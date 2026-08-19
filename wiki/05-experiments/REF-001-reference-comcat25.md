@@ -60,10 +60,26 @@ During source-target distance preparation, memory rose from approximately
 Docker VM. Docker had 7.65 GiB available plus a 1 GiB swap file. No completed
 parameter output was written.
 
-This is an infrastructure failure, not a numerical mismatch. The rerun must
-use the same locked AMD64 image and inputs with at least 12 GiB Docker memory;
-14 GiB is recommended. Native ARM execution is not substituted because it
-would change the reference platform.
+This is an infrastructure failure, not a numerical mismatch. The initial
+mitigation was to retain the same locked AMD64 image and raise Docker memory.
+Native ARM execution was not substituted because it would change the
+reference platform.
+
+## Run 3: Fresh Inversion, Transient Memory Spike
+
+Date: 2026-08-19
+
+Docker memory was increased to 15.60 GiB while swap remained at 1 GiB. The
+same locked command and parameter-free workspace were used. Distance
+preparation passed the previous 8 GiB boundary and reached an observed sample
+of 9.85 GiB. It was then killed with exit code 137 during a transient memory
+spike before the first optimization iteration. No completed parameter output
+was written.
+
+The next rerun retains 16 GiB memory and raises Docker swap to 8 GiB. The
+resource preflight now checks both limits. This preserves the reference model,
+catalog, platform, and numerical code while allowing the temporary matrix copy
+to spill to disk.
 
 ## Conclusion
 

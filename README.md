@@ -87,10 +87,11 @@ The upstream optimizer does not expose checkpoints. A completed
 `parameters_0.json` is preserved and the preparation command will not replace
 it; an interrupted run must restart from the locked initial values.
 
-The full ComCat_25 distance preparation exceeded an 8 GiB Docker allocation.
-The preflight requires at least 12 GiB and recommends 14 GiB. On Docker
-Desktop, adjust this under **Settings > Resources > Advanced > Memory** before
-starting the inversion.
+The full ComCat_25 distance preparation exceeded both an 8 GiB allocation and
+a later 16 GiB allocation with the default 1 GiB swap. The preflight requires
+at least 14 GiB memory and 6 GiB swap; 16 GiB memory and 8 GiB swap are
+recommended. On Docker Desktop, adjust both values under
+**Settings > Resources > Advanced** before starting the inversion.
 
 The Docker build documents one upstream inconsistency: EarthquakeNPP records
 Python 3.11.11 while its unpinned ETAS dependency later declared Python 3.12+
