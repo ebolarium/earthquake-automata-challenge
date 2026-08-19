@@ -24,6 +24,7 @@ COPIES = (
     "Datasets/ComCat/california_shape.npy",
     "Experiments/ETAS/config/ComCat_25.json",
     "Experiments/ETAS/invert_etas.py",
+    "Experiments/ETAS/predict_etas.py",
 )
 
 

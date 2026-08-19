@@ -19,13 +19,15 @@ GENERATED = (
     / "output_data_ComCat_25"
     / "ll_scores.json"
 )
-ABSOLUTE_TOLERANCE = 1e-10
 
 
 def main() -> int:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     actual = json.loads(GENERATED.read_text(encoding="utf-8"))
     expected = manifest["expected_results"]["likelihood"]
+    absolute_tolerance = manifest["alignment_tolerances"][
+        "replay_likelihood_absolute"
+    ]
 
     for expected_name, actual_name in (("etas", "ETAS"), ("poisson", "Poisson")):
         for component in ("nll", "tll", "sll"):
@@ -36,7 +38,7 @@ def main() -> int:
                 actual_value,
                 expected_value,
                 rel_tol=0.0,
-                abs_tol=ABSOLUTE_TOLERANCE,
+                abs_tol=absolute_tolerance,
             ):
                 raise ValueError(
                     f"{actual_name}.{component} differs by {delta:.3g}: "
@@ -44,7 +46,7 @@ def main() -> int:
                 )
             print(f"ok  {actual_name}.{component} delta={delta:.3g}")
 
-    print(f"likelihood aligned within absolute tolerance {ABSOLUTE_TOLERANCE:g}")
+    print(f"likelihood aligned within absolute tolerance {absolute_tolerance:g}")
     return 0
 
 

@@ -9,7 +9,7 @@ GIB = 1024**3
 KIB_PER_GIB = 1024**2
 MINIMUM_MEMORY_GIB = 14
 MINIMUM_SWAP_GIB = 6
-RECOMMENDED_MEMORY_GIB = 16
+RECOMMENDED_MEMORY_GIB = 15.5
 RECOMMENDED_SWAP_GIB = 8
 
 
@@ -61,7 +61,7 @@ def main() -> int:
         )
 
     if memory_gib < RECOMMENDED_MEMORY_GIB or swap_gib < RECOMMENDED_SWAP_GIB:
-        print("warning: 16 GiB memory and 8 GiB swap are recommended")
+        print("warning: Docker Desktop settings of 16 GiB memory and 8 GiB swap are recommended")
     return 0
 
 

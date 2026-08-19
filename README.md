@@ -93,6 +93,21 @@ at least 14 GiB memory and 6 GiB swap; 16 GiB memory and 8 GiB swap are
 recommended. On Docker Desktop, adjust both values under
 **Settings > Resources > Advanced** before starting the inversion.
 
+Docker Desktop may cap its swap setting below the required amount. In that
+case, the following privileged helper adds an 8 GiB swap file inside the
+Docker VM without changing the host operating system:
+
+```bash
+sh scripts/start_reference_swap.sh
+python3 scripts/check_reference_resources.py
+# Run the inversion and fresh-fit likelihood evaluation.
+sh scripts/stop_reference_swap.sh
+```
+
+The helper consumes 8 GiB disk space and must be stopped after the run. Heavy
+disk paging makes the reference inversion substantially slower but leaves the
+upstream numerical code unchanged.
+
 The Docker build documents one upstream inconsistency: EarthquakeNPP records
 Python 3.11.11 while its unpinned ETAS dependency later declared Python 3.12+
 in package metadata. We preserve the recorded 3.11 runtime and bypass only the

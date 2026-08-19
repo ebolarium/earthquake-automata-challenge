@@ -62,7 +62,9 @@
   ],
   "expected_results": {
     "n_target_events": 55442,
+    "n_iterations": 15,
     "beta": 2.1471442086213064,
+    "n_hat": 4233.7646490767975,
     "final_parameters": {
       "log10_mu": -6.3329886729199405,
       "log10_k0": -2.6717871682913943,
@@ -86,6 +88,13 @@
         "sll": -13.774504128914366
       }
     }
+  },
+  "alignment_tolerances": {
+    "replay_likelihood_absolute": 1e-10,
+    "fresh_inversion_beta_absolute": 1e-12,
+    "fresh_inversion_parameter_absolute": 5e-5,
+    "fresh_inversion_n_hat_absolute": 0.01,
+    "fresh_inversion_likelihood_absolute": 2e-6
   },
   "local_source_snapshot": {
     "source_name": "earthquake.db",

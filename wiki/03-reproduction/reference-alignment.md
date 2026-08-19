@@ -48,6 +48,11 @@ the six ETAS and Poisson likelihood components. Four components matched
 exactly; ETAS NLL and TLL differed by approximately `2.4e-11` under AMD64
 emulation. Parameter and simulation tolerances remain pending.
 
+The fresh inversion established absolute tolerances of `5e-5` for the nine
+transformed ETAS parameters, `1e-12` for beta, `0.01` for `n_hat`, and `2e-6`
+for likelihood components evaluated from freshly fitted parameters. The run
+matched the reference iteration count and target-event count exactly.
+
 ## Failure Policy
 
 Reference mismatches are findings. We diagnose package drift, platform

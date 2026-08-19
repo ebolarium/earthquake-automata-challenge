@@ -45,6 +45,23 @@ def validate_reference_manifest(payload: dict[str, Any]) -> None:
         if not SHA256_RE.fullmatch(artifact.get("sha256", "")):
             raise ValueError(f"invalid SHA-256 for {artifact.get('path')}")
 
+    tolerances = payload.get("alignment_tolerances") or {}
+    required_tolerances = {
+        "replay_likelihood_absolute",
+        "fresh_inversion_beta_absolute",
+        "fresh_inversion_parameter_absolute",
+        "fresh_inversion_n_hat_absolute",
+        "fresh_inversion_likelihood_absolute",
+    }
+    if required_tolerances - tolerances.keys():
+        raise ValueError("alignment_tolerances are incomplete")
+    invalid_tolerance = any(
+        not isinstance(value, (int, float)) or value <= 0
+        for value in tolerances.values()
+    )
+    if invalid_tolerance:
+        raise ValueError("alignment_tolerances must be positive numbers")
+
     source = payload.get("local_source_snapshot") or {}
     if not SHA256_RE.fullmatch(source.get("sha256", "")):
         raise ValueError("local source database must have a SHA-256")

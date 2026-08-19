@@ -35,6 +35,12 @@ class ReferenceManifestTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "never be committed"):
             validate_reference_manifest(payload)
 
+    def test_incomplete_tolerances_are_rejected(self):
+        payload = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        del payload["alignment_tolerances"]["fresh_inversion_parameter_absolute"]
+        with self.assertRaisesRegex(ValueError, "alignment_tolerances"):
+            validate_reference_manifest(payload)
+
 
 if __name__ == "__main__":
     unittest.main()

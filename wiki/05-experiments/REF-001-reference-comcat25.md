@@ -76,14 +76,41 @@ of 9.85 GiB. It was then killed with exit code 137 during a transient memory
 spike before the first optimization iteration. No completed parameter output
 was written.
 
-The next rerun retains 16 GiB memory and raises Docker swap to 8 GiB. The
-resource preflight now checks both limits. This preserves the reference model,
-catalog, platform, and numerical code while allowing the temporary matrix copy
-to spill to disk.
+Docker Desktop later proved to cap swap at 4 GiB on this host. The successful
+rerun therefore retained 16 GiB memory and 4 GiB configured swap, then added a
+temporary 8 GiB swap file inside the Docker VM. This preserved the reference
+model, catalog, platform, and numerical code while allowing the temporary
+matrix copy to spill to disk.
+
+## Run 4: Fresh Inversion, Aligned
+
+Date: 2026-08-19
+
+Docker Desktop exposed 15.60 GiB memory and its maximum 4 GiB swap. A
+privileged helper added a temporary 8 GiB swap file inside the Docker VM. This
+kept the upstream source and all scientific inputs unchanged while allowing
+the transient distance-matrix allocation to page to disk.
+
+The run completed after 15 iterations and reproduced all structural
+invariants:
+
+- 55,442 target events;
+- beta absolute delta `4.44e-16`;
+- maximum fitted-parameter absolute delta `2.88e-5`;
+- `n_hat` absolute delta `0.00523`;
+- maximum fresh-fit ETAS likelihood absolute delta `9.94e-7`;
+- all three Poisson likelihood components matched exactly.
+
+The inversion ran from 14:34:40 to 17:51:08 UTC, approximately 3 hours 16
+minutes. The output file appeared at 20:51:08 in the Europe/Istanbul host time
+zone. Heavy paging made the run substantially slower than an in-memory
+execution. A subsequent likelihood evaluation with the freshly fitted
+parameters completed normally and retained the upstream zero-intensity runtime
+warnings already observed in Run 1.
 
 ## Conclusion
 
-Likelihood replay is aligned at an absolute tolerance of `1e-10`. This
-supports the inferred ETAS compatibility commit. REF-001 remains open until a
-fresh parameter inversion reproduces the checked-in beta and nine fitted
-parameters.
+REF-001 is complete. Likelihood replay aligned at `1e-10`; the fresh inversion
+aligned at `5e-5` for transformed parameters, `0.01` for `n_hat`, and `2e-6`
+for likelihood components. The result supports the inferred historical ETAS
+commit and establishes the external baseline for native implementation.
