@@ -17,6 +17,11 @@ The first reference run will:
 
 No upstream source file will be edited to force alignment.
 
+Likelihood replay and fresh parameter inversion use separate ignored
+workspaces. The inversion workspace deliberately excludes the checked-in
+`parameters_0.json`, preventing a reference result from being mistaken for a
+fresh optimizer output.
+
 ## Version Caveat
 
 EarthquakeNPP installs `ss15859/etas` from an unpinned branch. Its recorded

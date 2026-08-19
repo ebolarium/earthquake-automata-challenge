@@ -42,6 +42,29 @@ The upstream code emitted divide-by-zero and invalid-subtraction warnings for
 individual zero-intensity samples. They did not alter the aggregate values and
 are retained as an upstream numerical-behavior finding.
 
+## Run 2: Fresh Inversion, Insufficient Memory
+
+Date: 2026-08-19
+
+The unmodified upstream `invert_etas.py` was started in a separate workspace
+that contained no reference parameter file. Preparation reproduced the
+expected catalog invariants:
+
+- 70,374 sources;
+- 55,442 targets;
+- beta `2.147144208621307`;
+- region area `959822.9591782562` square km.
+
+During source-target distance preparation, memory rose from approximately
+2.15 GiB to 6.65 GiB and the process was killed with exit code 137 by the
+Docker VM. Docker had 7.65 GiB available plus a 1 GiB swap file. No completed
+parameter output was written.
+
+This is an infrastructure failure, not a numerical mismatch. The rerun must
+use the same locked AMD64 image and inputs with at least 12 GiB Docker memory;
+14 GiB is recommended. Native ARM execution is not substituted because it
+would change the reference platform.
+
 ## Conclusion
 
 Likelihood replay is aligned at an absolute tolerance of `1e-10`. This

@@ -71,6 +71,27 @@ docker run --rm --platform linux/amd64 -v "$PWD:/workspace" \
 python3 scripts/compare_reference_likelihood.py
 ```
 
+The full parameter inversion uses a separate workspace that never receives
+the checked-in reference parameters:
+
+```bash
+python3 scripts/check_reference_resources.py
+python3 scripts/prepare_reference_inversion.py
+docker run --rm --platform linux/amd64 -v "$PWD:/workspace" \
+  -w /workspace/artifacts/reference-comcat25/inversion-workspace/Experiments/ETAS \
+  etas-challenge-reference python invert_etas.py ComCat_25
+python3 scripts/report_reference_inversion.py
+```
+
+The upstream optimizer does not expose checkpoints. A completed
+`parameters_0.json` is preserved and the preparation command will not replace
+it; an interrupted run must restart from the locked initial values.
+
+The full ComCat_25 distance preparation exceeded an 8 GiB Docker allocation.
+The preflight requires at least 12 GiB and recommends 14 GiB. On Docker
+Desktop, adjust this under **Settings > Resources > Advanced > Memory** before
+starting the inversion.
+
 The Docker build documents one upstream inconsistency: EarthquakeNPP records
 Python 3.11.11 while its unpinned ETAS dependency later declared Python 3.12+
 in package metadata. We preserve the recorded 3.11 runtime and bypass only the
