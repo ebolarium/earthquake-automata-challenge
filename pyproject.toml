@@ -10,11 +10,12 @@ requires-python = ">=3.11,<3.12"
 dependencies = []
 
 [project.optional-dependencies]
+# The historical ETAS package has conflicting Python metadata. The complete
+# reference environment is installed only by docker/reference.Dockerfile.
 reference = [
   "numpy==1.26.4",
   "pandas==2.2.3",
   "scipy==1.15.1",
-  "etas @ git+https://github.com/ss15859/etas.git@51e0c8e419197df3f88349035a682b90fbd4dfb5",
 ]
 evaluation = [
   "pycsep==0.6.3",
@@ -22,4 +23,3 @@ evaluation = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
-

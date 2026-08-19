@@ -27,8 +27,14 @@ def validate_reference_manifest(payload: dict[str, Any]) -> None:
         raise ValueError("target_model must remain spatial_temporal_etas")
 
     repositories = payload.get("repositories") or {}
-    for name in ("earthquakenpp", "etas_reference"):
-        commit = repositories.get(name, {}).get("commit", "")
+    required_repositories = {"earthquakenpp", "etas_reference", "seismostats"}
+    missing_repositories = required_repositories - repositories.keys()
+    if missing_repositories:
+        missing = ", ".join(sorted(missing_repositories))
+        raise ValueError(f"missing required repositories: {missing}")
+
+    for name, repository in repositories.items():
+        commit = repository.get("commit", "")
         if not GIT_SHA_RE.fullmatch(commit):
             raise ValueError(f"{name} must be pinned to a full Git commit")
 
@@ -60,4 +66,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

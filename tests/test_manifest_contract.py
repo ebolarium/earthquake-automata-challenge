@@ -23,6 +23,12 @@ class ReferenceManifestTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "full Git commit"):
             validate_reference_manifest(payload)
 
+    def test_missing_transitive_reference_is_rejected(self):
+        payload = json.loads(MANIFEST.read_text(encoding="utf-8"))
+        del payload["repositories"]["seismostats"]
+        with self.assertRaisesRegex(ValueError, "missing required repositories"):
+            validate_reference_manifest(payload)
+
     def test_committed_source_database_is_rejected(self):
         payload = json.loads(MANIFEST.read_text(encoding="utf-8"))
         payload["local_source_snapshot"]["committed"] = True
