@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "experiment_id": "etas-reference-comcat25-v1",
+  "locked_at": "2026-08-19",
+  "target_model": "spatial_temporal_etas",
+  "repositories": {
+    "earthquakenpp": {
+      "url": "https://github.com/ss15859/EarthquakeNPP.git",
+      "commit": "26d18048e1ca8ff2b02c7016b993de48ed0760f5"
+    },
+    "etas_reference": {
+      "url": "https://github.com/ss15859/etas.git",
+      "commit": "51e0c8e419197df3f88349035a682b90fbd4dfb5",
+      "selection_reason": "Last fork commit before the checked-in ComCat_25 output timestamp; EarthquakeNPP left this dependency unpinned."
+    }
+  },
+  "runtime": {
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "pandas": "2.2.3",
+    "scipy": "1.15.1",
+    "pycsep": "0.6.3"
+  },
+  "reference_artifacts": [
+    {
+      "path": "Datasets/ComCat/ComCat_catalog.csv",
+      "sha256": "5380f71c826e0026634f4e044e18fcbc3e755dd041a031fbc72853e29a748c98",
+      "lines": 92264
+    },
+    {
+      "path": "Datasets/ComCat/california_shape.npy",
+      "sha256": "ef0346ad838fb35a3ac2f95bf22d97280ebef05f8647b4ebe51aebb9e688768c"
+    },
+    {
+      "path": "Experiments/ETAS/config/ComCat_25.json",
+      "sha256": "86d41f722637c154487f73d5cf2aa8859b689ecab3f82b67110fad8042e8df23"
+    },
+    {
+      "path": "Experiments/ETAS/output_data_ComCat_25/parameters_0.json",
+      "sha256": "90c19386be2d11aa590a6380dc7ef327a367afa2c4d3869e63f957d34456df65"
+    },
+    {
+      "path": "Experiments/ETAS/output_data_ComCat_25/ll_scores.json",
+      "sha256": "aeb1d55e03d4e55e6ee64cbbcd8b9343e9e28c8bf47f8ae1a276c5d3cce325d7"
+    }
+  ],
+  "expected_results": {
+    "n_target_events": 55442,
+    "beta": 2.1471442086213064,
+    "final_parameters": {
+      "log10_mu": -6.3329886729199405,
+      "log10_k0": -2.6717871682913943,
+      "a": 1.5556888441764327,
+      "log10_c": -2.79828186440062,
+      "omega": -0.06185408129678495,
+      "log10_tau": 3.723786279418681,
+      "log10_d": -0.7725791509539909,
+      "gamma": 1.010873536606162,
+      "rho": 0.5565963092026862
+    },
+    "likelihood": {
+      "etas": {
+        "nll": 7.2554275527505645,
+        "tll": 1.4343428344882627,
+        "sll": -8.689770387238827
+      },
+      "poisson": {
+        "nll": 13.261863460288378,
+        "tll": 0.5126406686259881,
+        "sll": -13.774504128914366
+      }
+    }
+  },
+  "local_source_snapshot": {
+    "source_name": "earthquake.db",
+    "sha256": "8d7a4faf6082f42490c48979881b7017a7d7d05a778a5062f411e64fc520d3d7",
+    "bytes_human": "1.5G",
+    "earthquake_rows": 5086795,
+    "first_date": "1901-11-14",
+    "last_date": "2026-08-19",
+    "committed": false,
+    "status": "not_exported"
+  }
+}
+
