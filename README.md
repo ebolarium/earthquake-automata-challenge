@@ -10,9 +10,9 @@ repository does not import code, databases, predictions, or runtime state from
 
 ## Current Milestone
 
-Reproduce the EarthquakeNPP `ComCat_25` ETAS experiment with locked inputs and
-expected outputs. Then implement ETAS independently from the published
-equations and align the native implementation with the reference.
+The locked EarthquakeNPP `ComCat_25` reproduction is complete. The current
+milestone is to implement ETAS independently from the published equations and
+align its event-level likelihood terms with frozen reference fixtures.
 
 The baseline is not considered reproduced until parameter estimates,
 event-based likelihood scores, and simulation summaries satisfy the tolerances
@@ -50,9 +50,9 @@ PYTHONPATH=src python3 -m unittest discover -s tests
 PYTHONPATH=src python3 -m etas_challenge.contracts data/manifests/reference-comcat25.json
 ```
 
-Reference dependencies are intentionally not installed in the scaffold step.
-Their installation and the first upstream run form the next controlled
-milestone.
+The native package currently includes physical parameter conversion, the
+space-time triggering kernels, closed-form kernel integrals, branching ratio,
+and conditional intensity. Its formula tests do not import reference code.
 
 ## Reference Environment
 

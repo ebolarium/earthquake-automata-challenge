@@ -7,7 +7,9 @@ name = "earthquake-automata-challenge"
 version = "0.1.0"
 description = "Reproducible ETAS baseline and earthquake forecast challenge"
 requires-python = ">=3.11,<3.12"
-dependencies = []
+dependencies = [
+  "scipy==1.15.1",
+]
 
 [project.optional-dependencies]
 # The historical ETAS package has conflicting Python metadata. The complete

@@ -40,9 +40,6 @@ This is part of the reproducibility contract, not challenge-native model code.
 7. Native kernel integrals and likelihood terms match independent numerical
    integration tests.
 
-Exact tolerances will be established from deterministic reruns on the pinned
-reference environment before native alignment begins.
-
 The first likelihood replay established an absolute tolerance of `1e-10` for
 the six ETAS and Poisson likelihood components. Four components matched
 exactly; ETAS NLL and TLL differed by approximately `2.4e-11` under AMD64
