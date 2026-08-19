@@ -50,6 +50,12 @@ transformed ETAS parameters, `1e-12` for beta, `0.01` for `n_hat`, and `2e-6`
 for likelihood components evaluated from freshly fitted parameters. The run
 matched the reference iteration count and target-event count exactly.
 
+The synthetic `NATIVE-ALIGN-001` oracle established an event-level absolute
+tolerance of `1e-12`. Point intensity, temporal intensity, spatial score, and
+all compensators after the first test event align. The reference implementation
+omits pre-window triggering mass from the first event interval; native ETAS
+keeps the published compensator and records both values in the fixture.
+
 ## Failure Policy
 
 Reference mismatches are findings. We diagnose package drift, platform

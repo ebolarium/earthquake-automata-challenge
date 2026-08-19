@@ -1,0 +1,107 @@
+{
+  "fixture_id": "NATIVE-ALIGN-001",
+  "generator": "scripts/generate_native_alignment_fixture.py",
+  "reference": {
+    "earthquake_npp_commit": "26d18048e1ca8ff2b02c7016b993de48ed0760f5",
+    "etas_commit": "51e0c8e419197df3f88349035a682b90fbd4dfb5"
+  },
+  "units": {
+    "time": "days",
+    "distance": "km",
+    "area": "km^2"
+  },
+  "epoch": "2020-01-01T00:00:00",
+  "window_start": 9.0,
+  "area": 1000.0,
+  "earth_radius": 6378.1,
+  "m_ref": 2.5,
+  "parameters": {
+    "log10_mu": -6.3329886729199405,
+    "log10_iota": null,
+    "log10_k0": -2.6717871682913943,
+    "a": 1.5556888441764327,
+    "log10_c": -2.79828186440062,
+    "omega": -0.06185408129678495,
+    "log10_tau": 3.723786279418681,
+    "log10_d": -0.7725791509539909,
+    "gamma": 1.010873536606162,
+    "rho": 0.5565963092026862
+  },
+  "events": [
+    {
+      "id": "source-a",
+      "time": 1.0,
+      "latitude": 34.0,
+      "longitude": -118.0,
+      "magnitude": 3.2,
+      "role": "history"
+    },
+    {
+      "id": "source-b",
+      "time": 7.5,
+      "latitude": 34.12,
+      "longitude": -118.18,
+      "magnitude": 4.1,
+      "role": "history"
+    },
+    {
+      "id": "target-a",
+      "time": 10.25,
+      "latitude": 34.08,
+      "longitude": -118.1,
+      "magnitude": 2.8,
+      "role": "target"
+    },
+    {
+      "id": "target-b",
+      "time": 12.75,
+      "latitude": 34.2,
+      "longitude": -118.05,
+      "magnitude": 3.0,
+      "role": "target"
+    },
+    {
+      "id": "target-c",
+      "time": 17.125,
+      "latitude": 33.95,
+      "longitude": -118.25,
+      "magnitude": 2.7,
+      "role": "target"
+    }
+  ],
+  "targets": [
+    {
+      "id": "target-a",
+      "point_intensity": 1.2691810902285659e-05,
+      "temporal_intensity": 0.06976153903428199,
+      "published_compensator": 0.11154475061106447,
+      "reference_compensator": 0.0005806592383328368,
+      "reference_ll": -11.275134242561633,
+      "reference_tll": -2.6632530970184662,
+      "reference_sll": -8.611881145543167
+    },
+    {
+      "id": "target-b",
+      "point_intensity": 2.0695733524096297e-06,
+      "temporal_intensity": 0.05869710074764824,
+      "published_compensator": 0.4028469350317019,
+      "reference_compensator": 0.4028469350317019,
+      "reference_ll": -13.491015016909312,
+      "reference_tll": -3.2382118794106676,
+      "reference_sll": -10.252803137498644
+    },
+    {
+      "id": "target-c",
+      "point_intensity": 8.307654077038746e-07,
+      "temporal_intensity": 0.044546228447713096,
+      "published_compensator": 0.5469743186657114,
+      "reference_compensator": 0.5469743186657128,
+      "reference_ll": -14.547892701809866,
+      "reference_tll": -3.6582021061764545,
+      "reference_sll": -10.889690595633411
+    }
+  ],
+  "known_reference_behavior": {
+    "first_interval_triggered_compensator_omitted": true
+  }
+}

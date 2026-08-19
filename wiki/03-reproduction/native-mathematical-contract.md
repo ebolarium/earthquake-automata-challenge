@@ -62,12 +62,39 @@ eta = beta k0 pi d^(-rho) T
 where `T` is the full temporal integral. The branching ratio is finite only
 when `beta > alpha`.
 
+## Event Likelihood
+
+For an event interval `(s, t]`, the native compensator is
+
+```text
+C(s, t) = mu A (t-s)
+  + sum_i K(m_i) S(m_i)
+    integral[max(0, s-t_i), t-t_i] T(u) du,
+```
+
+where the sum includes sources with `t_i < t`, `A` is region area, and `S(m)`
+is the whole-plane spatial integral. Event-level scores follow
+
+```text
+LL  = log(lambda(t, x, y)) - C(s, t)
+TLL = log(lambda_star(t))  - C(s, t)
+SLL = LL - TLL.
+```
+
+Geographic event distances use the same spherical haversine calculation and
+Earth radius (`6378.1 km`) as the locked reference.
+
 ## Verification Boundary
 
-Closed forms are tested against independent adaptive quadrature. The next
-alignment layer will compare native event-level triggering rates, compensator
-terms, and likelihood components against frozen REF-001 fixtures. Reference
-software remains an oracle and is not imported by native modules.
+Closed forms are tested against independent adaptive quadrature. Event-level
+intensities and likelihood terms are tested against the synthetic
+`NATIVE-ALIGN-001` oracle at `1e-12` absolute tolerance. Reference software is
+used only by the fixture generator and is not imported by native modules.
+
+The locked reference omits the triggered compensator before the first event in
+the test window. The native implementation retains the published interval
+integral instead of reproducing this behavior. The fixture records both values
+so later full-catalog comparisons cannot hide the discrepancy.
 
 ## Sources
 
