@@ -1,0 +1,10 @@
+.git
+.venv
+__pycache__
+*.pyc
+artifacts
+data/local
+reference/upstream
+.DS_Store
+.pytest_cache
+.ruff_cache

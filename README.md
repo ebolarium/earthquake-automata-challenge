@@ -12,8 +12,9 @@ repository does not import code, databases, predictions, or runtime state from
 
 The locked EarthquakeNPP `ComCat_25` reproduction, native likelihood alignment,
 clean local catalog export, leakage-free daily replay, and the documented
-pyCSEP day-7 consistency gate are complete. The current milestone is the
-independent ETAS web page.
+pyCSEP day-7 consistency gate are complete. The independent ETAS forecast page
+is also complete. The current milestone is baseline-freeze review before any
+challenger model is admitted.
 
 The baseline will not be frozen until parameter estimates, event-based
 likelihood scores, and later prospective evaluation checks satisfy their
@@ -41,6 +42,7 @@ data/            Local catalogs, with committed manifests only
 reference/       Reference-run instructions and temporary upstream checkout
 src/             Native implementation
 tests/           Contract, formula, and alignment tests
+web/             Independent ETAS forecast server and static application
 wiki/            Literature, decisions, protocols, and experiment records
 ```
 
@@ -82,6 +84,24 @@ Poisson catalogs for the documented EarthquakeNPP day-7 window:
 PYTHONPATH=src python3 scripts/generate_pycsep_forecasts.py
 docker run --rm --platform linux/amd64 -v "$PWD:/workspace" \
   etas-challenge-reference python scripts/run_pycsep_evaluation.py
+```
+
+Generate and inspect the independent daily ETAS forecast page:
+
+```bash
+PYTHONPATH=src python3 scripts/generate_web_snapshot.py
+PYTHONPATH=src python3 web/server.py --port 8080
+```
+
+The production image generates the same snapshot from a read-only mounted
+catalog before serving it on port 8080:
+
+```bash
+docker build --platform linux/amd64 -f docker/web.Dockerfile \
+  -t etas-challenge-web .
+docker run --rm --platform linux/amd64 -p 8080:8080 \
+  -v "$PWD/data/local/california-earthquakes-v1.sqlite:/data/california-earthquakes.sqlite:ro" \
+  etas-challenge-web
 ```
 
 ## Reference Environment

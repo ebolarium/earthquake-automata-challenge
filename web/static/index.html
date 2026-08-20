@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f6f7f5">
+    <title>ETAS Baseline</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand-block">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <h1>ETAS Baseline</h1>
+          <p>California ComCat_25</p>
+        </div>
+      </div>
+      <div class="header-status">
+        <span class="status-dot" aria-hidden="true"></span>
+        <div>
+          <strong id="issue-label">Snapshot yükleniyor</strong>
+          <span>Araştırma tahmini · uyarı değildir</span>
+        </div>
+        <button class="icon-button" id="refresh-button" type="button" title="Snapshot'ı yenile" aria-label="Snapshot'ı yenile">&#8635;</button>
+      </div>
+    </header>
+
+    <nav class="view-tabs" aria-label="Görünümler">
+      <button class="tab-button active" type="button" data-tab="forecast" aria-selected="true">Tahmin</button>
+      <button class="tab-button" type="button" data-tab="validation" aria-selected="false">Doğrulama</button>
+      <button class="tab-button" type="button" data-tab="method" aria-selected="false">Model</button>
+    </nav>
+
+    <main>
+      <section class="tab-view active" id="forecast-view">
+        <div class="metric-strip" aria-label="Tahmin özeti">
+          <article class="metric-card">
+            <span>Beklenen olay</span>
+            <strong id="mean-count">—</strong>
+            <small id="mean-threshold">M≥2.5 / 24 saat</small>
+          </article>
+          <article class="metric-card">
+            <span>En az bir olay</span>
+            <strong id="any-probability">—</strong>
+            <small>Simülasyon oranı</small>
+          </article>
+          <article class="metric-card">
+            <span>%95 sayı aralığı</span>
+            <strong id="count-range">—</strong>
+            <small>2.5–97.5 persentil</small>
+          </article>
+          <article class="metric-card accent-card">
+            <span>M≥4 olasılığı</span>
+            <strong id="m4-probability">—</strong>
+            <small>California bölgesi</small>
+          </article>
+        </div>
+
+        <div class="forecast-controls">
+          <div class="control-group">
+            <span class="control-label">Magnitude</span>
+            <div class="segmented" id="threshold-control" role="group" aria-label="Magnitude eşiği"></div>
+          </div>
+          <div class="control-group">
+            <span class="control-label">Harita metriği</span>
+            <div class="segmented" role="group" aria-label="Harita metriği">
+              <button class="segment active" type="button" data-metric="probability">Olasılık</button>
+              <button class="segment" type="button" data-metric="expected">Beklenen sayı</button>
+            </div>
+          </div>
+          <label class="toggle-control">
+            <input id="events-toggle" type="checkbox" checked>
+            <span class="toggle-track" aria-hidden="true"></span>
+            Son 30 gün
+          </label>
+        </div>
+
+        <div class="forecast-layout">
+          <section class="map-panel" aria-labelledby="map-title">
+            <div class="panel-heading">
+              <div>
+                <h2 id="map-title">Günlük uzamsal tahmin</h2>
+                <p id="window-label">—</p>
+              </div>
+              <div class="legend" aria-label="Yoğunluk ölçeği">
+                <span>Düşük</span><i></i><span>Yüksek</span>
+              </div>
+            </div>
+            <div class="map-stage" id="map-stage">
+              <canvas id="forecast-map" aria-label="California ETAS tahmin haritası"></canvas>
+              <div class="map-tooltip" id="map-tooltip" role="status"></div>
+              <div class="map-loading" id="map-loading">Snapshot yükleniyor</div>
+            </div>
+          </section>
+
+          <aside class="forecast-sidebar">
+            <section class="sidebar-section">
+              <div class="section-heading">
+                <h2>En yüksek hücreler</h2>
+                <span id="hotspot-unit">Olasılık</span>
+              </div>
+              <ol class="hotspot-list" id="hotspot-list"></ol>
+            </section>
+            <section class="sidebar-section forecast-facts">
+              <h2>Forecast kaydı</h2>
+              <dl>
+                <div><dt>Issue time</dt><dd id="fact-issue">—</dd></div>
+                <div><dt>Simülasyon</dt><dd id="fact-simulations">—</dd></div>
+                <div><dt>Geçmiş olay</dt><dd id="fact-history">—</dd></div>
+                <div><dt>Son katalog olayı</dt><dd id="fact-last-event">—</dd></div>
+              </dl>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="tab-view" id="validation-view">
+        <div class="section-intro">
+          <span class="eyebrow">EVAL-001 · pyCSEP 0.6.3</span>
+          <h2>Katalog tutarlılık testleri</h2>
+          <p>EarthquakeNPP test günü 7 · 10.000 native ETAS kataloğu · 3 gözlenen olay</p>
+        </div>
+        <div class="validation-grid" id="validation-grid"></div>
+        <div class="replay-band">
+          <div><span>Leakage-free replay</span><strong id="replay-days">—</strong><small>gün</small></div>
+          <div><span>Hedef olay</span><strong id="replay-events">—</strong><small>M≥2.5</small></div>
+          <div><span>Poisson'a karşı IG</span><strong id="replay-ig">—</strong><small>olay başına</small></div>
+          <p>Tek günlük pyCSEP kapısı model üstünlüğü değil, forecast dağılımının gözlemle tutarlılık kontrolüdür.</p>
+        </div>
+      </section>
+
+      <section class="tab-view" id="method-view">
+        <div class="section-intro">
+          <span class="eyebrow">Native spatial-temporal ETAS</span>
+          <h2>Dondurulmuş model sözleşmesi</h2>
+          <p>ComCat_25 referans fit · sabit uzamsal background · tam günlük cascade continuation</p>
+        </div>
+        <div class="model-layout">
+          <section class="parameter-panel">
+            <h2>Parametreler</h2>
+            <div class="parameter-grid" id="parameter-grid"></div>
+          </section>
+          <section class="boundary-panel">
+            <h2>Değerlendirme sınırı</h2>
+            <dl>
+              <div><dt>Geçmiş sınırı</dt><dd>Issue time öncesi, strict</dd></div>
+              <div><dt>Forecast penceresi</dt><dd>[issue, issue + 1 gün)</dd></div>
+              <div><dt>Tamamlılık</dt><dd>Mc = Mref = 2.5</dd></div>
+              <div><dt>Branching ratio</dt><dd id="branching-ratio">—</dd></div>
+              <div><dt>Grid</dt><dd id="grid-definition">—</dd></div>
+            </dl>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div class="error-banner" id="error-banner" role="alert"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

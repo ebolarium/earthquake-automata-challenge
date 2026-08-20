@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "snapshot_id": "native-etas-california-2026-08-19-v1",
+  "status": "completed",
+  "config_sha256": "d392cff6d92835010bcd65946ecdce2723cb4388a5dfd41dff94c1f2eb85fce8",
+  "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+  "snapshot_sha256": "dbccbfa469ba580841fc0d18fd2286ff26e3c873e6687547dd538fb0618c99f9",
+  "issue_time": "2026-08-19T00:00:00Z",
+  "n_simulations": 10000,
+  "history_events": 56374,
+  "active_grid_cells": 2266
+}
