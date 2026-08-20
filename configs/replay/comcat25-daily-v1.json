@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "replay_id": "native-etas-california-daily-v1",
+  "catalog_manifest": "data/manifests/local-california-catalog-v1.json",
+  "catalog_path": "data/local/california-earthquakes-v1.sqlite",
+  "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+  "auxiliary_start": "1971-01-01T00:00:00Z",
+  "issue_start": "2007-01-01T00:00:00Z",
+  "issue_end_exclusive": "2026-08-19T00:00:00Z",
+  "horizon_days": 1.0,
+  "issue_clock": "00:00:00Z",
+  "issue_time_history_boundary": "exclusive",
+  "target_window": "[issue_time, window_end)",
+  "equal_timestamp_policy": "events at the same timestamp do not trigger each other",
+  "score_modes": {
+    "frozen": "only events strictly before issue time contribute",
+    "sequential": "events contribute only after their origin time within the window"
+  },
+  "m_ref": 2.5,
+  "mc": 2.5,
+  "delta_m": 0.1,
+  "area_km2": 959822.9591782562,
+  "earth_radius_km": 6378.1,
+  "parameter_source": "data/manifests/reference-comcat25.json",
+  "parameters": {
+    "log10_mu": -6.3329886729199405,
+    "log10_k0": -2.6717871682913943,
+    "a": 1.5556888441764327,
+    "log10_c": -2.79828186440062,
+    "omega": -0.06185408129678495,
+    "log10_tau": 3.723786279418681,
+    "log10_d": -0.7725791509539909,
+    "gamma": 1.010873536606162,
+    "rho": 0.5565963092026862
+  },
+  "poisson": {
+    "training_start": "1971-01-01T00:00:00Z",
+    "training_end_exclusive": "2007-01-01T00:00:00Z",
+    "training_event_count": 31876,
+    "training_days": 13149,
+    "mu_per_km2_day": 2.5256894993004103e-06
+  },
+  "expected_counts": {
+    "replay_days": 7170,
+    "initial_history_events": 31876,
+    "target_events": 24498
+  },
+  "outputs": {
+    "daily_scores": "artifacts/daily-replay-v1/daily-scores.csv",
+    "summary": "artifacts/daily-replay-v1/summary.json",
+    "manifest": "data/manifests/daily-replay-v1.json"
+  }
+}

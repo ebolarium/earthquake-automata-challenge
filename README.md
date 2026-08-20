@@ -11,8 +11,8 @@ repository does not import code, databases, predictions, or runtime state from
 ## Current Milestone
 
 The locked EarthquakeNPP `ComCat_25` reproduction, native likelihood alignment,
-and clean local catalog export are complete. The current milestone is a
-leakage-free daily forecast replay.
+clean local catalog export, and leakage-free daily replay are complete. The
+current milestone is baseline evaluation with pyCSEP.
 
 The baseline will not be frozen until parameter estimates, event-based
 likelihood scores, and later prospective evaluation checks satisfy their
@@ -66,6 +66,12 @@ The clean local catalog can be reproduced from the locked source snapshot:
 
 ```bash
 PYTHONPATH=src python3 scripts/export_clean_catalog.py
+```
+
+The resumable daily replay uses the committed clock and scoring contract:
+
+```bash
+PYTHONPATH=src python3 scripts/run_daily_replay.py
 ```
 
 ## Reference Environment

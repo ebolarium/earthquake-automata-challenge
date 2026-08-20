@@ -138,7 +138,7 @@ class CatalogReplay:
         lower = np.maximum(
             0.0, self._days_between(interval_start, self.catalog.times[history])
         )
-        temporal_mass = _temporal_integrals(lower, delta_t, self.parameters)
+        temporal_mass = temporal_integrals(lower, delta_t, self.parameters)
         background_mass = self.parameters.mu * self.area * (
             self._days_between(target_time, interval_start)
         )
@@ -176,7 +176,7 @@ class CatalogReplay:
         return difference
 
 
-def _temporal_integrals(
+def temporal_integrals(
     lower: np.ndarray,
     upper: np.ndarray,
     parameters: ETASParameters,

@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "replay_id": "native-etas-california-daily-v1",
+  "status": "completed",
+  "tool": {
+    "name": "scripts/run_daily_replay.py",
+    "version": "1.0.0",
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "scipy": "1.15.1",
+    "sqlite": "3.40.1"
+  },
+  "inputs": {
+    "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "config_sha256": "5ac9ebe57025707a52667759d928085b64382cb01667938ad6db596a2ebfe0a0",
+    "parameter_source": "data/manifests/reference-comcat25.json"
+  },
+  "protocol": {
+    "issue_boundary": "exclusive",
+    "target_window": "[issue_time, window_end)",
+    "equal_timestamp_policy": "events at the same timestamp do not trigger each other",
+    "horizon_days": 1.0,
+    "mc": 2.5
+  },
+  "outputs": {
+    "daily_scores_path": "artifacts/daily-replay-v1/daily-scores.csv",
+    "daily_scores_sha256": "770898ac35ee49755e505c9fbca6d47d85e8ad10441a8b2da11c9584e48efa60",
+    "summary_path": "artifacts/daily-replay-v1/summary.json",
+    "summary_sha256": "9eed092dbb0f09ba66c75fac8148695f82bad63861c76ff30246d444e864625b"
+  },
+  "results": {
+    "replay_days": 7170,
+    "target_events": 24498,
+    "sequential_information_gain_per_event": 5.29773523952997
+  }
+}
