@@ -21,7 +21,19 @@ reference = [
   "scipy==1.15.1",
 ]
 evaluation = [
+  "click==8.4.2",
+  "decorator==5.3.1",
+  "greenlet==3.5.5",
+  "lxml==6.1.2",
+  "mercantile==1.2.1",
+  "obspy==1.5.0",
   "pycsep==0.6.3",
+  "python-dateutil==2.9.0.post0",
+  "pytz==2026.3.post1",
+  "six==1.17.0",
+  "sqlalchemy==2.0.52",
+  "typing-extensions==4.16.0",
+  "tzdata==2026.3",
 ]
 
 [tool.setuptools.packages.find]

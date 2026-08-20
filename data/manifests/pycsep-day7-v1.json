@@ -1,0 +1,113 @@
+{
+  "schema_version": 1,
+  "evaluation_id": "native-etas-comcat25-pycsep-day7-v1",
+  "status": "completed",
+  "tool": {
+    "generator": "scripts/generate_pycsep_forecasts.py",
+    "evaluator": "scripts/run_pycsep_evaluation.py",
+    "version": "1.0.0",
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "pycsep": "0.6.3"
+  },
+  "inputs": {
+    "config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+    "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "parameter_source": "data/manifests/reference-comcat25.json"
+  },
+  "protocol": {
+    "issue_time": "2007-01-08T00:00:00Z",
+    "window_end_exclusive": "2007-01-09T00:00:00Z",
+    "history_boundary": "strictly before issue_time",
+    "n_simulations": 10000,
+    "seed": 20260820,
+    "region": "california_relm_region",
+    "region_nodes": 7682,
+    "empty_catalogs_preserved": true
+  },
+  "outputs": {
+    "etas_forecast_sha256": "f890e4be4fc3d13a464fac6eab337ad6e42aa8e48ee632efefc9f03c991ee1b0",
+    "poisson_forecast_sha256": "06b9036e5acce3baea8caa46dcd569e6265892ea04af35b6f198907cb056ac02",
+    "generation_summary_sha256": "21f309d5086b97a9cb520384eece66c075c536aa08546e0166a2c09379736759",
+    "evaluation_summary_sha256": "3c4dec0cd279d7976630463e4fc6895221a505fb688a8cbc98e89ccf698cb579"
+  },
+  "results": {
+    "etas": {
+      "number": {
+        "status": "normal",
+        "observed_statistic": 3,
+        "quantile": [
+          0.4121,
+          0.7394
+        ],
+        "rejected_at_two_sided_5_percent": false
+      },
+      "spatial": {
+        "status": "normal",
+        "observed_statistic": -5.786478964398893,
+        "quantile": [
+          0.3414174711561102,
+          0.6585825288438898
+        ],
+        "rejected_at_two_sided_5_percent": false
+      },
+      "pseudolikelihood": {
+        "status": "normal",
+        "observed_statistic": -17.10245736745561,
+        "quantile": [
+          0.608,
+          0.392
+        ],
+        "rejected_at_two_sided_5_percent": false
+      },
+      "magnitude": {
+        "status": "normal",
+        "observed_statistic": 0.13462160878741306,
+        "quantile": [
+          0.8722627737226277,
+          0.1298563692017895
+        ],
+        "rejected_at_two_sided_5_percent": false
+      }
+    },
+    "poisson": {
+      "number": {
+        "status": "normal",
+        "observed_statistic": 3,
+        "quantile": [
+          0.2943,
+          0.8759
+        ],
+        "rejected_at_two_sided_5_percent": false
+      },
+      "spatial": {
+        "status": "normal",
+        "observed_statistic": -8.793737318169628,
+        "quantile": [
+          0.6468370832842502,
+          0.3638826716927789
+        ],
+        "rejected_at_two_sided_5_percent": false
+      },
+      "pseudolikelihood": {
+        "status": "normal",
+        "observed_statistic": -26.354667285580607,
+        "quantile": [
+          0.8187,
+          0.1906
+        ],
+        "rejected_at_two_sided_5_percent": false
+      },
+      "magnitude": {
+        "status": "normal",
+        "observed_statistic": 0.13721266577701197,
+        "quantile": [
+          0.9460478265991283,
+          0.05654376251619743
+        ],
+        "rejected_at_two_sided_5_percent": false
+      }
+    }
+  },
+  "claim_boundary": "One documented active day is an integration and consistency gate, not a forecast superiority claim."
+}

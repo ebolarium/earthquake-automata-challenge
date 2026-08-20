@@ -40,6 +40,23 @@ RUN python -m pip install --no-cache-dir \
 RUN python -m pip install --no-cache-dir --no-deps geopandas==0.14.4
 RUN python -m pip install --no-cache-dir joblib==1.4.2
 
+# EarthquakeNPP declares pyCSEP 0.6.3 but its ETAS image did not install the
+# evaluation stack. Pin the complete resolved stack used by this project.
+RUN python -m pip install --no-cache-dir \
+    click==8.4.2 \
+    decorator==5.3.1 \
+    greenlet==3.5.5 \
+    lxml==6.1.2 \
+    mercantile==1.2.1 \
+    obspy==1.5.0 \
+    python-dateutil==2.9.0.post0 \
+    pytz==2026.3.post1 \
+    six==1.17.0 \
+    sqlalchemy==2.0.52 \
+    typing-extensions==4.16.0 \
+    tzdata==2026.3 \
+    pycsep==0.6.3
+
 # This dependency is imported by etas.evaluation but omitted from the ETAS
 # package metadata. Pin the exact commit recorded by the historical ETAS
 # requirements file. Its optional map/file backends are not used here.

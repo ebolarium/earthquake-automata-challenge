@@ -11,8 +11,9 @@ repository does not import code, databases, predictions, or runtime state from
 ## Current Milestone
 
 The locked EarthquakeNPP `ComCat_25` reproduction, native likelihood alignment,
-clean local catalog export, and leakage-free daily replay are complete. The
-current milestone is baseline evaluation with pyCSEP.
+clean local catalog export, leakage-free daily replay, and the documented
+pyCSEP day-7 consistency gate are complete. The current milestone is the
+independent ETAS web page.
 
 The baseline will not be frozen until parameter estimates, event-based
 likelihood scores, and later prospective evaluation checks satisfy their
@@ -72,6 +73,15 @@ The resumable daily replay uses the committed clock and scoring contract:
 
 ```bash
 PYTHONPATH=src python3 scripts/run_daily_replay.py
+```
+
+The pyCSEP integration gate generates 10,000 deterministic native ETAS and
+Poisson catalogs for the documented EarthquakeNPP day-7 window:
+
+```bash
+PYTHONPATH=src python3 scripts/generate_pycsep_forecasts.py
+docker run --rm --platform linux/amd64 -v "$PWD:/workspace" \
+  etas-challenge-reference python scripts/run_pycsep_evaluation.py
 ```
 
 ## Reference Environment
