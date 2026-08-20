@@ -96,6 +96,11 @@ the test window. The native implementation retains the published interval
 integral instead of reproducing this behavior. The fixture records both values
 so later full-catalog comparisons cannot hide the discrepancy.
 
+The full `ComCat_25` replay aligns point and temporal intensities within
+`1e-12`, strict-reference aggregate scores within `1e-9`, and event-level
+compensators within `1e-5`. The wider compensator tolerance accounts for the
+reference's sampled interpolation mesh; native ETAS evaluates the closed form.
+
 ## Sources
 
 - Ogata (1988), *Statistical Models for Earthquake Occurrences and Residual

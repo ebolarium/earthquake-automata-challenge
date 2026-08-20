@@ -56,6 +56,18 @@ all compensators after the first test event align. The reference implementation
 omits pre-window triggering mass from the first event interval; native ETAS
 keeps the published compensator and records both values in the fixture.
 
+The full native `ComCat_25` replay established the remaining alignment gates:
+
+- point and temporal intensity maximum absolute delta: `1e-12`;
+- strict-reference compensator maximum absolute delta: `1e-5`;
+- strict-reference aggregate likelihood absolute delta: `1e-9`.
+
+Observed maxima were `7.11e-15`, `4.55e-13`, and `4.58e-6` respectively for
+point intensity, temporal intensity, and compensator. Aggregate NLL and TLL
+differed by `3.47e-10`; SLL matched exactly. The compensator difference is
+consistent with the reference's sampled temporal-integral interpolation versus
+the native closed form.
+
 ## Failure Policy
 
 Reference mismatches are findings. We diagnose package drift, platform

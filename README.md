@@ -10,13 +10,13 @@ repository does not import code, databases, predictions, or runtime state from
 
 ## Current Milestone
 
-The locked EarthquakeNPP `ComCat_25` reproduction is complete. The current
-milestone is to implement ETAS independently from the published equations and
-align its event-level likelihood terms with frozen reference fixtures.
+The locked EarthquakeNPP `ComCat_25` reproduction and native likelihood
+alignment are complete. The current milestone is to export a clean local
+catalog with an explicit provenance and schema contract.
 
-The baseline is not considered reproduced until parameter estimates,
-event-based likelihood scores, and simulation summaries satisfy the tolerances
-defined in `wiki/03-reproduction/reference-alignment.md`.
+The baseline will not be frozen until parameter estimates, event-based
+likelihood scores, and later prospective evaluation checks satisfy their
+recorded tolerances.
 
 ## Locked Reference
 
@@ -52,7 +52,15 @@ PYTHONPATH=src python3 -m etas_challenge.contracts data/manifests/reference-comc
 
 The native package currently includes physical parameter conversion, the
 space-time triggering kernels, closed-form kernel integrals, branching ratio,
-and conditional intensity. Its formula tests do not import reference code.
+conditional intensity, and low-memory catalog replay. Its formula tests do not
+import reference code.
+
+The full native/reference catalog comparison is resumable and writes only
+ignored artifacts:
+
+```bash
+PYTHONPATH=src python3 scripts/compare_native_reference_catalog.py
+```
 
 ## Reference Environment
 
