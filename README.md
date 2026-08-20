@@ -10,9 +10,9 @@ repository does not import code, databases, predictions, or runtime state from
 
 ## Current Milestone
 
-The locked EarthquakeNPP `ComCat_25` reproduction and native likelihood
-alignment are complete. The current milestone is to export a clean local
-catalog with an explicit provenance and schema contract.
+The locked EarthquakeNPP `ComCat_25` reproduction, native likelihood alignment,
+and clean local catalog export are complete. The current milestone is a
+leakage-free daily forecast replay.
 
 The baseline will not be frozen until parameter estimates, event-based
 likelihood scores, and later prospective evaluation checks satisfy their
@@ -60,6 +60,12 @@ ignored artifacts:
 
 ```bash
 PYTHONPATH=src python3 scripts/compare_native_reference_catalog.py
+```
+
+The clean local catalog can be reproduced from the locked source snapshot:
+
+```bash
+PYTHONPATH=src python3 scripts/export_clean_catalog.py
 ```
 
 ## Reference Environment

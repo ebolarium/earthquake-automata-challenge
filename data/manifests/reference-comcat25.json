@@ -104,6 +104,9 @@
     "first_date": "1901-11-14",
     "last_date": "2026-08-19",
     "committed": false,
-    "status": "not_exported"
+    "status": "exported",
+    "export_manifest": "data/manifests/local-california-catalog-v1.json",
+    "exported_rows": 80140,
+    "export_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399"
   }
 }

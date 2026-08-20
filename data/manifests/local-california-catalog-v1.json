@@ -1,0 +1,61 @@
+{
+  "schema_version": 1,
+  "snapshot_id": "local-california-2026-08-19-v1",
+  "status": "exported",
+  "tool": {
+    "name": "etas_challenge.catalog_export",
+    "version": "1.0.0",
+    "python": "3.11.11",
+    "sqlite": "3.40.1"
+  },
+  "source": {
+    "name": "earthquake.db",
+    "sha256": "8d7a4faf6082f42490c48979881b7017a7d7d05a778a5062f411e64fc520d3d7",
+    "bytes": 1557409792,
+    "committed": false,
+    "total_rows": 5086795,
+    "inactive_rows": 50,
+    "active_missing_magnitude": 8160,
+    "active_with_magnitude": 5078585,
+    "invalid_coordinates": 0
+  },
+  "region": {
+    "id": "earthquakenpp-comcat25-california",
+    "shape_sha256": "ef0346ad838fb35a3ac2f95bf22d97280ebef05f8647b4ebe51aebb9e688768c",
+    "boundary_policy": "intersects",
+    "coordinate_order": "latitude,longitude",
+    "min_latitude": 31.0,
+    "max_latitude": 43.5,
+    "min_longitude": -125.9,
+    "max_longitude": -112.6
+  },
+  "selection": {
+    "is_catalog_earthquake": 1,
+    "requires_magnitude": true,
+    "magnitude_threshold": null,
+    "bounding_box_candidates": 82809,
+    "bounding_box_outside_polygon": 2669,
+    "included_rows": 80140,
+    "missing_payload_hash_rows": 79792,
+    "fallback_identity_rows": 79792
+  },
+  "normalization": {
+    "origin_time": "source date and time interpreted as UTC; Z appended",
+    "legacy_source_catalog": "legacy-earthquake-db",
+    "legacy_usgs_source_catalog": "usgs-legacy",
+    "null_active_event_type": "earthquake",
+    "unavailable_provenance": null
+  },
+  "output": {
+    "label": "California earthquake observations without Mc filtering",
+    "path": "data/local/california-earthquakes-v1.sqlite",
+    "sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "bytes": 32157696,
+    "rows": 80140,
+    "schema_version": 1,
+    "first_origin_time_utc": "1906-04-18T13:12:26.300000Z",
+    "last_origin_time_utc": "2026-08-19T07:31:35.970000Z",
+    "minimum_magnitude": 0.2,
+    "maximum_magnitude": 7.9
+  }
+}

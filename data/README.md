@@ -13,6 +13,7 @@ Each generated snapshot must have:
 - provenance fields for every event where available;
 - an output SHA-256 checksum.
 
-The first local catalog will be a California-only export created after the
-published EarthquakeNPP dataset has been reproduced.
-
+The first local catalog is `data/local/california-earthquakes-v1.sqlite`. It is
+a California-only, no-`Mc` snapshot with 80,140 events. The database remains
+ignored; its committed contract is
+`data/manifests/local-california-catalog-v1.json`.
