@@ -61,6 +61,11 @@ rate of `2.479148` events. It took `2.09` seconds on the local host and about
 5,844-day Docker run is therefore expected to take roughly seven hours on one
 CPU core. Initial observed memory use was about 66 MiB.
 
+The host and pinned Docker runtimes then generated the same 10,000-continuation
+2007-01-01 shard independently. The files were byte-identical with SHA-256
+`a32cbe254bb2944b201577cf1a8f3fa546881cbb3dcec8404576f09a375cd021`.
+This is an implementation reproducibility check, not an accuracy result.
+
 ## Boundary
 
 This artifact supplies the frozen ETAS spatial offset for challenger fitting.
