@@ -25,6 +25,20 @@ class SimulatedCatalog:
         return int(self.times.size)
 
 
+@dataclass(frozen=True, slots=True)
+class ForecastSimulation:
+    """A simulated catalog with its directly sampled background roots marked."""
+
+    catalog: SimulatedCatalog
+    background_roots: np.ndarray
+
+    def __post_init__(self) -> None:
+        roots = np.asarray(self.background_roots, dtype=bool)
+        if roots.shape != self.catalog.times.shape:
+            raise ValueError("background-root mask must match the simulated catalog")
+        object.__setattr__(self, "background_roots", roots)
+
+
 class ETASContinuationSimulator:
     """Simulate a finite ETAS continuation conditional on pre-issue history.
 
@@ -70,6 +84,18 @@ class ETASContinuationSimulator:
         self._history_sources = None
 
     def simulate(self, issue_time, rng: np.random.Generator) -> SimulatedCatalog:
+        return self.simulate_with_components(issue_time, rng).catalog
+
+    def simulate_with_components(
+        self, issue_time, rng: np.random.Generator
+    ) -> ForecastSimulation:
+        """Simulate a forecast and identify direct background events.
+
+        Descendants of background events are deliberately not marked. This lets
+        grid forecasts replace only the noisy Monte Carlo background roots with
+        their exact analytical cell rates while retaining all ETAS branching.
+        """
+
         history_end = int(np.searchsorted(self.catalog.times, issue_time, side="left"))
         history_times = self._days_between(
             self.catalog.times[:history_end], issue_time
@@ -102,6 +128,10 @@ class ETASContinuationSimulator:
             (background_times, background_lats, background_lons, background_mags),
             first,
         ]
+        background_masks = [
+            np.ones(background_count, dtype=bool),
+            np.zeros(len(first[0]), dtype=bool),
+        ]
         total = background_count + len(first[0])
         if total > self.max_events_per_catalog:
             raise RuntimeError("simulated catalog exceeded the configured event limit")
@@ -120,19 +150,27 @@ class ETASContinuationSimulator:
             if total > self.max_events_per_catalog:
                 raise RuntimeError("simulated catalog exceeded the configured event limit")
             generations.append(children)
+            background_masks.append(np.zeros(len(children[0]), dtype=bool))
             current = children
 
         all_events = self._merge_generations(generations)
         if not len(all_events[0]):
-            return self._empty_catalog(issue_time)
+            return ForecastSimulation(
+                catalog=self._empty_catalog(issue_time),
+                background_roots=np.empty(0, dtype=bool),
+            )
+        all_background_roots = np.concatenate(background_masks)
         inside = points_in_polygon(all_events[1], all_events[2], self.polygon)
         order = np.argsort(all_events[0][inside], kind="stable")
         offsets = all_events[0][inside][order]
-        return SimulatedCatalog(
-            times=self._add_days(issue_time, offsets),
-            latitudes=all_events[1][inside][order],
-            longitudes=all_events[2][inside][order],
-            magnitudes=all_events[3][inside][order],
+        return ForecastSimulation(
+            catalog=SimulatedCatalog(
+                times=self._add_days(issue_time, offsets),
+                latitudes=all_events[1][inside][order],
+                longitudes=all_events[2][inside][order],
+                magnitudes=all_events[3][inside][order],
+            ),
+            background_roots=all_background_roots[inside][order],
         )
 
     def _offspring(

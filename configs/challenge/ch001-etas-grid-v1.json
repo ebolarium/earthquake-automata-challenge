@@ -1,0 +1,23 @@
+{
+  "schema_version": 1,
+  "forecast_id": "ch001-frozen-etas-grid-v1",
+  "challenge_contract": "configs/challenge/challenge-v1.json",
+  "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+  "simulation_reference": "configs/evaluation/comcat25-pycsep-day7-v1.json",
+  "simulation_reference_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+  "catalog_path": "data/local/california-earthquakes-v1.sqlite",
+  "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+  "grid_path": "data/grids/california-relm-v1.json",
+  "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+  "auxiliary_start": "1971-01-01T00:00:00Z",
+  "issue_start": "2007-01-01T00:00:00Z",
+  "issue_end_exclusive": "2023-01-01T00:00:00Z",
+  "history_boundary": "strictly_before_issue_time",
+  "target_window": "[issue_time, issue_time + 1 day)",
+  "n_simulations": 10000,
+  "random_seed": 20260821,
+  "background_estimator": "replace sampled direct background roots with exact mu times spherical cell area; retain their descendants",
+  "shard_frequency": "calendar_month",
+  "output_dir": "artifacts/ch001-etas-grid-v1",
+  "manifest": "data/manifests/ch001-etas-grid-v1.json"
+}

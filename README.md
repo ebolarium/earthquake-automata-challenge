@@ -61,6 +61,19 @@ PYTHONPATH=src python3 scripts/generate_ch001_matrix.py
 PYTHONPATH=src python3 scripts/verify_ch001_matrix.py
 ```
 
+Generate the matching frozen ETAS cell-rate offset. The run is resumable at
+calendar-month boundaries and uses the same 10,000-catalog continuation method
+as the pinned EarthquakeNPP evaluation:
+
+```bash
+PYTHONPATH=src python3 scripts/generate_ch001_etas_grid.py
+PYTHONPATH=src python3 scripts/verify_ch001_etas_grid.py
+```
+
+Direct background roots are integrated analytically per spherical grid cell;
+all triggered events and descendants remain Monte Carlo estimates. This keeps
+the reference expectation while removing random zero-rate cells.
+
 The native package currently includes physical parameter conversion, the
 space-time triggering kernels, closed-form kernel integrals, branching ratio,
 conditional intensity, and low-memory catalog replay. Its formula tests do not

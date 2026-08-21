@@ -11,6 +11,8 @@ from etas_challenge.daily_replay import DailyCatalog
 from etas_challenge.parameters import ETASParameters
 from etas_challenge.simulation import (
     ETASContinuationSimulator,
+    ForecastSimulation,
+    SimulatedCatalog,
     destination_points,
     points_in_polygon,
 )
@@ -56,6 +58,35 @@ class SimulationTests(unittest.TestCase):
             np.all(points_in_polygon(first.latitudes, first.longitudes, POLYGON))
         )
         self.assertTrue(np.all(first.magnitudes >= 2.5))
+
+    def test_component_output_marks_only_direct_background_roots(self):
+        simulator = self._simulator(self._catalog())
+        rng = np.random.default_rng(19)
+        components = simulator.simulate_with_components(1.0, rng)
+
+        self.assertIsInstance(components, ForecastSimulation)
+        self.assertEqual(
+            components.background_roots.shape, components.catalog.times.shape
+        )
+        self.assertEqual(components.background_roots.dtype, np.dtype(bool))
+
+        repeated = self._simulator(self._catalog()).simulate(
+            1.0, np.random.default_rng(19)
+        )
+        np.testing.assert_array_equal(components.catalog.times, repeated.times)
+        np.testing.assert_array_equal(
+            components.catalog.latitudes, repeated.latitudes
+        )
+
+    def test_component_mask_rejects_wrong_shape(self):
+        catalog = SimulatedCatalog(
+            times=np.array([1.0]),
+            latitudes=np.array([0.5]),
+            longitudes=np.array([0.5]),
+            magnitudes=np.array([2.5]),
+        )
+        with self.assertRaisesRegex(ValueError, "must match"):
+            ForecastSimulation(catalog, np.array([], dtype=bool))
 
     def test_temporal_inverse_samples_stay_within_each_parent_window(self):
         simulator = self._simulator(self._catalog())
