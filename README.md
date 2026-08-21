@@ -54,6 +54,13 @@ PYTHONPATH=src python3 -m etas_challenge.contracts data/manifests/reference-comc
 PYTHONPATH=src python3 scripts/verify_challenge_freeze.py
 ```
 
+Generate the leakage-free catalog feature matrix admitted for `CH-001`:
+
+```bash
+PYTHONPATH=src python3 scripts/generate_ch001_matrix.py
+PYTHONPATH=src python3 scripts/verify_ch001_matrix.py
+```
+
 The native package currently includes physical parameter conversion, the
 space-time triggering kernels, closed-form kernel integrals, branching ratio,
 conditional intensity, and low-memory catalog replay. Its formula tests do not

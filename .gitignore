@@ -11,8 +11,9 @@ artifacts/*
 
 data/*
 !data/README.md
+!data/grids/
+!data/grids/*.json
 !data/manifests/
 !data/manifests/*.json
 
 reference/upstream/
-

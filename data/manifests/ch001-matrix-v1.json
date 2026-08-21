@@ -1,0 +1,2570 @@
+{
+  "schema_version": 1,
+  "matrix_id": "ch001-catalog-grid-matrix-v1",
+  "status": "completed",
+  "tool": {
+    "name": "scripts/generate_ch001_matrix.py",
+    "version": "1.0.0",
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "sqlite": "3.40.1"
+  },
+  "inputs": {
+    "config_sha256": "181a8d784d3bc828dbc9658945986e36963d21d8b6b8ae1a35303683ff20f2ae",
+    "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+    "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9"
+  },
+  "period": {
+    "start": "2007-01-01",
+    "end_exclusive": "2023-01-01",
+    "history_boundary": "strictly_before_issue_time",
+    "target_window": "[issue_time, issue_time + 1 day)"
+  },
+  "features": {
+    "count": [
+      "cell_count_3d",
+      "neighbor_count_3d",
+      "cell_count_7d",
+      "neighbor_count_7d",
+      "cell_count_30d",
+      "neighbor_count_30d",
+      "cell_count_90d",
+      "neighbor_count_90d"
+    ],
+    "count_dtype": "uint16",
+    "continuous": [
+      "cell_excess_30d",
+      "neighbor_excess_30d",
+      "cell_acceleration_7v30",
+      "neighbor_acceleration_7v30",
+      "cell_recency_days",
+      "neighbor_recency_days",
+      "background_rate_daily"
+    ],
+    "continuous_dtype": "float32",
+    "activity_windows_days": [
+      3,
+      7,
+      30,
+      90
+    ]
+  },
+  "outputs": {
+    "shards": [
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-01.npz",
+        "sha256": "8ca4b9d0238ca5594d02329a56c350c8cfd8702db12b5f7f4294ed51082f1f0b",
+        "issue_days": 31,
+        "first_issue": "2007-01-01",
+        "last_issue": "2007-01-31",
+        "target_counts": [
+          60,
+          6,
+          2
+        ],
+        "bytes": 454492
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-02.npz",
+        "sha256": "53e0b685c5e1dcb41da6465916e44b624fffc641c46d29dc0e4452a4e78a2878",
+        "issue_days": 28,
+        "first_issue": "2007-02-01",
+        "last_issue": "2007-02-28",
+        "target_counts": [
+          48,
+          4,
+          2
+        ],
+        "bytes": 409912
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-03.npz",
+        "sha256": "f225483bae85a92ea92a95b654d85d79075103d3083cd4a93d206b205905d2f5",
+        "issue_days": 31,
+        "first_issue": "2007-03-01",
+        "last_issue": "2007-03-31",
+        "target_counts": [
+          45,
+          4,
+          3
+        ],
+        "bytes": 451586
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-04.npz",
+        "sha256": "a8a715605dad0415ec7b7e2b77da30d901aed2bbe9c0db37ad9c7a596d33e684",
+        "issue_days": 30,
+        "first_issue": "2007-04-01",
+        "last_issue": "2007-04-30",
+        "target_counts": [
+          63,
+          8,
+          3
+        ],
+        "bytes": 431693
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-05.npz",
+        "sha256": "f95309dd7f11cedd868d78eca76eef5cc5a03c4f174f1ec8a342b5790159a335",
+        "issue_days": 31,
+        "first_issue": "2007-05-01",
+        "last_issue": "2007-05-31",
+        "target_counts": [
+          51,
+          8,
+          3
+        ],
+        "bytes": 446764
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-06.npz",
+        "sha256": "fe9feb4e59b956f6bff9a088ac6fcec1eed93ee20e76985ccc866da3d1f6d60e",
+        "issue_days": 30,
+        "first_issue": "2007-06-01",
+        "last_issue": "2007-06-30",
+        "target_counts": [
+          46,
+          10,
+          4
+        ],
+        "bytes": 434938
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-07.npz",
+        "sha256": "67de921e19a6e3d4c601945e0b794fcc8d144d7cfe3c369337494b8344bd420c",
+        "issue_days": 31,
+        "first_issue": "2007-07-01",
+        "last_issue": "2007-07-31",
+        "target_counts": [
+          44,
+          5,
+          2
+        ],
+        "bytes": 446374
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-08.npz",
+        "sha256": "7272dcf8d8957b92651d2ac2cc29ffb57f33f7a792aa35a50a959377f0d969d7",
+        "issue_days": 31,
+        "first_issue": "2007-08-01",
+        "last_issue": "2007-08-31",
+        "target_counts": [
+          44,
+          4,
+          1
+        ],
+        "bytes": 433173
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-09.npz",
+        "sha256": "d61d35199874645386102a053aa619bbff35f788836ed36463d06a344ec8c771",
+        "issue_days": 30,
+        "first_issue": "2007-09-01",
+        "last_issue": "2007-09-30",
+        "target_counts": [
+          50,
+          10,
+          3
+        ],
+        "bytes": 442687
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-10.npz",
+        "sha256": "23196cf16b655a3a84776d02e132a2c364199a83c9129948759725608e619e14",
+        "issue_days": 31,
+        "first_issue": "2007-10-01",
+        "last_issue": "2007-10-31",
+        "target_counts": [
+          45,
+          6,
+          4
+        ],
+        "bytes": 450799
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-11.npz",
+        "sha256": "521617b85a50f808fe7bd5ddcf5c94784176c8c4a93c63dc00008c3ef9fad863",
+        "issue_days": 30,
+        "first_issue": "2007-11-01",
+        "last_issue": "2007-11-30",
+        "target_counts": [
+          39,
+          4,
+          1
+        ],
+        "bytes": 440137
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2007-12.npz",
+        "sha256": "2428c6c56b90d0b4c2d561dcd24ff69e84d671b0ffb76864f334058292f20f88",
+        "issue_days": 31,
+        "first_issue": "2007-12-01",
+        "last_issue": "2007-12-31",
+        "target_counts": [
+          51,
+          6,
+          3
+        ],
+        "bytes": 458897
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-01.npz",
+        "sha256": "c0e985b38e938fafc9c3f3419bd482e01fe780feda033f39f84dc4745721a956",
+        "issue_days": 31,
+        "first_issue": "2008-01-01",
+        "last_issue": "2008-01-31",
+        "target_counts": [
+          44,
+          3,
+          2
+        ],
+        "bytes": 440596
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-02.npz",
+        "sha256": "48ad29506809435e0555652488ad4d9bb6f31421a0e8b891292df2702444f278",
+        "issue_days": 29,
+        "first_issue": "2008-02-01",
+        "last_issue": "2008-02-29",
+        "target_counts": [
+          247,
+          34,
+          11
+        ],
+        "bytes": 437686
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-03.npz",
+        "sha256": "10bc05e6c89493e1060dfa98e5ba6949b8966d59a60e7febd4fb3e9545693297",
+        "issue_days": 31,
+        "first_issue": "2008-03-01",
+        "last_issue": "2008-03-31",
+        "target_counts": [
+          48,
+          8,
+          1
+        ],
+        "bytes": 452475
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-04.npz",
+        "sha256": "170ae37d60527cf710530e21ea8dc72a334885f08edade9454e8253f59ea88e7",
+        "issue_days": 30,
+        "first_issue": "2008-04-01",
+        "last_issue": "2008-04-30",
+        "target_counts": [
+          70,
+          15,
+          7
+        ],
+        "bytes": 437502
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-05.npz",
+        "sha256": "ab940e26b0c5938324b368fd5f3c1fa62dc12d70465be1d49c625e72ca3346a1",
+        "issue_days": 31,
+        "first_issue": "2008-05-01",
+        "last_issue": "2008-05-31",
+        "target_counts": [
+          60,
+          10,
+          2
+        ],
+        "bytes": 462498
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-06.npz",
+        "sha256": "44c1d1f39c9fabbda4eca3c5b8dd4478c455ee8a070d543b0e3f9165a7a11e70",
+        "issue_days": 30,
+        "first_issue": "2008-06-01",
+        "last_issue": "2008-06-30",
+        "target_counts": [
+          87,
+          13,
+          4
+        ],
+        "bytes": 447325
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-07.npz",
+        "sha256": "9debe91db814c3b1ff422c635c354f5e861afaffe7d6c9625ab8b576db828f7e",
+        "issue_days": 31,
+        "first_issue": "2008-07-01",
+        "last_issue": "2008-07-31",
+        "target_counts": [
+          66,
+          10,
+          2
+        ],
+        "bytes": 460730
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-08.npz",
+        "sha256": "63f91ea8ab3608e8207aef0de76b9f2692f28821811d7445712bbe53a5b791d4",
+        "issue_days": 31,
+        "first_issue": "2008-08-01",
+        "last_issue": "2008-08-31",
+        "target_counts": [
+          40,
+          3,
+          1
+        ],
+        "bytes": 459375
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-09.npz",
+        "sha256": "0a85da379514bef8d9bbf4f817c1aeccac4bd265f39faaec6b429cfbee91cabb",
+        "issue_days": 30,
+        "first_issue": "2008-09-01",
+        "last_issue": "2008-09-30",
+        "target_counts": [
+          49,
+          5,
+          2
+        ],
+        "bytes": 446309
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-10.npz",
+        "sha256": "b1fedae110a11ea5ff16f24c922e1d8562a4b150f773bf38b794a129a8bff1dd",
+        "issue_days": 31,
+        "first_issue": "2008-10-01",
+        "last_issue": "2008-10-31",
+        "target_counts": [
+          51,
+          6,
+          2
+        ],
+        "bytes": 441552
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-11.npz",
+        "sha256": "574da5916272336bc80f46fdd4ddb057584adaa2cc4d777130b4bf5e470f6494",
+        "issue_days": 30,
+        "first_issue": "2008-11-01",
+        "last_issue": "2008-11-30",
+        "target_counts": [
+          87,
+          13,
+          6
+        ],
+        "bytes": 463713
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2008-12.npz",
+        "sha256": "00fc951957f285b078101ac6b14c41743c7bfd30443b936e858327a10395a30e",
+        "issue_days": 31,
+        "first_issue": "2008-12-01",
+        "last_issue": "2008-12-31",
+        "target_counts": [
+          82,
+          13,
+          5
+        ],
+        "bytes": 483685
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-01.npz",
+        "sha256": "674716fbe20c0b1dd59ae6ad0a45458467cd0d95b512b1037c2c0025e3682ee7",
+        "issue_days": 31,
+        "first_issue": "2009-01-01",
+        "last_issue": "2009-01-31",
+        "target_counts": [
+          87,
+          20,
+          3
+        ],
+        "bytes": 469348
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-02.npz",
+        "sha256": "0c6f9e3633d8ef1b3a3d7d6cc575a7a21d0fe77612e62b25b62080baa424981d",
+        "issue_days": 28,
+        "first_issue": "2009-02-01",
+        "last_issue": "2009-02-28",
+        "target_counts": [
+          46,
+          8,
+          0
+        ],
+        "bytes": 421354
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-03.npz",
+        "sha256": "8ab8a90f5c9e2f23b170ee75013c99d18a1274fcb57b8b7e9b4b65fdf1ec5258",
+        "issue_days": 31,
+        "first_issue": "2009-03-01",
+        "last_issue": "2009-03-31",
+        "target_counts": [
+          76,
+          10,
+          4
+        ],
+        "bytes": 474041
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-04.npz",
+        "sha256": "2e0dd651c3d1a66081bcd1c6c019f6d3ba56c9c50d27bde6703938145f10fd7d",
+        "issue_days": 30,
+        "first_issue": "2009-04-01",
+        "last_issue": "2009-04-30",
+        "target_counts": [
+          71,
+          6,
+          0
+        ],
+        "bytes": 479614
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-05.npz",
+        "sha256": "87d2c5b576a475117910ffbc24d606915d5150f9abeed859b1edc31ce9bd2c7e",
+        "issue_days": 31,
+        "first_issue": "2009-05-01",
+        "last_issue": "2009-05-31",
+        "target_counts": [
+          59,
+          6,
+          3
+        ],
+        "bytes": 486298
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-06.npz",
+        "sha256": "715b53acf272fe9dc281894d66e9a717391df205f7291b68fe32060d8bf307d4",
+        "issue_days": 30,
+        "first_issue": "2009-06-01",
+        "last_issue": "2009-06-30",
+        "target_counts": [
+          87,
+          11,
+          4
+        ],
+        "bytes": 472810
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-07.npz",
+        "sha256": "01c72678afc8e45f0c850a874a4840166e481694bfbcb24c475d3b5607e1acec",
+        "issue_days": 31,
+        "first_issue": "2009-07-01",
+        "last_issue": "2009-07-31",
+        "target_counts": [
+          46,
+          7,
+          1
+        ],
+        "bytes": 476728
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-08.npz",
+        "sha256": "afae10f0c925458ccf915a8530b66b66c996884b84a6efdc1717a7aa6bcfad8c",
+        "issue_days": 31,
+        "first_issue": "2009-08-01",
+        "last_issue": "2009-08-31",
+        "target_counts": [
+          61,
+          7,
+          1
+        ],
+        "bytes": 474619
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-09.npz",
+        "sha256": "0b9f0773ad57e188ad9f7e843fc79253ab566f0456d823af556b32f9313b17a2",
+        "issue_days": 30,
+        "first_issue": "2009-09-01",
+        "last_issue": "2009-09-30",
+        "target_counts": [
+          73,
+          8,
+          4
+        ],
+        "bytes": 481858
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-10.npz",
+        "sha256": "1deff3b94fee309d4fd3f91ab9dda2859f53eb76ac3c211b9d30dbe895d43ca9",
+        "issue_days": 31,
+        "first_issue": "2009-10-01",
+        "last_issue": "2009-10-31",
+        "target_counts": [
+          114,
+          23,
+          10
+        ],
+        "bytes": 496550
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-11.npz",
+        "sha256": "5186c994da33e26ed5fddc77b2dde25e5fbe453da5a7269b9d937d870341da40",
+        "issue_days": 30,
+        "first_issue": "2009-11-01",
+        "last_issue": "2009-11-30",
+        "target_counts": [
+          105,
+          18,
+          2
+        ],
+        "bytes": 468601
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2009-12.npz",
+        "sha256": "705dd068a810ab795cc223bea0e791cba493c34bf2bf57e478fa7a971922d612",
+        "issue_days": 31,
+        "first_issue": "2009-12-01",
+        "last_issue": "2009-12-31",
+        "target_counts": [
+          95,
+          15,
+          2
+        ],
+        "bytes": 486821
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-01.npz",
+        "sha256": "573a66cc0d4608c97c4df9246ea5ef0e15121253791774c8f1e429aaf3687d5e",
+        "issue_days": 31,
+        "first_issue": "2010-01-01",
+        "last_issue": "2010-01-31",
+        "target_counts": [
+          142,
+          21,
+          6
+        ],
+        "bytes": 496103
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-02.npz",
+        "sha256": "0d7bebc754b1164a8973b74f613aa13fcce792ac86eca012872b5ae461e2e376",
+        "issue_days": 28,
+        "first_issue": "2010-02-01",
+        "last_issue": "2010-02-28",
+        "target_counts": [
+          87,
+          14,
+          3
+        ],
+        "bytes": 460967
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-03.npz",
+        "sha256": "17902b1d8d7e60829eb8fc91c603ccf0fc9fd37fa86247d6126dc39e115f53b2",
+        "issue_days": 31,
+        "first_issue": "2010-03-01",
+        "last_issue": "2010-03-31",
+        "target_counts": [
+          102,
+          21,
+          3
+        ],
+        "bytes": 512461
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-04.npz",
+        "sha256": "8e93f37163be8b89ad0f7398eb0f4a77774cdb61139d81a8d25abea715c32575",
+        "issue_days": 30,
+        "first_issue": "2010-04-01",
+        "last_issue": "2010-04-30",
+        "target_counts": [
+          1140,
+          332,
+          64
+        ],
+        "bytes": 553379
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-05.npz",
+        "sha256": "964b333b903f917fdf09efae2196e8f1418a584b155ce4585d74b7624e2f0623",
+        "issue_days": 31,
+        "first_issue": "2010-05-01",
+        "last_issue": "2010-05-31",
+        "target_counts": [
+          514,
+          59,
+          13
+        ],
+        "bytes": 561689
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-06.npz",
+        "sha256": "996b97ae91a8703e458983f2abdae56667881989de3c5d6a8e727656838d97a9",
+        "issue_days": 30,
+        "first_issue": "2010-06-01",
+        "last_issue": "2010-06-30",
+        "target_counts": [
+          337,
+          44,
+          12
+        ],
+        "bytes": 555015
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-07.npz",
+        "sha256": "33b697b5dd12157f7bfc7faaef365195e8af3da9590c5c95e86cd7e0e99b14c1",
+        "issue_days": 31,
+        "first_issue": "2010-07-01",
+        "last_issue": "2010-07-31",
+        "target_counts": [
+          219,
+          18,
+          2
+        ],
+        "bytes": 549301
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-08.npz",
+        "sha256": "52f9e6263ceca2f3289a0b7bd3c1e4276d964a078cec741fd100222def9d0cdb",
+        "issue_days": 31,
+        "first_issue": "2010-08-01",
+        "last_issue": "2010-08-31",
+        "target_counts": [
+          169,
+          25,
+          2
+        ],
+        "bytes": 546537
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-09.npz",
+        "sha256": "5cfac041a05b418afd9a67f7395330cfd34b0ffdd47b65b8629456475f561e80",
+        "issue_days": 30,
+        "first_issue": "2010-09-01",
+        "last_issue": "2010-09-30",
+        "target_counts": [
+          117,
+          16,
+          4
+        ],
+        "bytes": 528735
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-10.npz",
+        "sha256": "311f2e256fef20b1b32147c21c95eaa9aef241b153370f6d797c8db7953496c2",
+        "issue_days": 31,
+        "first_issue": "2010-10-01",
+        "last_issue": "2010-10-31",
+        "target_counts": [
+          125,
+          18,
+          4
+        ],
+        "bytes": 496437
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-11.npz",
+        "sha256": "9b5ff718b148a020de1de45b2627945aad718ac9fc254faeb4190b62fa8bb7e7",
+        "issue_days": 30,
+        "first_issue": "2010-11-01",
+        "last_issue": "2010-11-30",
+        "target_counts": [
+          122,
+          14,
+          2
+        ],
+        "bytes": 516210
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2010-12.npz",
+        "sha256": "f01d21fdb10ae3a02ca5dd4592db5f7db66b7d8695ec39470c86d6908c0dc23b",
+        "issue_days": 31,
+        "first_issue": "2010-12-01",
+        "last_issue": "2010-12-31",
+        "target_counts": [
+          109,
+          15,
+          3
+        ],
+        "bytes": 542179
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-01.npz",
+        "sha256": "5cc101eb197ff2232e5234af35ca7eb2f2de8b916ff90efeee0f167f43896b84",
+        "issue_days": 31,
+        "first_issue": "2011-01-01",
+        "last_issue": "2011-01-31",
+        "target_counts": [
+          101,
+          13,
+          1
+        ],
+        "bytes": 525459
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-02.npz",
+        "sha256": "3dc2c4a888735e0bdb08e37693e6a2eaa0296fc259870d384f899901990be15a",
+        "issue_days": 28,
+        "first_issue": "2011-02-01",
+        "last_issue": "2011-02-28",
+        "target_counts": [
+          118,
+          30,
+          8
+        ],
+        "bytes": 485536
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-03.npz",
+        "sha256": "58a755c1cff8facaeb45c93dc882002c780d7270a46c67ffc68fa468bc4ac365",
+        "issue_days": 31,
+        "first_issue": "2011-03-01",
+        "last_issue": "2011-03-31",
+        "target_counts": [
+          102,
+          22,
+          2
+        ],
+        "bytes": 534921
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-04.npz",
+        "sha256": "372905fc0ddb868036d8003fc2bbd63465427066afdd6f51ada2e4ce4db82dba",
+        "issue_days": 30,
+        "first_issue": "2011-04-01",
+        "last_issue": "2011-04-30",
+        "target_counts": [
+          156,
+          36,
+          5
+        ],
+        "bytes": 515298
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-05.npz",
+        "sha256": "22d4aaa6dd0d60c30ad5c311e64d1135be27a99ae90d9da210bcb34cb1b15c3d",
+        "issue_days": 31,
+        "first_issue": "2011-05-01",
+        "last_issue": "2011-05-31",
+        "target_counts": [
+          103,
+          22,
+          0
+        ],
+        "bytes": 527211
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-06.npz",
+        "sha256": "07aa2dd30b85c10dc4a929da1da8f693cc82514006f32262430f8b61a0714b03",
+        "issue_days": 30,
+        "first_issue": "2011-06-01",
+        "last_issue": "2011-06-30",
+        "target_counts": [
+          87,
+          21,
+          2
+        ],
+        "bytes": 506180
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-07.npz",
+        "sha256": "58ea0b7dfffea73754549f7fd98541e2b4de2e649b7dc9fde1cb25ace3248e97",
+        "issue_days": 31,
+        "first_issue": "2011-07-01",
+        "last_issue": "2011-07-31",
+        "target_counts": [
+          77,
+          19,
+          2
+        ],
+        "bytes": 509996
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-08.npz",
+        "sha256": "4cca8a29fc58f88e4b7dc79320e5df333136b02326b3f4640a6805544667d146",
+        "issue_days": 31,
+        "first_issue": "2011-08-01",
+        "last_issue": "2011-08-31",
+        "target_counts": [
+          93,
+          26,
+          3
+        ],
+        "bytes": 516620
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-09.npz",
+        "sha256": "2a87bdb08f6746fdb62ed09657cd79a19083bdc79f427ae68e8092945a3b5690",
+        "issue_days": 30,
+        "first_issue": "2011-09-01",
+        "last_issue": "2011-09-30",
+        "target_counts": [
+          61,
+          10,
+          1
+        ],
+        "bytes": 469605
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-10.npz",
+        "sha256": "2f1074ce651a1a36308a56113d2092e65581a4150c75368f7477e7bfcff3a708",
+        "issue_days": 31,
+        "first_issue": "2011-10-01",
+        "last_issue": "2011-10-31",
+        "target_counts": [
+          82,
+          25,
+          6
+        ],
+        "bytes": 500976
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-11.npz",
+        "sha256": "52901c6598b1c7209f0695d86da29656320c17a871b20117d4c1b8cf0406f135",
+        "issue_days": 30,
+        "first_issue": "2011-11-01",
+        "last_issue": "2011-11-30",
+        "target_counts": [
+          81,
+          8,
+          1
+        ],
+        "bytes": 505509
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2011-12.npz",
+        "sha256": "0e247b3f61412b0ce97d65063ace967f2ccc7bf87f0dfee7bf5672cad7d4058d",
+        "issue_days": 31,
+        "first_issue": "2011-12-01",
+        "last_issue": "2011-12-31",
+        "target_counts": [
+          55,
+          10,
+          0
+        ],
+        "bytes": 492808
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-01.npz",
+        "sha256": "85e2b31b54b5545a2c0d4e20317ad1aef9bbe36328592520e607cc3979a09b6e",
+        "issue_days": 31,
+        "first_issue": "2012-01-01",
+        "last_issue": "2012-01-31",
+        "target_counts": [
+          66,
+          12,
+          0
+        ],
+        "bytes": 472211
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-02.npz",
+        "sha256": "4f4b0bcc28b1810537a6064dacab3d668165b62c0dac2006bbd2da1b2787ca9e",
+        "issue_days": 29,
+        "first_issue": "2012-02-01",
+        "last_issue": "2012-02-29",
+        "target_counts": [
+          67,
+          11,
+          2
+        ],
+        "bytes": 453604
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-03.npz",
+        "sha256": "9252a24c85f8ddd19eed7cd968aec11e34823f88eb56e27d30a52f1628d462f8",
+        "issue_days": 31,
+        "first_issue": "2012-03-01",
+        "last_issue": "2012-03-31",
+        "target_counts": [
+          58,
+          4,
+          0
+        ],
+        "bytes": 493833
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-04.npz",
+        "sha256": "de94d733ec8d709ff06902177198bb7990cab499b2f0599199685d81073f31f1",
+        "issue_days": 30,
+        "first_issue": "2012-04-01",
+        "last_issue": "2012-04-30",
+        "target_counts": [
+          77,
+          13,
+          1
+        ],
+        "bytes": 481060
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-05.npz",
+        "sha256": "5e33ebca500807bcb7f5827d77e5dfa00b2d456aa9b1c14034b969b45537d430",
+        "issue_days": 31,
+        "first_issue": "2012-05-01",
+        "last_issue": "2012-05-31",
+        "target_counts": [
+          73,
+          14,
+          2
+        ],
+        "bytes": 497621
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-06.npz",
+        "sha256": "b89007096edd2cea0b7be56c426877b55d279a070c057a31918e225e55a2bdee",
+        "issue_days": 30,
+        "first_issue": "2012-06-01",
+        "last_issue": "2012-06-30",
+        "target_counts": [
+          75,
+          11,
+          1
+        ],
+        "bytes": 476030
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-07.npz",
+        "sha256": "7535218edf9a6fc824fc05cfb3be8cd605e1d855628da6798b96bf54b08c0880",
+        "issue_days": 31,
+        "first_issue": "2012-07-01",
+        "last_issue": "2012-07-31",
+        "target_counts": [
+          89,
+          23,
+          5
+        ],
+        "bytes": 504389
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-08.npz",
+        "sha256": "44612237d35e395e0c84d753d9db820198fcd014be7d6173596fe842d2dba7c1",
+        "issue_days": 31,
+        "first_issue": "2012-08-01",
+        "last_issue": "2012-08-31",
+        "target_counts": [
+          146,
+          33,
+          10
+        ],
+        "bytes": 500093
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-09.npz",
+        "sha256": "3da296d644dad813e4391179ccf57d63417f3b286f3efeabba8fe631a9f477eb",
+        "issue_days": 30,
+        "first_issue": "2012-09-01",
+        "last_issue": "2012-09-30",
+        "target_counts": [
+          64,
+          9,
+          5
+        ],
+        "bytes": 506964
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-10.npz",
+        "sha256": "8a17b101dac060690800d2b598346f19f5172619dfb945095ad80aa07b08084e",
+        "issue_days": 31,
+        "first_issue": "2012-10-01",
+        "last_issue": "2012-10-31",
+        "target_counts": [
+          53,
+          10,
+          3
+        ],
+        "bytes": 486793
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-11.npz",
+        "sha256": "488b6feff996ca0bee80a35d2d14805fae5e01cdbe24fdf49846c193d8156084",
+        "issue_days": 30,
+        "first_issue": "2012-11-01",
+        "last_issue": "2012-11-30",
+        "target_counts": [
+          70,
+          3,
+          0
+        ],
+        "bytes": 483863
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2012-12.npz",
+        "sha256": "81d16885e450fea5bcf39788fe8d1d73b6e3269031be2f893dd4273241d1323e",
+        "issue_days": 31,
+        "first_issue": "2012-12-01",
+        "last_issue": "2012-12-31",
+        "target_counts": [
+          69,
+          6,
+          0
+        ],
+        "bytes": 519133
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-01.npz",
+        "sha256": "f365228523c2920b625821313b0b8b617a4e64b225ac1b1fab31a842157e1762",
+        "issue_days": 31,
+        "first_issue": "2013-01-01",
+        "last_issue": "2013-01-31",
+        "target_counts": [
+          69,
+          6,
+          1
+        ],
+        "bytes": 508803
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-02.npz",
+        "sha256": "39bbc1d5220b6296568f3be44272a22b354d641cc9220825d0e695590065c041",
+        "issue_days": 28,
+        "first_issue": "2013-02-01",
+        "last_issue": "2013-02-28",
+        "target_counts": [
+          65,
+          16,
+          4
+        ],
+        "bytes": 468582
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-03.npz",
+        "sha256": "87edf6cf4a9c72340648083dccb4b890b74c2cca4083654f438399b3290ba47d",
+        "issue_days": 31,
+        "first_issue": "2013-03-01",
+        "last_issue": "2013-03-31",
+        "target_counts": [
+          77,
+          8,
+          2
+        ],
+        "bytes": 506025
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-04.npz",
+        "sha256": "2e60ebf8f75de2c2c1e34bfe13ddad5d9420c9ce898d3ed003c047ac8fc613e1",
+        "issue_days": 30,
+        "first_issue": "2013-04-01",
+        "last_issue": "2013-04-30",
+        "target_counts": [
+          62,
+          4,
+          1
+        ],
+        "bytes": 511814
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-05.npz",
+        "sha256": "143dfd1949a0f65b921c7b0f53cbcf9c2b1e2b8394c754515e4faba4e665c981",
+        "issue_days": 31,
+        "first_issue": "2013-05-01",
+        "last_issue": "2013-05-31",
+        "target_counts": [
+          124,
+          17,
+          6
+        ],
+        "bytes": 522818
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-06.npz",
+        "sha256": "efe330f5836eda4711da868e698e9fe93f14abc3ee1fed7f102852e66b16fb84",
+        "issue_days": 30,
+        "first_issue": "2013-06-01",
+        "last_issue": "2013-06-30",
+        "target_counts": [
+          82,
+          5,
+          2
+        ],
+        "bytes": 507193
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-07.npz",
+        "sha256": "748b13334093cc58caeca561b37efac958172b95da28a49f2c5af68e6ddd5918",
+        "issue_days": 31,
+        "first_issue": "2013-07-01",
+        "last_issue": "2013-07-31",
+        "target_counts": [
+          61,
+          5,
+          1
+        ],
+        "bytes": 522777
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-08.npz",
+        "sha256": "a430a3d1b3b5c52b26d7f13fa389adbef11217487714059bccc8731c682a6e3b",
+        "issue_days": 31,
+        "first_issue": "2013-08-01",
+        "last_issue": "2013-08-31",
+        "target_counts": [
+          87,
+          13,
+          4
+        ],
+        "bytes": 531245
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-09.npz",
+        "sha256": "58680cbbd3b045a2dd9a2aa6683488041400b4cb44469eda2b70804427ffddc5",
+        "issue_days": 30,
+        "first_issue": "2013-09-01",
+        "last_issue": "2013-09-30",
+        "target_counts": [
+          47,
+          7,
+          0
+        ],
+        "bytes": 503282
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-10.npz",
+        "sha256": "869444450eede82f48164032cb5a86d74b81b632f851e2298f3bd144435516f2",
+        "issue_days": 31,
+        "first_issue": "2013-10-01",
+        "last_issue": "2013-10-31",
+        "target_counts": [
+          82,
+          9,
+          3
+        ],
+        "bytes": 518047
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-11.npz",
+        "sha256": "9ec6d1033602ac33d30b1e3672f83dfe35ed2edf79d47234fdadacde9943f108",
+        "issue_days": 30,
+        "first_issue": "2013-11-01",
+        "last_issue": "2013-11-30",
+        "target_counts": [
+          39,
+          3,
+          1
+        ],
+        "bytes": 502048
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2013-12.npz",
+        "sha256": "cd65719646df390f67318137c18b2dded5bb86ed0d50ed9f6a70dce3eb0f8570",
+        "issue_days": 31,
+        "first_issue": "2013-12-01",
+        "last_issue": "2013-12-31",
+        "target_counts": [
+          62,
+          10,
+          5
+        ],
+        "bytes": 484145
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-01.npz",
+        "sha256": "bcd98ca4a6b595daa196daa6913b47f88c21e7276b0ba560f7ff55b3b6b9856d",
+        "issue_days": 31,
+        "first_issue": "2014-01-01",
+        "last_issue": "2014-01-31",
+        "target_counts": [
+          66,
+          8,
+          3
+        ],
+        "bytes": 507243
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-02.npz",
+        "sha256": "21a9285cdcdbc932c9f40842dd30d35fc665a53a2146bec64417ef0fd751517f",
+        "issue_days": 28,
+        "first_issue": "2014-02-01",
+        "last_issue": "2014-02-28",
+        "target_counts": [
+          43,
+          7,
+          2
+        ],
+        "bytes": 459794
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-03.npz",
+        "sha256": "4588b49b921d54ad0d915bfb24c6e221f5dc40a51420bebba0e56a7987bcab0e",
+        "issue_days": 31,
+        "first_issue": "2014-03-01",
+        "last_issue": "2014-03-31",
+        "target_counts": [
+          143,
+          24,
+          15
+        ],
+        "bytes": 520766
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-04.npz",
+        "sha256": "aad1b80739735ea6b607d5d45ea6b4a5e8c4782836f4ac38998e7b30986edc77",
+        "issue_days": 30,
+        "first_issue": "2014-04-01",
+        "last_issue": "2014-04-30",
+        "target_counts": [
+          59,
+          6,
+          0
+        ],
+        "bytes": 505061
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-05.npz",
+        "sha256": "9f60bf241162836bb196924199823cf6afa2bc20769bdf6110fc7fdcedc26a3d",
+        "issue_days": 31,
+        "first_issue": "2014-05-01",
+        "last_issue": "2014-05-31",
+        "target_counts": [
+          38,
+          7,
+          1
+        ],
+        "bytes": 486779
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-06.npz",
+        "sha256": "a7712b67fbdbbe92d1183697beff5fa7e0ad0eaeb7c976b719d1369d2cbb6580",
+        "issue_days": 30,
+        "first_issue": "2014-06-01",
+        "last_issue": "2014-06-30",
+        "target_counts": [
+          49,
+          6,
+          1
+        ],
+        "bytes": 462713
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-07.npz",
+        "sha256": "6d5c6945ae0bd1caa19d29f8a0ebaf731ac16fa89de2e2b281206afb4e506004",
+        "issue_days": 31,
+        "first_issue": "2014-07-01",
+        "last_issue": "2014-07-31",
+        "target_counts": [
+          84,
+          2,
+          1
+        ],
+        "bytes": 483538
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-08.npz",
+        "sha256": "5283d8edd54bcf553b861f992cec9e276086203d5addfb327d6e033fd4185be3",
+        "issue_days": 31,
+        "first_issue": "2014-08-01",
+        "last_issue": "2014-08-31",
+        "target_counts": [
+          92,
+          14,
+          2
+        ],
+        "bytes": 504077
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-09.npz",
+        "sha256": "16438cdd2fec61e15c9042ede8d928913b6377bf44b7a2df8b07b8c884838ad0",
+        "issue_days": 30,
+        "first_issue": "2014-09-01",
+        "last_issue": "2014-09-30",
+        "target_counts": [
+          64,
+          14,
+          1
+        ],
+        "bytes": 470283
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-10.npz",
+        "sha256": "3e36fa791586ba1e0e0c015ef0d495179e48f46ef8caa776af0899499964dd28",
+        "issue_days": 31,
+        "first_issue": "2014-10-01",
+        "last_issue": "2014-10-31",
+        "target_counts": [
+          85,
+          10,
+          2
+        ],
+        "bytes": 484199
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-11.npz",
+        "sha256": "38211fe82f21849b175999df86246143d245d54ffb1f537917b58815d6c6e14f",
+        "issue_days": 30,
+        "first_issue": "2014-11-01",
+        "last_issue": "2014-11-30",
+        "target_counts": [
+          287,
+          28,
+          7
+        ],
+        "bytes": 478141
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2014-12.npz",
+        "sha256": "c05c030d3501994acd0099f069a54f650f2cdc3b1bad5ed2aef658f49a667fb0",
+        "issue_days": 31,
+        "first_issue": "2014-12-01",
+        "last_issue": "2014-12-31",
+        "target_counts": [
+          104,
+          17,
+          1
+        ],
+        "bytes": 484032
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-01.npz",
+        "sha256": "61f8723dbf7e6b81a662b7ec89fa3012cf981146ef84f11e84fef24e25e103e4",
+        "issue_days": 31,
+        "first_issue": "2015-01-01",
+        "last_issue": "2015-01-31",
+        "target_counts": [
+          142,
+          15,
+          6
+        ],
+        "bytes": 474985
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-02.npz",
+        "sha256": "d2aed0b378de2c6585f7940fda9f03eeb6e8fc70d02fba49f53f52023842dba9",
+        "issue_days": 28,
+        "first_issue": "2015-02-01",
+        "last_issue": "2015-02-28",
+        "target_counts": [
+          71,
+          4,
+          2
+        ],
+        "bytes": 430676
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-03.npz",
+        "sha256": "6c453aa2685d8dca2249c478c483aee209249663a449a00068768518cbbd390c",
+        "issue_days": 31,
+        "first_issue": "2015-03-01",
+        "last_issue": "2015-03-31",
+        "target_counts": [
+          54,
+          7,
+          2
+        ],
+        "bytes": 461889
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-04.npz",
+        "sha256": "0f75b7c0a37c99eadcb4aee05c0925e46539678df278ddf78ea132bc29d6158c",
+        "issue_days": 30,
+        "first_issue": "2015-04-01",
+        "last_issue": "2015-04-30",
+        "target_counts": [
+          44,
+          6,
+          1
+        ],
+        "bytes": 447964
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-05.npz",
+        "sha256": "4749cec059a3cb77415f51ecf9e260f80cf381a2391814e330c1af1e293f99c7",
+        "issue_days": 31,
+        "first_issue": "2015-05-01",
+        "last_issue": "2015-05-31",
+        "target_counts": [
+          65,
+          11,
+          1
+        ],
+        "bytes": 489381
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-06.npz",
+        "sha256": "0ff7223f2f7d1f0a0d5e5ebbaadcfd9e4347af53903221f5ed8c5c95fa012ac0",
+        "issue_days": 30,
+        "first_issue": "2015-06-01",
+        "last_issue": "2015-06-30",
+        "target_counts": [
+          45,
+          6,
+          0
+        ],
+        "bytes": 462364
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-07.npz",
+        "sha256": "e081951f52934595a075fbe430504099c1ce0d1b7625e8fd3ec5ea165a41fe35",
+        "issue_days": 31,
+        "first_issue": "2015-07-01",
+        "last_issue": "2015-07-31",
+        "target_counts": [
+          106,
+          15,
+          2
+        ],
+        "bytes": 489432
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-08.npz",
+        "sha256": "1c24a6f1feee21c398d51bd7ecc3e04de80c5df5eda0d1d75b4fb87ce7501205",
+        "issue_days": 31,
+        "first_issue": "2015-08-01",
+        "last_issue": "2015-08-31",
+        "target_counts": [
+          67,
+          7,
+          1
+        ],
+        "bytes": 475757
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-09.npz",
+        "sha256": "9ae561121aa2d500839d46dfca2e4ff5f033a39123ffa380f6aa5aec61f972a3",
+        "issue_days": 30,
+        "first_issue": "2015-09-01",
+        "last_issue": "2015-09-30",
+        "target_counts": [
+          90,
+          11,
+          4
+        ],
+        "bytes": 454539
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-10.npz",
+        "sha256": "b398bfc7cef32007c2dd2ca0ab0d113da280e12150609ef078a89ea86098d720",
+        "issue_days": 31,
+        "first_issue": "2015-10-01",
+        "last_issue": "2015-10-31",
+        "target_counts": [
+          67,
+          8,
+          1
+        ],
+        "bytes": 460729
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-11.npz",
+        "sha256": "d0865fede01d585488f18741672af66c11b5d52c7f9e0cfd70346141cfa9aceb",
+        "issue_days": 30,
+        "first_issue": "2015-11-01",
+        "last_issue": "2015-11-30",
+        "target_counts": [
+          62,
+          7,
+          1
+        ],
+        "bytes": 466847
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2015-12.npz",
+        "sha256": "06c9c6e8f5bfe7314e96646376166bca7e97b7a1dc25dd200a679cab86f194d8",
+        "issue_days": 31,
+        "first_issue": "2015-12-01",
+        "last_issue": "2015-12-31",
+        "target_counts": [
+          106,
+          16,
+          7
+        ],
+        "bytes": 475665
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-01.npz",
+        "sha256": "2bcdb57ac8a34a853ab3eaee387dc6b5edb85cf429c700c39ceff81e1734eb8b",
+        "issue_days": 31,
+        "first_issue": "2016-01-01",
+        "last_issue": "2016-01-31",
+        "target_counts": [
+          81,
+          7,
+          4
+        ],
+        "bytes": 484125
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-02.npz",
+        "sha256": "5782f73dafdb2457cae95398bfd5001ed1ee4c3d502109e156f3f1441d4ad022",
+        "issue_days": 29,
+        "first_issue": "2016-02-01",
+        "last_issue": "2016-02-29",
+        "target_counts": [
+          67,
+          11,
+          3
+        ],
+        "bytes": 439272
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-03.npz",
+        "sha256": "30ccfa8b323929d6e3c4c4325c8f307b638ceb5c8fe63bcf15f7847bb8cbc56d",
+        "issue_days": 31,
+        "first_issue": "2016-03-01",
+        "last_issue": "2016-03-31",
+        "target_counts": [
+          50,
+          6,
+          1
+        ],
+        "bytes": 478775
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-04.npz",
+        "sha256": "b1f607fb77de03f61083747e5fcb68f2306bf3c13c1191a5eb760e4979457c27",
+        "issue_days": 30,
+        "first_issue": "2016-04-01",
+        "last_issue": "2016-04-30",
+        "target_counts": [
+          50,
+          2,
+          0
+        ],
+        "bytes": 459557
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-05.npz",
+        "sha256": "885943c165e6151e8465b386b17d68e5cef5b269db19d5597597b898228c4309",
+        "issue_days": 31,
+        "first_issue": "2016-05-01",
+        "last_issue": "2016-05-31",
+        "target_counts": [
+          42,
+          5,
+          1
+        ],
+        "bytes": 468543
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-06.npz",
+        "sha256": "4b8166855b1f6bdf9a5d12d375b7db326ab2413d305c5f0c63a0589baca4e834",
+        "issue_days": 30,
+        "first_issue": "2016-06-01",
+        "last_issue": "2016-06-30",
+        "target_counts": [
+          48,
+          4,
+          1
+        ],
+        "bytes": 439110
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-07.npz",
+        "sha256": "0de4c53f2f0f09cca7cf2e93df5a5145e5a1216d7a88183211dc958d34ebce38",
+        "issue_days": 31,
+        "first_issue": "2016-07-01",
+        "last_issue": "2016-07-31",
+        "target_counts": [
+          42,
+          6,
+          3
+        ],
+        "bytes": 436390
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-08.npz",
+        "sha256": "e1ed6a4be00b8af6f70ff6d3cb4073959eaac864c7cb51ed28a9969273623938",
+        "issue_days": 31,
+        "first_issue": "2016-08-01",
+        "last_issue": "2016-08-31",
+        "target_counts": [
+          60,
+          9,
+          5
+        ],
+        "bytes": 467595
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-09.npz",
+        "sha256": "28dadf3801f9ba471a2af5bf9bc16cece98c5f0bc78cb73fc877160340f766cf",
+        "issue_days": 30,
+        "first_issue": "2016-09-01",
+        "last_issue": "2016-09-30",
+        "target_counts": [
+          66,
+          4,
+          2
+        ],
+        "bytes": 441900
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-10.npz",
+        "sha256": "49a10942e10b1adc9a0984fad6534f1bc0cb791f18d7e45eec537c9cbdfff66e",
+        "issue_days": 31,
+        "first_issue": "2016-10-01",
+        "last_issue": "2016-10-31",
+        "target_counts": [
+          40,
+          2,
+          1
+        ],
+        "bytes": 450554
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-11.npz",
+        "sha256": "1e1b9bfd4d04b556b424973b211be327aa6259609ae266a24491a5503c089aea",
+        "issue_days": 30,
+        "first_issue": "2016-11-01",
+        "last_issue": "2016-11-30",
+        "target_counts": [
+          43,
+          1,
+          1
+        ],
+        "bytes": 429893
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2016-12.npz",
+        "sha256": "d923705c33298e3c08d0c74a056e1543f7d6a63e0d9d7b9226a924f687594fba",
+        "issue_days": 31,
+        "first_issue": "2016-12-01",
+        "last_issue": "2016-12-31",
+        "target_counts": [
+          112,
+          16,
+          6
+        ],
+        "bytes": 450983
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-01.npz",
+        "sha256": "f4d961096f364b55792176a8c12ad205c4f821e7e3f083cf0a2e419fd0a49365",
+        "issue_days": 31,
+        "first_issue": "2017-01-01",
+        "last_issue": "2017-01-31",
+        "target_counts": [
+          56,
+          5,
+          1
+        ],
+        "bytes": 457047
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-02.npz",
+        "sha256": "03ec08a886712aab2130a0e07ac1a8db4187383fcde023af3b8283625847b375",
+        "issue_days": 28,
+        "first_issue": "2017-02-01",
+        "last_issue": "2017-02-28",
+        "target_counts": [
+          24,
+          5,
+          1
+        ],
+        "bytes": 379899
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-03.npz",
+        "sha256": "6146cf0f79bd86a19b6b5604a45f34408625732f5beae883869719dc6a9d349e",
+        "issue_days": 31,
+        "first_issue": "2017-03-01",
+        "last_issue": "2017-03-31",
+        "target_counts": [
+          41,
+          10,
+          1
+        ],
+        "bytes": 419840
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-04.npz",
+        "sha256": "711dc0bed9f8e767bf10e1c90c721b1235dab21703fdc6ff0ca0c0c3b1073f93",
+        "issue_days": 30,
+        "first_issue": "2017-04-01",
+        "last_issue": "2017-04-30",
+        "target_counts": [
+          41,
+          3,
+          0
+        ],
+        "bytes": 418423
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-05.npz",
+        "sha256": "ed9b14c0b1fa55d33458260fcbd9467b46bb78e4757b4492cbc2e7fa1a11b295",
+        "issue_days": 31,
+        "first_issue": "2017-05-01",
+        "last_issue": "2017-05-31",
+        "target_counts": [
+          28,
+          7,
+          1
+        ],
+        "bytes": 423895
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-06.npz",
+        "sha256": "1ab8e24be754d60ba0941350087e347cb263a16dd43ea036889a69ff60d54436",
+        "issue_days": 30,
+        "first_issue": "2017-06-01",
+        "last_issue": "2017-06-30",
+        "target_counts": [
+          34,
+          7,
+          2
+        ],
+        "bytes": 408111
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-07.npz",
+        "sha256": "f2caf042d495a05618a5f71b49bb6c7c1e4999a25dac67faabbfaac63d8f20d2",
+        "issue_days": 31,
+        "first_issue": "2017-07-01",
+        "last_issue": "2017-07-31",
+        "target_counts": [
+          46,
+          7,
+          3
+        ],
+        "bytes": 420980
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-08.npz",
+        "sha256": "82294b80c6cbaf539439fc5d1350a43a8d496dfedd28f47f344f4cd7c44c4fcb",
+        "issue_days": 31,
+        "first_issue": "2017-08-01",
+        "last_issue": "2017-08-31",
+        "target_counts": [
+          47,
+          4,
+          1
+        ],
+        "bytes": 439986
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-09.npz",
+        "sha256": "59567a126204c63683185e9941aca3aa62da53db879fc5397c489d9df09de079",
+        "issue_days": 30,
+        "first_issue": "2017-09-01",
+        "last_issue": "2017-09-30",
+        "target_counts": [
+          40,
+          6,
+          0
+        ],
+        "bytes": 423042
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-10.npz",
+        "sha256": "b1dab3366515272773aef1616375b9f34aeab81cbf18a313f088a688b4c14941",
+        "issue_days": 31,
+        "first_issue": "2017-10-01",
+        "last_issue": "2017-10-31",
+        "target_counts": [
+          37,
+          7,
+          2
+        ],
+        "bytes": 434083
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-11.npz",
+        "sha256": "88febedd2bd6c94524bdd3cd56fa50bb48f9a1edf281eac4caebb8965c4dde0f",
+        "issue_days": 30,
+        "first_issue": "2017-11-01",
+        "last_issue": "2017-11-30",
+        "target_counts": [
+          48,
+          2,
+          1
+        ],
+        "bytes": 433610
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2017-12.npz",
+        "sha256": "7a842c607152a94467e853a8273ad4bd7ce26e39922a034653435afad922c6ac",
+        "issue_days": 31,
+        "first_issue": "2017-12-01",
+        "last_issue": "2017-12-31",
+        "target_counts": [
+          57,
+          10,
+          1
+        ],
+        "bytes": 442351
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-01.npz",
+        "sha256": "6e5dc72c68cfb67aa0038b0cf4528d4a9e9e8e0fa96dd129785d71d8d00b9a41",
+        "issue_days": 31,
+        "first_issue": "2018-01-01",
+        "last_issue": "2018-01-31",
+        "target_counts": [
+          38,
+          8,
+          4
+        ],
+        "bytes": 468965
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-02.npz",
+        "sha256": "2a4194b99644eb879aa8fea2dea790ccc797a91d8b4bcd50bcaf0728e97c77a5",
+        "issue_days": 28,
+        "first_issue": "2018-02-01",
+        "last_issue": "2018-02-28",
+        "target_counts": [
+          33,
+          6,
+          1
+        ],
+        "bytes": 396184
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-03.npz",
+        "sha256": "c0b3e4f8571d737d094367f15da1c6ce2af5902ff789c6bea0aa9b6ace52d639",
+        "issue_days": 31,
+        "first_issue": "2018-03-01",
+        "last_issue": "2018-03-31",
+        "target_counts": [
+          34,
+          5,
+          3
+        ],
+        "bytes": 443580
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-04.npz",
+        "sha256": "3ce18d3f4feb3a5f21fc986ebd1296ff69c6e953dec35419e656d3246365bf27",
+        "issue_days": 30,
+        "first_issue": "2018-04-01",
+        "last_issue": "2018-04-30",
+        "target_counts": [
+          38,
+          7,
+          1
+        ],
+        "bytes": 424417
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-05.npz",
+        "sha256": "262179e9436c53b1cfeee13aaeb702b307120e38f270fe0d82ebed3d21195d50",
+        "issue_days": 31,
+        "first_issue": "2018-05-01",
+        "last_issue": "2018-05-31",
+        "target_counts": [
+          46,
+          7,
+          2
+        ],
+        "bytes": 447254
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-06.npz",
+        "sha256": "52548c1931326e8bdaf4629e489db47450a73353a86196e00f6ea5c37e416db2",
+        "issue_days": 30,
+        "first_issue": "2018-06-01",
+        "last_issue": "2018-06-30",
+        "target_counts": [
+          29,
+          1,
+          0
+        ],
+        "bytes": 418626
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-07.npz",
+        "sha256": "baa753e634db1975222609fe313e33484f6f61310c8f746c8050ac6ba3cd7a3b",
+        "issue_days": 31,
+        "first_issue": "2018-07-01",
+        "last_issue": "2018-07-31",
+        "target_counts": [
+          36,
+          7,
+          3
+        ],
+        "bytes": 421069
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-08.npz",
+        "sha256": "ba531f5b3f8b63080abcc081063c2836f346f515cd669a92ca0384c485a931dc",
+        "issue_days": 31,
+        "first_issue": "2018-08-01",
+        "last_issue": "2018-08-31",
+        "target_counts": [
+          28,
+          2,
+          2
+        ],
+        "bytes": 424007
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-09.npz",
+        "sha256": "6930d990735f2165987a28b47f4cc1d64b9ae2f631b900b766eee75bda4bffca",
+        "issue_days": 30,
+        "first_issue": "2018-09-01",
+        "last_issue": "2018-09-30",
+        "target_counts": [
+          16,
+          4,
+          1
+        ],
+        "bytes": 379694
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-10.npz",
+        "sha256": "7f818a095bfe97d80bb62400c07010d400e67c5eda6fb32ae828c7fe4b4fe16d",
+        "issue_days": 31,
+        "first_issue": "2018-10-01",
+        "last_issue": "2018-10-31",
+        "target_counts": [
+          33,
+          3,
+          0
+        ],
+        "bytes": 393789
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-11.npz",
+        "sha256": "edf30acc77eb4b277707d56b74587b2a53dcd84e7908bcfa10f163c2f101b8aa",
+        "issue_days": 30,
+        "first_issue": "2018-11-01",
+        "last_issue": "2018-11-30",
+        "target_counts": [
+          37,
+          12,
+          2
+        ],
+        "bytes": 384205
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2018-12.npz",
+        "sha256": "948efe43dffb9c9bcc822d5598d6bcc012eb8d0f0f2189d39c0509cfe57a8f7f",
+        "issue_days": 31,
+        "first_issue": "2018-12-01",
+        "last_issue": "2018-12-31",
+        "target_counts": [
+          26,
+          3,
+          1
+        ],
+        "bytes": 386087
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-01.npz",
+        "sha256": "b33c87cc6683659889166ee881843ed49c028c9c23842e681108e928ab50a05b",
+        "issue_days": 31,
+        "first_issue": "2019-01-01",
+        "last_issue": "2019-01-31",
+        "target_counts": [
+          29,
+          5,
+          1
+        ],
+        "bytes": 383759
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-02.npz",
+        "sha256": "5a1c7322d454af9bd1797e65d1fd519374c833a8cddb332b8267e25dfd9a925d",
+        "issue_days": 28,
+        "first_issue": "2019-02-01",
+        "last_issue": "2019-02-28",
+        "target_counts": [
+          36,
+          9,
+          5
+        ],
+        "bytes": 353701
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-03.npz",
+        "sha256": "e9f6619d2134858006114d235e29c20988c03bb460c30bd2b769fad73955a9bc",
+        "issue_days": 31,
+        "first_issue": "2019-03-01",
+        "last_issue": "2019-03-31",
+        "target_counts": [
+          20,
+          2,
+          1
+        ],
+        "bytes": 373470
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-04.npz",
+        "sha256": "f810eab241e2ca3475be4728ccd45d19010f435c2fda6dea261798c88540ee14",
+        "issue_days": 30,
+        "first_issue": "2019-04-01",
+        "last_issue": "2019-04-30",
+        "target_counts": [
+          41,
+          7,
+          1
+        ],
+        "bytes": 362448
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-05.npz",
+        "sha256": "372684a25c3b881f48da5356dd47f0ae8985ef9290e61f1d0eee5b23d74f17f7",
+        "issue_days": 31,
+        "first_issue": "2019-05-01",
+        "last_issue": "2019-05-31",
+        "target_counts": [
+          25,
+          3,
+          0
+        ],
+        "bytes": 401818
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-06.npz",
+        "sha256": "3fa2e402c643ba2c07972b6c1fd7a5f739121a15ad10ff2bbd2fadff495731e2",
+        "issue_days": 30,
+        "first_issue": "2019-06-01",
+        "last_issue": "2019-06-30",
+        "target_counts": [
+          41,
+          9,
+          3
+        ],
+        "bytes": 370725
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-07.npz",
+        "sha256": "fef50d9151383a3862f39a494c0e4689acfb541e1f781c4a65c1531781cd9675",
+        "issue_days": 31,
+        "first_issue": "2019-07-01",
+        "last_issue": "2019-07-31",
+        "target_counts": [
+          825,
+          314,
+          103
+        ],
+        "bytes": 433899
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-08.npz",
+        "sha256": "2d32314045c54d479c65236d70e35769081b3f411666cc881df4a8b97bb1fe69",
+        "issue_days": 31,
+        "first_issue": "2019-08-01",
+        "last_issue": "2019-08-31",
+        "target_counts": [
+          61,
+          13,
+          2
+        ],
+        "bytes": 421287
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-09.npz",
+        "sha256": "6208f0608c3116056cbfb0540316ed464a383ac75782264470e73c5e2432747f",
+        "issue_days": 30,
+        "first_issue": "2019-09-01",
+        "last_issue": "2019-09-30",
+        "target_counts": [
+          39,
+          9,
+          1
+        ],
+        "bytes": 390476
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-10.npz",
+        "sha256": "c5341d3f912a6d19a3eedf8d1d4e28fd598c317631a6f71aaaac5a03aac13da4",
+        "issue_days": 31,
+        "first_issue": "2019-10-01",
+        "last_issue": "2019-10-31",
+        "target_counts": [
+          41,
+          10,
+          2
+        ],
+        "bytes": 408716
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-11.npz",
+        "sha256": "56721cfede5dab74709fdf91af798190b68574e59a419d84f493767781bd82c1",
+        "issue_days": 30,
+        "first_issue": "2019-11-01",
+        "last_issue": "2019-11-30",
+        "target_counts": [
+          58,
+          16,
+          2
+        ],
+        "bytes": 413886
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2019-12.npz",
+        "sha256": "0f70a22b24dbe8ee233dad482c55b61ff564407df0a8a671bdcf2df461a91b0b",
+        "issue_days": 31,
+        "first_issue": "2019-12-01",
+        "last_issue": "2019-12-31",
+        "target_counts": [
+          38,
+          8,
+          2
+        ],
+        "bytes": 414802
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-01.npz",
+        "sha256": "00bb3ea35c193fe4d8353f5d53af390ad0d7e0d1bdb0f224811ddbb3ebb63e91",
+        "issue_days": 31,
+        "first_issue": "2020-01-01",
+        "last_issue": "2020-01-31",
+        "target_counts": [
+          71,
+          3,
+          2
+        ],
+        "bytes": 439582
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-02.npz",
+        "sha256": "a66806cc94ebb3458f754e77d2874c66c94a4ade6dd255792411dfc8d4b4c0a9",
+        "issue_days": 29,
+        "first_issue": "2020-02-01",
+        "last_issue": "2020-02-29",
+        "target_counts": [
+          57,
+          5,
+          3
+        ],
+        "bytes": 443956
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-03.npz",
+        "sha256": "573f50002ca4a1670b739e0c59a76fa138410d45ad872cdae35e4326a4473de3",
+        "issue_days": 31,
+        "first_issue": "2020-03-01",
+        "last_issue": "2020-03-31",
+        "target_counts": [
+          64,
+          12,
+          5
+        ],
+        "bytes": 474661
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-04.npz",
+        "sha256": "6247f127e016dec98f85c1d946860ea66c300648eeadecb7a93ddf8a7f27cd68",
+        "issue_days": 30,
+        "first_issue": "2020-04-01",
+        "last_issue": "2020-04-30",
+        "target_counts": [
+          141,
+          19,
+          4
+        ],
+        "bytes": 452288
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-05.npz",
+        "sha256": "6e7267e8be5b12b7456ea898d8128ef38686541ccd1cd5f2e8aa09728edd15fa",
+        "issue_days": 31,
+        "first_issue": "2020-05-01",
+        "last_issue": "2020-05-31",
+        "target_counts": [
+          743,
+          57,
+          24
+        ],
+        "bytes": 482757
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-06.npz",
+        "sha256": "5add5ef266b37b3b5a2429d9291ab8ebc32e4f0373415fadfa6caba925c13e20",
+        "issue_days": 30,
+        "first_issue": "2020-06-01",
+        "last_issue": "2020-06-30",
+        "target_counts": [
+          257,
+          24,
+          11
+        ],
+        "bytes": 494583
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-07.npz",
+        "sha256": "e38431333149c80f473a3a8b55ae02ce8ac9c8e7c8ddb9f97037ea01410e3455",
+        "issue_days": 31,
+        "first_issue": "2020-07-01",
+        "last_issue": "2020-07-31",
+        "target_counts": [
+          109,
+          10,
+          3
+        ],
+        "bytes": 502830
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-08.npz",
+        "sha256": "5aa3aea7bf42d5afe52847ee8b13159a1e80bd99fec72267e026ab80124da8c0",
+        "issue_days": 31,
+        "first_issue": "2020-08-01",
+        "last_issue": "2020-08-31",
+        "target_counts": [
+          110,
+          7,
+          5
+        ],
+        "bytes": 487674
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-09.npz",
+        "sha256": "e0acfd1c3df03f6a57ba36b70354bd766472f1f6d6e0a7b81e2ba855d302d43b",
+        "issue_days": 30,
+        "first_issue": "2020-09-01",
+        "last_issue": "2020-09-30",
+        "target_counts": [
+          100,
+          7,
+          4
+        ],
+        "bytes": 479531
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-10.npz",
+        "sha256": "67a861b612a17ff77f8ead3f3b2237b200e39a8820cdb3b0ec68b2ee0d4259a5",
+        "issue_days": 31,
+        "first_issue": "2020-10-01",
+        "last_issue": "2020-10-31",
+        "target_counts": [
+          206,
+          16,
+          3
+        ],
+        "bytes": 497965
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-11.npz",
+        "sha256": "8e8da2dfa0e5e0fc734b544eceb8fab9639357489f2b826263e53cc7354bb3d5",
+        "issue_days": 30,
+        "first_issue": "2020-11-01",
+        "last_issue": "2020-11-30",
+        "target_counts": [
+          99,
+          7,
+          2
+        ],
+        "bytes": 485829
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2020-12.npz",
+        "sha256": "3f6811bd3d36f6b1409d5a24a78890e44a47b82512c723e5ffdd4ec8993a9181",
+        "issue_days": 31,
+        "first_issue": "2020-12-01",
+        "last_issue": "2020-12-31",
+        "target_counts": [
+          157,
+          23,
+          11
+        ],
+        "bytes": 509589
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-01.npz",
+        "sha256": "7c1c25f93bde8049fd0ee115b8f59bc799a9e9f2d299d6d3830cbe70ad6c0e67",
+        "issue_days": 31,
+        "first_issue": "2021-01-01",
+        "last_issue": "2021-01-31",
+        "target_counts": [
+          96,
+          11,
+          3
+        ],
+        "bytes": 512378
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-02.npz",
+        "sha256": "524289bc8ea2662fda3ff4a4a0c056f01fac3a4b7377e577ca765070007cca4d",
+        "issue_days": 28,
+        "first_issue": "2021-02-01",
+        "last_issue": "2021-02-28",
+        "target_counts": [
+          85,
+          7,
+          1
+        ],
+        "bytes": 439402
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-03.npz",
+        "sha256": "8a4b00a58254ea4f0e68b9f873888fd7fe7ae62daa69658c268e95a4063745a4",
+        "issue_days": 31,
+        "first_issue": "2021-03-01",
+        "last_issue": "2021-03-31",
+        "target_counts": [
+          67,
+          3,
+          3
+        ],
+        "bytes": 513176
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-04.npz",
+        "sha256": "db1d3028d45926c063e1b0cdf36ba46384c62957d72a60f4991ddcb83129ac8c",
+        "issue_days": 30,
+        "first_issue": "2021-04-01",
+        "last_issue": "2021-04-30",
+        "target_counts": [
+          67,
+          8,
+          2
+        ],
+        "bytes": 485756
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-05.npz",
+        "sha256": "f905a17b8bb0348a4cc8e2752018ceede94b7a6950c65006687f6c0c6015d064",
+        "issue_days": 31,
+        "first_issue": "2021-05-01",
+        "last_issue": "2021-05-31",
+        "target_counts": [
+          66,
+          5,
+          2
+        ],
+        "bytes": 495643
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-06.npz",
+        "sha256": "9b1a2830897755678af79b0783bd616d592e8c88706967a0342c874b7ac4f586",
+        "issue_days": 30,
+        "first_issue": "2021-06-01",
+        "last_issue": "2021-06-30",
+        "target_counts": [
+          170,
+          16,
+          3
+        ],
+        "bytes": 489884
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-07.npz",
+        "sha256": "36e9c04d1f3a77afd80368aeb763cf84352660eb62cc6d388d1712a3d0da18e9",
+        "issue_days": 31,
+        "first_issue": "2021-07-01",
+        "last_issue": "2021-07-31",
+        "target_counts": [
+          197,
+          21,
+          8
+        ],
+        "bytes": 507099
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-08.npz",
+        "sha256": "eb6a15f81a2d243429348845960619039244ec1c8b3c2019ddc4a05a5f242340",
+        "issue_days": 31,
+        "first_issue": "2021-08-01",
+        "last_issue": "2021-08-31",
+        "target_counts": [
+          93,
+          8,
+          2
+        ],
+        "bytes": 501646
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-09.npz",
+        "sha256": "a26243c6c99f5e4fdd5bd3625f092d92952f9586c075a86d235f248876c37828",
+        "issue_days": 30,
+        "first_issue": "2021-09-01",
+        "last_issue": "2021-09-30",
+        "target_counts": [
+          69,
+          8,
+          2
+        ],
+        "bytes": 472953
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-10.npz",
+        "sha256": "22c99ec4bfdfbec81bf7c76bef041d5491ebf80d1e728ec6bc73a3fd8275f4ea",
+        "issue_days": 31,
+        "first_issue": "2021-10-01",
+        "last_issue": "2021-10-31",
+        "target_counts": [
+          68,
+          4,
+          1
+        ],
+        "bytes": 509659
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-11.npz",
+        "sha256": "0bc8681c988cdfc7f7613b37c0e39df093ebca9dd11b137d1320005e75b73b58",
+        "issue_days": 30,
+        "first_issue": "2021-11-01",
+        "last_issue": "2021-11-30",
+        "target_counts": [
+          49,
+          2,
+          1
+        ],
+        "bytes": 479048
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2021-12.npz",
+        "sha256": "55f2a5498265f7dcffb9321ea3a16b49de123b9ab683a4475e6c901d250906b5",
+        "issue_days": 31,
+        "first_issue": "2021-12-01",
+        "last_issue": "2021-12-31",
+        "target_counts": [
+          124,
+          6,
+          3
+        ],
+        "bytes": 481730
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-01.npz",
+        "sha256": "84aa7a2adacce9bd122523d3317b365eafa9a08c17ef3548c8b78e17f8121be4",
+        "issue_days": 31,
+        "first_issue": "2022-01-01",
+        "last_issue": "2022-01-31",
+        "target_counts": [
+          77,
+          10,
+          5
+        ],
+        "bytes": 506867
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-02.npz",
+        "sha256": "6d52572cba4899ff0be395427eb762eda48b6c3d1c17428ebe175f9ef8805a9d",
+        "issue_days": 28,
+        "first_issue": "2022-02-01",
+        "last_issue": "2022-02-28",
+        "target_counts": [
+          61,
+          5,
+          3
+        ],
+        "bytes": 462328
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-03.npz",
+        "sha256": "5705df6ae3f23a0f94639ba5a233f8ea7696cde7cbfc354132b26ac4e6007a28",
+        "issue_days": 31,
+        "first_issue": "2022-03-01",
+        "last_issue": "2022-03-31",
+        "target_counts": [
+          55,
+          4,
+          1
+        ],
+        "bytes": 486000
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-04.npz",
+        "sha256": "d1ef6de0b074b12d29f43d886f2e6b13ffc8ab7df9050a8c08074856c08c008c",
+        "issue_days": 30,
+        "first_issue": "2022-04-01",
+        "last_issue": "2022-04-30",
+        "target_counts": [
+          62,
+          6,
+          2
+        ],
+        "bytes": 488636
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-05.npz",
+        "sha256": "3e40fdde9f47203f6d04ceea672cfed540f0ba349b70af25c0309db5a7e332b6",
+        "issue_days": 31,
+        "first_issue": "2022-05-01",
+        "last_issue": "2022-05-31",
+        "target_counts": [
+          50,
+          4,
+          1
+        ],
+        "bytes": 490373
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-06.npz",
+        "sha256": "ab498373ed6791f61cb9a23ad157210210c6baac13fefdd49d0e5bf7fd30407f",
+        "issue_days": 30,
+        "first_issue": "2022-06-01",
+        "last_issue": "2022-06-30",
+        "target_counts": [
+          42,
+          6,
+          2
+        ],
+        "bytes": 462761
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-07.npz",
+        "sha256": "9ce8c4d89b9eb94c76d7dc7ae57c77c1eab7cf12a1a4b482aff8458032b9d1c6",
+        "issue_days": 31,
+        "first_issue": "2022-07-01",
+        "last_issue": "2022-07-31",
+        "target_counts": [
+          49,
+          4,
+          3
+        ],
+        "bytes": 477606
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-08.npz",
+        "sha256": "1fb6be2c309097fc7b0ad8bd023a41efa6e8d54ce78a1d92883196a9a06b00e9",
+        "issue_days": 31,
+        "first_issue": "2022-08-01",
+        "last_issue": "2022-08-31",
+        "target_counts": [
+          45,
+          3,
+          1
+        ],
+        "bytes": 462647
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-09.npz",
+        "sha256": "fbd7cd00a951798b6e8db1d2b7132a706356111fbd6b555be8897176c3365146",
+        "issue_days": 30,
+        "first_issue": "2022-09-01",
+        "last_issue": "2022-09-30",
+        "target_counts": [
+          65,
+          8,
+          4
+        ],
+        "bytes": 466052
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-10.npz",
+        "sha256": "8f8c724752eaad5c07ec9130f9b5e437d2b21bfb278013fddd860e59c1aa6e5d",
+        "issue_days": 31,
+        "first_issue": "2022-10-01",
+        "last_issue": "2022-10-31",
+        "target_counts": [
+          49,
+          6,
+          3
+        ],
+        "bytes": 476823
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-11.npz",
+        "sha256": "70215f06bfb78a74314f8740e91b8a41f868e4e5d1cac6a3b90a93e3e836175c",
+        "issue_days": 30,
+        "first_issue": "2022-11-01",
+        "last_issue": "2022-11-30",
+        "target_counts": [
+          40,
+          2,
+          0
+        ],
+        "bytes": 451932
+      },
+      {
+        "path": "artifacts/ch001-matrix-v1/2022-12.npz",
+        "sha256": "0090cbd7ff8bf3f4c0617093243fad42cc2acefd551f8ee02bc33e28ede922bb",
+        "issue_days": 31,
+        "first_issue": "2022-12-01",
+        "last_issue": "2022-12-31",
+        "target_counts": [
+          90,
+          13,
+          7
+        ],
+        "bytes": 464819
+      }
+    ]
+  },
+  "results": {
+    "grid_cells": 7682,
+    "issue_days": 5844,
+    "rows": 44893608,
+    "target_magnitude_thresholds": [
+      2.5,
+      3.5,
+      4.0
+    ],
+    "target_counts": [
+      17331,
+      2670,
+      707
+    ],
+    "catalog_events_outside_relm_grid": 2162
+  },
+  "claim_boundary": "Catalog-only CH-001 features and targets; no ETAS grid offset and no challenger performance result are included."
+}
