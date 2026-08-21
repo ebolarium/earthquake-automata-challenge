@@ -42,21 +42,24 @@ PYTHONPATH=src python3 scripts/generate_ch001_etas_grid.py
 PYTHONPATH=src python3 scripts/verify_ch001_etas_grid.py
 ```
 
-For a detached run, progress can be inspected without a Codex session:
+The canonical run uses the pinned Python 3.11.11 container. It was started as
+the named detached container `ch001-etas-grid`, so progress can be inspected
+without a Codex session:
 
 ```bash
-tail -f artifacts/ch001-etas-grid-v1/run.log
-cat artifacts/ch001-etas-grid-v1/run.pid
-ps -p "$(cat artifacts/ch001-etas-grid-v1/run.pid)" -o pid,etime,%cpu,%mem,command
+docker logs --tail 20 ch001-etas-grid
+docker logs -f ch001-etas-grid
+docker stats --no-stream ch001-etas-grid
 ```
 
 ## Preflight Result
 
 A two-day, 100-continuation smoke run passed the complete artifact verifier. A
 full 10,000-continuation benchmark for 2007-01-01 produced a mean RELM-region
-rate of `2.479148` events and took `2.09` seconds on the local host. The full
-5,844-day run is therefore expected to take roughly 3.5 hours on one CPU core
-with low memory usage.
+rate of `2.479148` events. It took `2.09` seconds on the local host and about
+`4.4` seconds in the canonical emulated `linux/amd64` container. The full
+5,844-day Docker run is therefore expected to take roughly seven hours on one
+CPU core. Initial observed memory use was about 66 MiB.
 
 ## Boundary
 

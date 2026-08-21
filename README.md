@@ -74,6 +74,14 @@ Direct background roots are integrated analytically per spherical grid cell;
 all triggered events and descendants remain Monte Carlo estimates. This keeps
 the reference expectation while removing random zero-rate cells.
 
+The canonical low-memory run uses the pinned Python 3.11 container and can be
+followed independently of a Codex session:
+
+```bash
+docker logs --tail 20 ch001-etas-grid
+docker stats --no-stream ch001-etas-grid
+```
+
 The native package currently includes physical parameter conversion, the
 space-time triggering kernels, closed-form kernel integrals, branching ratio,
 conditional intensity, and low-memory catalog replay. Its formula tests do not
