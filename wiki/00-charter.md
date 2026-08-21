@@ -9,7 +9,15 @@ literature baseline, especially for low-background or emergence events?
 
 The sole model is spatial-temporal ETAS. No challenger, RQ model, strain
 feature, or custom reranker enters the repository until the ETAS alignment gate
-is complete.
+is complete. That gate and the Challenge V1 freeze were completed on
+2026-08-21.
+
+## Challenger Phase
+
+Challengers are admitted only through the frozen Challenge V1 contract. The
+first admitted model is `CH-001`, a catalog-only residual-emergence correction
+to ETAS. Historical RQ artifacts and production databases remain outside this
+repository.
 
 ## Rules
 
@@ -27,4 +35,3 @@ is complete.
 This repository is a sibling of `earthquake-automata-core`. It does not read
 the core application's databases at runtime and does not share scheduled tasks,
 models, APIs, or deployment state.
-

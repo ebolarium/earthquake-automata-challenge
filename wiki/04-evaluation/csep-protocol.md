@@ -1,7 +1,9 @@
 # Evaluation Protocol
 
 Reference reproduction measures implementation alignment, not forecast
-superiority. Model comparisons begin only after the baseline is frozen.
+superiority. Model comparisons begin only after the baseline is frozen. The
+immutable split, metric, uncertainty, and promotion rules are recorded in
+`configs/challenge/challenge-v1.json`.
 
 The evaluation layer will support:
 

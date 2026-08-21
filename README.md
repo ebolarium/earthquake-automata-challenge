@@ -11,14 +11,14 @@ repository does not import code, databases, predictions, or runtime state from
 ## Current Milestone
 
 The locked EarthquakeNPP `ComCat_25` reproduction, native likelihood alignment,
-clean local catalog export, leakage-free daily replay, and the documented
-pyCSEP day-7 consistency gate are complete. The independent ETAS forecast page
-is also complete. The current milestone is baseline-freeze review before any
-challenger model is admitted.
+clean local catalog export, leakage-free daily replay, documented pyCSEP day-7
+consistency gate, and independent ETAS forecast page are complete. Challenge V1
+is now frozen. The current milestone is `CH-001`, an ETAS residual-emergence
+spatial challenger developed only on the admitted fit and validation splits.
 
-The baseline will not be frozen until parameter estimates, event-based
-likelihood scores, and later prospective evaluation checks satisfy their
-recorded tolerances.
+The frozen retrospective test can promote a model to prospective evaluation;
+it cannot by itself support a scientific ETAS-superiority claim. That claim
+requires the separate one-year prospective gate in the challenge contract.
 
 ## Locked Reference
 
@@ -51,6 +51,7 @@ wiki/            Literature, decisions, protocols, and experiment records
 ```bash
 PYTHONPATH=src python3 -m unittest discover -s tests
 PYTHONPATH=src python3 -m etas_challenge.contracts data/manifests/reference-comcat25.json
+PYTHONPATH=src python3 scripts/verify_challenge_freeze.py
 ```
 
 The native package currently includes physical parameter conversion, the

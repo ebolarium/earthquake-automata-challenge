@@ -1,0 +1,135 @@
+{
+  "schema_version": 1,
+  "challenge_id": "etas-residual-challenge-v1",
+  "status": "frozen",
+  "frozen_at": "2026-08-21",
+  "baseline": {
+    "model": "EarthquakeNPP spatial-temporal ETAS ComCat_25",
+    "repository_commit": "6819219e1a933d731a918d9c929703dc1046884b",
+    "parameters": "data/manifests/reference-comcat25.json",
+    "parameter_fit_window": "[1981-01-01T00:00:00Z, 2007-01-01T00:00:00Z)",
+    "m_ref": 2.5
+  },
+  "locked_inputs": [
+    {
+      "path": "configs/reference/comcat25.json",
+      "sha256": "91df8627da90ea9822d4bf02739726e24e35ec1bfa93f5cd16250ddce5ae00a3"
+    },
+    {
+      "path": "configs/replay/comcat25-daily-v1.json",
+      "sha256": "5ac9ebe57025707a52667759d928085b64382cb01667938ad6db596a2ebfe0a0"
+    },
+    {
+      "path": "configs/evaluation/comcat25-pycsep-day7-v1.json",
+      "sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12"
+    },
+    {
+      "path": "data/manifests/reference-comcat25.json",
+      "sha256": "435317cf2776239ffdd76a9a7cfc9009f19c05f42b87ede4d9b13c73821cf40e"
+    },
+    {
+      "path": "data/manifests/local-california-catalog-v1.json",
+      "sha256": "cbe73b4682136bd924cd321c4dfffaeccf07675c328d8bc0de750d13226af250"
+    },
+    {
+      "path": "data/manifests/daily-replay-v1.json",
+      "sha256": "97e3af7c53badf9e1f699adf6d5ca93736a08eddc84add8f66433a9ff283ec2e"
+    },
+    {
+      "path": "data/manifests/pycsep-day7-v1.json",
+      "sha256": "a1a69634b6dfb1a6ed452d0659c0379e219e09e127e7d6d936c63e44055c151f"
+    }
+  ],
+  "catalog": {
+    "path": "data/local/california-earthquakes-v1.sqlite",
+    "sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "committed": false,
+    "revision_history_available": false
+  },
+  "forecast_contract": {
+    "region": "california_relm_region",
+    "spatial_resolution_degrees": 0.1,
+    "issue_clock": "00:00:00Z",
+    "horizon_days": 1,
+    "history_boundary": "strictly_before_issue_time",
+    "target_window": "[issue_time, issue_time + 1 day)",
+    "magnitude_rounding": 0.1,
+    "primary_magnitude_threshold": 2.5,
+    "secondary_magnitude_thresholds": [3.5, 4.0]
+  },
+  "splits": [
+    {
+      "name": "challenger_fit",
+      "start": "2007-01-01T00:00:00Z",
+      "end_exclusive": "2019-01-01T00:00:00Z",
+      "usage": "feature fitting and parameter estimation",
+      "model_selection_allowed": true
+    },
+    {
+      "name": "development_validation",
+      "start": "2019-01-01T00:00:00Z",
+      "end_exclusive": "2023-01-01T00:00:00Z",
+      "usage": "model selection, ablation, and calibration",
+      "model_selection_allowed": true
+    },
+    {
+      "name": "locked_retrospective_test",
+      "start": "2023-01-01T00:00:00Z",
+      "end_exclusive": "2026-08-19T00:00:00Z",
+      "usage": "one evaluation per immutable challenger version; never used for tuning",
+      "model_selection_allowed": false,
+      "immutable": true
+    }
+  ],
+  "primary_metric": {
+    "name": "paired_point_process_information_gain_per_earthquake",
+    "unit": "natural_log_nats_per_event",
+    "baseline": "frozen_etas",
+    "aggregation": "sum challenger log score minus ETAS log score, divided by target event count"
+  },
+  "uncertainty": {
+    "method": "stationary_daily_block_bootstrap",
+    "replicates": 10000,
+    "seed": 20260821,
+    "mean_block_days": 30,
+    "sensitivity_block_days": 90,
+    "confidence_level": 0.95
+  },
+  "required_reports": [
+    "daily paired log-score difference",
+    "ETAS and challenger expected event counts",
+    "number, spatial, pseudolikelihood, and magnitude consistency tests",
+    "information gain for M>=3.5 and M>=4.0 target events",
+    "information gain in the low-ETAS-intensity stratum",
+    "30-day and 90-day block-bootstrap intervals",
+    "feature ablations and failed experiments"
+  ],
+  "low_etas_intensity_stratum": {
+    "definition": "target events whose pre-event frozen ETAS intensity is at or below the challenger-fit event-intensity 25th percentile",
+    "threshold_source": "challenger_fit split only",
+    "threshold_lock": "must be committed in the challenger training manifest before validation scoring"
+  },
+  "promotion_rules": {
+    "retrospective_research_win": [
+      "primary information gain is positive on development validation",
+      "locked retrospective 95% 30-day block-bootstrap lower bound is greater than zero",
+      "locked retrospective 90-day sensitivity lower bound is not negative",
+      "all required calibration and magnitude-stratified results are reported"
+    ],
+    "scientific_superiority_claim": [
+      "retrospective research win is satisfied",
+      "predictions are persisted before target catalog ingestion",
+      "prospective evaluation spans at least 365 issue days and at least 500 M>=2.5 target events",
+      "prospective 95% 30-day block-bootstrap lower bound is greater than zero",
+      "no challenger parameter or feature definition changes after prospective activation"
+    ]
+  },
+  "prospective": {
+    "status": "pending_collector_and_activation_manifest",
+    "activation_manifest": "data/manifests/prospective-challenge-v1.json",
+    "activation_rule": "commit the first issue time and challenger artifact hashes before its target window begins",
+    "minimum_issue_days": 365,
+    "minimum_target_events": 500
+  },
+  "claim_boundary": "The locked retrospective test is as-of-snapshot evidence and is not a blind prospective record because historical catalog revisions and prior Automata research may have influenced model design."
+}
