@@ -18,6 +18,8 @@
   "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
   "etas_manifest": "data/manifests/ch001-etas-grid-v1.json",
   "etas_manifest_sha256": "5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d",
+  "retrospective_etas_manifest": "data/manifests/ch004-etas-retrospective-v1.json",
+  "retrospective_etas_manifest_sha256": "e149a92fd926d16dbb01bfccefcf889a04c3a8018682841bcb95944418c570bf",
   "simulation_config": "configs/evaluation/comcat25-pycsep-day7-v1.json",
   "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
   "fault_sections": "data/local/ch002-ucerf3-fault-sections-v1.json",

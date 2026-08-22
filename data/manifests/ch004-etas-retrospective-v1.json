@@ -1,0 +1,352 @@
+{
+  "schema_version": 1,
+  "forecast_id": "ch004-frozen-etas-retrospective-v1",
+  "status": "completed",
+  "tool": {
+    "name": "scripts/generate_ch001_etas_grid.py",
+    "version": "1.0.0",
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "sqlite": "3.40.1"
+  },
+  "inputs": {
+    "config_sha256": "66755cac9ff9fb9180d282c9dab76ea53c9422c2c673b3148c956681e9ae6ce4",
+    "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+    "simulation_reference_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+    "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9"
+  },
+  "protocol": {
+    "method": "EarthquakeNPP ETAS catalog continuation",
+    "simulations_per_issue": 10000,
+    "seed": 20260821,
+    "history_boundary": "strictly_before_issue_time",
+    "target_window": "[issue_time, issue_time + 1 day)",
+    "background_estimator": "replace sampled direct background roots with exact mu times spherical cell area; retain their descendants"
+  },
+  "period": {
+    "start": "2023-01-01",
+    "end_exclusive": "2026-08-19"
+  },
+  "outputs": {
+    "shards": [
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-01.npz",
+        "sha256": "e3f4673de5a282ec16842b59e31adaceded24e54a5d269f8eb2f9fa914123146",
+        "issue_days": 31,
+        "start": "2023-01-01",
+        "end_inclusive": "2023-01-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-02.npz",
+        "sha256": "ec00af28f51d226163230e8a12806895489906832e951a421ed7692527df4e8b",
+        "issue_days": 28,
+        "start": "2023-02-01",
+        "end_inclusive": "2023-02-28"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-03.npz",
+        "sha256": "a9507118f292f487cc79f6af071a4577f6e9f29daf6d5a8f9a6af31780b3455a",
+        "issue_days": 31,
+        "start": "2023-03-01",
+        "end_inclusive": "2023-03-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-04.npz",
+        "sha256": "c02bb33b920d53a81c743f6e7b640aeae081bf50e5429fab56ff9efe9f1b03af",
+        "issue_days": 30,
+        "start": "2023-04-01",
+        "end_inclusive": "2023-04-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-05.npz",
+        "sha256": "1864e5369d4514bd03c0f0b264398b0f8be148021096f7cef11d4f12e9e71a68",
+        "issue_days": 31,
+        "start": "2023-05-01",
+        "end_inclusive": "2023-05-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-06.npz",
+        "sha256": "d90e362ed7780d0656fa9bd2c3274fad8de8fc83def069cc98829afffc8e285d",
+        "issue_days": 30,
+        "start": "2023-06-01",
+        "end_inclusive": "2023-06-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-07.npz",
+        "sha256": "1919a318a860d348ddf82a6f06aff1e93f66ff6c499dc4af261eb774a8efef01",
+        "issue_days": 31,
+        "start": "2023-07-01",
+        "end_inclusive": "2023-07-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-08.npz",
+        "sha256": "8a7ebf51de3991805259541d624e9b9fbcced134c4a5de2547d9f1c2a2e4c96f",
+        "issue_days": 31,
+        "start": "2023-08-01",
+        "end_inclusive": "2023-08-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-09.npz",
+        "sha256": "89fe2c6b8851897ebf3a9a1c8be313de80830f39f64481d599f50162c1618fef",
+        "issue_days": 30,
+        "start": "2023-09-01",
+        "end_inclusive": "2023-09-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-10.npz",
+        "sha256": "1fd3d178b4340d9671d92a1852b51937bd4b09e2377f64f9ed84b14e65263a55",
+        "issue_days": 31,
+        "start": "2023-10-01",
+        "end_inclusive": "2023-10-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-11.npz",
+        "sha256": "f22edc9e25eaef3e9f17a81f2192034e3766f3bd60d48baccca509e3bff4d998",
+        "issue_days": 30,
+        "start": "2023-11-01",
+        "end_inclusive": "2023-11-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2023-12.npz",
+        "sha256": "9e33dfc7d57bd4ac60b4f111a520e1f91cf0899e66a3cd2bc673d9d55279e828",
+        "issue_days": 31,
+        "start": "2023-12-01",
+        "end_inclusive": "2023-12-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-01.npz",
+        "sha256": "89e3016c2cf21813dfb8a79203d45db65a87f0774843c9e16e834e36e326ba6f",
+        "issue_days": 31,
+        "start": "2024-01-01",
+        "end_inclusive": "2024-01-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-02.npz",
+        "sha256": "f15f5670e859eb4d6245c2e69751c3a3f8fbdfd5fe2696c1dbab0a96bd27af5b",
+        "issue_days": 29,
+        "start": "2024-02-01",
+        "end_inclusive": "2024-02-29"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-03.npz",
+        "sha256": "e26550895b80c2c2063ef071244fa05532a4fc89f92ba6912ddfbba4ad44876d",
+        "issue_days": 31,
+        "start": "2024-03-01",
+        "end_inclusive": "2024-03-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-04.npz",
+        "sha256": "60a65032ad9f019708fdb65298d38858eb6ca7f497bde05ab7737f398893a47e",
+        "issue_days": 30,
+        "start": "2024-04-01",
+        "end_inclusive": "2024-04-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-05.npz",
+        "sha256": "c5e7c3cc13a2cacdfa19eb5fe0506999173da168536feaa1d1136d4a1cca8360",
+        "issue_days": 31,
+        "start": "2024-05-01",
+        "end_inclusive": "2024-05-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-06.npz",
+        "sha256": "9fbfd75495ce207191a0ae6c12d0f40a2c3503d639f9a003d06dace3de694151",
+        "issue_days": 30,
+        "start": "2024-06-01",
+        "end_inclusive": "2024-06-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-07.npz",
+        "sha256": "f736b7eeed11139106d2f59eda371a051d2d8bb0274dd6ddb44857824b7636a8",
+        "issue_days": 31,
+        "start": "2024-07-01",
+        "end_inclusive": "2024-07-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-08.npz",
+        "sha256": "48666b1e618f53c1e931e8f4352d2ee277b62af60dd0de8d48219ca59e9c9e3a",
+        "issue_days": 31,
+        "start": "2024-08-01",
+        "end_inclusive": "2024-08-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-09.npz",
+        "sha256": "7e17f31379bfb526bb8fd70e808ace98f24a5a8414e3a8331c47a070acc6039a",
+        "issue_days": 30,
+        "start": "2024-09-01",
+        "end_inclusive": "2024-09-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-10.npz",
+        "sha256": "fadc35800de8765f5600efdcaabc74a5b8cc61cb7002c50b035e27636f4ac2b3",
+        "issue_days": 31,
+        "start": "2024-10-01",
+        "end_inclusive": "2024-10-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-11.npz",
+        "sha256": "1790fbd962f046d8e648cb11030e66457728b6a52ec9f1f93bad4e24f1fc9972",
+        "issue_days": 30,
+        "start": "2024-11-01",
+        "end_inclusive": "2024-11-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2024-12.npz",
+        "sha256": "20114518b3ac336a83da298cf7c36339e9561bf55bec97a767d8a318a9ec9ec6",
+        "issue_days": 31,
+        "start": "2024-12-01",
+        "end_inclusive": "2024-12-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-01.npz",
+        "sha256": "cf114b7975ac60c83e9b25e3608a0bd3c77a4e14cd3b527299c6452de46ec775",
+        "issue_days": 31,
+        "start": "2025-01-01",
+        "end_inclusive": "2025-01-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-02.npz",
+        "sha256": "65ca07296d6a25829ff000dd063c921f3f9aee456cd3b77c36881c1f0fe0dcd4",
+        "issue_days": 28,
+        "start": "2025-02-01",
+        "end_inclusive": "2025-02-28"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-03.npz",
+        "sha256": "6a9cb4b9dde9be982e19417b2a8c512733de60679958c484dd75f40e12ae2068",
+        "issue_days": 31,
+        "start": "2025-03-01",
+        "end_inclusive": "2025-03-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-04.npz",
+        "sha256": "a83b4d5e00b2c79ef8b1506fc6bea3b6c921eedcbf02ddc9e0a46e85a41c238e",
+        "issue_days": 30,
+        "start": "2025-04-01",
+        "end_inclusive": "2025-04-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-05.npz",
+        "sha256": "2a2b27bd44284792690f43938eab7e73b4d518ebb54182451323b07bb7104847",
+        "issue_days": 31,
+        "start": "2025-05-01",
+        "end_inclusive": "2025-05-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-06.npz",
+        "sha256": "c430b6bb2fb6375273427eddc22539d34428a00d4bd3072a611e37ec234893e4",
+        "issue_days": 30,
+        "start": "2025-06-01",
+        "end_inclusive": "2025-06-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-07.npz",
+        "sha256": "a96bd3150847376b8e5f61c3c17068dc4eff2c2622af0f4635d9a54974d7a024",
+        "issue_days": 31,
+        "start": "2025-07-01",
+        "end_inclusive": "2025-07-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-08.npz",
+        "sha256": "4bf73ea63ca0253f1abc78f44410557c53f36d979822c9a6e632d51005839a36",
+        "issue_days": 31,
+        "start": "2025-08-01",
+        "end_inclusive": "2025-08-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-09.npz",
+        "sha256": "24d806fb010ef481895e56246713d7a086426a92edd2d01883768600358408e1",
+        "issue_days": 30,
+        "start": "2025-09-01",
+        "end_inclusive": "2025-09-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-10.npz",
+        "sha256": "9474e6cc3a456c59f8a1164ff88d3514673ecff299db3f0dcddf03419ba71d39",
+        "issue_days": 31,
+        "start": "2025-10-01",
+        "end_inclusive": "2025-10-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-11.npz",
+        "sha256": "306cd4d3b4fbb954eb47f367fe36d7b1d72df65ee96661a59b26a260f56d44b2",
+        "issue_days": 30,
+        "start": "2025-11-01",
+        "end_inclusive": "2025-11-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2025-12.npz",
+        "sha256": "a29bb1e677ceb0b21fca9dc1772d4c79730a5ba39c1fc9141b43853bb43dd344",
+        "issue_days": 31,
+        "start": "2025-12-01",
+        "end_inclusive": "2025-12-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2026-01.npz",
+        "sha256": "a6d8923b8a247316d091d9fd612534898b8737f82907b32380a0a1000d0c9045",
+        "issue_days": 31,
+        "start": "2026-01-01",
+        "end_inclusive": "2026-01-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2026-02.npz",
+        "sha256": "709b9af8f33b1c08968b6d98aeca065eb13741353af26e0b6c466394af9c82ec",
+        "issue_days": 28,
+        "start": "2026-02-01",
+        "end_inclusive": "2026-02-28"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2026-03.npz",
+        "sha256": "63217741aefc7bd75653f5f1b640effa9b7f92695c4cd1d698053b68a1f4a634",
+        "issue_days": 31,
+        "start": "2026-03-01",
+        "end_inclusive": "2026-03-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2026-04.npz",
+        "sha256": "abd0382f7da3fb90af386fa7843c690c614a4062919170a028e80096e53c6d24",
+        "issue_days": 30,
+        "start": "2026-04-01",
+        "end_inclusive": "2026-04-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2026-05.npz",
+        "sha256": "ae741c59fb6685e0944dd4491a3ef5e76c405f8bdab669f6328cc0ae9045b7dc",
+        "issue_days": 31,
+        "start": "2026-05-01",
+        "end_inclusive": "2026-05-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2026-06.npz",
+        "sha256": "d09a4679ecb107eeacabfc99963c6a1b61f27946df85b5fd2774a510dc152997",
+        "issue_days": 30,
+        "start": "2026-06-01",
+        "end_inclusive": "2026-06-30"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2026-07.npz",
+        "sha256": "08fd7706774ff741e24b27758feea50ede772bb6d3c98a6b1c3c530f2edadf0d",
+        "issue_days": 31,
+        "start": "2026-07-01",
+        "end_inclusive": "2026-07-31"
+      },
+      {
+        "path": "artifacts/ch004-etas-retrospective-v1/etas-2026-08.npz",
+        "sha256": "d335dd7e42f0126a6b69641441ce0d57dcfbe01f8740d9a70e4abcef2299171c",
+        "issue_days": 18,
+        "start": "2026-08-01",
+        "end_inclusive": "2026-08-18"
+      }
+    ]
+  },
+  "results": {
+    "grid_cells": 7682,
+    "issue_days": 1326,
+    "rows": 10186332,
+    "mean_expected_events": 3.0566674759724504,
+    "sampled_nonbackground_events": 50985433,
+    "sampled_nonbackground_inside": 35873862
+  },
+  "claim_boundary": "Frozen ETAS baseline rates only; no challenger fitting or performance result is included. Monte Carlo descendants use the locked seed and direct background roots are Rao-Blackwellized analytically."
+}

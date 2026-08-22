@@ -79,6 +79,7 @@ def main() -> int:
             (
                 ("validation_manifest", "validation_manifest_sha256"),
                 ("challenge_contract", "challenge_contract_sha256"),
+                ("retrospective_etas_manifest", "retrospective_etas_manifest_sha256"),
             )
         )
     for path_key, hash_key in locked_inputs:
@@ -109,6 +110,26 @@ def main() -> int:
         magnitude_threshold=config["magnitude_threshold"],
     )
     etas_manifest = json.loads(Path(config["etas_manifest"]).read_text())
+    if retrospective_period:
+        retrospective_etas = json.loads(
+            Path(config["retrospective_etas_manifest"]).read_text()
+        )
+        if (
+            etas_manifest["period"]["end_exclusive"]
+            != retrospective_etas["period"]["start"]
+            or retrospective_etas["period"]["start"] != "2023-01-01"
+            or retrospective_etas["period"]["end_exclusive"] != "2026-08-19"
+        ):
+            raise ValueError("CH-004 ETAS manifests are not contiguous")
+        etas_manifest = {
+            **etas_manifest,
+            "outputs": {
+                "shards": [
+                    *etas_manifest["outputs"]["shards"],
+                    *retrospective_etas["outputs"]["shards"],
+                ]
+            },
+        }
     simulation = json.loads(Path(config["simulation_config"]).read_text())
     inputs = attach_etas_background_probabilities(
         catalog,

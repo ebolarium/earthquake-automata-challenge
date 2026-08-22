@@ -31,7 +31,7 @@ prospective activation but is not a scientific ETAS-superiority claim.
 
 ## Status
 
-Baseline extension in progress; locked retrospective scores unopened.
+Baseline extension completed; history retry pre-registered; scores unopened.
 
 The first history-construction preflight stopped before producing an artifact
 or score because the existing monthly ETAS grid ended at 2023-01-01. The
@@ -39,3 +39,10 @@ missing 2023-2026 baseline period is now pre-registered with the unchanged ETAS
 parameters, catalog, grid, seed, and 10,000 continuations per issue day. After
 those shards are complete, their manifest hash must be added to the history
 contract before history construction is retried.
+
+The extension completed all 44 monthly shards and 1,326 issue days with 10,000
+continuations per day. The canonical manifest SHA-256 is
+`e149a92fd926d16dbb01bfccefcf889a04c3a8018682841bcb95944418c570bf`.
+All artifact hashes, shapes, positive rates, expected-count sums, and global day
+continuity passed the verifier. The history contract binds both the original
+2007-2022 manifest and this contiguous 2023-2026 extension separately.
