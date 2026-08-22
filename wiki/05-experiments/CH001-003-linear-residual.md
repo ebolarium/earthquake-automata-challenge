@@ -66,3 +66,48 @@ opening 2019-2022. It verifies the model against the pre-validation lock commit,
 requires a clean worktree, and refuses any split that is not composed of whole
 monthly shards. The locked retrospective period is not addressable by this
 evaluation configuration.
+
+## Development Validation
+
+| Stratum | Events | IGPE | 95% CI, 30-day blocks | 95% CI, 90-day blocks |
+|---|---:|---:|---:|---:|
+| `M >= 2.5` | 5,204 | 0.013591 | [-0.013895, 0.048660] | [-0.014694, 0.052748] |
+| `M >= 3.5` | 765 | 0.006435 | [-0.022517, 0.064020] | [-0.022632, 0.069929] |
+| `M >= 4.0` | 263 | 0.000694 | [-0.029735, 0.060001] | [-0.025667, 0.061116] |
+| Low ETAS | 1,331 | -0.066100 | [-0.130859, -0.002713] | [-0.133948, 0.007032] |
+
+The primary mean is positive, but both block-bootstrap intervals include zero.
+Higher-magnitude gains are close to zero and also uncertain. More importantly,
+the fit-locked low-ETAS stratum is negative; its 30-day interval lies entirely
+below zero. The candidate therefore fails the intended rare-event objective.
+
+Daily expected counts are numerically identical to ETAS, with a validation sum
+of `5,263.078453`. Number and magnitude tests are consequently inherited from
+the same frozen ETAS forecast; conditional spatial gain equals pseudolikelihood
+gain because only spatial allocation changed.
+
+## Diagnostics
+
+| Year | All-event IGPE | Low-ETAS IGPE |
+|---|---:|---:|
+| 2019 | -0.000430 | -0.039925 |
+| 2020 | -0.016489 | -0.164995 |
+| 2021 | 0.061109 | -0.024325 |
+| 2022 | 0.052246 | 0.046710 |
+
+Low-ETAS events are 25.6% of validation targets, close to the fit-defined 25%
+stratum. Outside that stratum the model gains `0.040978 nat/event`. The model
+therefore mostly sharpens locations where ETAS is already relatively strong,
+rather than discovering surprising events.
+
+## Decision
+
+CH001-003 is completed but not promoted. The locked retrospective test remains
+unopened. The result is retained as a failed experiment: an unconstrained
+global spatial-likelihood objective can improve common/high-ETAS locations
+while actively harming the rare-event behavior that motivated the challenge.
+
+A successor should change the fit objective, not merely add complexity. The
+most direct candidate is a fit-only low-intensity-aware residual with explicit
+stratum weighting or a constraint that prevents negative fit performance in
+low-ETAS event cells, followed by the same pre-validation lock procedure.

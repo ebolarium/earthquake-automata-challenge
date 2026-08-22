@@ -17,8 +17,9 @@ is now frozen. The current milestone is `CH-001`, an ETAS residual-emergence
 spatial challenger developed only on the admitted fit and validation splits.
 Its leakage-free catalog matrix and matching frozen ETAS grid offset are
 complete. The first fit-only linear residual artifact is now locked without
-opening the retrospective split; development-validation scoring is the next
-gate.
+opening the retrospective split. Its development-validation mean gain was
+positive but uncertain, and performance in low-ETAS cells was negative; this
+candidate is not promoted to the locked retrospective test.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim
