@@ -13,13 +13,15 @@ repository does not import code, databases, predictions, or runtime state from
 The locked EarthquakeNPP `ComCat_25` reproduction, native likelihood alignment,
 clean local catalog export, leakage-free daily replay, documented pyCSEP day-7
 consistency gate, and independent ETAS forecast page are complete. Challenge V1
-is now frozen. The current milestone is `CH-001`, an ETAS residual-emergence
-spatial challenger developed only on the admitted fit and validation splits.
+is now frozen. `CH-001`, an ETAS residual-emergence spatial challenger, was
+developed only on the admitted fit and validation splits.
 Its leakage-free catalog matrix and matching frozen ETAS grid offset are
 complete. The first fit-only linear residual artifact is now locked without
 opening the retrospective split. Its development-validation mean gain was
 positive but uncertain, and performance in low-ETAS cells was negative; this
-candidate is not promoted to the locked retrospective test.
+candidate is not promoted to the locked retrospective test. The current
+milestone is `CH-002`, a separate latent fault-readiness challenger that
+preserves ETAS triggering and redistributes only its direct background mass.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim

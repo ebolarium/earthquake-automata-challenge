@@ -1,0 +1,39 @@
+{
+  "schema_version": 1,
+  "contract_id": "ch002-state-replay-v0",
+  "status": "synthetic_contract_implemented_no_fit",
+  "clock": {
+    "issue_time": "00:00:00 UTC",
+    "forecast_before_observation": true,
+    "observed_day_updates": "next_issue_only",
+    "days_per_year": 365.2425
+  },
+  "loading": {
+    "branches": 8,
+    "particles_per_branch": 32,
+    "seismic_loading": "slip_rate * (1 - aseismicity) * coupling_coefficient",
+    "normalization": "centered_unit_rms_within_active_branch"
+  },
+  "event_assignment": {
+    "method": "gaussian_trace_distance_plus_off_fault_state",
+    "bandwidth_km": 10.0,
+    "cutoff_km": 40.0,
+    "fault_prior_odds": 4.0,
+    "deterministic_nearest_fault_forbidden": true
+  },
+  "state_update": {
+    "equation": "margin_next = center(margin + loading + bounded_background_assimilation - rupture_depletion)",
+    "assimilation_weight": "frozen_etas_direct_background_probability",
+    "assimilation_bound": "sigmoid(-current_margin)",
+    "release_scaling": "release_gain * 10^(release_exponent * (magnitude - 2.5))",
+    "directional_transfer": 0.0
+  },
+  "fit_only_parameter_bounds": {
+    "loading_gain_per_year": [0.0, 2.0],
+    "assimilation_gain": [0.0, 2.0],
+    "release_gain": [0.0, 2.0],
+    "release_magnitude_exponent": [0.0, 1.0],
+    "background_tilt_sensitivity": [0.0, 2.0]
+  },
+  "claim_boundary": "Daily state-transition contract and synthetic tests only. No fit, validation, retrospective result, or physical stress calibration."
+}

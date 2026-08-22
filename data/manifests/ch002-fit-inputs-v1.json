@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ch002-fit-inputs-v1",
+  "status": "completed_fit_only",
+  "tool": {
+    "name": "scripts/prepare_ch002_fit_inputs.py",
+    "script_sha256": "5b84ab74d1da696e01ca108353a82fb0eff33b5c8a0c5457a24fd8d2e7132ec5",
+    "module_sha256": "90df5cdaf55f16b340f13badf6f46fe2e1b6f73b4f7c317781d44ff2617ec206",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "inputs": {
+    "config_sha256": "d0f68123e1a60c8d347d31a567aa6199da27dd03de24f23dd38a767f64d142ee",
+    "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "etas_manifest_sha256": "5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543"
+  },
+  "period": {
+    "start": "2014-01-07T00:00:00Z",
+    "end_exclusive": "2019-01-01T00:00:00Z",
+    "validation_opened": false
+  },
+  "protocol": {
+    "history_boundary": "forecast before same-day observations",
+    "magnitude_rounding": 0.1,
+    "magnitude_threshold": 2.5,
+    "background_posterior": "analytical direct background cell rate / frozen total ETAS cell rate",
+    "event_fault_geometry": "eight nearest UCERF3 trace sections from exact event coordinates"
+  },
+  "output": {
+    "path": "data/local/ch002-fit-inputs-v1.npz",
+    "git_policy": "ignored_generated_data",
+    "bytes": 249146,
+    "sha256": "1e414fca8774d9dac9e76c40ddde80dcd2406fa213023855e1f86750ec284558"
+  },
+  "results": {
+    "issue_days": 1820,
+    "selected_events_before_grid": 3978,
+    "outside_relm_grid": 359,
+    "fit_events": 3619,
+    "event_days": 1352,
+    "verified_etas_monthly_shards": 60,
+    "magnitude_min": 2.5,
+    "magnitude_max": 6.300000000000001,
+    "magnitude_gte_3_5": 466,
+    "magnitude_gte_4_0": 126,
+    "posterior_background_event_mass": 522.7561899990094,
+    "etas_background_probability_min": 1.885577984026317e-05,
+    "etas_background_probability_median": 0.01142715959321487,
+    "etas_background_probability_mean": 0.14444768996933113,
+    "etas_background_probability_max": 1.0
+  },
+  "claim_boundary": "Fit-period input construction only. No parameter optimization, validation access, forecast score, or retrospective access."
+}

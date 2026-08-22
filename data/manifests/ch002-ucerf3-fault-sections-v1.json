@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ch002-ucerf3-fault-sections-v1",
+  "status": "completed",
+  "source": {
+    "publication": "USGS Open-File Report 2013-1165",
+    "url": "https://pubs.usgs.gov/of/2013/1165/data/ofr2013-1165_FaultSectionData.xlsx",
+    "retrieved_at": "2026-08-22T13:28:42+03:00",
+    "bytes": 821878,
+    "sha256": "aa3d8ee48acb0887efa79921eccfde0f1a227b53688db8fa2d63f289096eb589",
+    "git_policy": "ignored_raw_input",
+    "first_admitted_issue_date": "2014-01-07"
+  },
+  "parser": {
+    "command": "python3 scripts/prepare_ch002_fault_sections.py",
+    "script_sha256": "d9a5ace20d9e71706a9469cb73c84032001888e453f9d87bf01a8455c0613421",
+    "ucerf3_module_sha256": "88bd1386b13d1e01662e1a248571c329c28a3b23162e811b6add76e3079b2da3",
+    "xlsx_reader_sha256": "0d4b2f017d13b5d775a98bcc92dfb53345a312511a837bb0706373fc59f81e8b"
+  },
+  "output": {
+    "path": "data/local/ch002-ucerf3-fault-sections-v1.json",
+    "git_policy": "ignored_generated_data",
+    "bytes": 373228,
+    "sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543"
+  },
+  "results": {
+    "sections": 350,
+    "fault_model_3_1_sections": 313,
+    "fault_model_3_2_sections": 320,
+    "trace_vertices": 2407,
+    "slip_rate_branches": 8,
+    "slip_rate_units": "millimeters_per_year"
+  },
+  "claim_boundary": "Source acquisition and deterministic parsing only. No stress, strength, readiness, forecast, validation score, or superiority result is included."
+}

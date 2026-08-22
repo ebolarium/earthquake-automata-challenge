@@ -19,6 +19,11 @@ first admitted model is `CH-001`, a catalog-only residual-emergence correction
 to ETAS. Historical RQ artifacts and production databases remain outside this
 repository.
 
+`CH-002` is admitted as an independent latent fault-readiness family after the
+completed, non-promoted CH-001 validation. It may use provenance-qualified
+fault information but cannot import legacy ledger values or claim that its
+dimensionless criticality state is observed physical stress.
+
 ## Rules
 
 - Forecasts use only information available at the forecast issue time.

@@ -11,6 +11,13 @@
 | CH001-001 | Completed | Can CH-001 receive leakage-free daily grid features and targets? | Fit and validation periods, California RELM grid | 5,844 days and 44,893,608 cell-days generated and verified |
 | CH001-002 | Completed | Can the frozen EarthquakeNPP ETAS forecast be converted to positive daily RELM cell rates with bounded memory? | Fit and validation periods, 10,000 continuations per day | 5,844 positive daily grids generated and all 192 shards verified |
 | CH001-003 | Completed, not promoted | Can a fixed linear catalog residual improve ETAS spatial allocation without changing daily counts? | CH001-001 features and CH001-002 rates | Validation IGPE +0.01359 with CI crossing zero; low-ETAS IGPE -0.06610 |
+| CH002-001 | Contract implemented | Can latent fault readiness alter only ETAS direct-background allocation while preserving triggering and total count? | Frozen ETAS decomposition, synthetic margins | Numerical component and state-transition contract implemented; no skill result |
+| CH002-002 | Completed | Which fault-system inputs can enter a leakage-controlled retrospective model? | UCERF3, ComCat product documentation, NSHM23 provenance | UCERF3 admitted from 2014-01-07; modern/revision-prone sources deferred |
+| CH002-003 | Completed | Can admitted UCERF3 sections be parsed and represented on the RELM grid without model fitting? | 350 UCERF3 sections, 7,682 RELM cells | Eight loading branches retained; deterministic four-nearest-section geometry generated |
+| CH002-004 | Completed | Can initial stress-minus-strength uncertainty be represented without one asserted stress map? | UCERF3 pair geometry, 256 seeded particles | Geometry-weighted graph and centered unit-variance latent ensemble frozen; no target read |
+| CH002-005 | Contract implemented | Can daily loading, background-weighted assimilation, and rupture depletion remain leakage-free? | Synthetic events, eight loading branches | Daily next-issue transition and probabilistic off-fault assignment tested; no fit |
+| CH002-006 | Completed | Can fit events receive same-day frozen ETAS background posteriors without validation access? | 2014-2018 catalog and 60 frozen ETAS shards | 3,619 RELM events across 1,820 fit days; posterior background mass 522.76 |
+| CH002-007 | Pre-registered, unrun | Can latent readiness improve ETAS on fit-only selection and report-only holdout periods? | Locked CH002-003 through CH002-006 inputs | 33-candidate Sobol protocol frozen; no real objective evaluated |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,

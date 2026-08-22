@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "fit_id": "ch002-readiness-fit-v1",
+  "status": "pre_registered_unrun",
+  "fit_inputs_manifest": "data/manifests/ch002-fit-inputs-v1.json",
+  "fit_inputs_manifest_sha256": "9bc97ec6143074e4154f7381fe11768e347d759969d06768c3c0db05e9c040fc",
+  "fit_inputs": "data/local/ch002-fit-inputs-v1.npz",
+  "fit_inputs_sha256": "1e414fca8774d9dac9e76c40ddde80dcd2406fa213023855e1f86750ec284558",
+  "initial_state_manifest": "data/manifests/ch002-fault-graph-initial-state-v1.json",
+  "initial_state_manifest_sha256": "51aa162727ace883e7241e732a8110229ecb8b4b5f105f411dfb418da654ae56",
+  "initial_state": "data/local/ch002-fault-graph-initial-state-v1.npz",
+  "initial_state_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+  "fault_grid_manifest": "data/manifests/ch002-ucerf3-relm-nearest-v1.json",
+  "fault_grid_manifest_sha256": "4e9d7c83801454ab8aac455f2627910034726ac9bb3dd6c589bf93bad12956e3",
+  "fault_grid": "data/local/ch002-ucerf3-relm-nearest-v1.npz",
+  "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+  "fault_sections": "data/local/ch002-ucerf3-fault-sections-v1.json",
+  "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+  "grid": "data/grids/california-relm-v1.json",
+  "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+  "simulation_config": "configs/evaluation/comcat25-pycsep-day7-v1.json",
+  "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+  "state_contract": "configs/challenge/ch002-state-replay-v0.json",
+  "state_contract_sha256": "25ad0a202b085b95d8cc293925598dc97748d3e3ab0915c0f2c29388910c4f34",
+  "period": {
+    "start": "2014-01-07",
+    "selection_end_exclusive": "2018-01-01",
+    "fit_holdout_start": "2018-01-01",
+    "end_exclusive": "2019-01-01",
+    "validation_opened": false
+  },
+  "candidate_protocol": {
+    "sampler": "scipy_sobol_scramble",
+    "seed": 20260822,
+    "sobol_power": 5,
+    "sobol_candidates": 32,
+    "include_zero_candidate": true,
+    "selection_metric": "2014-2017_information_gain_per_earthquake",
+    "fit_holdout_role": "report_only_not_model_selection",
+    "validation_admission": "selected_candidate_requires_positive_2018_fit_holdout_igpe"
+  },
+  "parameter_order": [
+    "loading_gain_per_year",
+    "assimilation_gain",
+    "release_gain",
+    "release_magnitude_exponent",
+    "background_tilt_sensitivity"
+  ],
+  "parameter_bounds": [
+    [0.0, 2.0],
+    [0.0, 2.0],
+    [0.0, 2.0],
+    [0.0, 1.0],
+    [0.0, 2.0]
+  ],
+  "fixed_geometry": {
+    "grid_projection_bandwidth_km": 10.0,
+    "grid_projection_cutoff_km": 40.0,
+    "fault_prior_odds": 4.0,
+    "directional_transfer": 0.0
+  },
+  "model_output": "models/ch002-readiness-v1.json",
+  "fit_manifest": "data/manifests/ch002-readiness-v1-fit.json",
+  "candidate_output": "artifacts/ch002-readiness-v1-fit/candidates.csv",
+  "claim_boundary": "Fit-only candidate selection with a report-only 2018 holdout. Development validation and locked retrospective outcomes remain unopened."
+}

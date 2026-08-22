@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "challenger_id": "ch002-latent-fault-readiness-v0",
+  "status": "pre_registered_inputs_acquired_no_fit",
+  "frozen_baseline": {
+    "challenge_contract": "configs/challenge/challenge-v1.json",
+    "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+    "etas_grid_manifest": "data/manifests/ch001-etas-grid-v1.json",
+    "etas_grid_manifest_sha256": "5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d",
+    "grid": "data/grids/california-relm-v1.json",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9"
+  },
+  "periods": {
+    "eligible_fit_start": "2014-01-07",
+    "fit_end_exclusive": "2019-01-01",
+    "development_validation_start": "2019-01-01",
+    "development_validation_end_exclusive": "2023-01-01",
+    "locked_retrospective_opened": false
+  },
+  "forecast_contract": {
+    "equation": "triggered_etas + redistribute(direct_background, criticality_margin)",
+    "preserve_daily_expected_count": true,
+    "preserve_triggered_component": true,
+    "state_units": "dimensionless",
+    "absolute_stress_claim_allowed": false,
+    "initial_state": "seeded_correlated_particle_ensemble",
+    "event_assimilation_weight": "direct_background_rate / total_etas_rate"
+  },
+  "initial_state_prior": {
+    "particles": 256,
+    "seed": 20260822,
+    "correlation_length_km": 25.0,
+    "axial_alignment_floor": 0.25,
+    "graph_smoothness": 4.0,
+    "fault_model_compatibility_required": true,
+    "construction": "centered_unit_variance_correlated_stress_minus_correlated_effective_strength",
+    "absolute_units": false
+  },
+  "first_candidate": {
+    "admitted_terms": [
+      "initial_state_ensemble",
+      "tectonic_loading",
+      "rupture_depletion",
+      "background_posterior_assimilation"
+    ],
+    "deferred_terms": [
+      "directional_transfer_from_current_mechanism_products",
+      "most_recent_event_dates",
+      "nshm23_inputs",
+      "legacy_automata_state_values"
+    ]
+  },
+  "evaluation": {
+    "primary_metric": "paired_information_gain_per_earthquake_vs_frozen_etas",
+    "bootstrap": "10000_replicate_30_day_blocks",
+    "sensitivity_bootstrap": "90_day_blocks",
+    "mandatory_slices": [
+      "low_etas_intensity",
+      "high_etas_intensity",
+      "magnitude_gte_3_5",
+      "magnitude_gte_4_0"
+    ],
+    "mandatory_ablations": [
+      "no_loading",
+      "no_rupture_depletion",
+      "no_event_assimilation",
+      "uniform_initial_state"
+    ],
+    "promotion_rule": "positive overall evidence without material low-ETAS degradation"
+  },
+  "claim_boundary": "Pre-registration and admitted static inputs only. No CH-002 model was fitted, no forecast skill was measured, and the locked retrospective split remains unopened."
+}

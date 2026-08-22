@@ -1,0 +1,70 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ch002-fault-graph-initial-state-v1",
+  "status": "completed_no_fit",
+  "inputs": {
+    "fault_sections_path": "data/local/ch002-ucerf3-fault-sections-v1.json",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+    "challenge_config": "configs/challenge/ch002-readiness-v0.json",
+    "challenge_config_sha256": "0d3dcab377dea849d0a1a4976493ca759ed4538bb603fcea411515af95e7ae08"
+  },
+  "method": {
+    "command": "python3 scripts/prepare_ch002_fault_graph.py",
+    "script_sha256": "89d1cdf1fa9428f2f49c9ce51ef9b5eebded9a1be806a01068860be3e7c3387f",
+    "module_sha256": "57ea0058ed801457fbadd7012bdeb99b0aa6cf98b638b3c5baec8cf93e580f4c",
+    "replay_module_sha256": "99616ea6571794f24cef11300eb217b73fca2b519ea16089f6d2a39c1bffc040",
+    "pair_distance": "minimum segment-to-segment distance in one common local equirectangular projection per fault pair",
+    "orientation": "length-weighted axial strike alignment",
+    "fault_model_rule": "edge weight is zero unless sections share FM3.1 or FM3.2",
+    "adjacency": "exp(-0.5*(distance/25km)^2) * (0.25 + 0.75*alignment^2)",
+    "correlation_length_km": 25.0,
+    "alignment_floor": 0.25
+  },
+  "initial_state_prior": {
+    "particles": 256,
+    "seed": 20260822,
+    "graph_smoothness": 4.0,
+    "precision": "I + 4 * normalized_graph_laplacian",
+    "components": "independent correlated stress and effective-strength latent draws",
+    "loading_branches": "8 branches with exactly 32 particles each",
+    "identified_state": "branch-active centered unit-variance stress minus effective strength; inactive sections zero",
+    "units": "dimensionless"
+  },
+  "output": {
+    "path": "data/local/ch002-fault-graph-initial-state-v1.npz",
+    "git_policy": "ignored_generated_data",
+    "bytes": 2054017,
+    "sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+    "arrays": {
+      "section_ids": "int32[350]",
+      "trace_distance_km": "float32[350,350]",
+      "axial_alignment": "float32[350,350]",
+      "shared_fault_model": "bool[350,350]",
+      "adjacency": "float32[350,350]",
+      "stress_component": "float32[256,350]",
+      "effective_strength_component": "float32[256,350]",
+      "criticality_margin": "float32[256,350]",
+      "particle_loading_branch": "unicode[256]",
+      "particle_active_sections": "bool[256,350]"
+    }
+  },
+  "results": {
+    "sections": 350,
+    "fault_pairs": 61075,
+    "effective_edges_weight_gt_1e_6": 11561,
+    "edges_weight_gt_0_01": 6234,
+    "minimum_pair_distance_km": 0.0,
+    "median_pair_distance_km": 312.67401123046875,
+    "maximum_pair_distance_km": 1233.4058837890625,
+    "particles_per_loading_branch": 32,
+    "fm3_1_active_sections": 313,
+    "fm3_2_active_sections": 320,
+    "inactive_margin_nonzero_values": 0,
+    "maximum_active_particle_absolute_mean": 4.247704055160284e-09,
+    "active_particle_standard_deviation_min": 0.9999999931119847,
+    "active_particle_standard_deviation_max": 1.0000000070975468,
+    "float32_component_identity_max_error": 2.384185791015625e-07,
+    "repeated_export_sha256_equal": true
+  },
+  "claim_boundary": "Seeded prior geometry and latent initial-state uncertainty only. Components are not measured stress or strength, and no earthquake target, fit, forecast score, or validation outcome was read."
+}
