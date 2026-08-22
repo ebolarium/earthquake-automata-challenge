@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "challenger_id": "ch004-marked-renewal-quiescence-v0",
+  "status": "component_contract_no_catalog_evaluation",
+  "frozen_baseline": {
+    "challenge_contract": "configs/challenge/challenge-v1.json",
+    "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+    "model": "EarthquakeNPP spatial-temporal ETAS ComCat_25",
+    "magnitude_reference": 2.5,
+    "beta": 2.1471442086213064
+  },
+  "hypothesis": "Fault-local ETAS-normalized time since a magnitude-marked independent root contains renewal information absent from memoryless ETAS background.",
+  "state_contract": {
+    "state": "expected cumulative ETAS reset hazard since the last probabilistic marked reset",
+    "daily_aging": "analytical ETAS direct-background section mass times expected reset mark under Gutenberg-Richter",
+    "daily_reset": "one minus exp of negative posterior root mass times observed magnitude reset mark",
+    "magnitude_mark": "min(1, 10^(exponent * (magnitude - full_reset_magnitude)))",
+    "hazard_transform": "positive log Brownian-passage-time hazard above unit-rate exponential baseline",
+    "forecast_before_same_day_reset": true,
+    "absolute_initial_stress_used": false,
+    "paleoseismic_last_event_claimed": false,
+    "bpt_model_claimed": false
+  },
+  "warmup_contract": {
+    "start": "2007-01-01",
+    "end_exclusive": "2014-01-07",
+    "scored": false,
+    "initial_age_at_warmup_start": 0.0,
+    "fault_source_availability": "UCERF3 is treated as available on 2014-01-07; mapping then-known historical events to that source is allowed only to initialize forecasts issued on or after that date.",
+    "limitation": "The seven-year warmup is not a complete earthquake-cycle history."
+  },
+  "fit_contract": {
+    "start": "2014-01-07",
+    "end_exclusive": "2019-01-01",
+    "development_validation_opened": false,
+    "locked_retrospective_opened": false,
+    "selection": "risk-sensitive annual IGPE with nonnegative low-ETAS veto",
+    "memoryless_etas_control_required": true
+  },
+  "forecast_contract": {
+    "equation": "triggered_etas + bounded_mixture(direct_background, renewal_overdue_score)",
+    "preserve_daily_expected_count": true,
+    "preserve_triggered_component": true,
+    "maximum_background_mixture_fraction": 0.1,
+    "zero_overdue_evidence_equals_etas": true
+  },
+  "future_fit_bounds": {
+    "full_reset_magnitude": [3.5, 6.5],
+    "magnitude_exponent": [0.25, 0.75],
+    "bpt_aperiodicity": [0.3, 1.0],
+    "graph_neighborhood_mix": [0.0, 0.75],
+    "minimum_branch_consensus": [0.5, 0.875],
+    "background_mixture_fraction": [0.0, 0.1],
+    "renewal_sensitivity": [0.0, 2.0]
+  },
+  "claim_boundary": "Synthetic component contract only. This is a BPT-inspired proxy, not a fitted BPT recurrence forecast. No CH004 catalog score has been evaluated."
+}

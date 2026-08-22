@@ -21,6 +21,7 @@
 | CH003-001 | Contract implemented | Can ETAS-compensated fault-network emergence remain neutral without evidence and bound its downside? | Synthetic innovations and fault graphs | CUSUM, coherence, consensus, and bounded-mixture invariants implemented; no catalog score |
 | CH003-002 | Completed | Can observed posterior root mass and expected ETAS background mass share exactly the same section geometry? | Locked fit inputs, UCERF3 branches, RELM grid | 1,820 branch-aware days; mass conserved within 6.82e-13; no CH-003 score |
 | CH003-003 | Completed, not admitted | Can coherent ETAS residual emergence improve next-day forecasts robustly across years and low-ETAS events? | CH003-002 and frozen ETAS fit inputs | 20 active candidates; none passed annual robustness or low-ETAS veto; exact ETAS control selected |
+| CH004-001 | Contract implemented | Can ETAS-normalized quiescence form a magnitude-marked renewal clock without absolute stress or hard declustering? | Synthetic marked resets and hazard ages | GR expectation, soft reset, and BPT-inspired overdue components implemented; no catalog score |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,
