@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "fit_id": "ch003-residual-emergence-fit-v1",
+  "status": "pre_registered_unrun",
+  "component_contract": "configs/challenge/ch003-residual-emergence-v0.json",
+  "component_contract_sha256": "b7b63f264de79aa9c7c0ade39f7c1e353f3c581d5ed6881323949b5602f7aef1",
+  "compensator_manifest": "data/manifests/ch003-section-compensator-v1.json",
+  "compensator_manifest_sha256": "8120a168dc3092d1ab4020300e567bd082fce8abb425b5068c93c7d1f1b6cbf0",
+  "compensator": "data/local/ch003-section-compensator-v1.npz",
+  "compensator_sha256": "13dee5359f05c6a70fc0d7cd05d3d886160b21934df9b21ecc0f62655ea00900",
+  "fit_inputs": "data/local/ch002-fit-inputs-v1.npz",
+  "fit_inputs_sha256": "1e414fca8774d9dac9e76c40ddde80dcd2406fa213023855e1f86750ec284558",
+  "fault_grid": "data/local/ch002-ucerf3-relm-nearest-v1.npz",
+  "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+  "grid": "data/grids/california-relm-v1.json",
+  "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+  "simulation_config": "configs/evaluation/comcat25-pycsep-day7-v1.json",
+  "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+  "period": {
+    "start": "2014-01-07",
+    "end_exclusive": "2019-01-01",
+    "development_validation_opened": false,
+    "locked_retrospective_opened": false
+  },
+  "candidate_protocol": {
+    "sampler": "scipy_sobol_scramble",
+    "seed": 20260822,
+    "sobol_power": 5,
+    "sobol_candidates": 32,
+    "include_etas_control": true,
+    "half_life_transform": "log_uniform",
+    "selection_metric": "mean_annual_igpe_minus_population_sd_annual_igpe",
+    "annual_loss_floor": -0.01,
+    "require_positive_mean_igpe": true,
+    "require_nonnegative_low_etas_igpe": true,
+    "low_etas_quantile": 0.25,
+    "admission": "best admissible nonzero candidate; otherwise ETAS control"
+  },
+  "parameter_order": [
+    "memory_half_life_days",
+    "standardized_threshold",
+    "graph_diffusion",
+    "minimum_branch_consensus",
+    "background_mixture_fraction",
+    "emergence_sensitivity"
+  ],
+  "parameter_bounds": [
+    [30.0, 730.0],
+    [0.5, 4.0],
+    [0.0, 0.5],
+    [0.5, 0.875],
+    [0.005, 0.1],
+    [0.1, 2.0]
+  ],
+  "etas_control_parameters": [180.0, 2.0, 0.25, 0.75, 0.0, 1.0],
+  "fixed_contract": {
+    "graph_neighbors": 8,
+    "variance_floor": 1.0,
+    "maximum_log_tilt": 4.0,
+    "grid_bandwidth_km": 10.0,
+    "grid_cutoff_km": 40.0,
+    "fault_prior_odds": 4.0
+  },
+  "model_output": "models/ch003-residual-emergence-v1.json",
+  "fit_manifest": "data/manifests/ch003-residual-emergence-v1-fit.json",
+  "candidate_output": "artifacts/ch003-residual-emergence-v1-fit/candidates.csv",
+  "claim_boundary": "All 2014-2018 outcomes are development data. No 2019-2022 CH003 score or locked-retrospective outcome is evaluated."
+}
