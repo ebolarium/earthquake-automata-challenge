@@ -33,4 +33,9 @@ target, or retrospective-test event is admitted to this candidate.
 
 ## Status
 
-Implementation pending fit-only reproducibility and commit gate.
+The first fit-only preflight reached the frozen 40-iteration optimizer limit
+without writing a model. Its final objective was changing at roughly `2e-10`
+and fit IGPE had stabilized near `0.0484203`, but the convergence flag remained
+false. No validation shard was opened. Because optimizer convergence is a fit
+concern, the candidate contract now allows 80 iterations and uses an `ftol` of
+`1e-9`; this change must be committed before the fit is rerun.

@@ -23,8 +23,8 @@
     "name": "L-BFGS-B",
     "l2_per_target": 0.01,
     "weight_bound": 3.0,
-    "max_iterations": 40,
-    "ftol": 1e-10,
+    "max_iterations": 80,
+    "ftol": 1e-9,
     "gtol": 1e-7
   },
   "model_output": "models/ch001-linear-v1.json",
