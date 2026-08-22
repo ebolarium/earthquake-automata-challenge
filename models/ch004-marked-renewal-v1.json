@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "model_id": "ch004-marked-renewal-v1",
+  "status": "fit_locked_validation_unseen",
+  "fit_lock_commit": "e2b551bec611842b108b1ace968fdda0cddeffa8",
+  "selected_candidate_id": 19,
+  "selected_nonzero_candidate": true,
+  "parameters": {
+    "full_reset_magnitude": 4.088951385580003,
+    "magnitude_exponent": 0.35896617639809847,
+    "bpt_aperiodicity": 0.9892824226059018,
+    "graph_neighborhood_mix": 0.6765009602531791,
+    "minimum_branch_consensus": 0.7743960032239556,
+    "background_mixture_fraction": 0.06304375926498323,
+    "renewal_sensitivity": 0.6854983473196625
+  },
+  "fit_scores": {
+    "mean_igpe": 0.00025470533273113386,
+    "relative_factor": 1.0002547377728885,
+    "robust_annual_igpe": 0.0001127572096285585,
+    "low_etas_igpe": 0.0008677002980664323,
+    "annual_igpe": {
+      "2014": 0.00014163597096611375,
+      "2015": 0.00021224806216228327,
+      "2016": 0.00010341956018081751,
+      "2017": 0.0005757892183894662,
+      "2018": 0.000533648006282276
+    },
+    "active_issue_days": 1352,
+    "development_validation_admitted": true
+  },
+  "claim_boundary": "All 2014-2018 outcomes are development data. No 2019-2022 CH004 score or locked-retrospective outcome is evaluated."
+}

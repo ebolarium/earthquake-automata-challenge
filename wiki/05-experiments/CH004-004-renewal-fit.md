@@ -26,6 +26,33 @@ events reset the clock. All code, bounds, seed, vetoes, and input hashes must be
 committed before execution. No 2019-2022 CH-004 score or locked-retrospective
 outcome may be read.
 
+## Fit Result
+
+The locked run evaluated 3,619 fit-development events, including 906 events in
+the fit-defined low-ETAS quartile. Candidate 19 won the risk-sensitive rule.
+
+| Quantity | Value |
+| --- | ---: |
+| Mean IGPE | +0.00025471 |
+| Robust annual IGPE | +0.00011276 |
+| Low-ETAS IGPE | +0.00086770 |
+| 2014 IGPE | +0.00014164 |
+| 2015 IGPE | +0.00021225 |
+| 2016 IGPE | +0.00010342 |
+| 2017 IGPE | +0.00057579 |
+| 2018 IGPE | +0.00053365 |
+| Development validation admitted | Yes |
+
+Selected parameters include full-reset magnitude `4.08895`, magnitude exponent
+`0.35897`, BPT aperiodicity `0.98928`, graph-neighborhood mix `0.67650`, and a
+bounded background mixture fraction of `0.06304`.
+
+The gain is small but consistent across all five fit years, and the low-ETAS
+gain is larger than the overall mean. This is the first challenger in the
+project to satisfy the pre-registered rare-event and annual-robust admission
+rules. It is not yet a validation result or an ETAS-superiority claim.
+
 ## Status
 
-Pre-registered and unrun.
+Fit completed and locked from commit `e2b551b`; admitted to development
+validation. No 2019-2022 CH-004 outcome has been read.

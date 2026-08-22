@@ -35,7 +35,9 @@ admitted to development validation.
 `CH-004` now begins a complementary marked-renewal quiescence family. It measures
 fault-local silence in expected ETAS root-hazard units and uses magnitude-scaled
 soft resets instead of an asserted initial stress map. Its synthetic component
-contract is frozen; no CH-004 catalog score has been evaluated.
+contract, event warmup, and fit are complete. The selected fit candidate has
+positive overall, annual-robust, and low-ETAS information gain and is admitted
+to development validation; no 2019-2022 CH-004 outcome has yet been read.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim
