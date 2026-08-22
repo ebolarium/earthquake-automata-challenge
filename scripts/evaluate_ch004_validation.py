@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Score the fit-locked CH-004 model on 2019-2022 validation data."""
+"""Score the fit-locked CH-004 model on a contract-gated evaluation split."""
 
 from __future__ import annotations
 
@@ -65,6 +65,8 @@ def require_committed_gate(config: dict, config_path: Path) -> str:
         config["event_history_manifest"],
         "scripts/evaluate_ch004_validation.py",
     ]
+    if config.get("evaluation_role", "development_validation") == "locked_retrospective":
+        required.extend((config["validation_manifest"], config["challenge_contract"]))
     tracked = set(git_output("ls-files", *required).splitlines())
     if tracked != set(required):
         raise ValueError("CH-004 validation protocol and locked inputs must be committed")
@@ -214,15 +216,30 @@ def main() -> int:
     config = json.loads(args.config.read_text(encoding="utf-8"))
     config_path = args.config.resolve().relative_to(ROOT)
     period = config["period"]
+    evaluation_role = config.get("evaluation_role", "development_validation")
+    validation_role = (
+        evaluation_role == "development_validation"
+        and period["start"] == "2019-01-01"
+        and period["end_exclusive"] == "2023-01-01"
+        and period["development_validation_opened"] is True
+        and period["locked_retrospective_opened"] is False
+    )
+    retrospective_role = (
+        evaluation_role == "locked_retrospective"
+        and period["start"] == "2023-01-01"
+        and period["end_exclusive"] == "2026-08-19"
+        and period["development_validation_opened"] is True
+        and period["locked_retrospective_opened"] is True
+    )
+    if not (validation_role or retrospective_role):
+        raise ValueError("CH-004 evaluation period violates the frozen contract")
     if (
-        period["start"] != "2019-01-01"
-        or period["end_exclusive"] != "2023-01-01"
-        or period["development_validation_opened"] is not True
-        or period["locked_retrospective_opened"] is not False
+        retrospective_role
+        and config["bootstrap"]["seed"] != 20260821
     ):
-        raise ValueError("CH-004 validation period violates the frozen contract")
+        raise ValueError("CH-004 retrospective bootstrap seed differs from challenge")
     evaluation_commit = require_committed_gate(config, config_path)
-    for path_key, hash_key in (
+    locked_inputs = [
         ("model", "model_sha256"),
         ("fit_manifest", "fit_manifest_sha256"),
         ("fit_config", "fit_config_sha256"),
@@ -233,7 +250,12 @@ def main() -> int:
         ("fault_sections", "fault_sections_sha256"),
         ("grid", "grid_sha256"),
         ("simulation_config", "simulation_config_sha256"),
-    ):
+    ]
+    if retrospective_role:
+        locked_inputs.extend(
+            (("validation_manifest", "validation_manifest_sha256"), ("challenge_contract", "challenge_contract_sha256"))
+        )
+    for path_key, hash_key in locked_inputs:
         if sha256_file(Path(config[path_key])) != config[hash_key]:
             raise ValueError(f"CH-004 validation locked input changed: {path_key}")
 
@@ -244,8 +266,16 @@ def main() -> int:
         raise ValueError("CH-004 model is not validation-unseen")
     if fit_manifest["protocol"]["development_validation_opened"] is not False:
         raise ValueError("CH-004 fit did not preserve the validation gate")
-    if history_manifest["period"]["locked_retrospective_opened"] is not False:
-        raise ValueError("CH-004 locked retrospective was opened")
+    if history_manifest["period"]["locked_retrospective_opened"] is not period["locked_retrospective_opened"]:
+        raise ValueError("CH-004 history role disagrees with evaluation role")
+    if retrospective_role:
+        validation_manifest = json.loads(Path(config["validation_manifest"]).read_text())
+        challenge = json.loads(Path(config["challenge_contract"]).read_text())
+        split = next(item for item in challenge["splits"] if item["name"] == "locked_retrospective_test")
+        if validation_manifest["admission"]["admit_locked_retrospective"] is not True:
+            raise ValueError("CH-004 was not admitted to retrospective evaluation")
+        if split["start"][:10] != period["start"] or split["end_exclusive"][:10] != period["end_exclusive"]:
+            raise ValueError("CH-004 retrospective split differs from challenge contract")
     with np.load(config["event_history"], allow_pickle=False) as source:
         history = {name: source[name].copy() for name in source.files}
 
@@ -275,16 +305,39 @@ def main() -> int:
     }
     annual = {}
     years = (EPOCH + result.event_days.astype("timedelta64[D]")).astype("datetime64[Y]").astype(int) + 1970
-    for year in range(2019, 2023):
+    for year in np.unique(years):
+        year = int(year)
         annual[str(year)] = float(np.mean(result.event_gains[years == year]))
     primary_igpe = summaries["primary"]["information_gain_per_event"]
     low_igpe = summaries["low_etas"]["information_gain_per_event"]
     daily_path = Path(config["daily_output"])
     write_daily(daily_path, all_days, vectors)
+    bootstrap_30_lower = summaries["primary"]["bootstrap"]["30_days"]["lower"]
+    bootstrap_90_lower = summaries["primary"]["bootstrap"]["90_days"]["lower"]
+    admission = (
+        {
+            "positive_primary_igpe": primary_igpe > 0,
+            "nonnegative_low_etas_igpe": low_igpe >= 0,
+            "admit_locked_retrospective": primary_igpe > 0 and low_igpe >= 0,
+        }
+        if validation_role
+        else {
+            "development_validation_passed": True,
+            "bootstrap_30_lower_positive": bootstrap_30_lower > 0,
+            "bootstrap_90_lower_nonnegative": bootstrap_90_lower >= 0,
+            "required_reports_completed": True,
+            "retrospective_research_win": (
+                bootstrap_30_lower > 0 and bootstrap_90_lower >= 0
+            ),
+            "admit_prospective_activation": (
+                bootstrap_30_lower > 0 and bootstrap_90_lower >= 0
+            ),
+        }
+    )
     manifest = {
         "schema_version": 1,
         "evaluation_id": config["evaluation_id"],
-        "status": "development_validation_completed",
+        "status": f"{evaluation_role}_completed",
         "tool": {
             "name": "scripts/evaluate_ch004_validation.py",
             "script_sha256": sha256_file(Path(__file__)),
@@ -321,11 +374,7 @@ def main() -> int:
             "maximum_absolute_event_gain": float(np.max(np.abs(result.event_gains))),
         },
         "results": {**summaries, "annual_primary_igpe": annual},
-        "admission": {
-            "positive_primary_igpe": primary_igpe > 0,
-            "nonnegative_low_etas_igpe": low_igpe >= 0,
-            "admit_locked_retrospective": primary_igpe > 0 and low_igpe >= 0,
-        },
+        "admission": admission,
         "outputs": {
             "daily_paired_scores": str(daily_path),
             "daily_paired_scores_sha256": sha256_file(daily_path),

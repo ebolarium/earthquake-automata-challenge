@@ -31,7 +31,7 @@ prospective activation but is not a scientific ETAS-superiority claim.
 
 ## Status
 
-Retrospective history completed; scores unopened.
+Retrospective history completed; scoring protocol pre-registered and unopened.
 
 The first history-construction preflight stopped before producing an artifact
 or score because the existing monthly ETAS grid ended at 2023-01-01. The
