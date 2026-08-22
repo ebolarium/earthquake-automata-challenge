@@ -39,22 +39,36 @@ def main() -> int:
     args = parser.parse_args()
     config = json.loads(args.config.read_text(encoding="utf-8"))
     period = config["period"]
+    fit_period = (
+        period["scoring_start"] == "2014-01-07T00:00:00Z"
+        and period["end_exclusive"] == "2019-01-01T00:00:00Z"
+        and period["development_validation_opened"] is False
+    )
+    validation_period = (
+        period["scoring_start"] == "2019-01-01T00:00:00Z"
+        and period["end_exclusive"] == "2023-01-01T00:00:00Z"
+        and period["development_validation_opened"] is True
+        and period.get("locked_retrospective_opened") is False
+    )
     if (
         period["history_start"] != "2007-01-01T00:00:00Z"
-        or period["scoring_start"] != "2014-01-07T00:00:00Z"
-        or period["end_exclusive"] != "2019-01-01T00:00:00Z"
         or period["warmup_scored"] is not False
-        or period["development_validation_opened"] is not False
+        or not (fit_period or validation_period)
     ):
         raise ValueError("CH-004 event-history period violates the frozen contract")
-    for path_key, hash_key in (
+    locked_inputs = [
         ("component_contract", "component_contract_sha256"),
         ("catalog", "catalog_sha256"),
         ("grid", "grid_sha256"),
         ("etas_manifest", "etas_manifest_sha256"),
         ("simulation_config", "simulation_config_sha256"),
         ("fault_sections", "fault_sections_sha256"),
-    ):
+    ]
+    if validation_period:
+        locked_inputs.extend(
+            (("locked_model", "locked_model_sha256"), ("fit_manifest", "fit_manifest_sha256"))
+        )
+    for path_key, hash_key in locked_inputs:
         if sha256_file(Path(config[path_key])) != config[hash_key]:
             raise ValueError(f"CH-004 locked input changed: {path_key}")
 
@@ -120,7 +134,7 @@ def main() -> int:
     manifest = {
         "schema_version": 1,
         "dataset_id": config["dataset_id"],
-        "status": "completed_warmup_and_fit_development_only",
+        "status": f"completed_warmup_and_{period.get('scoring_role', 'fit_development')}",
         "tool": {
             "name": "scripts/prepare_ch004_event_history.py",
             "script_sha256": sha256_file(Path(__file__)),
@@ -134,6 +148,8 @@ def main() -> int:
             "issue_days": int(len(issue_days)),
             "warmup_days": int(scoring_start_day - issue_days[0]),
             "fit_development_days": int(issue_days[-1] - scoring_start_day + 1),
+            "scoring_days": int(issue_days[-1] - scoring_start_day + 1),
+            "scoring_role": period.get("scoring_role", "fit_development"),
         },
         "protocol": {
             "history_boundary": "forecast before same-day observations",
@@ -154,10 +170,12 @@ def main() -> int:
             "events": int(len(inputs.catalog.event_ids)),
             "warmup_events": int(np.count_nonzero(warmup)),
             "fit_development_events": int(np.count_nonzero(scoring)),
+            "scoring_events": int(np.count_nonzero(scoring)),
             "selected_events_before_grid": inputs.catalog.selected_before_grid,
             "outside_relm_grid": inputs.catalog.outside_grid,
             "warmup_posterior_root_mass": float(np.sum(probability[warmup])),
             "fit_development_posterior_root_mass": float(np.sum(probability[scoring])),
+            "scoring_posterior_root_mass": float(np.sum(probability[scoring])),
             "magnitude_gte_3_5": int(np.count_nonzero(inputs.catalog.magnitudes >= 3.5)),
             "magnitude_gte_4_0": int(np.count_nonzero(inputs.catalog.magnitudes >= 4.0)),
             "magnitude_gte_5_0": int(np.count_nonzero(inputs.catalog.magnitudes >= 5.0)),
