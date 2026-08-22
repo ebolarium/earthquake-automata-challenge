@@ -42,6 +42,11 @@ year, with positive 30-day and 90-day bootstrap lower bounds. The unchanged
 model then passed the one-use 2023-2026 locked retrospective test, including
 positive 30-day and 90-day lower bounds and every required stratum. CH-004 has
 a retrospective research win and is eligible for prospective activation.
+`CH-005` tested whether that result depended on setting every renewal age to
+zero in 2007. A 16-member stationary ETAS-hazard age ensemble improved the fit
+period, but its small positive 2019-2022 gain was not bootstrap-robust and three
+of four annual deltas were negative. It was recorded as an informative failed
+ablation and was not promoted.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim

@@ -58,3 +58,24 @@ now locked and may be evaluated unchanged on 2019-2022 development validation.
 The validation gate requires positive overall paired delta, nonnegative
 low-ETAS paired delta, a positive 30-day 95% bootstrap lower bound, and a
 nonnegative 90-day lower bound. The 2023 onward period remains excluded.
+
+## Validation Result
+
+The equilibrium mixture retained a small positive mean advantage over zero
+initialization: primary paired IGPE `+0.000008`, low-ETAS `+0.000029`,
+`M >= 3.5` `+0.000022`, and `M >= 4.0` `+0.000027`. However, annual primary
+deltas were negative in 2019, 2021, and 2022. The paired primary intervals were:
+
+- 30-day blocks: `[-0.000019, +0.000036]`.
+- 90-day blocks: `[-0.000021, +0.000036]`.
+
+Both confidence-bound conditions failed. CH-005 is therefore completed but not
+validated or promoted, and no 2023 onward outcome is opened.
+
+## Conclusion
+
+The equilibrium initialization removes some early zero-age bias, as shown by
+the larger and annually consistent fit improvement. After twelve years of
+state evolution, its remaining contribution is too small and unstable to
+establish durable forecast skill. A future experiment should propagate state
+uncertainty dynamically rather than search for another fixed initial state.
