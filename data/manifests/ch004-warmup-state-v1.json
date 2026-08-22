@@ -1,0 +1,99 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ch004-warmup-state-v1",
+  "status": "completed_unscored_warmup_anchors",
+  "tool": {
+    "name": "scripts/prepare_ch004_warmup_state.py",
+    "script_sha256": "ca5c53be957c451dfcf48b31764a2f869b3db119eda9e5fc0c649a24727c7d0d",
+    "renewal_module_sha256": "53b48ba2dfc7f3c1c71b9dc094d51abfd777c92a68abd0eb5ceb4e748f7ca8ae",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "inputs": {
+    "component_contract_sha256": "f4e291bf83ac703d45ad140f73612c0a6feb0fd7a913686195a47558fa2a8fd6",
+    "event_history_manifest_sha256": "015dcb66331cb74ef27fbdf9d451c17807b8afa974c0e19a3dcb8bbc7bc1f47a",
+    "event_history_sha256": "303242277044996840daa7f83fe62d12236eb3597870b59925f248279efc1db7",
+    "fault_graph_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+    "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12"
+  },
+  "protocol": {
+    "warmup_start_day": 13514,
+    "warmup_end_exclusive_day": 16077,
+    "warmup_days": 2563,
+    "warmup_events": 8508,
+    "forecast_before_same_day_reset": true,
+    "anchors_selected": false,
+    "diagnostic_bpt_aperiodicity": 0.5,
+    "geometry": {
+      "neighbors": 4,
+      "bandwidth_km": 10.0,
+      "cutoff_km": 40.0,
+      "fault_prior_odds": 4.0
+    }
+  },
+  "output": {
+    "path": "data/local/ch004-warmup-state-v1.npz",
+    "git_policy": "ignored_generated_data",
+    "bytes": 15318,
+    "sha256": "758b527a47ebbf1040fee1498066a833bc1f36b9d63c20d80d82b8f2b9ff9cb4"
+  },
+  "results": {
+    "anchor_diagnostics": [
+      {
+        "full_reset_magnitude": 4.0,
+        "magnitude_exponent": 0.5,
+        "expected_reset_weight": 0.3372542560595718,
+        "active_age_percentiles": {
+          "0": 0.0,
+          "25": 0.13819198818715583,
+          "50": 0.21032712796057773,
+          "75": 0.35691042876414675,
+          "90": 0.5289603162210015,
+          "95": 0.7172000051580428,
+          "99": 1.0005449642506332,
+          "100": 1.600653760963963
+        },
+        "active_overdue_fraction": 0.11216429699842022,
+        "active_overdue_score_max": 0.802600849726838
+      },
+      {
+        "full_reset_magnitude": 5.0,
+        "magnitude_exponent": 0.5,
+        "expected_reset_weight": 0.11585364918989524,
+        "active_age_percentiles": {
+          "0": 0.0,
+          "25": 0.05330882803863932,
+          "50": 0.08574092618626837,
+          "75": 0.1448863291139894,
+          "90": 0.23726875386018642,
+          "95": 0.29143161482662006,
+          "99": 0.4504954226644672,
+          "100": 0.562446345342594
+        },
+        "active_overdue_fraction": 0.00315955766192733,
+        "active_overdue_score_max": 0.14016051536416568
+      },
+      {
+        "full_reset_magnitude": 6.0,
+        "magnitude_exponent": 0.5,
+        "expected_reset_weight": 0.037711384132928454,
+        "active_age_percentiles": {
+          "0": 0.0,
+          "25": 0.018300113571254297,
+          "50": 0.029082242664647966,
+          "75": 0.05096215203023948,
+          "90": 0.08743619854704805,
+          "95": 0.10770846386525666,
+          "99": 0.17194677693523844,
+          "100": 0.20745317863567161
+        },
+        "active_overdue_fraction": 0.0,
+        "active_overdue_score_max": 0.0
+      }
+    ]
+  },
+  "claim_boundary": "Unscored warmup-state anchors only. No anchor is selected, no fit objective is evaluated, and validation remains unopened."
+}
