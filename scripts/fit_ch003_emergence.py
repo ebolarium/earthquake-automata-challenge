@@ -150,6 +150,8 @@ def main() -> int:
         mean_igpe = float(np.mean(result.event_gains))
         robust_score, annual = annual_robust_score(result.event_gains, result.event_days)
         low_igpe = float(np.mean(result.event_gains[low_mask]))
+        changed_events = int(np.count_nonzero(result.challenger_event_rates != fit["etas_rates"]))
+        maximum_absolute_gain = float(np.max(np.abs(result.event_gains)))
         admissible = candidate_id > 0 and candidate_is_admissible(
             mean_igpe,
             robust_score,
@@ -164,6 +166,8 @@ def main() -> int:
             "mean_igpe": format(mean_igpe, ".12g"),
             "robust_annual_igpe": format(robust_score, ".12g"),
             "low_etas_igpe": format(low_igpe, ".12g"),
+            "changed_events": changed_events,
+            "maximum_absolute_event_gain": format(maximum_absolute_gain, ".12g"),
             **{f"igpe_{year}": format(annual[year], ".12g") for year in range(2014, 2019)},
             "admissible": str(admissible).lower(),
             "elapsed_seconds": format(elapsed, ".6f"),
@@ -192,6 +196,8 @@ def main() -> int:
         "mean_igpe",
         "robust_annual_igpe",
         "low_etas_igpe",
+        "changed_events",
+        "maximum_absolute_event_gain",
         *annual_fields,
         "admissible",
         "elapsed_seconds",

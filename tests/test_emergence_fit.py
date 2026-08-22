@@ -44,6 +44,33 @@ class EmergenceFitTest(unittest.TestCase):
         self.assertAlmostEqual(result.event_gains[0], 0.0)
         self.assertGreater(result.event_gains[1], 0.0)
 
+    def test_zero_mixture_reproduces_stored_etas_rates_exactly(self):
+        geometry = SparseGeometry(
+            section_indexes=np.array([[0], [1]]),
+            probabilities=np.ones((2, 1)),
+        )
+        evaluator = EmergenceFitEvaluator(
+            issue_days=np.array([0]),
+            observed_root_mass=np.zeros((1, 1, 2)),
+            expected_daily_root_mass=np.zeros((1, 2)),
+            adjacency=np.array([[0.0, 1.0], [1.0, 0.0]]),
+            active_sections=np.ones((1, 2), bool),
+            grid_geometries=[geometry],
+            background_grid=np.array([0.1, 0.2]),
+            event_days=np.array([0, 0]),
+            event_cells=np.array([0, 1]),
+            event_etas_rates=np.array([0.100000001, 1.23456789]),
+            event_background_rates=np.array([0.1, 0.2]),
+            graph_neighbors=1,
+            variance_floor=1.0,
+            maximum_log_tilt=4.0,
+        )
+        result = evaluator.evaluate(np.array([30.0, 0.0, 0.0, 0.0, 0.0, 1.0]))
+        np.testing.assert_array_equal(
+            result.challenger_event_rates, np.array([0.100000001, 1.23456789])
+        )
+        np.testing.assert_array_equal(result.event_gains, 0.0)
+
     def test_robust_admission_requires_low_etas_and_every_year(self):
         days = np.array([0, 365, 366, 731])
         robust, annual = annual_robust_score(np.array([0.1, 0.1, 0.2, 0.2]), days)

@@ -205,12 +205,12 @@ class EmergenceFitEvaluator:
                     parameters.emergence_sensitivity,
                     self.maximum_log_tilt,
                 )
-                triggered = np.maximum(
-                    self.event_etas[start:end] - self.event_background[start:end], 0.0
+                cells = self.event_cells[start:end]
+                challenger_rates[start:end] = (
+                    self.event_etas[start:end]
+                    + adjusted[cells]
+                    - self.background[cells]
                 )
-                challenger_rates[start:end] = triggered + adjusted[
-                    self.event_cells[start:end]
-                ]
             state = update_compensated_cusum(
                 state,
                 self.observed[day_index],
