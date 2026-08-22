@@ -54,3 +54,7 @@ risk-adjusted delta was `+0.000034`.
 
 All three frozen admission conditions passed. The initialization definition is
 now locked and may be evaluated unchanged on 2019-2022 development validation.
+
+The validation gate requires positive overall paired delta, nonnegative
+low-ETAS paired delta, a positive 30-day 95% bootstrap lower bound, and a
+nonnegative 90-day lower bound. The 2023 onward period remains excluded.

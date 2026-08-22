@@ -20,6 +20,7 @@ sys.path.insert(0, str(ROOT / "src"))
 sys.path.insert(0, str(ROOT / "scripts"))
 
 from etas_challenge.emergence_fit import annual_robust_score  # noqa: E402
+from etas_challenge.challenger import stationary_block_bootstrap_igpe  # noqa: E402
 from etas_challenge.renewal_quiescence import equilibrium_hazard_age_ensemble  # noqa: E402
 from etas_challenge.training_matrix import sha256_file  # noqa: E402
 from evaluate_ch004_validation import build_evaluator  # noqa: E402
@@ -60,6 +61,8 @@ def require_committed_gate(config: dict, config_path: Path) -> str:
         config["event_history_manifest"],
         "scripts/evaluate_ch005_equilibrium_ablation.py",
     }
+    if config["stage"] == "development_validation_ablation":
+        required.add(config["fit_ablation_manifest"])
     if set(git_output("ls-files", *sorted(required)).splitlines()) != required:
         raise ValueError("CH-005 protocol and locked inputs must be committed")
     lock_commit = config["parent_model_lock_commit"]
@@ -87,18 +90,52 @@ def summarize(gains: np.ndarray, masks: dict[str, np.ndarray]) -> dict:
     }
 
 
+def bootstrap_delta(
+    gains: np.ndarray,
+    event_days: np.ndarray,
+    mask: np.ndarray,
+    all_days: np.ndarray,
+    protocol: dict,
+    seed_offset: int,
+) -> dict:
+    daily_gain = np.zeros(len(all_days), dtype=float)
+    daily_count = np.zeros(len(all_days), dtype=np.int64)
+    indexes = np.searchsorted(all_days, event_days[mask])
+    np.add.at(daily_gain, indexes, gains[mask])
+    np.add.at(daily_count, indexes, 1)
+    return {
+        f"{block}_days": stationary_block_bootstrap_igpe(
+            daily_gain,
+            daily_count,
+            replicates=protocol["replicates"],
+            mean_block_days=block,
+            seed=protocol["seed"] + seed_offset + block,
+            confidence_level=protocol["confidence_level"],
+        )
+        for block in protocol["mean_block_days"]
+    }
+
+
 def main() -> int:
     args = parse_args()
     config = json.loads(args.config.read_text(encoding="utf-8"))
     config_path = args.config.resolve().relative_to(ROOT)
-    if (
-        config["stage"] != "fit_ablation"
-        or config["period"]["scoring_start"] != "2014-01-07"
-        or config["period"]["end_exclusive"] != "2019-01-01"
-        or config["period"]["development_validation_opened"] is not False
-        or config["period"]["locked_retrospective_opened"] is not False
-    ):
-        raise ValueError("CH-005 fit ablation violates the frozen split")
+    fit_stage = (
+        config["stage"] == "fit_ablation"
+        and config["period"]["scoring_start"] == "2014-01-07"
+        and config["period"]["end_exclusive"] == "2019-01-01"
+        and config["period"]["development_validation_opened"] is False
+        and config["period"]["locked_retrospective_opened"] is False
+    )
+    validation_stage = (
+        config["stage"] == "development_validation_ablation"
+        and config["period"]["scoring_start"] == "2019-01-01"
+        and config["period"]["end_exclusive"] == "2023-01-01"
+        and config["period"]["development_validation_opened"] is True
+        and config["period"]["locked_retrospective_opened"] is False
+    )
+    if not (fit_stage or validation_stage):
+        raise ValueError("CH-005 ablation violates the frozen split")
     evaluation_commit = require_committed_gate(config, config_path)
     for path_key, hash_key in config["locked_files"]:
         if sha256_file(Path(config[path_key])) != config[hash_key]:
@@ -107,6 +144,10 @@ def main() -> int:
     model = json.loads(Path(config["parent_model"]).read_text())
     fit_manifest = json.loads(Path(config["parent_fit_manifest"]).read_text())
     fit_config = json.loads(Path(config["parent_fit_config"]).read_text())
+    if validation_stage:
+        fit_ablation = json.loads(Path(config["fit_ablation_manifest"]).read_text())
+        if fit_ablation["admission"]["admit_development_validation"] is not True:
+            raise ValueError("CH-005 fit ablation did not admit validation")
     with np.load(config["event_history"], allow_pickle=False) as source:
         history = {name: source[name].copy() for name in source.files}
     evaluator = build_evaluator(config, history)
@@ -150,10 +191,42 @@ def main() -> int:
         "nonnegative_low_etas_delta": difference_summary["low_etas"]["igpe"] >= 0,
     }
     admission["admit_development_validation"] = all(admission.values())
+    bootstrap = None
+    if validation_stage:
+        all_days = history["all_issue_days"][
+            history["all_issue_days"] >= scoring_start
+        ]
+        bootstrap = {
+            "primary": bootstrap_delta(
+                difference,
+                zero.event_days,
+                masks["primary"],
+                all_days,
+                config["bootstrap"],
+                0,
+            ),
+            "low_etas": bootstrap_delta(
+                difference,
+                zero.event_days,
+                masks["low_etas"],
+                all_days,
+                config["bootstrap"],
+                1000,
+            ),
+        }
+        lower_30 = bootstrap["primary"]["30_days"]["lower"]
+        lower_90 = bootstrap["primary"]["90_days"]["lower"]
+        admission = {
+            "positive_primary_delta": difference_summary["primary"]["igpe"] > 0,
+            "nonnegative_low_etas_delta": difference_summary["low_etas"]["igpe"] >= 0,
+            "bootstrap_30_lower_positive": lower_30 > 0,
+            "bootstrap_90_lower_nonnegative": lower_90 >= 0,
+        }
+        admission["equilibrium_initialization_validated"] = all(admission.values())
     manifest = {
         "schema_version": 1,
         "experiment_id": config["experiment_id"],
-        "status": "fit_ablation_completed",
+        "status": f"{config['stage']}_completed",
         "tool": {
             "name": "scripts/evaluate_ch005_equilibrium_ablation.py",
             "script_sha256": sha256_file(Path(__file__)),
@@ -189,6 +262,7 @@ def main() -> int:
                 "delta": {str(key): value for key, value in annual_difference.items()},
             },
             "robust_annual_delta": robust_difference,
+            "paired_delta_bootstrap": bootstrap,
         },
         "diagnostics": {
             "member_active_issue_days": ensemble.member_active_issue_days.tolist(),
