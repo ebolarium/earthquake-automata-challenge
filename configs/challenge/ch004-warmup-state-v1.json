@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ch004-warmup-state-v1",
+  "status": "pre_registered_unbuilt",
+  "component_contract": "configs/challenge/ch004-renewal-quiescence-v0.json",
+  "component_contract_sha256": "f4e291bf83ac703d45ad140f73612c0a6feb0fd7a913686195a47558fa2a8fd6",
+  "event_history_manifest": "data/manifests/ch004-event-history-v1.json",
+  "event_history_manifest_sha256": "015dcb66331cb74ef27fbdf9d451c17807b8afa974c0e19a3dcb8bbc7bc1f47a",
+  "event_history": "data/local/ch004-event-history-v1.npz",
+  "event_history_sha256": "303242277044996840daa7f83fe62d12236eb3597870b59925f248279efc1db7",
+  "fault_graph": "data/local/ch002-fault-graph-initial-state-v1.npz",
+  "fault_graph_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+  "fault_grid": "data/local/ch002-ucerf3-relm-nearest-v1.npz",
+  "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+  "fault_sections": "data/local/ch002-ucerf3-fault-sections-v1.json",
+  "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+  "grid": "data/grids/california-relm-v1.json",
+  "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+  "simulation_config": "configs/evaluation/comcat25-pycsep-day7-v1.json",
+  "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+  "geometry": {
+    "neighbors": 4,
+    "bandwidth_km": 10.0,
+    "cutoff_km": 40.0,
+    "fault_prior_odds": 4.0
+  },
+  "anchors": [
+    {"full_reset_magnitude": 4.0, "magnitude_exponent": 0.5},
+    {"full_reset_magnitude": 5.0, "magnitude_exponent": 0.5},
+    {"full_reset_magnitude": 6.0, "magnitude_exponent": 0.5}
+  ],
+  "diagnostic_bpt_aperiodicity": 0.5,
+  "output": "data/local/ch004-warmup-state-v1.npz",
+  "manifest": "data/manifests/ch004-warmup-state-v1.json",
+  "claim_boundary": "Unscored warmup-state anchors only. No anchor is selected, no fit objective is evaluated, and validation remains unopened."
+}

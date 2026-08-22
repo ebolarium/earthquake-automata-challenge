@@ -23,6 +23,7 @@
 | CH003-003 | Completed, not admitted | Can coherent ETAS residual emergence improve next-day forecasts robustly across years and low-ETAS events? | CH003-002 and frozen ETAS fit inputs | 20 active candidates; none passed annual robustness or low-ETAS veto; exact ETAS control selected |
 | CH004-001 | Contract implemented | Can ETAS-normalized quiescence form a magnitude-marked renewal clock without absolute stress or hard declustering? | Synthetic marked resets and hazard ages | GR expectation, soft reset, and BPT-inspired overdue components implemented; no catalog score |
 | CH004-002 | Completed | Can a seven-year unscored warmup initialize event-level marked renewal inputs without validation access? | Frozen 2007-2018 catalog, ETAS grids, UCERF3 geometry | 2,563 warmup days and 8,508 warmup events precede the unchanged 3,619-event fit subset; no score |
+| CH004-003 | Pre-registered, unbuilt | Do M4/M5/M6 reset anchors produce nondegenerate renewal ages before fitting? | CH004-002 warmup, eight UCERF3 branches | Three unselected warmup anchors frozen; no forecast score |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,
