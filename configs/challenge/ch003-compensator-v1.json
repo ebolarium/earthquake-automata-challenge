@@ -22,6 +22,7 @@
     "development_validation_opened": false
   },
   "geometry": {
+    "neighbors": 4,
     "bandwidth_km": 10.0,
     "cutoff_km": 40.0,
     "fault_prior_odds": 4.0

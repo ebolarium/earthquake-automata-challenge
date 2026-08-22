@@ -10,7 +10,9 @@ projected to fault sections with exactly the same leakage-free geometry?
 For each of eight UCERF3 loading branches, every event contributes its frozen
 ETAS direct-background posterior through the branch-aware event-to-fault
 probabilities. The analytical direct-background grid is projected through the
-same bandwidth, cutoff, prior odds, active-section mask, and off-fault term.
+same four-neighbor count, bandwidth, cutoff, prior odds, active-section mask,
+and off-fault term. Although the event input retains eight neighbors for older
+experiments, CH-003 truncates it to four to match the frozen grid artifact.
 
 The artifact stores daily observed section mass, static expected daily section
 mass, off-fault mass, active masks, branch loading, and the frozen graph. It

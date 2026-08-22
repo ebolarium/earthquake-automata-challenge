@@ -80,6 +80,11 @@ def main() -> int:
         event_distances = fit["nearest_fault_distances_km"].copy()
 
     geometry_config = config["geometry"]
+    neighbors = int(geometry_config["neighbors"])
+    if grid_ids.shape[1] != neighbors or event_ids.shape[1] < neighbors:
+        raise ValueError("grid and event fault-neighbor contracts disagree")
+    event_ids = event_ids[:, :neighbors]
+    event_distances = event_distances[:, :neighbors]
     branch_count = len(SLIP_RATE_BRANCHES)
     section_count = len(section_ids)
     observed = np.zeros((len(issue_days), branch_count, section_count), dtype=np.float64)
