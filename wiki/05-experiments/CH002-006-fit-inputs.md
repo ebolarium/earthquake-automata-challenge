@@ -62,6 +62,6 @@ the locked retrospective period was read.
 
 ## Next Step
 
-CH002-007 will run fit-only daily replay and optimize the four pre-registered
-state gains plus the background-tilt sensitivity. Model and optimizer artifacts
-must be locked before any 2019-2022 validation command is admitted.
+CH002-007 used these inputs for its pre-registered fit-only replay. Its selected
+candidate failed the positive 2018 holdout admission rule, so the 2019-2022
+development validation remained unopened.

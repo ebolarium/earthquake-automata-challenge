@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "fit_id": "ch002-readiness-fit-v1",
+  "status": "fit_locked_validation_unseen",
+  "tool": {
+    "name": "scripts/fit_ch002_readiness.py",
+    "script_sha256": "b58d0b0b6da38c125219a7031da199a88c5960dbec44b4dc33650ccdcd8b2ac8",
+    "module_sha256": "e259ecc810ce950bb2fedde20f9455021192ffa29f0699ce13533011172c4391",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "protocol": {
+    "sampler": "scipy_sobol_scramble",
+    "seed": 20260822,
+    "sobol_power": 5,
+    "sobol_candidates": 32,
+    "include_zero_candidate": true,
+    "selection_metric": "2014-2017_information_gain_per_earthquake",
+    "fit_holdout_role": "report_only_not_model_selection",
+    "validation_admission": "selected_candidate_requires_positive_2018_fit_holdout_igpe",
+    "candidate_count": 33,
+    "validation_opened": false,
+    "locked_retrospective_opened": false,
+    "fit_lock_commit": "0474f1456f7392bb6614afb86a4754544dbbe717"
+  },
+  "inputs": {
+    "config_sha256": "885a51064f202e66bf66dfa88bf843b08ba1aab4942caa630461877eef98ced8",
+    "fit_inputs_manifest_sha256": "9bc97ec6143074e4154f7381fe11768e347d759969d06768c3c0db05e9c040fc",
+    "fit_inputs_sha256": "1e414fca8774d9dac9e76c40ddde80dcd2406fa213023855e1f86750ec284558",
+    "initial_state_manifest_sha256": "51aa162727ace883e7241e732a8110229ecb8b4b5f105f411dfb418da654ae56",
+    "initial_state_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+    "fault_grid_manifest_sha256": "4e9d7c83801454ab8aac455f2627910034726ac9bb3dd6c589bf93bad12956e3",
+    "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+    "state_contract_sha256": "25ad0a202b085b95d8cc293925598dc97748d3e3ab0915c0f2c29388910c4f34"
+  },
+  "outputs": {
+    "model": "models/ch002-readiness-v1.json",
+    "model_sha256": "1dba7b322af82e67563fc75344b1ed693289dec8e4ed2c40f03f3f1f1284331c",
+    "candidates": "artifacts/ch002-readiness-v1-fit/candidates.csv",
+    "candidates_sha256": "b77c5a244d332ce157644772d56bb6a0f70fffdac5b307b9081b4507c4c41b95"
+  },
+  "result": {
+    "selected_candidate_id": 14,
+    "selection_events": 3225,
+    "holdout_events": 394,
+    "selection_igpe": 0.0003350984821102722,
+    "holdout_igpe": -0.011573367534840371,
+    "admit_development_validation": false
+  },
+  "claim_boundary": "Fit-only candidate selection with a report-only 2018 holdout. Development validation and locked retrospective outcomes remain unopened."
+}

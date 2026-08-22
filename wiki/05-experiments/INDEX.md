@@ -17,7 +17,7 @@
 | CH002-004 | Completed | Can initial stress-minus-strength uncertainty be represented without one asserted stress map? | UCERF3 pair geometry, 256 seeded particles | Geometry-weighted graph and centered unit-variance latent ensemble frozen; no target read |
 | CH002-005 | Contract implemented | Can daily loading, background-weighted assimilation, and rupture depletion remain leakage-free? | Synthetic events, eight loading branches | Daily next-issue transition and probabilistic off-fault assignment tested; no fit |
 | CH002-006 | Completed | Can fit events receive same-day frozen ETAS background posteriors without validation access? | 2014-2018 catalog and 60 frozen ETAS shards | 3,619 RELM events across 1,820 fit days; posterior background mass 522.76 |
-| CH002-007 | Pre-registered, unrun | Can latent readiness improve ETAS on fit-only selection and report-only holdout periods? | Locked CH002-003 through CH002-006 inputs | 33-candidate Sobol protocol frozen; no real objective evaluated |
+| CH002-007 | Completed, not admitted | Can latent readiness improve ETAS on fit-only selection and report-only holdout periods? | Locked CH002-003 through CH002-006 inputs | Best selection IGPE +0.000335; 2018 holdout IGPE -0.011573; validation remained unopened |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,

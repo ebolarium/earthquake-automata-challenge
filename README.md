@@ -22,6 +22,9 @@ positive but uncertain, and performance in low-ETAS cells was negative; this
 candidate is not promoted to the locked retrospective test. The current
 milestone is `CH-002`, a separate latent fault-readiness challenger that
 preserves ETAS triggering and redistributes only its direct background mass.
+Its first pre-registered 33-candidate fit selected a very small fit-period gain,
+but the report-only 2018 holdout was negative. The candidate is locked as a
+negative result and was not admitted to development validation.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim

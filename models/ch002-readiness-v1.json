@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "model_id": "ch002-readiness-v1",
+  "status": "fit_locked_validation_unseen",
+  "fit_lock_commit": "0474f1456f7392bb6614afb86a4754544dbbe717",
+  "selected_candidate_id": 14,
+  "parameters": {
+    "loading_gain_per_year": 0.19976583123207092,
+    "assimilation_gain": 1.829937931150198,
+    "release_gain": 0.2615635171532631,
+    "release_magnitude_exponent": 0.30593912675976753,
+    "background_tilt_sensitivity": 0.17637647688388824
+  },
+  "fit_scores": {
+    "selection_2014_2017_igpe": 0.0003350984821102722,
+    "selection_2014_2017_relative_factor": 1.0003351546338786,
+    "holdout_2018_igpe": -0.011573367534840371,
+    "holdout_2018_relative_factor": 0.9884933462673976,
+    "holdout_positive": false
+  },
+  "forecast_contract": {
+    "preserve_triggered_etas": true,
+    "preserve_daily_expected_count": true,
+    "directional_transfer": 0.0
+  },
+  "claim_boundary": "Fit-only candidate selection with a report-only 2018 holdout. Development validation and locked retrospective outcomes remain unopened."
+}
