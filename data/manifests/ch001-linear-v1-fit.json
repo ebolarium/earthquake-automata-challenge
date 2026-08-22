@@ -1,0 +1,77 @@
+{
+  "schema_version": 1,
+  "experiment_id": "CH001-003-fit",
+  "status": "fit_locked_validation_unseen",
+  "tool": {
+    "name": "scripts/fit_ch001_linear.py",
+    "version": "1.0.0",
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "scipy": "1.15.1"
+  },
+  "repository_commit": "5ad1787ae7e40319411d82414b855c559739aa69",
+  "inputs": {
+    "config_sha256": "6f19e9d4cc7e159df56bc1cfeab241ca889d762fef2e5a83a453a7a22d40aa99",
+    "matrix_manifest_sha256": "efd633a68bd5a759178ebbcbdf0b2aa4f79c40d1dd85166ea6b957fe17544886",
+    "etas_manifest_sha256": "5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d"
+  },
+  "protocol": {
+    "fit_start": "2007-01-01",
+    "fit_end_exclusive": "2019-01-01",
+    "validation_opened": false,
+    "features": [
+      "log1p_cell_count_3d",
+      "log1p_neighbor_count_3d",
+      "log1p_cell_count_7d",
+      "log1p_neighbor_count_7d",
+      "log1p_cell_count_30d",
+      "log1p_neighbor_count_30d",
+      "log1p_cell_count_90d",
+      "log1p_neighbor_count_90d",
+      "cell_excess_30d",
+      "neighbor_excess_30d",
+      "cell_acceleration_7v30",
+      "neighbor_acceleration_7v30",
+      "log1p_cell_recency_days",
+      "log1p_neighbor_recency_days",
+      "log_background_rate_daily"
+    ],
+    "optimizer": {
+      "name": "L-BFGS-B",
+      "l2_per_target": 0.01,
+      "weight_bound": 3.0,
+      "max_iterations": 80,
+      "ftol": 1e-09,
+      "gtol": 1e-07
+    },
+    "daily_count_policy": "preserve frozen ETAS expected count exactly"
+  },
+  "low_etas_intensity": {
+    "quantile": 0.25,
+    "fit_event_count": 12127,
+    "threshold_rate_per_cell_day": 0.0010438695317134261,
+    "source": "challenger_fit target-event cells only"
+  },
+  "outputs": {
+    "model": "models/ch001-linear-v1.json",
+    "model_sha256": "85a76fa4ed612942e7b572eca196bef44fcf7247a0176f64b55c5531d9de7b19"
+  },
+  "optimizer_result": {
+    "success": true,
+    "message": "CONVERGENCE: RELATIVE REDUCTION OF F <= FACTR*EPSMCH",
+    "iterations": 38,
+    "objective_evaluations": 42,
+    "final_regularized_loss": -0.04789523018586219,
+    "gradient_max_absolute": 3.098021166683977e-05
+  },
+  "fit_result": {
+    "target_events": 12127,
+    "information_gain": 587.1928648679277,
+    "information_gain_per_event": 0.048420290662812546,
+    "positive_gain_days": 2139,
+    "negative_gain_days": 1412,
+    "cell_day_rows": 33670206,
+    "months": 144
+  },
+  "claim_boundary": "Fit-split optimization only. Development validation and locked retrospective outcomes were not read by this process."
+}

@@ -39,3 +39,24 @@ and fit IGPE had stabilized near `0.0484203`, but the convergence flag remained
 false. No validation shard was opened. Because optimizer convergence is a fit
 concern, the candidate contract now allows 80 iterations and uses an `ftol` of
 `1e-9`; this change must be committed before the fit is rerun.
+
+The committed optimizer contract then converged after 38 iterations and 42
+objective evaluations. The fit process read 144 monthly shards and 33,670,206
+cell-days, ending before 2019-01-01.
+
+## Fit Lock
+
+| Measure | Value |
+|---|---:|
+| Fit target events | 12,127 |
+| Total fit information gain | 587.192865 nat |
+| Fit information gain per event | 0.0484203 nat/event |
+| Positive-gain days | 2,139 |
+| Negative-gain days | 1,412 |
+| Low-ETAS fit-event 25th percentile | 0.0010438695 rate/cell/day |
+
+The model SHA-256 is
+`85a76fa4ed612942e7b572eca196bef44fcf7247a0176f64b55c5531d9de7b19`.
+Its status is `fit_locked_validation_unseen`, and the fit manifest explicitly
+records `validation_opened: false`. These are optimization results, not
+out-of-sample evidence.

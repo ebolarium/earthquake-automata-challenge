@@ -16,8 +16,9 @@ consistency gate, and independent ETAS forecast page are complete. Challenge V1
 is now frozen. The current milestone is `CH-001`, an ETAS residual-emergence
 spatial challenger developed only on the admitted fit and validation splits.
 Its leakage-free catalog matrix and matching frozen ETAS grid offset are
-complete; the next step is fitting the first residual model without opening
-the locked retrospective split.
+complete. The first fit-only linear residual artifact is now locked without
+opening the retrospective split; development-validation scoring is the next
+gate.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim

@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "model_id": "ch001-linear-residual-v1",
+  "model_family": "conditional_linear_etas_residual",
+  "status": "fit_locked_validation_unseen",
+  "trained_from_repository_commit": "5ad1787ae7e40319411d82414b855c559739aa69",
+  "fit_period": {
+    "start": "2007-01-01",
+    "end_exclusive": "2019-01-01"
+  },
+  "sources": {
+    "config_sha256": "6f19e9d4cc7e159df56bc1cfeab241ca889d762fef2e5a83a453a7a22d40aa99",
+    "matrix_manifest_sha256": "efd633a68bd5a759178ebbcbdf0b2aa4f79c40d1dd85166ea6b957fe17544886",
+    "etas_manifest_sha256": "5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d"
+  },
+  "scaler": {
+    "feature_names": [
+      "log1p_cell_count_3d",
+      "log1p_neighbor_count_3d",
+      "log1p_cell_count_7d",
+      "log1p_neighbor_count_7d",
+      "log1p_cell_count_30d",
+      "log1p_neighbor_count_30d",
+      "log1p_cell_count_90d",
+      "log1p_neighbor_count_90d",
+      "cell_excess_30d",
+      "neighbor_excess_30d",
+      "cell_acceleration_7v30",
+      "neighbor_acceleration_7v30",
+      "log1p_cell_recency_days",
+      "log1p_neighbor_recency_days",
+      "log_background_rate_daily"
+    ],
+    "means": [
+      0.0005979579539649363,
+      0.004367792247870571,
+      0.001310411885489563,
+      0.009399508833631092,
+      0.004954286645451075,
+      0.034019165512672624,
+      0.013264621782314348,
+      0.08618212922300497,
+      -0.46133746159495204,
+      -1.3175229248400808,
+      -0.013863716008063087,
+      -0.04930496060654649,
+      5.849443147108761,
+      5.607604802299055,
+      -10.244658037263632
+    ],
+    "scales": [
+      0.023731068289023754,
+      0.06623051555547012,
+      0.03610309590154556,
+      0.0998287370870337,
+      0.07336124925497907,
+      0.19874234955864795,
+      0.12433995433481942,
+      0.32853977145845203,
+      0.7903205969590998,
+      0.7734905530023383,
+      0.27377158474261576,
+      0.44273502425649863,
+      0.3339496645825892,
+      0.7806468268620655,
+      1.7141162798021548
+    ],
+    "standardized_clip": 8.0
+  },
+  "weights": [
+    0.012810252244952467,
+    0.011277847109489352,
+    0.037132471293246344,
+    -0.05182104124233367,
+    -0.053966070828176935,
+    -0.009883848595373832,
+    0.05502053394787984,
+    0.025348071547414974,
+    0.061579416981958686,
+    0.10642549355494374,
+    -0.02643427581780522,
+    0.061471061893051175,
+    0.11636193599487729,
+    0.008968370751305308,
+    0.24649613915147112
+  ],
+  "low_etas_intensity_threshold": 0.0010438695317134261,
+  "daily_count_policy": "preserve frozen ETAS expected count exactly"
+}
