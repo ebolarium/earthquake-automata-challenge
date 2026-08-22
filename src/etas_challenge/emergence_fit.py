@@ -206,11 +206,8 @@ class EmergenceFitEvaluator:
                     self.maximum_log_tilt,
                 )
                 cells = self.event_cells[start:end]
-                challenger_rates[start:end] = (
-                    self.event_etas[start:end]
-                    + adjusted[cells]
-                    - self.background[cells]
-                )
+                background_delta = adjusted[cells] - self.background[cells]
+                challenger_rates[start:end] = self.event_etas[start:end] + background_delta
             state = update_compensated_cusum(
                 state,
                 self.observed[day_index],

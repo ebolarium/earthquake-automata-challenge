@@ -166,6 +166,8 @@ def bounded_background_mixture(
         or max_log_tilt <= 0
     ):
         raise ValueError("invalid bounded-mixture inputs")
+    if mixture_fraction == 0 or sensitivity == 0 or not np.any(score):
+        return background.copy()
     baseline = background / np.sum(background)
     logits = np.minimum(sensitivity * score, max_log_tilt)
     tilted = baseline * np.exp(logits - np.max(logits))

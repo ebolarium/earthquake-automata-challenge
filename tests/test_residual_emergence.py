@@ -60,7 +60,7 @@ class ResidualEmergenceTest(unittest.TestCase):
         adjusted = bounded_background_mixture(
             background, np.zeros(3), 0.1, 1.0
         )
-        np.testing.assert_allclose(adjusted, background)
+        np.testing.assert_array_equal(adjusted, background)
 
 
 if __name__ == "__main__":
