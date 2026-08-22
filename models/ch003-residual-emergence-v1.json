@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "model_id": "ch003-residual-emergence-v1",
+  "status": "fit_locked_validation_unseen",
+  "fit_lock_commit": "82752d292fee62ba7e526ebbde801ce3296918ef",
+  "selected_candidate_id": 0,
+  "selected_nonzero_candidate": false,
+  "parameters": {
+    "memory_half_life_days": 180.0,
+    "standardized_threshold": 2.0,
+    "graph_diffusion": 0.25,
+    "minimum_branch_consensus": 0.75,
+    "background_mixture_fraction": 0.0,
+    "emergence_sensitivity": 1.0
+  },
+  "fit_scores": {
+    "mean_igpe": 0.0,
+    "relative_factor": 1.0,
+    "robust_annual_igpe": 0.0,
+    "low_etas_igpe": 0.0,
+    "annual_igpe": {
+      "2014": 0.0,
+      "2015": 0.0,
+      "2016": 0.0,
+      "2017": 0.0,
+      "2018": 0.0
+    },
+    "development_validation_admitted": false
+  },
+  "claim_boundary": "All 2014-2018 outcomes are development data. No 2019-2022 CH003 score or locked-retrospective outcome is evaluated."
+}

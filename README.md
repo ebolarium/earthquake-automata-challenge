@@ -28,7 +28,10 @@ negative result and was not admitted to development validation.
 `CH-003` now begins a distinct residual-emergence family: it watches for
 persistent, fault-network-coherent departures from ETAS and can redistribute at
 most 10% of direct background mass. Its synthetic component contract is frozen;
-no CH-003 catalog score has been evaluated.
+its branch-aware compensator and risk-sensitive fit are complete. Some active
+candidates had tiny positive mean gains, but none passed annual robustness or
+the low-ETAS veto. The exact ETAS control was selected, and CH-003 was not
+admitted to development validation.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim

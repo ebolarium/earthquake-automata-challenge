@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "fit_id": "ch003-residual-emergence-fit-v1",
+  "status": "fit_locked_validation_unseen",
+  "tool": {
+    "name": "scripts/fit_ch003_emergence.py",
+    "script_sha256": "8018497a7b892d76660ef415e2bb38e0423a902f61d80c214ef6ec036c56c6ff",
+    "module_sha256": "4e7549cf941a0d349b0577416402abcc35e62a1858b0b7f8f9f2590c21bf0a0a",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "protocol": {
+    "sampler": "scipy_sobol_scramble",
+    "seed": 20260822,
+    "sobol_power": 5,
+    "sobol_candidates": 32,
+    "include_etas_control": true,
+    "half_life_transform": "log_uniform",
+    "selection_metric": "mean_annual_igpe_minus_population_sd_annual_igpe",
+    "annual_loss_floor": -0.01,
+    "require_positive_mean_igpe": true,
+    "require_nonnegative_low_etas_igpe": true,
+    "low_etas_quantile": 0.25,
+    "admission": "best admissible nonzero candidate; otherwise ETAS control",
+    "candidate_count": 33,
+    "fit_lock_commit": "82752d292fee62ba7e526ebbde801ce3296918ef",
+    "development_validation_opened": false,
+    "locked_retrospective_opened": false
+  },
+  "inputs": {
+    "config_sha256": "5f23b200c7900e201a18d465a43337b10ef459882e736a55b4a5f0f2f30ee29f",
+    "component_contract_sha256": "b7b63f264de79aa9c7c0ade39f7c1e353f3c581d5ed6881323949b5602f7aef1",
+    "compensator_manifest_sha256": "8120a168dc3092d1ab4020300e567bd082fce8abb425b5068c93c7d1f1b6cbf0",
+    "compensator_sha256": "13dee5359f05c6a70fc0d7cd05d3d886160b21934df9b21ecc0f62655ea00900",
+    "fit_inputs_sha256": "1e414fca8774d9dac9e76c40ddde80dcd2406fa213023855e1f86750ec284558",
+    "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12"
+  },
+  "outputs": {
+    "model": "models/ch003-residual-emergence-v1.json",
+    "model_sha256": "d2f8725c85c6ff19195b411c3062aaccc1ac269b3df9b45883c962b91fdd618b",
+    "candidates": "artifacts/ch003-residual-emergence-v1-fit/candidates.csv",
+    "candidates_sha256": "a74a0fe4ba0dd7595ae730f7c12b57e7b77e39790b84a5735e4093aab94831f8"
+  },
+  "result": {
+    "selected_candidate_id": 0,
+    "selected_nonzero_candidate": false,
+    "events": 3619,
+    "low_etas_events": 906,
+    "low_etas_threshold": 0.0005436737556010485,
+    "mean_igpe": 0.0,
+    "robust_annual_igpe": 0.0,
+    "low_etas_igpe": 0.0,
+    "annual_igpe": {
+      "2014": 0.0,
+      "2015": 0.0,
+      "2016": 0.0,
+      "2017": 0.0,
+      "2018": 0.0
+    },
+    "admit_development_validation": false
+  },
+  "claim_boundary": "All 2014-2018 outcomes are development data. No 2019-2022 CH003 score or locked-retrospective outcome is evaluated."
+}
