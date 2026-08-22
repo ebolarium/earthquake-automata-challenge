@@ -15,6 +15,7 @@ from etas_challenge.challenger import (
     event_log_ratios,
     fit_scaler_from_moments,
     raw_features,
+    stationary_block_bootstrap_igpe,
 )
 
 
@@ -83,6 +84,27 @@ class ChallengerTests(unittest.TestCase):
         mutated["feature_names"][0] = "changed"
         with self.assertRaisesRegex(ValueError, "contract changed"):
             FeatureScaler.from_payload(mutated)
+
+    def test_stationary_bootstrap_is_deterministic_and_preserves_ratio(self):
+        count = np.array([1, 2, 1, 2])
+        gain = 2.0 * count
+        first = stationary_block_bootstrap_igpe(
+            gain,
+            count,
+            replicates=500,
+            mean_block_days=2,
+            seed=12,
+        )
+        second = stationary_block_bootstrap_igpe(
+            gain,
+            count,
+            replicates=500,
+            mean_block_days=2,
+            seed=12,
+        )
+        self.assertEqual(first, second)
+        self.assertAlmostEqual(first["lower"], 2.0)
+        self.assertAlmostEqual(first["upper"], 2.0)
 
 
 if __name__ == "__main__":

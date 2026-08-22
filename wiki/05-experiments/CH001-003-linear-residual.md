@@ -60,3 +60,9 @@ The model SHA-256 is
 Its status is `fit_locked_validation_unseen`, and the fit manifest explicitly
 records `validation_opened: false`. These are optimization results, not
 out-of-sample evidence.
+
+The separate validation evaluator and bootstrap protocol are committed before
+opening 2019-2022. It verifies the model against the pre-validation lock commit,
+requires a clean worktree, and refuses any split that is not composed of whole
+monthly shards. The locked retrospective period is not addressable by this
+evaluation configuration.

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "evaluation_id": "ch001-linear-v1-development-validation",
+  "challenge_contract": "configs/challenge/challenge-v1.json",
+  "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+  "matrix_manifest": "data/manifests/ch001-matrix-v1.json",
+  "matrix_manifest_sha256": "efd633a68bd5a759178ebbcbdf0b2aa4f79c40d1dd85166ea6b957fe17544886",
+  "etas_manifest": "data/manifests/ch001-etas-grid-v1.json",
+  "etas_manifest_sha256": "5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d",
+  "model": "models/ch001-linear-v1.json",
+  "model_sha256": "85a76fa4ed612942e7b572eca196bef44fcf7247a0176f64b55c5531d9de7b19",
+  "fit_manifest": "data/manifests/ch001-linear-v1-fit.json",
+  "fit_manifest_sha256": "07dd466282ec0700015ed50373422e18fcf486f1fd82933a423f716ad841c662",
+  "model_lock_commit": "7a44e7db4ce933405e011e250d89f95844fe1250",
+  "validation_start": "2019-01-01",
+  "validation_end_exclusive": "2023-01-01",
+  "target_magnitude_thresholds": [2.5, 3.5, 4.0],
+  "bootstrap": {
+    "replicates": 10000,
+    "seed": 20260821,
+    "mean_block_days": [30, 90],
+    "confidence_level": 0.95
+  },
+  "daily_output": "artifacts/ch001-linear-v1-validation/daily-paired-scores.csv",
+  "manifest": "data/manifests/ch001-linear-v1-validation.json"
+}

@@ -169,6 +169,67 @@ def event_log_ratios(
     return offsets - normalizer[:, None]
 
 
+def stationary_block_bootstrap_igpe(
+    daily_gain: np.ndarray,
+    daily_count: np.ndarray,
+    *,
+    replicates: int,
+    mean_block_days: float,
+    seed: int,
+    confidence_level: float = 0.95,
+    batch_size: int = 256,
+) -> dict:
+    gain = np.asarray(daily_gain, dtype=np.float64)
+    count = np.asarray(daily_count, dtype=np.int64)
+    if gain.ndim != 1 or count.shape != gain.shape or not len(gain):
+        raise ValueError("bootstrap daily vectors must be non-empty and aligned")
+    if not np.all(np.isfinite(gain)) or np.any(count < 0):
+        raise ValueError("bootstrap vectors contain invalid values")
+    if replicates <= 0 or mean_block_days <= 1 or batch_size <= 0:
+        raise ValueError("bootstrap controls must be positive")
+    if not 0 < confidence_level < 1:
+        raise ValueError("confidence level must lie between zero and one")
+
+    rng = np.random.default_rng(seed)
+    sample_values = np.empty(replicates, dtype=np.float64)
+    valid = 0
+    n_days = len(gain)
+    restart_probability = 1.0 / mean_block_days
+    for batch_start in range(0, replicates, batch_size):
+        size = min(batch_size, replicates - batch_start)
+        indexes = np.empty((size, n_days), dtype=np.int32)
+        indexes[:, 0] = rng.integers(0, n_days, size=size)
+        for day in range(1, n_days):
+            restart = rng.random(size) < restart_probability
+            indexes[:, day] = (indexes[:, day - 1] + 1) % n_days
+            restart_count = int(np.count_nonzero(restart))
+            if restart_count:
+                indexes[restart, day] = rng.integers(
+                    0, n_days, size=restart_count
+                )
+        sampled_gain = np.sum(gain[indexes], axis=1)
+        sampled_count = np.sum(count[indexes], axis=1)
+        usable = sampled_count > 0
+        values = sampled_gain[usable] / sampled_count[usable]
+        sample_values[valid : valid + len(values)] = values
+        valid += len(values)
+    if valid < math.ceil(replicates * 0.99):
+        raise ValueError("too many bootstrap replicates contain no target events")
+    sample_values = sample_values[:valid]
+    tail = (1.0 - confidence_level) / 2.0
+    return {
+        "method": "stationary_daily_block_bootstrap",
+        "replicates": replicates,
+        "valid_replicates": valid,
+        "seed": seed,
+        "mean_block_days": mean_block_days,
+        "confidence_level": confidence_level,
+        "lower": float(np.quantile(sample_values, tail)),
+        "median": float(np.quantile(sample_values, 0.5)),
+        "upper": float(np.quantile(sample_values, 1.0 - tail)),
+    }
+
+
 def validate_challenger_model(payload: dict) -> None:
     if payload.get("schema_version") != CHALLENGER_MODEL_SCHEMA_VERSION:
         raise ValueError("unsupported challenger model schema_version")
