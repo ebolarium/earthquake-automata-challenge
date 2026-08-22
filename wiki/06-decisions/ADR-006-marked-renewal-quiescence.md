@@ -2,7 +2,8 @@
 
 ## Status
 
-Accepted as the CH-004 component contract. No catalog score has been read.
+Accepted as the CH-004 component contract. The 2019-2022 development
+validation passed; the locked retrospective remains unopened.
 
 ## Context
 
@@ -49,8 +50,10 @@ fault geometry to map already-known historical catalog events is allowed for
 forecasts issued afterward. The finite warmup cannot reconstruct a full seismic
 cycle and must be reported as a limitation.
 
-Every day is scored before its events reset the clock. The 2019-2022 CH-004
-development-validation outcome and the locked retrospective split remain closed.
+Every day is scored before its events reset the clock. The fit-locked CH-004
+candidate passed 2019-2022 development validation with positive overall,
+annual, low-ETAS, and bootstrap results. The locked retrospective split remains
+closed.
 
 ## Consequences
 

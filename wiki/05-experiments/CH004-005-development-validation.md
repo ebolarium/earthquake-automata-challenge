@@ -40,9 +40,27 @@ used to alter the locked model or this admission rule.
 
 ## Status
 
-Validation history built; scoring not yet run.
+Completed. Admitted to locked retrospective evaluation, which remains unopened.
 
 The frozen replay contains 5,844 issue days and 17,331 events. The
 2019-2022 scoring slice contains 1,461 days and 5,204 events. The generated
 NPZ remains local; its committed manifest records SHA-256
 `c818a34fe5c94a8c34e58ff01498b6556e1d46640712cb35f0220f455ff1eddc`.
+
+## Result
+
+The locked candidate achieved overall IGPE `+0.000244` over 5,204 events
+(`1.000244x` ETAS event probability). All four annual scores were positive.
+The 95% stationary-bootstrap intervals were:
+
+- 30-day blocks: `[+0.000093, +0.000414]`.
+- 90-day blocks: `[+0.000087, +0.000433]`.
+
+The fit-locked low-ETAS stratum achieved IGPE `+0.001125` over 956 events.
+`M >= 3.5` and `M >= 4.0` achieved `+0.000306` and `+0.000372`, respectively;
+their bootstrap lower bounds were also positive. ETAS daily counts and
+magnitude forecasts were preserved exactly by construction.
+
+This is positive development-validation evidence, not a final ETAS-superiority
+claim. The model remains unchanged and the 2023 onward locked retrospective
+has not been read.

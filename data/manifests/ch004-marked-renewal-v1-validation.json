@@ -1,0 +1,210 @@
+{
+  "schema_version": 1,
+  "evaluation_id": "ch004-marked-renewal-development-validation-v1",
+  "status": "development_validation_completed",
+  "tool": {
+    "name": "scripts/evaluate_ch004_validation.py",
+    "script_sha256": "2684c6318d4c765bad23653d42055cae43fb7baee41459ebf1390cf7b7e67a9e",
+    "module_sha256": "4dd62b8a23ce85b4f983e9c4be0e29e29fe9fbd52213b59215610d6842f1cc66",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "repository": {
+    "model_lock_commit": "5c9db5c38f35a0359248b4a86a5bb75e91c3cca8",
+    "evaluation_code_commit": "6ff67511a956774f72acb51fac04f1b3b14eeaf2"
+  },
+  "inputs": {
+    "config_sha256": "8dbbd55ae5ea72dfe92c521f689e47549c3041f58c9a29e333bc0ebd6a828e33",
+    "model_sha256": "57057b1c1bd9807993f491d16cc1c2c30bfb7ca86071f60b97cee7ef8dd837c8",
+    "fit_manifest_sha256": "1650ddfe5988eec2a67ee5771fe103256c8c9657050f6a2a9037222a4ef1a983",
+    "fit_config_sha256": "cca955b51772a6028a729b5f3e2835a0bd2aa68f0f526cb4528cd6eb35e69625",
+    "event_history_manifest_sha256": "6a728c51530b5029a8264cc4f815e31d74bf5d572bcadcd011714439d75cf7aa",
+    "event_history_sha256": "c818a34fe5c94a8c34e58ff01498b6556e1d46640712cb35f0220f455ff1eddc",
+    "fault_graph_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+    "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12"
+  },
+  "period": {
+    "start": "2019-01-01",
+    "end_exclusive": "2023-01-01",
+    "development_validation_opened": true,
+    "locked_retrospective_opened": false,
+    "issue_days": 1461,
+    "events": 5204
+  },
+  "protocol": {
+    "baseline": "frozen_etas",
+    "low_etas_threshold_rate_per_cell_day": 0.0005436737556010485,
+    "low_etas_threshold_source": "fit_locked_2014_2018_quantile",
+    "bootstrap": {
+      "replicates": 10000,
+      "mean_block_days": [
+        30,
+        90
+      ],
+      "seed": 20260822,
+      "confidence_level": 0.95
+    },
+    "forecast_boundary": "forecast before same-day observations"
+  },
+  "count_and_magnitude_invariants": {
+    "maximum_daily_expected_count_difference": 0.0,
+    "number_test": "identical to frozen ETAS by construction",
+    "magnitude_test": "identical to frozen ETAS by construction",
+    "pseudolikelihood_gain": "conditional spatial log gain; count and magnitude forecasts unchanged"
+  },
+  "diagnostics": {
+    "active_issue_days": 1171,
+    "expected_reset_weight": 0.4165871793344584,
+    "changed_event_rates": 5204,
+    "maximum_absolute_event_gain": 0.00876880506644163
+  },
+  "results": {
+    "primary": {
+      "target_events": 5204,
+      "information_gain": 1.2710105686379596,
+      "information_gain_per_event": 0.0002442372345576402,
+      "relative_factor": 1.0002442670628993,
+      "positive_gain_days": 916,
+      "negative_gain_days": 255,
+      "bootstrap": {
+        "30_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20260852,
+          "mean_block_days": 30,
+          "confidence_level": 0.95,
+          "lower": 9.27596668329543e-05,
+          "median": 0.000252641641849366,
+          "upper": 0.0004137276234383176
+        },
+        "90_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20260912,
+          "mean_block_days": 90,
+          "confidence_level": 0.95,
+          "lower": 8.702795300321983e-05,
+          "median": 0.0002506959952112012,
+          "upper": 0.0004332400787941866
+        }
+      }
+    },
+    "m_gte_3_5": {
+      "target_events": 765,
+      "information_gain": 0.23435709038119515,
+      "information_gain_per_event": 0.00030634913775319625,
+      "relative_factor": 1.0003063960674425,
+      "positive_gain_days": 242,
+      "negative_gain_days": 71,
+      "bootstrap": {
+        "30_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20261852,
+          "mean_block_days": 30,
+          "confidence_level": 0.95,
+          "lower": 0.00015609728837545202,
+          "median": 0.0003119704616328175,
+          "upper": 0.000631514916859683
+        },
+        "90_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20261912,
+          "mean_block_days": 90,
+          "confidence_level": 0.95,
+          "lower": 0.00015679282128092345,
+          "median": 0.0003107511392415526,
+          "upper": 0.0006478986769817591
+        }
+      }
+    },
+    "m_gte_4_0": {
+      "target_events": 263,
+      "information_gain": 0.09794032298601438,
+      "information_gain_per_event": 0.00037239666534606225,
+      "relative_factor": 1.0003724660135924,
+      "positive_gain_days": 102,
+      "negative_gain_days": 31,
+      "bootstrap": {
+        "30_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20262852,
+          "mean_block_days": 30,
+          "confidence_level": 0.95,
+          "lower": 0.00015412746244926177,
+          "median": 0.00037432288468706944,
+          "upper": 0.0007313779461871896
+        },
+        "90_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20262912,
+          "mean_block_days": 90,
+          "confidence_level": 0.95,
+          "lower": 0.00012333483737543376,
+          "median": 0.0003746143827843517,
+          "upper": 0.0007669064442534687
+        }
+      }
+    },
+    "low_etas": {
+      "target_events": 956,
+      "information_gain": 1.075309972233418,
+      "information_gain_per_event": 0.0011248012261855836,
+      "relative_factor": 1.0011254340523303,
+      "positive_gain_days": 374,
+      "negative_gain_days": 136,
+      "bootstrap": {
+        "30_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20263852,
+          "mean_block_days": 30,
+          "confidence_level": 0.95,
+          "lower": 0.0003350251487980851,
+          "median": 0.001171827314580881,
+          "upper": 0.0018958501711869259
+        },
+        "90_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20263912,
+          "mean_block_days": 90,
+          "confidence_level": 0.95,
+          "lower": 0.0003280122327825087,
+          "median": 0.0011661229260965936,
+          "upper": 0.0019134275305576355
+        }
+      }
+    },
+    "annual_primary_igpe": {
+      "2019": 0.00024007376197357928,
+      "2020": 5.663570552716116e-05,
+      "2021": 0.00043353625774642847,
+      "2022": 0.0005127444627336253
+    }
+  },
+  "admission": {
+    "positive_primary_igpe": true,
+    "nonnegative_low_etas_igpe": true,
+    "admit_locked_retrospective": true
+  },
+  "outputs": {
+    "daily_paired_scores": "artifacts/ch004-marked-renewal-v1-validation/daily-paired-scores.csv",
+    "daily_paired_scores_sha256": "47fbb85a7267c7476d24ccf6c3b3ee385791ec2a41cb03ef0b9ddde4ebeae607"
+  },
+  "claim_boundary": "Development-validation evidence through 2022 only. The 2023 onward locked retrospective remains unopened."
+}

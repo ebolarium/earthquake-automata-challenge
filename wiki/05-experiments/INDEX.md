@@ -25,7 +25,7 @@
 | CH004-002 | Completed | Can a seven-year unscored warmup initialize event-level marked renewal inputs without validation access? | Frozen 2007-2018 catalog, ETAS grids, UCERF3 geometry | 2,563 warmup days and 8,508 warmup events precede the unchanged 3,619-event fit subset; no score |
 | CH004-003 | Completed | Do M4/M5/M6 reset anchors produce nondegenerate renewal ages before fitting? | CH004-002 warmup, eight UCERF3 branches | M4 anchor has 11.22% overdue coverage; M5 nearly inactive and M6 inactive; no forecast score |
 | CH004-004 | Fit completed, validation admitted | Can magnitude-marked renewal quiescence beat ETAS robustly without harming low-ETAS events? | Seven-year warmup and 2014-2018 fit development | Candidate 19: mean IGPE +0.000255, robust +0.000113, low-ETAS +0.000868; every fit year positive |
-| CH004-005 | History built, scoring unopened | Does CH-004 generalize to 2019-2022 with low-ETAS and bootstrap support? | Locked candidate 19 and frozen validation protocol | 5,204 validation events in 2019-2022; model unchanged and scores not yet run |
+| CH004-005 | Completed, retrospective admitted | Does CH-004 generalize to 2019-2022 with low-ETAS and bootstrap support? | Locked candidate 19 and frozen validation protocol | Overall IGPE +0.000244; every year and both bootstrap lower bounds positive; low-ETAS +0.001125 |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,
