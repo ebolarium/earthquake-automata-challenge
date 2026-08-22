@@ -31,4 +31,11 @@ prospective activation but is not a scientific ETAS-superiority claim.
 
 ## Status
 
-History construction pre-registered; locked retrospective scores unopened.
+Baseline extension in progress; locked retrospective scores unopened.
+
+The first history-construction preflight stopped before producing an artifact
+or score because the existing monthly ETAS grid ended at 2023-01-01. The
+missing 2023-2026 baseline period is now pre-registered with the unchanged ETAS
+parameters, catalog, grid, seed, and 10,000 continuations per issue day. After
+those shards are complete, their manifest hash must be added to the history
+contract before history construction is retried.
