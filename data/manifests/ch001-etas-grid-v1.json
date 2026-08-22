@@ -1,0 +1,1388 @@
+{
+  "schema_version": 1,
+  "forecast_id": "ch001-frozen-etas-grid-v1",
+  "status": "completed",
+  "tool": {
+    "name": "scripts/generate_ch001_etas_grid.py",
+    "version": "1.0.0",
+    "python": "3.11.11",
+    "numpy": "1.26.4",
+    "sqlite": "3.40.1"
+  },
+  "inputs": {
+    "config_sha256": "452ec5b98e7508b4acda16e8a05b5e5b022db631f62f2c2eca5cfe46d50ba5dd",
+    "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+    "simulation_reference_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+    "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9"
+  },
+  "protocol": {
+    "method": "EarthquakeNPP ETAS catalog continuation",
+    "simulations_per_issue": 10000,
+    "seed": 20260821,
+    "history_boundary": "strictly_before_issue_time",
+    "target_window": "[issue_time, issue_time + 1 day)",
+    "background_estimator": "replace sampled direct background roots with exact mu times spherical cell area; retain their descendants"
+  },
+  "period": {
+    "start": "2007-01-01",
+    "end_exclusive": "2023-01-01"
+  },
+  "outputs": {
+    "shards": [
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-01.npz",
+        "sha256": "896530d63f8433b863b3ec7b051e73b4dc9cdeab19eb026af832969a3ea477a4",
+        "issue_days": 31,
+        "start": "2007-01-01",
+        "end_inclusive": "2007-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-02.npz",
+        "sha256": "bc8b2856c96ed0f0c3dc2a9e0c477771a86776a047bd5ba01a130a6ab516492d",
+        "issue_days": 28,
+        "start": "2007-02-01",
+        "end_inclusive": "2007-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-03.npz",
+        "sha256": "16a0db3261d06513e78ac721e91119d07be619b3698397fc5869a3eafd291b5a",
+        "issue_days": 31,
+        "start": "2007-03-01",
+        "end_inclusive": "2007-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-04.npz",
+        "sha256": "2adc64a815806443bd01ca1ff6d40b4284cba17eae0b6552aebbf7d5d860d7f7",
+        "issue_days": 30,
+        "start": "2007-04-01",
+        "end_inclusive": "2007-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-05.npz",
+        "sha256": "bac2f83b57500461e33516a83318efde4d88d87f4996664540ee06928ba6a2de",
+        "issue_days": 31,
+        "start": "2007-05-01",
+        "end_inclusive": "2007-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-06.npz",
+        "sha256": "b2526e94163f7daf4e8710d09a2bb848a4820d48fa2dd2624fc9fd656fc64156",
+        "issue_days": 30,
+        "start": "2007-06-01",
+        "end_inclusive": "2007-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-07.npz",
+        "sha256": "7686d1d80154b472d8f47843a3e1c5d43fea125715ea89a7fe5ec184c2504dbf",
+        "issue_days": 31,
+        "start": "2007-07-01",
+        "end_inclusive": "2007-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-08.npz",
+        "sha256": "03d4e6a4357e6048d154ae3f23292401a50b540ddbbbe141084c23dd137b81ba",
+        "issue_days": 31,
+        "start": "2007-08-01",
+        "end_inclusive": "2007-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-09.npz",
+        "sha256": "b6e2e2ccd95ecacdd59bfccc50e6493933912da0bb5ef1c8bf58a4cd44f1ef70",
+        "issue_days": 30,
+        "start": "2007-09-01",
+        "end_inclusive": "2007-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-10.npz",
+        "sha256": "c15e6d8e5242e48287a201587109e9b296d882670c0faed91235191fd6d6c3c9",
+        "issue_days": 31,
+        "start": "2007-10-01",
+        "end_inclusive": "2007-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-11.npz",
+        "sha256": "d44811e66da4f93bb5207552fd67cdcd986efdb7e44bda464f16bc4638c74ab9",
+        "issue_days": 30,
+        "start": "2007-11-01",
+        "end_inclusive": "2007-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2007-12.npz",
+        "sha256": "257865778961ca851aefa77a68f284ba7c7bd0dbeae113d06815ccb57dd9db42",
+        "issue_days": 31,
+        "start": "2007-12-01",
+        "end_inclusive": "2007-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-01.npz",
+        "sha256": "3a0cdd8acfd785519341310aef470739e7ea50fc98ef20eb24fda251d49ab10f",
+        "issue_days": 31,
+        "start": "2008-01-01",
+        "end_inclusive": "2008-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-02.npz",
+        "sha256": "fc2e97ce360a8dad29ceed2af7b023b361f16bf13bf34e4a166973ce63c9c8d6",
+        "issue_days": 29,
+        "start": "2008-02-01",
+        "end_inclusive": "2008-02-29"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-03.npz",
+        "sha256": "b22745516c6915fa8797d3c4464c7e73dd256b5682f575c815bd19efc3da482e",
+        "issue_days": 31,
+        "start": "2008-03-01",
+        "end_inclusive": "2008-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-04.npz",
+        "sha256": "beec7522fd7bfa659f4a847b9cc3dd3e3daf3ba469dd24c687833fd3826f7bf7",
+        "issue_days": 30,
+        "start": "2008-04-01",
+        "end_inclusive": "2008-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-05.npz",
+        "sha256": "d652c170d37a0ade44beefc013f15a0df35b583d88e671773bfca1cbdd8ca038",
+        "issue_days": 31,
+        "start": "2008-05-01",
+        "end_inclusive": "2008-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-06.npz",
+        "sha256": "bd4ae4ef784d38d904252d100c409c97a2f1c89b3ff3153e8c3f28a69f27a19b",
+        "issue_days": 30,
+        "start": "2008-06-01",
+        "end_inclusive": "2008-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-07.npz",
+        "sha256": "5900ec9a27da4cd31002909937deb7ab3b6db2417d82529e86e78862cd407cc1",
+        "issue_days": 31,
+        "start": "2008-07-01",
+        "end_inclusive": "2008-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-08.npz",
+        "sha256": "869c4b940313fc8e9f8e05df3bbb4e81190fd95b81d80ec0efb50ec9bd0b902a",
+        "issue_days": 31,
+        "start": "2008-08-01",
+        "end_inclusive": "2008-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-09.npz",
+        "sha256": "60cbd5064c1c3a6e24d3e2002489ac6c882d0009db7f83e42e301f100d5886ff",
+        "issue_days": 30,
+        "start": "2008-09-01",
+        "end_inclusive": "2008-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-10.npz",
+        "sha256": "9dd1e5f6fc5fb66c264dab48b8b706d84c583e68969f88e4a4942ed272472fbe",
+        "issue_days": 31,
+        "start": "2008-10-01",
+        "end_inclusive": "2008-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-11.npz",
+        "sha256": "fc0fbbd5193d138997dab8f2744ce63a0e0bcabeec85df095b1879ab49a3a809",
+        "issue_days": 30,
+        "start": "2008-11-01",
+        "end_inclusive": "2008-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2008-12.npz",
+        "sha256": "8f09644f310bb859c2cbba922147ad4e82f2461a7e1dfcbe75fb27329ae585b7",
+        "issue_days": 31,
+        "start": "2008-12-01",
+        "end_inclusive": "2008-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-01.npz",
+        "sha256": "69a3eb7ecaad70839cf43fdcb825275372e3ab179bbc4bc1face2838269fb58a",
+        "issue_days": 31,
+        "start": "2009-01-01",
+        "end_inclusive": "2009-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-02.npz",
+        "sha256": "d02244096689c1e5c6039f3e01f3b1f7ed1b45a02fc33491c1e27e104bf71acc",
+        "issue_days": 28,
+        "start": "2009-02-01",
+        "end_inclusive": "2009-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-03.npz",
+        "sha256": "32d3ffc143669fbc80546836382931e9b072897de35a9cc5a3c08d4fddc2c1b6",
+        "issue_days": 31,
+        "start": "2009-03-01",
+        "end_inclusive": "2009-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-04.npz",
+        "sha256": "2b5a5a58ca39f19f9995ea846f185326dde9796061572c2583600d09b0c77504",
+        "issue_days": 30,
+        "start": "2009-04-01",
+        "end_inclusive": "2009-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-05.npz",
+        "sha256": "c2d1f383f1f9d38f482c2d09de3adc2fde7931e35bc8292ddd43c6a0e7bd1dce",
+        "issue_days": 31,
+        "start": "2009-05-01",
+        "end_inclusive": "2009-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-06.npz",
+        "sha256": "2e1c8bbf790a176608e0baee7dd4371e84d1bde642cfd1abcf250e5495c1b90b",
+        "issue_days": 30,
+        "start": "2009-06-01",
+        "end_inclusive": "2009-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-07.npz",
+        "sha256": "b5de7bdabe28429688fe0b8f615ae58cffe356e6d8d9960e2ef1715a6c6ac74a",
+        "issue_days": 31,
+        "start": "2009-07-01",
+        "end_inclusive": "2009-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-08.npz",
+        "sha256": "0b2d9e29240f0cdb58566cf92b9f71b651d4c17d146170d047a96f23e1e42195",
+        "issue_days": 31,
+        "start": "2009-08-01",
+        "end_inclusive": "2009-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-09.npz",
+        "sha256": "8184cd92321823b0dbdfd84abb29a763188c61b98c101a4f2ae09f57626b07fc",
+        "issue_days": 30,
+        "start": "2009-09-01",
+        "end_inclusive": "2009-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-10.npz",
+        "sha256": "6e85445ad2b0338767658c3da8185b611a4d4a5ff55a58dda334b1402140e6d5",
+        "issue_days": 31,
+        "start": "2009-10-01",
+        "end_inclusive": "2009-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-11.npz",
+        "sha256": "11f06009e2b027770dbb51ca07c3cd2ca90d7e9a03af8cd3398d4a533597a13d",
+        "issue_days": 30,
+        "start": "2009-11-01",
+        "end_inclusive": "2009-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2009-12.npz",
+        "sha256": "c98abaa05981860620f2919a3144d9ab8c9fe82bcc0918fb42ade34df9a818c9",
+        "issue_days": 31,
+        "start": "2009-12-01",
+        "end_inclusive": "2009-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-01.npz",
+        "sha256": "dc4dab3a90c2d5695fc52f83586382ec2c25a99af6ffb839434096727d371ecf",
+        "issue_days": 31,
+        "start": "2010-01-01",
+        "end_inclusive": "2010-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-02.npz",
+        "sha256": "046b1a16c9f55f71111bf528ba3a4e8d2cc5c18489e2f58b8e2aa16b9dd0bafe",
+        "issue_days": 28,
+        "start": "2010-02-01",
+        "end_inclusive": "2010-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-03.npz",
+        "sha256": "2077788a373cb4b24016867616dd8a41d084849104718ae0779d83fd0865726f",
+        "issue_days": 31,
+        "start": "2010-03-01",
+        "end_inclusive": "2010-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-04.npz",
+        "sha256": "31376f2fcda8679719b85d7dbd3a8b712a6051be4c2bb9fc41ccb91deeed60d2",
+        "issue_days": 30,
+        "start": "2010-04-01",
+        "end_inclusive": "2010-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-05.npz",
+        "sha256": "95a6bea8c589a6af88803b9d5287a9777cd1bba17b927635df9aefd8345c3435",
+        "issue_days": 31,
+        "start": "2010-05-01",
+        "end_inclusive": "2010-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-06.npz",
+        "sha256": "9c28658c327820863f03fb54ad5be7b755cfc053d81731f5d5d211d735b4bebf",
+        "issue_days": 30,
+        "start": "2010-06-01",
+        "end_inclusive": "2010-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-07.npz",
+        "sha256": "fe78eafa61f3443bdb7698e4c2741cb8d4ca4d44f4aac9aa77c06fce0f4d096f",
+        "issue_days": 31,
+        "start": "2010-07-01",
+        "end_inclusive": "2010-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-08.npz",
+        "sha256": "2ca6cdc215f76f6248cb7826029b564c5221679d29b5cc4433990638549f5466",
+        "issue_days": 31,
+        "start": "2010-08-01",
+        "end_inclusive": "2010-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-09.npz",
+        "sha256": "91777e7cdb1ea6bda8bded5eb61f2e973e7dd6e841b8744fce72528a1140e7bf",
+        "issue_days": 30,
+        "start": "2010-09-01",
+        "end_inclusive": "2010-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-10.npz",
+        "sha256": "62cee62272b2041109698de481a82b1e108cdeeca8ace8b191a345e0bf23fbdd",
+        "issue_days": 31,
+        "start": "2010-10-01",
+        "end_inclusive": "2010-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-11.npz",
+        "sha256": "d3ae551ba561a3fcaf1fc13b05545b8ac825ae35c4162da18233bc51452cab80",
+        "issue_days": 30,
+        "start": "2010-11-01",
+        "end_inclusive": "2010-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2010-12.npz",
+        "sha256": "925d6c259b130e0cc984ac0565df7a1dd9de5855197ed762d4084ecfb3be69aa",
+        "issue_days": 31,
+        "start": "2010-12-01",
+        "end_inclusive": "2010-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-01.npz",
+        "sha256": "1b6b5df0cc417b7ec160f27072968dfbfa86146990540695dbf22c0908a46d5e",
+        "issue_days": 31,
+        "start": "2011-01-01",
+        "end_inclusive": "2011-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-02.npz",
+        "sha256": "d10f93b40282e800b8ebf6908c434e9d82a5b9a286d92a3863c8936e41aa6808",
+        "issue_days": 28,
+        "start": "2011-02-01",
+        "end_inclusive": "2011-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-03.npz",
+        "sha256": "d80a8c23d89d42f9cc7003db1ea82cf82d5085df11c9af0ef072ce2655b97813",
+        "issue_days": 31,
+        "start": "2011-03-01",
+        "end_inclusive": "2011-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-04.npz",
+        "sha256": "d60cc234c1b0d8eebcddf4174fe5d8cdd3f15e3a5853ecd44cca5d99a14ab6f2",
+        "issue_days": 30,
+        "start": "2011-04-01",
+        "end_inclusive": "2011-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-05.npz",
+        "sha256": "a828df98350354bb8d77c4e81f77560569b53dfac716dd66f7b5fe5627878362",
+        "issue_days": 31,
+        "start": "2011-05-01",
+        "end_inclusive": "2011-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-06.npz",
+        "sha256": "e9bc10a854f9f4bad248a84e38ce80e702bf863c914c7bd1871d52d0ab629b05",
+        "issue_days": 30,
+        "start": "2011-06-01",
+        "end_inclusive": "2011-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-07.npz",
+        "sha256": "4feb6ffdc491b8b90a1443188efb73e671443863799f309263052a67b264226b",
+        "issue_days": 31,
+        "start": "2011-07-01",
+        "end_inclusive": "2011-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-08.npz",
+        "sha256": "e378e60cceceb50048860061776ae852a13c96d7de5443fa9e822861445dbaa6",
+        "issue_days": 31,
+        "start": "2011-08-01",
+        "end_inclusive": "2011-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-09.npz",
+        "sha256": "79e960ddefeac39d8f391cfa7df4a31dca13fa51027509390c672426ed223732",
+        "issue_days": 30,
+        "start": "2011-09-01",
+        "end_inclusive": "2011-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-10.npz",
+        "sha256": "60c23b887c5f9961c2fed62ac8547c27dce4436dfe00ac99ad7a648974063366",
+        "issue_days": 31,
+        "start": "2011-10-01",
+        "end_inclusive": "2011-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-11.npz",
+        "sha256": "37b198cbd723f3e685b8de14280a25bb204376eeb5fbe36dbe350e8fcd7be50d",
+        "issue_days": 30,
+        "start": "2011-11-01",
+        "end_inclusive": "2011-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2011-12.npz",
+        "sha256": "e20d3d7e72a115fcdd2f9dbb682ce85659bd53261ccfae6230727bf7f7a90f16",
+        "issue_days": 31,
+        "start": "2011-12-01",
+        "end_inclusive": "2011-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-01.npz",
+        "sha256": "80af2f837f829e1458a82de8124bdd11f10bc4ae912d7148d0ebecbee538855d",
+        "issue_days": 31,
+        "start": "2012-01-01",
+        "end_inclusive": "2012-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-02.npz",
+        "sha256": "1046757ed48ddf89d3075aa2374eaeff4a15165790445caedd70acef2fcd95ea",
+        "issue_days": 29,
+        "start": "2012-02-01",
+        "end_inclusive": "2012-02-29"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-03.npz",
+        "sha256": "ef84ce913eb3486d18629e08eb163360f04cee985ec5eeb2202c7423b781790d",
+        "issue_days": 31,
+        "start": "2012-03-01",
+        "end_inclusive": "2012-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-04.npz",
+        "sha256": "7d4cb81cb9fe00677c90a2fd74f395cc43b8053eb4dedba42e693f3d9d1e5fc1",
+        "issue_days": 30,
+        "start": "2012-04-01",
+        "end_inclusive": "2012-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-05.npz",
+        "sha256": "604ceba9711034e464c345646214bf9415838e52fc4001972a8e3b45024d5c79",
+        "issue_days": 31,
+        "start": "2012-05-01",
+        "end_inclusive": "2012-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-06.npz",
+        "sha256": "c5ba3053e70631419cc78c1bbf00674cf0b99a40fd01fec40f8904477471a6da",
+        "issue_days": 30,
+        "start": "2012-06-01",
+        "end_inclusive": "2012-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-07.npz",
+        "sha256": "0b2557eed44ef03ab228d9e1b37998daaa9600cec125e3f0b7a40ed2ae4dc8b8",
+        "issue_days": 31,
+        "start": "2012-07-01",
+        "end_inclusive": "2012-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-08.npz",
+        "sha256": "ee34e2e4e38f5ff660b57f4ad8e92592cd438603998d88c70a1173c31a255f79",
+        "issue_days": 31,
+        "start": "2012-08-01",
+        "end_inclusive": "2012-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-09.npz",
+        "sha256": "ffb4ccf08114c1d7955f7b762d948b7acee178fdc4e88322fd64c0bbab8fd64d",
+        "issue_days": 30,
+        "start": "2012-09-01",
+        "end_inclusive": "2012-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-10.npz",
+        "sha256": "97d7cc993a6667bf0586857adc312a5a551c9bb2a43dc5ed85c9b6034edb4cbe",
+        "issue_days": 31,
+        "start": "2012-10-01",
+        "end_inclusive": "2012-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-11.npz",
+        "sha256": "df5a0045b001e4b3829081d49940b6c2a1b07f21f28d4c1911967d2b9f90ed0a",
+        "issue_days": 30,
+        "start": "2012-11-01",
+        "end_inclusive": "2012-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2012-12.npz",
+        "sha256": "d84503494e68d0fcd62d7c2721021d91a1a23c286a74cd48b292199805583f71",
+        "issue_days": 31,
+        "start": "2012-12-01",
+        "end_inclusive": "2012-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-01.npz",
+        "sha256": "de301649e2f657cb90a404bf677114693d966defadf0a8be3f502734b2046269",
+        "issue_days": 31,
+        "start": "2013-01-01",
+        "end_inclusive": "2013-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-02.npz",
+        "sha256": "b54fe532dee051bdc0791d4d2e77ce7b7bfecbbdaa3c1d7276d45be8a6be60c5",
+        "issue_days": 28,
+        "start": "2013-02-01",
+        "end_inclusive": "2013-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-03.npz",
+        "sha256": "6e073b5f248c00069cc4abf41387ca58ce92d98e6ffab00d970b8885f2edabd6",
+        "issue_days": 31,
+        "start": "2013-03-01",
+        "end_inclusive": "2013-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-04.npz",
+        "sha256": "dc84397c571a0f3cbd7aa0df79ce421e661da56898d8ecdafb440c3cd8235d5e",
+        "issue_days": 30,
+        "start": "2013-04-01",
+        "end_inclusive": "2013-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-05.npz",
+        "sha256": "2a029ce5e50a288993c3ed526d8f8738d1fd568df65d3eeddb7b278d57bd10e9",
+        "issue_days": 31,
+        "start": "2013-05-01",
+        "end_inclusive": "2013-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-06.npz",
+        "sha256": "296b55c307900e92f0041930230bae26c19f413603f7c2e2e13a5268e0b4f593",
+        "issue_days": 30,
+        "start": "2013-06-01",
+        "end_inclusive": "2013-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-07.npz",
+        "sha256": "e9fc8a598b9e6fe2fb7e4907feba3cea2d22211bc337de75c6ca048b7a3bf8e6",
+        "issue_days": 31,
+        "start": "2013-07-01",
+        "end_inclusive": "2013-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-08.npz",
+        "sha256": "d6ce3c63fe6e7355c31fc7f4ba0e21c764739d28dcc9996b1e985c0395144ccc",
+        "issue_days": 31,
+        "start": "2013-08-01",
+        "end_inclusive": "2013-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-09.npz",
+        "sha256": "b8d30f1273b584d84bae2f2cd08a637f117a5d0e38d63a1fc4b40fd53543b2ce",
+        "issue_days": 30,
+        "start": "2013-09-01",
+        "end_inclusive": "2013-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-10.npz",
+        "sha256": "fe7a61880ce8a9220363dceff0ce4aa8f3db771dde6535e0f8bdb0509b58c1fd",
+        "issue_days": 31,
+        "start": "2013-10-01",
+        "end_inclusive": "2013-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-11.npz",
+        "sha256": "54be0fb45cff81c2361e31f12aa1c42e8269a5d882a311648fe6103c8a7c4505",
+        "issue_days": 30,
+        "start": "2013-11-01",
+        "end_inclusive": "2013-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2013-12.npz",
+        "sha256": "c11ca4619d89e451186e26e0f218a5483233192845f9f775c5fe07246d55590c",
+        "issue_days": 31,
+        "start": "2013-12-01",
+        "end_inclusive": "2013-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-01.npz",
+        "sha256": "2bb5b03af4a0c359afcc6d8b75d39ad5b8c2890bf797aa588425b6aa92a150ec",
+        "issue_days": 31,
+        "start": "2014-01-01",
+        "end_inclusive": "2014-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-02.npz",
+        "sha256": "af0ef2b710e5b523f5e8f3316e99a163a1c57d3a53ee64598db81158a3285a3a",
+        "issue_days": 28,
+        "start": "2014-02-01",
+        "end_inclusive": "2014-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-03.npz",
+        "sha256": "86238d05f217dcd9a36c0b77f41250222541c1c830214de5ef9e5d7e36d73e56",
+        "issue_days": 31,
+        "start": "2014-03-01",
+        "end_inclusive": "2014-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-04.npz",
+        "sha256": "f0d076f0b6fc64e08dc2aa286104da778ebfa5897b8398045af8a3c9bf4b270a",
+        "issue_days": 30,
+        "start": "2014-04-01",
+        "end_inclusive": "2014-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-05.npz",
+        "sha256": "4adcbc2aa680ddb8daaa18d1501b3e4dcd49523e96031223e9efcff253061b22",
+        "issue_days": 31,
+        "start": "2014-05-01",
+        "end_inclusive": "2014-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-06.npz",
+        "sha256": "e51835b86dd383a7549ad33409364d4617fce259531302196cb6b74451af5f9c",
+        "issue_days": 30,
+        "start": "2014-06-01",
+        "end_inclusive": "2014-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-07.npz",
+        "sha256": "5e5cbdb3de333c23c1b01efa6d2cab8f20ed47b4158367d2e218b72626e6fa10",
+        "issue_days": 31,
+        "start": "2014-07-01",
+        "end_inclusive": "2014-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-08.npz",
+        "sha256": "eabca64ffb9bb2dccede529f22903f07a32df00e8df784c5178ba563060671cd",
+        "issue_days": 31,
+        "start": "2014-08-01",
+        "end_inclusive": "2014-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-09.npz",
+        "sha256": "f70b1581ce1cd7bbc927854485d65172b2fe786370625c8026c28bb3ac9f6393",
+        "issue_days": 30,
+        "start": "2014-09-01",
+        "end_inclusive": "2014-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-10.npz",
+        "sha256": "c3fd4085d9107105c0cfde0c9689a7a60c34a7a5fcb99e424452b78688b06f8b",
+        "issue_days": 31,
+        "start": "2014-10-01",
+        "end_inclusive": "2014-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-11.npz",
+        "sha256": "2abcc481edc1ba32453ea12f33510b2f3f1a5e4cd1ad17038931493ad83b8e30",
+        "issue_days": 30,
+        "start": "2014-11-01",
+        "end_inclusive": "2014-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2014-12.npz",
+        "sha256": "306229b1bb827b5bc55c3c6bf26107a6d99280e6f998e55a9a133f14e0b6d64c",
+        "issue_days": 31,
+        "start": "2014-12-01",
+        "end_inclusive": "2014-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-01.npz",
+        "sha256": "a8bfd51fd9d1e9ab4f42dd5a1ca7c667a2ccb0307d4dcbab8aabc51d402b6262",
+        "issue_days": 31,
+        "start": "2015-01-01",
+        "end_inclusive": "2015-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-02.npz",
+        "sha256": "6c042fe5c0190ceebbac20a4e3234e2e4f057bb5d10a5b303d7261ac0981ce85",
+        "issue_days": 28,
+        "start": "2015-02-01",
+        "end_inclusive": "2015-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-03.npz",
+        "sha256": "86eae4a4c4a5e9f8d83643a9a4c4c2e24d00d551eca2336ff655e8eab0e5f2bb",
+        "issue_days": 31,
+        "start": "2015-03-01",
+        "end_inclusive": "2015-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-04.npz",
+        "sha256": "cc369fbb4d2709eec50b8b62125c57c7e76e7416bc661fcca47f6039838261c0",
+        "issue_days": 30,
+        "start": "2015-04-01",
+        "end_inclusive": "2015-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-05.npz",
+        "sha256": "a2a3f41c3da4d8757f5fe277dffc2fab0fd43fb3abc86cb8f905288483e64ed4",
+        "issue_days": 31,
+        "start": "2015-05-01",
+        "end_inclusive": "2015-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-06.npz",
+        "sha256": "04bce2b1302c7aa1ad83970e54ee72339f06d5e41059cc922b9f0fc3097afd69",
+        "issue_days": 30,
+        "start": "2015-06-01",
+        "end_inclusive": "2015-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-07.npz",
+        "sha256": "a8b576383569cf4e2d7b023c2d228533ff4c044569d70e51579622c35cbc8b53",
+        "issue_days": 31,
+        "start": "2015-07-01",
+        "end_inclusive": "2015-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-08.npz",
+        "sha256": "93eaf95b3e102708bc358fec1b8fe064cdbbf6d413c679415844109defe726a6",
+        "issue_days": 31,
+        "start": "2015-08-01",
+        "end_inclusive": "2015-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-09.npz",
+        "sha256": "f0bc76bacf93267833ae4d84da3e9368f4a109dcc754dbdaea122aedf5b564cc",
+        "issue_days": 30,
+        "start": "2015-09-01",
+        "end_inclusive": "2015-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-10.npz",
+        "sha256": "968419297319a2d074bd36c17c510548176d757df187c6559d782eb0686d7644",
+        "issue_days": 31,
+        "start": "2015-10-01",
+        "end_inclusive": "2015-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-11.npz",
+        "sha256": "df04eb366f239e3383375a67ceb0027715c8a2caa6841436651231173f0ccc09",
+        "issue_days": 30,
+        "start": "2015-11-01",
+        "end_inclusive": "2015-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2015-12.npz",
+        "sha256": "acf171f3fce5f55d2216903e9d4dafe96993eb332d03f2b41d554b3751fcb20b",
+        "issue_days": 31,
+        "start": "2015-12-01",
+        "end_inclusive": "2015-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-01.npz",
+        "sha256": "6061c9c4a1bfa6f48ef4855255a4a5d2ef366f77e431a22c24af94491bb884fd",
+        "issue_days": 31,
+        "start": "2016-01-01",
+        "end_inclusive": "2016-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-02.npz",
+        "sha256": "bb525998e2b9f3948f078439366e9f36079483babf6d8d70a26b2aee1d95dcd7",
+        "issue_days": 29,
+        "start": "2016-02-01",
+        "end_inclusive": "2016-02-29"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-03.npz",
+        "sha256": "a89f9e7a59e1541482b687d9f7e6b268b32780c6d0eb6e83dabf8a83bd277d9c",
+        "issue_days": 31,
+        "start": "2016-03-01",
+        "end_inclusive": "2016-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-04.npz",
+        "sha256": "e9be9156051aa485c5c96baffdd10816bbdc217ec257e72d4ccde680919c5037",
+        "issue_days": 30,
+        "start": "2016-04-01",
+        "end_inclusive": "2016-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-05.npz",
+        "sha256": "2d847dd8957e74267ebb048e84b05b8d6301be33c75359f4b2f35b231973097f",
+        "issue_days": 31,
+        "start": "2016-05-01",
+        "end_inclusive": "2016-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-06.npz",
+        "sha256": "a4aec94748fdd105be40b0312aa15aff49275b7c5cd9ca7faf91c85eec419052",
+        "issue_days": 30,
+        "start": "2016-06-01",
+        "end_inclusive": "2016-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-07.npz",
+        "sha256": "256bbd0af0b12e670abfcee9a9899ea6593a86b27e513aaadea6764f90a21dff",
+        "issue_days": 31,
+        "start": "2016-07-01",
+        "end_inclusive": "2016-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-08.npz",
+        "sha256": "6bc7a0c598999d37351e08d2f692631322866f5a658712ebe6a637a96a3319e2",
+        "issue_days": 31,
+        "start": "2016-08-01",
+        "end_inclusive": "2016-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-09.npz",
+        "sha256": "44445132f628a840d538f51051e091b8aba461418636f929e7e4a13d5e46b8e6",
+        "issue_days": 30,
+        "start": "2016-09-01",
+        "end_inclusive": "2016-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-10.npz",
+        "sha256": "7ee15917b36759bc2872c4d1bbc860b2620905e0b87c3a385404d10f397a7e8d",
+        "issue_days": 31,
+        "start": "2016-10-01",
+        "end_inclusive": "2016-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-11.npz",
+        "sha256": "10b0e567af4afd42bbbcee52ce9c33acc90c56e98a2f91125e5f537327c28521",
+        "issue_days": 30,
+        "start": "2016-11-01",
+        "end_inclusive": "2016-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2016-12.npz",
+        "sha256": "d8987be96da03139ff1d420606c405c0526d23278ccbb988bb330d40a12d0c43",
+        "issue_days": 31,
+        "start": "2016-12-01",
+        "end_inclusive": "2016-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-01.npz",
+        "sha256": "c7ba8ca01e950b2463472428f1d7181ac385c264ee93c7d6fe0df188d75b84d4",
+        "issue_days": 31,
+        "start": "2017-01-01",
+        "end_inclusive": "2017-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-02.npz",
+        "sha256": "4b5f49b761f12605b3a43878265c9e9636e7836a38301ae63e46bed81d10443a",
+        "issue_days": 28,
+        "start": "2017-02-01",
+        "end_inclusive": "2017-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-03.npz",
+        "sha256": "69a7cbb010bf19a54be1406eb97f4a52f623fd48ee289d0b5e15d3edbca83c9c",
+        "issue_days": 31,
+        "start": "2017-03-01",
+        "end_inclusive": "2017-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-04.npz",
+        "sha256": "7fd33930d6a99d33012cc604de78399af6589056d5942d3c8dce483b9c3ca68e",
+        "issue_days": 30,
+        "start": "2017-04-01",
+        "end_inclusive": "2017-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-05.npz",
+        "sha256": "864747aa9f3b8afc1de015299eb9398d3c103ee03130b469d2f907033b668cdc",
+        "issue_days": 31,
+        "start": "2017-05-01",
+        "end_inclusive": "2017-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-06.npz",
+        "sha256": "13fdb889f620c6d091ebc3bcd49907e6e120bef5cd5b2dee43f7fd3261b0f80e",
+        "issue_days": 30,
+        "start": "2017-06-01",
+        "end_inclusive": "2017-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-07.npz",
+        "sha256": "fb1c88fe03d56918892fe91add061c3aed7a93d0e3bf61353d6ce1bb028ffd7b",
+        "issue_days": 31,
+        "start": "2017-07-01",
+        "end_inclusive": "2017-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-08.npz",
+        "sha256": "810527944d5ecd69e9f5460060e233a7f1fa7bdf0f5dcc2566276cbb8581b779",
+        "issue_days": 31,
+        "start": "2017-08-01",
+        "end_inclusive": "2017-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-09.npz",
+        "sha256": "0ef4b1c28b9a1c5730ee009e92430853c3b38aad7780a92b4a4cbf12ee9fcab9",
+        "issue_days": 30,
+        "start": "2017-09-01",
+        "end_inclusive": "2017-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-10.npz",
+        "sha256": "38c75d7d31aa6d8ab6a8f0a9c9079052b62179a24300e67c315352e083beb104",
+        "issue_days": 31,
+        "start": "2017-10-01",
+        "end_inclusive": "2017-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-11.npz",
+        "sha256": "1db8f1b22514a42ca377f03db23236e515c93a50d3077b30b7315ad4c3d531c3",
+        "issue_days": 30,
+        "start": "2017-11-01",
+        "end_inclusive": "2017-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2017-12.npz",
+        "sha256": "268556117a63459de1c1b81ad3ebdd5dccde0d20fc148dfa7b082ae879c74eb7",
+        "issue_days": 31,
+        "start": "2017-12-01",
+        "end_inclusive": "2017-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-01.npz",
+        "sha256": "c39132a155f4a80d15232bd9fbc7fee431b7a0450e922d93edc9352a6c6f3be0",
+        "issue_days": 31,
+        "start": "2018-01-01",
+        "end_inclusive": "2018-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-02.npz",
+        "sha256": "2568d42fb306f24e9a74182f2fc86fc8b3c113d857eda6e0c722d8ac3b02f97a",
+        "issue_days": 28,
+        "start": "2018-02-01",
+        "end_inclusive": "2018-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-03.npz",
+        "sha256": "9809fc18a12c00cdb256ed9ad80dd5587329752ea176383a7032357d4a076a6e",
+        "issue_days": 31,
+        "start": "2018-03-01",
+        "end_inclusive": "2018-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-04.npz",
+        "sha256": "1acb78f6543fb55024486d4243f61af5df326b23388852781f367be527de8d0a",
+        "issue_days": 30,
+        "start": "2018-04-01",
+        "end_inclusive": "2018-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-05.npz",
+        "sha256": "44597bd33a385e673bc02ef794b0a1595777adbbb29c8039fec19d80acf26ff9",
+        "issue_days": 31,
+        "start": "2018-05-01",
+        "end_inclusive": "2018-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-06.npz",
+        "sha256": "7a498b6ce477b36fd15e1d65b52015cc417d4bde31f0c9a04ea0670c766e0b48",
+        "issue_days": 30,
+        "start": "2018-06-01",
+        "end_inclusive": "2018-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-07.npz",
+        "sha256": "3be5eb7d94727c9a2d2534bba48faf900534f63397678a42b310f37a4d60c0d6",
+        "issue_days": 31,
+        "start": "2018-07-01",
+        "end_inclusive": "2018-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-08.npz",
+        "sha256": "58f1f54fa66ca302e2249cec9416b4f85ef0d63e5ecfbce668587201120cb830",
+        "issue_days": 31,
+        "start": "2018-08-01",
+        "end_inclusive": "2018-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-09.npz",
+        "sha256": "a004c97d25615a68c4a35f372663f836ec1e1262607d1d5f531f4f102af6e353",
+        "issue_days": 30,
+        "start": "2018-09-01",
+        "end_inclusive": "2018-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-10.npz",
+        "sha256": "bbb6f14597f675a49f2f8cc7df5cd54fd62cb094ee2a778d99a8c194b77373f9",
+        "issue_days": 31,
+        "start": "2018-10-01",
+        "end_inclusive": "2018-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-11.npz",
+        "sha256": "e705c307e3e2830f2aa40af703f44cde3771752a0e039ebe1b189fb00f783618",
+        "issue_days": 30,
+        "start": "2018-11-01",
+        "end_inclusive": "2018-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2018-12.npz",
+        "sha256": "9570f80667c69a1247971b5d21490f8f62157a91813d3594380d6f4f28c5925b",
+        "issue_days": 31,
+        "start": "2018-12-01",
+        "end_inclusive": "2018-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-01.npz",
+        "sha256": "c2bfb8b3e94f1791b839e83304ebdbedbb9f807ea886f0da4c26f85eeee4305e",
+        "issue_days": 31,
+        "start": "2019-01-01",
+        "end_inclusive": "2019-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-02.npz",
+        "sha256": "b238bf2b626ec49ee6e52a3df8706e966864beaf0160a686c87fd8bb933b4b49",
+        "issue_days": 28,
+        "start": "2019-02-01",
+        "end_inclusive": "2019-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-03.npz",
+        "sha256": "5a7d0eb35176a96bc6a4bc7a5dc4b69d28edf4b78b7bdc71f73634be824e5f38",
+        "issue_days": 31,
+        "start": "2019-03-01",
+        "end_inclusive": "2019-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-04.npz",
+        "sha256": "e26af58e18d78eef9ff985c7b31d828a934d3e4488a92c6df0b4e1b8852b26bd",
+        "issue_days": 30,
+        "start": "2019-04-01",
+        "end_inclusive": "2019-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-05.npz",
+        "sha256": "b38791408dd5bb1ceef8d10ffcfa39514ebb468788c2f71165c08a262e4b77fc",
+        "issue_days": 31,
+        "start": "2019-05-01",
+        "end_inclusive": "2019-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-06.npz",
+        "sha256": "fa66689de1fd59e6355f49fd448230f4463b2c3ca05de641ce97ca7b2d64c055",
+        "issue_days": 30,
+        "start": "2019-06-01",
+        "end_inclusive": "2019-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-07.npz",
+        "sha256": "228dd93020e93ddae033078b3b9cd05b1848dd5d3c4453cdb34bd70ff094fac2",
+        "issue_days": 31,
+        "start": "2019-07-01",
+        "end_inclusive": "2019-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-08.npz",
+        "sha256": "b33c3d345119b9f1ed8dbfe3a3f9631a932c408af83bd44afcf7ec33d50a0290",
+        "issue_days": 31,
+        "start": "2019-08-01",
+        "end_inclusive": "2019-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-09.npz",
+        "sha256": "4534090836c191c8df4c5d0843af650a95ea9789c0d02b5719522e4ee7d90c4d",
+        "issue_days": 30,
+        "start": "2019-09-01",
+        "end_inclusive": "2019-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-10.npz",
+        "sha256": "4a9b8146b5043f25b373ec4d61bef641d7424fbcfcc99f6ba77850e6c4ba3975",
+        "issue_days": 31,
+        "start": "2019-10-01",
+        "end_inclusive": "2019-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-11.npz",
+        "sha256": "b68ee5e5e673d802c1a95870954570b117405c82579822390ae0434554758e7e",
+        "issue_days": 30,
+        "start": "2019-11-01",
+        "end_inclusive": "2019-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2019-12.npz",
+        "sha256": "fef5c1c7ea6568e93441f6b0840ca302d71a8271f3644323762d614cad9f0848",
+        "issue_days": 31,
+        "start": "2019-12-01",
+        "end_inclusive": "2019-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-01.npz",
+        "sha256": "7732db1a447eca52da45f211afab19dab69dc67124493cae02a297f2479f908d",
+        "issue_days": 31,
+        "start": "2020-01-01",
+        "end_inclusive": "2020-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-02.npz",
+        "sha256": "25847c2b19277afdb60eb4b712143a203cf559b76c54c9ba16f4da1d5459cd54",
+        "issue_days": 29,
+        "start": "2020-02-01",
+        "end_inclusive": "2020-02-29"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-03.npz",
+        "sha256": "88346c77161a9040fe94892fe163654eaa78f471c1387b04c197e4fbe8a37660",
+        "issue_days": 31,
+        "start": "2020-03-01",
+        "end_inclusive": "2020-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-04.npz",
+        "sha256": "af0f212cfb4ad3ea690e8537bb8aea670e634a6618873dde4b064ce2837e6035",
+        "issue_days": 30,
+        "start": "2020-04-01",
+        "end_inclusive": "2020-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-05.npz",
+        "sha256": "90dfaa9c6d0308d4ca302c2cdef9412697dbf3bc8301503f7a5fa94520e40010",
+        "issue_days": 31,
+        "start": "2020-05-01",
+        "end_inclusive": "2020-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-06.npz",
+        "sha256": "9dfd79fd3575dc4ed5edbb7ddec5a895b7adcdb2ae93abfec69dd0bd2b887bc4",
+        "issue_days": 30,
+        "start": "2020-06-01",
+        "end_inclusive": "2020-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-07.npz",
+        "sha256": "26de86cecd72a38f3395dc31a624ab9c4436a41f58dd2df98490db88f91ac81f",
+        "issue_days": 31,
+        "start": "2020-07-01",
+        "end_inclusive": "2020-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-08.npz",
+        "sha256": "f3c746aa0b2cbe6785953d200171d29d1fecba59a83a4067abfc3b02a7a8cffe",
+        "issue_days": 31,
+        "start": "2020-08-01",
+        "end_inclusive": "2020-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-09.npz",
+        "sha256": "e54e44fa66a52b57aa5bcd3ad78755c6e564f83c26bc995d4010bdb7ff255654",
+        "issue_days": 30,
+        "start": "2020-09-01",
+        "end_inclusive": "2020-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-10.npz",
+        "sha256": "995bc5faef280c43a3e86d08350df0719ddee5a265153f0eeded02f3f40fc19b",
+        "issue_days": 31,
+        "start": "2020-10-01",
+        "end_inclusive": "2020-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-11.npz",
+        "sha256": "3a4cf09ea511dfc69cf58a5922ba7a7c07540b1c5cd703f35e9768295e22055b",
+        "issue_days": 30,
+        "start": "2020-11-01",
+        "end_inclusive": "2020-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2020-12.npz",
+        "sha256": "08230cfc4dfac0d7137c9f3e7a9a36dfdba9b25c5343810c0c3a13507ad6906c",
+        "issue_days": 31,
+        "start": "2020-12-01",
+        "end_inclusive": "2020-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-01.npz",
+        "sha256": "e1bf384d0581693845a4a4c0714e35d006cf98dc7b6604178f42a6bd4b5c5b6e",
+        "issue_days": 31,
+        "start": "2021-01-01",
+        "end_inclusive": "2021-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-02.npz",
+        "sha256": "c2e304f9dba52c4fea1cd506fbb2c03cbdfb25ad1f6c82b57f67c733089f9f82",
+        "issue_days": 28,
+        "start": "2021-02-01",
+        "end_inclusive": "2021-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-03.npz",
+        "sha256": "626ac064c9f3a5819f98d8cb51f201e468d8ce7402906b1ccb302ca52ac0684f",
+        "issue_days": 31,
+        "start": "2021-03-01",
+        "end_inclusive": "2021-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-04.npz",
+        "sha256": "76e723d4fd70497532f3ee3635e95107ec60dcb5b237d3551096ade59d9ab753",
+        "issue_days": 30,
+        "start": "2021-04-01",
+        "end_inclusive": "2021-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-05.npz",
+        "sha256": "4b0f594bb47f02cbe8237c269d52794ab28a3bb9c8c900fa52f31c377d6b4a2f",
+        "issue_days": 31,
+        "start": "2021-05-01",
+        "end_inclusive": "2021-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-06.npz",
+        "sha256": "10070aced693c31294dff4d46f3c693716882ece38f77f2b03340539d3660954",
+        "issue_days": 30,
+        "start": "2021-06-01",
+        "end_inclusive": "2021-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-07.npz",
+        "sha256": "73715c98134a05461edf388ffea8509896ee34e5257478fe2c375aab73db55ef",
+        "issue_days": 31,
+        "start": "2021-07-01",
+        "end_inclusive": "2021-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-08.npz",
+        "sha256": "07fa8d987b241f24a631bddedfeff5a77c5ad09ff1c01b1a1859ab17ad7782ac",
+        "issue_days": 31,
+        "start": "2021-08-01",
+        "end_inclusive": "2021-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-09.npz",
+        "sha256": "3f88b4bb63a991c2d12e7dd38edc9514c7c1d2849236757182d63a7b4410fa5d",
+        "issue_days": 30,
+        "start": "2021-09-01",
+        "end_inclusive": "2021-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-10.npz",
+        "sha256": "e16cb7cfc457f45466ecd0dc1fa264bac0a81ff4b89bd8503bcda432e75435ec",
+        "issue_days": 31,
+        "start": "2021-10-01",
+        "end_inclusive": "2021-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-11.npz",
+        "sha256": "589f9db54fb4c778d404f12505746bc8a330ea045471309e432755222d7d368d",
+        "issue_days": 30,
+        "start": "2021-11-01",
+        "end_inclusive": "2021-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2021-12.npz",
+        "sha256": "4cb44c2589c1c26e338193746f330668fdf2544272714ac7429ba373463bf4b9",
+        "issue_days": 31,
+        "start": "2021-12-01",
+        "end_inclusive": "2021-12-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-01.npz",
+        "sha256": "9d39079e6ec6e4d5d2f779d247ea8b87888829ef95df16c33aa733345e3fa7be",
+        "issue_days": 31,
+        "start": "2022-01-01",
+        "end_inclusive": "2022-01-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-02.npz",
+        "sha256": "40879beb21b1dcbb313509ec542125f244e36cf3deee8eecb32f68e7a6b2d0e3",
+        "issue_days": 28,
+        "start": "2022-02-01",
+        "end_inclusive": "2022-02-28"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-03.npz",
+        "sha256": "95cd913fce4cee9b49bd9fb34aa4251787085aec59cb2c6f2ed415ad209850e8",
+        "issue_days": 31,
+        "start": "2022-03-01",
+        "end_inclusive": "2022-03-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-04.npz",
+        "sha256": "96e83a00a7d985fb5cae8105d35fcdb2c6b27de96255dec997ef5239a9866386",
+        "issue_days": 30,
+        "start": "2022-04-01",
+        "end_inclusive": "2022-04-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-05.npz",
+        "sha256": "1cb95ee7a131c94c6e150d8bbbcbc45ef209c7752f6d66c3b7fec297dcfd995a",
+        "issue_days": 31,
+        "start": "2022-05-01",
+        "end_inclusive": "2022-05-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-06.npz",
+        "sha256": "40a9889d3da83a9ba4003b818cf8528b394426f7018d6a29479dcc13fc3f3cb3",
+        "issue_days": 30,
+        "start": "2022-06-01",
+        "end_inclusive": "2022-06-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-07.npz",
+        "sha256": "df50b4b25daac0d75e2ad0ec9bc9152ae0ef936de96c47b77fff516b36ef3b80",
+        "issue_days": 31,
+        "start": "2022-07-01",
+        "end_inclusive": "2022-07-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-08.npz",
+        "sha256": "ff04d202a61d5a8b254b74d17c6938bbffbd22203defa3f58df8ff6e280cec02",
+        "issue_days": 31,
+        "start": "2022-08-01",
+        "end_inclusive": "2022-08-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-09.npz",
+        "sha256": "dd8d3a7929e73ff7e86965d1dde349767d7f9ba0382f07441bf48532fc8c9706",
+        "issue_days": 30,
+        "start": "2022-09-01",
+        "end_inclusive": "2022-09-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-10.npz",
+        "sha256": "6b7aa32afe3a319e33f2de6d2d4b4a3235b5738825a4d4ce4f393fc3fd88df5f",
+        "issue_days": 31,
+        "start": "2022-10-01",
+        "end_inclusive": "2022-10-31"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-11.npz",
+        "sha256": "39a0f8d034a58295259bec89f625cab981554e9893519ad26c14cc639a2f9cec",
+        "issue_days": 30,
+        "start": "2022-11-01",
+        "end_inclusive": "2022-11-30"
+      },
+      {
+        "path": "artifacts/ch001-etas-grid-v1/etas-2022-12.npz",
+        "sha256": "c593804c8ae06fab13740ea7663037164f29dbcd740fae73aa4201ca8e836fc0",
+        "issue_days": 31,
+        "start": "2022-12-01",
+        "end_inclusive": "2022-12-31"
+      }
+    ]
+  },
+  "results": {
+    "grid_cells": 7682,
+    "issue_days": 5844,
+    "rows": 44893608,
+    "mean_expected_events": 3.254666054550937,
+    "sampled_nonbackground_events": 181910017,
+    "sampled_nonbackground_inside": 169675750
+  },
+  "claim_boundary": "Frozen ETAS baseline rates only; no challenger fitting or performance result is included. Monte Carlo descendants use the locked seed and direct background roots are Rao-Blackwellized analytically."
+}

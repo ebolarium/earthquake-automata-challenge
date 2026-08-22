@@ -32,7 +32,7 @@ month. Existing canonical shards are reused only when their period, simulation
 count, and configuration hash match, so an interrupted run can resume safely.
 
 Generated shards and logs remain ignored under
-`artifacts/ch001-etas-grid-v1/`. The completed manifest will commit every shard
+`artifacts/ch001-etas-grid-v1/`. The committed manifest records every shard
 hash, dtype, period, and aggregate count.
 
 ## Commands
@@ -42,15 +42,11 @@ PYTHONPATH=src python3 scripts/generate_ch001_etas_grid.py
 PYTHONPATH=src python3 scripts/verify_ch001_etas_grid.py
 ```
 
-The canonical run uses the pinned Python 3.11.11 container. It was started as
-the named detached container `ch001-etas-grid`, so progress can be inspected
-without a Codex session:
-
-```bash
-docker logs --tail 20 ch001-etas-grid
-docker logs -f ch001-etas-grid
-docker stats --no-stream ch001-etas-grid
-```
+The canonical run used the pinned Python 3.11.11 container. After four monthly
+shards were completed sequentially, the remaining period was divided into six
+non-overlapping month-aligned workers. A seventh low-resource container waited
+for all 192 atomic shards, rebuilt the canonical manifest, and ran the complete
+artifact verifier.
 
 ## Preflight Result
 
@@ -65,6 +61,34 @@ The host and pinned Docker runtimes then generated the same 10,000-continuation
 2007-01-01 shard independently. The files were byte-identical with SHA-256
 `a32cbe254bb2944b201577cf1a8f3fa546881cbb3dcec8404576f09a375cd021`.
 This is an implementation reproducibility check, not an accuracy result.
+
+## Result
+
+| Measure | Value |
+|---|---:|
+| Issue days | 5,844 |
+| Grid cells | 7,682 |
+| Cell-day rows | 44,893,608 |
+| Monthly shards | 192 |
+| Compressed artifacts | 37 MB |
+| Simulated non-background events | 181,910,017 |
+| Simulated events inside RELM grid | 169,675,750 |
+| Mean expected events per day | 3.254666 |
+| Median expected events per day | 2.774698 |
+| Maximum expected events per day | 59.714448 |
+| Minimum cell rate | 0.0000421337 |
+
+All six workers and the finalizer exited with code zero. The verifier checked
+all shard hashes, dtypes, shapes, finite positive rates, expected-count sums,
+and global day continuity. The committed manifest SHA-256 is
+`5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d`.
+
+## Conclusion
+
+The frozen ETAS offset is ready to join CH001-001 by issue day and cell index.
+The next experiment may fit a spatial residual using only the challenger-fit
+split, then select and calibrate it on development validation. The locked
+retrospective period remains unopened.
 
 ## Boundary
 

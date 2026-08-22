@@ -9,7 +9,7 @@
 | EVAL-001 | Completed | Can native ETAS and Poisson forecasts pass the pinned day-7 pyCSEP consistency pipeline? | Local California V1, 10,000 catalogs per model | All four tests valid; neither model rejected; no superiority claim |
 | WEB-001 | Completed | Can the native ETAS baseline publish an independent inspectable forecast? | Local California V1, 10,000 catalogs | Responsive forecast page and production image complete |
 | CH001-001 | Completed | Can CH-001 receive leakage-free daily grid features and targets? | Fit and validation periods, California RELM grid | 5,844 days and 44,893,608 cell-days generated and verified |
-| CH001-002 | Running | Can the frozen EarthquakeNPP ETAS forecast be converted to positive daily RELM cell rates with bounded memory? | Fit and validation periods, 10,000 continuations per day | Implementation and smoke gate complete; canonical generation running |
+| CH001-002 | Completed | Can the frozen EarthquakeNPP ETAS forecast be converted to positive daily RELM cell rates with bounded memory? | Fit and validation periods, 10,000 continuations per day | 5,844 positive daily grids generated and all 192 shards verified |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,
