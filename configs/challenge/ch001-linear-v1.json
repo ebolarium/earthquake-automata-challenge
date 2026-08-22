@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "model_id": "ch001-linear-residual-v1",
+  "challenge_contract": "configs/challenge/challenge-v1.json",
+  "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+  "matrix_manifest": "data/manifests/ch001-matrix-v1.json",
+  "matrix_manifest_sha256": "efd633a68bd5a759178ebbcbdf0b2aa4f79c40d1dd85166ea6b957fe17544886",
+  "etas_manifest": "data/manifests/ch001-etas-grid-v1.json",
+  "etas_manifest_sha256": "5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d",
+  "fit_start": "2007-01-01",
+  "fit_end_exclusive": "2019-01-01",
+  "validation_start": "2019-01-01",
+  "validation_end_exclusive": "2023-01-01",
+  "primary_target_index": 0,
+  "feature_transform": {
+    "counts": "log1p",
+    "excess_and_acceleration": "identity",
+    "recency": "log1p",
+    "background_rate": "natural_log",
+    "standardized_clip": 8.0
+  },
+  "optimizer": {
+    "name": "L-BFGS-B",
+    "l2_per_target": 0.01,
+    "weight_bound": 3.0,
+    "max_iterations": 40,
+    "ftol": 1e-10,
+    "gtol": 1e-7
+  },
+  "model_output": "models/ch001-linear-v1.json",
+  "fit_manifest": "data/manifests/ch001-linear-v1-fit.json"
+}
