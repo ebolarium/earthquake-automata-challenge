@@ -24,6 +24,20 @@ retrospective period.
 - 30-day and 90-day stationary block-bootstrap intervals.
 - Exact ETAS count preservation and active issue-day diagnostics.
 
+## Command
+
+```bash
+docker run --rm --platform linux/amd64 -v "$PWD:/workspace" -w /workspace \
+  etas-challenge-reference python scripts/evaluate_ch004_validation.py
+```
+
+## Admission Rule
+
+Open the locked retrospective stage only if overall IGPE is positive and the
+fit-locked low-ETAS stratum IGPE is nonnegative. Bootstrap intervals and annual
+scores are reported as uncertainty and stability diagnostics; they are not
+used to alter the locked model or this admission rule.
+
 ## Status
 
 Validation history built; scoring not yet run.

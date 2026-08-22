@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "evaluation_id": "ch004-marked-renewal-development-validation-v1",
+  "model_lock_commit": "5c9db5c38f35a0359248b4a86a5bb75e91c3cca8",
+  "model": "models/ch004-marked-renewal-v1.json",
+  "model_sha256": "57057b1c1bd9807993f491d16cc1c2c30bfb7ca86071f60b97cee7ef8dd837c8",
+  "fit_manifest": "data/manifests/ch004-marked-renewal-v1-fit.json",
+  "fit_manifest_sha256": "1650ddfe5988eec2a67ee5771fe103256c8c9657050f6a2a9037222a4ef1a983",
+  "fit_config": "configs/challenge/ch004-fit-v1.json",
+  "fit_config_sha256": "cca955b51772a6028a729b5f3e2835a0bd2aa68f0f526cb4528cd6eb35e69625",
+  "event_history_manifest": "data/manifests/ch004-validation-history-v1.json",
+  "event_history_manifest_sha256": "6a728c51530b5029a8264cc4f815e31d74bf5d572bcadcd011714439d75cf7aa",
+  "event_history": "data/local/ch004-validation-history-v1.npz",
+  "event_history_sha256": "c818a34fe5c94a8c34e58ff01498b6556e1d46640712cb35f0220f455ff1eddc",
+  "fault_graph": "data/local/ch002-fault-graph-initial-state-v1.npz",
+  "fault_graph_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+  "fault_grid": "data/local/ch002-ucerf3-relm-nearest-v1.npz",
+  "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+  "fault_sections": "data/local/ch002-ucerf3-fault-sections-v1.json",
+  "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+  "grid": "data/grids/california-relm-v1.json",
+  "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+  "simulation_config": "configs/evaluation/comcat25-pycsep-day7-v1.json",
+  "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+  "fixed_contract": {
+    "graph_neighbors": 8,
+    "maximum_log_tilt": 4.0,
+    "grid_neighbors": 4,
+    "grid_bandwidth_km": 10.0,
+    "grid_cutoff_km": 40.0,
+    "fault_prior_odds": 4.0
+  },
+  "period": {
+    "start": "2019-01-01",
+    "end_exclusive": "2023-01-01",
+    "development_validation_opened": true,
+    "locked_retrospective_opened": false
+  },
+  "strata": {
+    "primary_magnitude": 2.5,
+    "magnitude_thresholds": [3.5, 4.0],
+    "low_etas_threshold_source": "fit_manifest"
+  },
+  "bootstrap": {
+    "replicates": 10000,
+    "mean_block_days": [30, 90],
+    "seed": 20260822,
+    "confidence_level": 0.95
+  },
+  "acceptance": {
+    "positive_primary_igpe": true,
+    "nonnegative_low_etas_igpe": true
+  },
+  "daily_output": "artifacts/ch004-marked-renewal-v1-validation/daily-paired-scores.csv",
+  "manifest": "data/manifests/ch004-marked-renewal-v1-validation.json",
+  "claim_boundary": "Development-validation evidence through 2022 only. The 2023 onward locked retrospective remains unopened."
+}
