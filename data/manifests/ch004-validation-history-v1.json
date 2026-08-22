@@ -1,0 +1,65 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ch004-validation-history-v1",
+  "status": "completed_warmup_and_development_validation",
+  "tool": {
+    "name": "scripts/prepare_ch004_event_history.py",
+    "script_sha256": "03edb56ccd5cabbc8980232f7748c67c2c1fb9031e276b3fc4831ed671ffe7e1",
+    "input_module_sha256": "90df5cdaf55f16b340f13badf6f46fe2e1b6f73b4f7c317781d44ff2617ec206",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "inputs": {
+    "component_contract_sha256": "f4e291bf83ac703d45ad140f73612c0a6feb0fd7a913686195a47558fa2a8fd6",
+    "locked_model_sha256": "57057b1c1bd9807993f491d16cc1c2c30bfb7ca86071f60b97cee7ef8dd837c8",
+    "fit_manifest_sha256": "1650ddfe5988eec2a67ee5771fe103256c8c9657050f6a2a9037222a4ef1a983",
+    "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "etas_manifest_sha256": "5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543"
+  },
+  "period": {
+    "history_start": "2007-01-01T00:00:00Z",
+    "scoring_start": "2019-01-01T00:00:00Z",
+    "end_exclusive": "2023-01-01T00:00:00Z",
+    "scoring_role": "development_validation",
+    "warmup_scored": false,
+    "development_validation_opened": true,
+    "locked_retrospective_opened": false,
+    "issue_days": 5844,
+    "warmup_days": 4383,
+    "fit_development_days": 1461,
+    "scoring_days": 1461
+  },
+  "protocol": {
+    "history_boundary": "forecast before same-day observations",
+    "warmup_targets_scored": false,
+    "magnitude_rounding": 0.1,
+    "magnitude_threshold": 2.5,
+    "background_posterior": "analytical direct background cell rate / frozen total ETAS cell rate",
+    "event_fault_geometry": "four nearest UCERF3 trace sections from exact event coordinates",
+    "event_magnitudes_retained_for_candidate_dependent_reset_marks": true
+  },
+  "output": {
+    "path": "data/local/ch004-validation-history-v1.npz",
+    "git_policy": "ignored_generated_data",
+    "bytes": 823368,
+    "sha256": "c818a34fe5c94a8c34e58ff01498b6556e1d46640712cb35f0220f455ff1eddc"
+  },
+  "results": {
+    "events": 17331,
+    "warmup_events": 12127,
+    "fit_development_events": 5204,
+    "scoring_events": 5204,
+    "selected_events_before_grid": 18525,
+    "outside_relm_grid": 1194,
+    "warmup_posterior_root_mass": 1304.5077294638963,
+    "fit_development_posterior_root_mass": 515.1198514916624,
+    "scoring_posterior_root_mass": 515.1198514916624,
+    "magnitude_gte_3_5": 2670,
+    "magnitude_gte_4_0": 707,
+    "magnitude_gte_5_0": 58
+  },
+  "claim_boundary": "Locked-model development validation inputs through 2022 only. The 2023 onward retrospective period remains unopened."
+}

@@ -26,4 +26,9 @@ retrospective period.
 
 ## Status
 
-Model locked; validation-history construction pre-registered and unbuilt.
+Validation history built; scoring not yet run.
+
+The frozen replay contains 5,844 issue days and 17,331 events. The
+2019-2022 scoring slice contains 1,461 days and 5,204 events. The generated
+NPZ remains local; its committed manifest records SHA-256
+`c818a34fe5c94a8c34e58ff01498b6556e1d46640712cb35f0220f455ff1eddc`.
