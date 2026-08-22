@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "challenger_id": "ch003-fault-residual-emergence-v0",
+  "status": "component_contract_no_catalog_evaluation",
+  "frozen_baseline": {
+    "challenge_contract": "configs/challenge/challenge-v1.json",
+    "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+    "model": "EarthquakeNPP spatial-temporal ETAS ComCat_25"
+  },
+  "admitted_inputs": {
+    "fit_inputs_manifest": "data/manifests/ch002-fit-inputs-v1.json",
+    "fit_inputs_manifest_sha256": "9bc97ec6143074e4154f7381fe11768e347d759969d06768c3c0db05e9c040fc",
+    "fault_graph_manifest": "data/manifests/ch002-fault-graph-initial-state-v1.json",
+    "fault_graph_manifest_sha256": "51aa162727ace883e7241e732a8110229ecb8b4b5f105f411dfb418da654ae56",
+    "fault_grid_manifest": "data/manifests/ch002-ucerf3-relm-nearest-v1.json",
+    "fault_grid_manifest_sha256": "4e9d7c83801454ab8aac455f2627910034726ac9bb3dd6c589bf93bad12956e3"
+  },
+  "state_contract": {
+    "innovation": "etas_background_posterior_event_mass_minus_etas_expected_background_mass",
+    "accumulator": "one_sided_exponentially_decayed_compensated_cusum",
+    "variance": "decayed_poisson_compensator",
+    "spatial_gate": "positive_local_and_fault_neighbor_excess",
+    "uncertainty_gate": "minimum_loading_branch_consensus",
+    "absolute_initial_stress_used": false,
+    "initial_strength_map_used": false,
+    "fault_loading_role": "branch_uncertainty_and_later_prior_ablation_only"
+  },
+  "forecast_contract": {
+    "equation": "triggered_etas + bounded_mixture(direct_background, residual_emergence)",
+    "preserve_daily_expected_count": true,
+    "preserve_triggered_component": true,
+    "zero_evidence_equals_etas": true,
+    "maximum_background_mixture_fraction": 0.1,
+    "maximum_event_log_loss_from_background_mixture_nats": 0.10536051565782628,
+    "maximum_log_tilt": 4.0
+  },
+  "development_protocol": {
+    "fit_start": "2014-01-07",
+    "fit_end_exclusive": "2019-01-01",
+    "annual_robust_score": "mean_annual_igpe_minus_standard_deviation_annual_igpe",
+    "zero_mixture_control_required": true,
+    "development_validation_opened": false,
+    "locked_retrospective_opened": false,
+    "disclosure": "CH002 exposed 2018 outcomes before CH003 design; all 2014-2018 data are therefore development data, not a blind holdout."
+  },
+  "fit_parameter_bounds": {
+    "memory_half_life_days": [30.0, 730.0],
+    "standardized_threshold": [0.5, 4.0],
+    "graph_diffusion": [0.0, 0.5],
+    "minimum_branch_consensus": [0.5, 0.875],
+    "background_mixture_fraction": [0.0, 0.1],
+    "emergence_sensitivity": [0.0, 2.0]
+  },
+  "claim_boundary": "Pure component contract only. No CH003 catalog objective, validation score, or retrospective outcome has been evaluated."
+}
