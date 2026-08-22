@@ -159,9 +159,15 @@ def information_gain_per_event(
 ) -> np.ndarray:
     challenger = np.asarray(challenger_rates, dtype=float)
     baseline = np.asarray(etas_rates, dtype=float)
-    if challenger.shape != baseline.shape or np.any(challenger <= 0) or np.any(baseline <= 0):
-        raise ValueError("challenger and ETAS event rates must be positive equal arrays")
-    return np.log(challenger / baseline)
+    if (
+        challenger.shape != baseline.shape
+        or not np.all(np.isfinite(challenger))
+        or np.any(challenger < 0)
+        or not np.all(np.isfinite(baseline))
+        or np.any(baseline <= 0)
+    ):
+        raise ValueError("challenger and ETAS event rates must be finite valid arrays")
+    return np.log(np.maximum(challenger, np.finfo(float).tiny) / baseline)
 
 
 class ReadinessFitEvaluator:

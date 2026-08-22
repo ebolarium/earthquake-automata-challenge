@@ -104,6 +104,11 @@ class ReadinessFitTests(unittest.TestCase):
         gain = information_gain_per_event(np.array([2.0, 1.0]), np.ones(2))
         np.testing.assert_allclose(gain, [np.log(2.0), 0.0])
 
+    def test_underflowed_zero_rate_receives_finite_log_penalty(self):
+        gain = information_gain_per_event(np.array([0.0]), np.array([1.0]))
+        self.assertTrue(np.isfinite(gain[0]))
+        self.assertLess(gain[0], -700)
+
     def test_full_zero_candidate_exactly_matches_etas(self):
         evaluator = ReadinessFitEvaluator(
             sections=[test_section(10, 1.0), test_section(20, 3.0)],
