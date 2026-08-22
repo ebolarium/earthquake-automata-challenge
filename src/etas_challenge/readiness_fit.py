@@ -285,9 +285,10 @@ class ReadinessFitEvaluator:
                     )
                     adjusted_sum += np.sum(adjusted, axis=0)
                 adjusted_mean = adjusted_sum / len(self.particle_branches)
-                triggered = (
+                triggered = np.maximum(
                     self.event_etas_rates[start:end]
-                    - self.event_background_rates[start:end]
+                    - self.event_background_rates[start:end],
+                    0.0,
                 )
                 challenger_rates[start:end] = triggered + adjusted_mean
 

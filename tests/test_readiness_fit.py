@@ -132,6 +132,28 @@ class ReadinessFitTests(unittest.TestCase):
         np.testing.assert_allclose(result.challenger_event_rates, [0.6])
         np.testing.assert_allclose(result.event_gains, [0.0], atol=1e-15)
 
+    def test_float32_background_roundoff_does_not_create_negative_triggering(self):
+        evaluator = ReadinessFitEvaluator(
+            sections=[test_section(10, 1.0), test_section(20, 3.0)],
+            section_ids=np.array([10, 20]),
+            initial_state=np.tile([-1.0, 1.0], (8, 1)),
+            particle_branches=np.asarray(SLIP_RATE_BRANCHES),
+            grid_nearest_ids=np.array([[10, 20], [20, 10]]),
+            grid_nearest_distances_km=np.array([[0.0, 10.0], [0.0, 10.0]]),
+            event_nearest_ids=np.array([[10, 20]]),
+            event_nearest_distances_km=np.array([[0.0, 10.0]]),
+            background_grid=np.array([0.1, 0.2]),
+            all_issue_days=np.array([1], dtype=np.int32),
+            event_days=np.array([1], dtype=np.int32),
+            event_cells=np.array([0], dtype=np.int32),
+            event_magnitudes=np.array([3.0]),
+            event_etas_rates=np.array([0.1 - 1e-12]),
+            event_background_rates=np.array([0.1]),
+            event_background_probabilities=np.array([1.0]),
+        )
+        result = evaluator.evaluate(np.array([0, 0, 0, 0, 1.0]))
+        self.assertTrue(np.isfinite(result.event_gains[0]))
+
 
 if __name__ == "__main__":
     unittest.main()
