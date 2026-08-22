@@ -82,9 +82,9 @@ def main() -> int:
     geometry_config = config["geometry"]
     branch_count = len(SLIP_RATE_BRANCHES)
     section_count = len(section_ids)
-    observed = np.zeros((len(issue_days), branch_count, section_count), dtype=np.float32)
+    observed = np.zeros((len(issue_days), branch_count, section_count), dtype=np.float64)
     expected = np.zeros((branch_count, section_count), dtype=np.float64)
-    observed_off_fault = np.zeros((len(issue_days), branch_count), dtype=np.float32)
+    observed_off_fault = np.zeros((len(issue_days), branch_count), dtype=np.float64)
     expected_off_fault = np.zeros(branch_count, dtype=np.float64)
     active_sections = np.zeros((branch_count, section_count), dtype=bool)
     loading = np.zeros((branch_count, section_count), dtype=np.float32)
@@ -149,6 +149,12 @@ def main() -> int:
     )
     observed_total = np.sum(observed, axis=(0, 2)) + np.sum(observed_off_fault, axis=0)
     expected_total = np.sum(expected, axis=1) + expected_off_fault
+    posterior_total = float(np.sum(event_probabilities))
+    background_total = float(np.sum(background_grid))
+    if not np.allclose(observed_total, posterior_total, rtol=0.0, atol=1e-10):
+        raise ValueError("observed section plus off-fault mass is not conserved")
+    if not np.allclose(expected_total, background_total, rtol=0.0, atol=1e-12):
+        raise ValueError("expected section plus off-fault mass is not conserved")
     manifest = {
         "schema_version": 1,
         "dataset_id": config["dataset_id"],
@@ -185,6 +191,12 @@ def main() -> int:
             "observed_total_root_mass_by_branch": observed_total.tolist(),
             "expected_daily_total_root_mass_by_branch": expected_total.tolist(),
             "expected_period_total_root_mass_by_branch": (expected_total * len(issue_days)).tolist(),
+            "observed_mass_conservation_max_abs_error": float(
+                np.max(np.abs(observed_total - posterior_total))
+            ),
+            "expected_mass_conservation_max_abs_error": float(
+                np.max(np.abs(expected_total - background_total))
+            ),
         },
         "claim_boundary": config["claim_boundary"],
     }
