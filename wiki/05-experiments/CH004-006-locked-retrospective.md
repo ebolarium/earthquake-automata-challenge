@@ -31,7 +31,7 @@ prospective activation but is not a scientific ETAS-superiority claim.
 
 ## Status
 
-Baseline extension completed; history retry pre-registered; scores unopened.
+Retrospective history completed; scores unopened.
 
 The first history-construction preflight stopped before producing an artifact
 or score because the existing monthly ETAS grid ended at 2023-01-01. The
@@ -46,3 +46,8 @@ continuations per day. The canonical manifest SHA-256 is
 All artifact hashes, shapes, positive rates, expected-count sums, and global day
 continuity passed the verifier. The history contract binds both the original
 2007-2022 manifest and this contiguous 2023-2026 extension separately.
+
+The resulting replay contains 7,170 issue days and 21,326 in-grid events from
+2007-01-01 onward. The locked 1,326-day scoring slice contains 3,995 events.
+The ignored NPZ SHA-256 is
+`56053ca2f9d853785cd78b62a2df720974c6d894e4c82a0e65090cd9b1d9b28a`.
