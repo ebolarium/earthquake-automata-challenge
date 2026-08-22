@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build warmup plus fit event history for the CH-004 renewal clock."""
+"""Build a contract-gated event history for the CH-004 renewal clock."""
 
 from __future__ import annotations
 
@@ -50,10 +50,16 @@ def main() -> int:
         and period["development_validation_opened"] is True
         and period.get("locked_retrospective_opened") is False
     )
+    retrospective_period = (
+        period["scoring_start"] == "2023-01-01T00:00:00Z"
+        and period["end_exclusive"] == "2026-08-19T00:00:00Z"
+        and period["development_validation_opened"] is True
+        and period.get("locked_retrospective_opened") is True
+    )
     if (
         period["history_start"] != "2007-01-01T00:00:00Z"
         or period["warmup_scored"] is not False
-        or not (fit_period or validation_period)
+        or not (fit_period or validation_period or retrospective_period)
     ):
         raise ValueError("CH-004 event-history period violates the frozen contract")
     locked_inputs = [
@@ -64,13 +70,34 @@ def main() -> int:
         ("simulation_config", "simulation_config_sha256"),
         ("fault_sections", "fault_sections_sha256"),
     ]
-    if validation_period:
+    if validation_period or retrospective_period:
         locked_inputs.extend(
             (("locked_model", "locked_model_sha256"), ("fit_manifest", "fit_manifest_sha256"))
+        )
+    if retrospective_period:
+        locked_inputs.extend(
+            (
+                ("validation_manifest", "validation_manifest_sha256"),
+                ("challenge_contract", "challenge_contract_sha256"),
+            )
         )
     for path_key, hash_key in locked_inputs:
         if sha256_file(Path(config[path_key])) != config[hash_key]:
             raise ValueError(f"CH-004 locked input changed: {path_key}")
+    if retrospective_period:
+        validation = json.loads(Path(config["validation_manifest"]).read_text())
+        challenge = json.loads(Path(config["challenge_contract"]).read_text())
+        retrospective_split = next(
+            split for split in challenge["splits"] if split["name"] == "locked_retrospective_test"
+        )
+        if validation["admission"]["admit_locked_retrospective"] is not True:
+            raise ValueError("CH-004 was not admitted to locked retrospective evaluation")
+        if (
+            retrospective_split["start"] != period["scoring_start"]
+            or retrospective_split["end_exclusive"] != period["end_exclusive"]
+            or retrospective_split["immutable"] is not True
+        ):
+            raise ValueError("CH-004 retrospective period differs from challenge contract")
 
     grid = GridDefinition.load(Path(config["grid"]))
     catalog = load_fit_catalog(
