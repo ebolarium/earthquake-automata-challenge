@@ -55,6 +55,15 @@ class RenewalFitEvaluation:
     expected_reset_weight: float
 
 
+@dataclass(frozen=True, slots=True)
+class RenewalEnsembleEvaluation:
+    event_gains: np.ndarray
+    event_days: np.ndarray
+    challenger_event_rates: np.ndarray
+    member_active_issue_days: np.ndarray
+    expected_reset_weight: float
+
+
 class RenewalFitEvaluator:
     """Warm and score CH-004 with forecast-before-reset ordering."""
 
@@ -122,7 +131,12 @@ class RenewalFitEvaluator:
             np.searchsorted(self.event_days, self.scoring_start_day, side="left")
         )
 
-    def evaluate(self, parameter_values: np.ndarray) -> RenewalFitEvaluation:
+    def evaluate(
+        self,
+        parameter_values: np.ndarray,
+        *,
+        initial_age: np.ndarray | None = None,
+    ) -> RenewalFitEvaluation:
         parameters = RenewalParameters.from_array(parameter_values)
         expected_mark = expected_reset_weight_gr(
             self.beta,
@@ -137,7 +151,17 @@ class RenewalFitEvaluator:
             parameters.magnitude_exponent,
         )
         marked_roots = self.event_probabilities * marks
-        age = np.zeros_like(expected_hazard)
+        if initial_age is None:
+            age = np.zeros_like(expected_hazard)
+        else:
+            age = np.asarray(initial_age, dtype=float).copy()
+            if (
+                age.shape != expected_hazard.shape
+                or not np.all(np.isfinite(age))
+                or np.any(age < 0)
+                or np.any(age[~self.active] != 0)
+            ):
+                raise ValueError("CH-004 initial age violates the state contract")
         scored_event_count = len(self.event_days) - self.scoring_event_start
         challenger_rates = np.empty(scored_event_count, dtype=float)
         active_issue_days = 0
@@ -200,4 +224,33 @@ class RenewalFitEvaluator:
             challenger_event_rates=challenger_rates,
             active_issue_days=active_issue_days,
             expected_reset_weight=expected_mark,
+        )
+
+    def evaluate_initial_age_ensemble(
+        self,
+        parameter_values: np.ndarray,
+        initial_ages: np.ndarray,
+    ) -> RenewalEnsembleEvaluation:
+        ages = np.asarray(initial_ages, dtype=float)
+        expected_shape = (len(self.expected_background), self.expected_background.shape[1])
+        if ages.ndim != 3 or ages.shape[1:] != expected_shape or len(ages) < 2:
+            raise ValueError("CH-005 initial-age ensemble has the wrong shape")
+        evaluations = [
+            self.evaluate(parameter_values, initial_age=initial_age)
+            for initial_age in ages
+        ]
+        rates = np.mean(
+            np.asarray([item.challenger_event_rates for item in evaluations]),
+            axis=0,
+            dtype=np.float64,
+        )
+        baseline = self.event_etas[self.scoring_event_start :]
+        return RenewalEnsembleEvaluation(
+            event_gains=information_gain_per_event(rates, baseline),
+            event_days=evaluations[0].event_days.copy(),
+            challenger_event_rates=rates,
+            member_active_issue_days=np.asarray(
+                [item.active_issue_days for item in evaluations], dtype=np.int32
+            ),
+            expected_reset_weight=evaluations[0].expected_reset_weight,
         )

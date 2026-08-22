@@ -84,6 +84,33 @@ def update_expected_hazard_age(
     return (current + expected) * np.exp(-observed)
 
 
+def equilibrium_hazard_age_ensemble(
+    active_sections: np.ndarray,
+    ensemble_size: int,
+    seed: int,
+) -> np.ndarray:
+    """Return stratified stationary memoryless ages with section-wise phases."""
+
+    active = np.asarray(active_sections, dtype=bool)
+    if active.ndim != 2 or ensemble_size < 2 or ensemble_size > 1024:
+        raise ValueError("invalid equilibrium-age ensemble shape or size")
+    if not isinstance(seed, (int, np.integer)) or seed < 0:
+        raise ValueError("equilibrium-age seed must be a nonnegative integer")
+    quantiles = -np.log1p(
+        -(np.arange(ensemble_size, dtype=float) + 0.5) / ensemble_size
+    )
+    flat_indexes = np.arange(active.size, dtype=np.uint64)
+    offsets = (
+        flat_indexes * np.uint64(2654435761) + np.uint64(seed)
+    ) % np.uint64(ensemble_size)
+    members = np.arange(ensemble_size, dtype=np.uint64)[:, None]
+    indexes = (members + offsets[None, :]) % np.uint64(ensemble_size)
+    ages = quantiles[indexes.astype(np.int64)].reshape(
+        (ensemble_size, *active.shape)
+    )
+    return np.where(active[None, :, :], ages, 0.0)
+
+
 def bpt_overdue_score(age: np.ndarray, aperiodicity: float) -> np.ndarray:
     """Return positive log hazard above a unit-rate memoryless baseline."""
 

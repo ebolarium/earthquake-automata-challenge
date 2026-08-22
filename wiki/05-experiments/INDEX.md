@@ -27,6 +27,7 @@
 | CH004-004 | Fit completed, validation admitted | Can magnitude-marked renewal quiescence beat ETAS robustly without harming low-ETAS events? | Seven-year warmup and 2014-2018 fit development | Candidate 19: mean IGPE +0.000255, robust +0.000113, low-ETAS +0.000868; every fit year positive |
 | CH004-005 | Completed, retrospective admitted | Does CH-004 generalize to 2019-2022 with low-ETAS and bootstrap support? | Locked candidate 19 and frozen validation protocol | Overall IGPE +0.000244; every year and both bootstrap lower bounds positive; low-ETAS +0.001125 |
 | CH004-006 | Completed, research win | Does unchanged CH-004 pass the one-use 2023-2026 locked retrospective test? | Frozen challenge split and admitted candidate 19 | IGPE +0.000336; 30/90-day lower bounds positive; all years and required strata positive |
+| CH005-001 | Pre-registered, unopened | Does stationary ETAS-hazard age initialization improve locked CH-004 over zero initialization? | Sixteen deterministic Exp(1) age members, 2014-2018 fit | Component implemented; no catalog score read |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,
