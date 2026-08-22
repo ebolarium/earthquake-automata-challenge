@@ -17,11 +17,12 @@ import numpy as np
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
+sys.path.insert(0, str(ROOT / "scripts"))
 
 from etas_challenge.emergence_fit import annual_robust_score  # noqa: E402
 from etas_challenge.renewal_quiescence import equilibrium_hazard_age_ensemble  # noqa: E402
 from etas_challenge.training_matrix import sha256_file  # noqa: E402
-from scripts.evaluate_ch004_validation import build_evaluator  # noqa: E402
+from evaluate_ch004_validation import build_evaluator  # noqa: E402
 
 EPOCH = np.datetime64("1970-01-01", "D")
 

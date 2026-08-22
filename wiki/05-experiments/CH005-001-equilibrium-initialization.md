@@ -39,3 +39,7 @@ this fit ablation is scored.
 ## Status
 
 Component and fit ablation pre-registered; catalog score unopened.
+
+The first execution preflight stopped at module import before loading the
+catalog or running a replay. The container script path was made explicit; no
+experimental input, initialization rule, admission rule, or score changed.
