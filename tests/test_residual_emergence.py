@@ -3,14 +3,27 @@ import unittest
 import numpy as np
 
 from etas_challenge.residual_emergence import InnovationState
+from etas_challenge.residual_emergence import aggregate_sparse_section_mass
 from etas_challenge.residual_emergence import bounded_background_mixture
 from etas_challenge.residual_emergence import consensus_score
 from etas_challenge.residual_emergence import graph_coherent_score
 from etas_challenge.residual_emergence import standardized_excess
 from etas_challenge.residual_emergence import update_compensated_cusum
+from etas_challenge.readiness_fit import SparseGeometry
 
 
 class ResidualEmergenceTest(unittest.TestCase):
+    def test_sparse_section_projection_conserves_off_fault_mass(self):
+        geometry = SparseGeometry(
+            section_indexes=np.array([[0, 1], [1, -1]]),
+            probabilities=np.array([[0.5, 0.25], [0.2, 0.0]]),
+        )
+        sections, off_fault = aggregate_sparse_section_mass(
+            np.array([2.0, 3.0]), geometry, section_count=2
+        )
+        np.testing.assert_allclose(sections, [1.0, 1.1])
+        self.assertAlmostEqual(off_fault, 2.9)
+
     def test_compensated_cusum_accumulates_only_positive_surprise(self):
         state = InnovationState(np.zeros(2), np.zeros(2))
         updated = update_compensated_cusum(

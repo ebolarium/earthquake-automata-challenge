@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ch003-section-compensator-v1",
+  "status": "pre_registered_unbuilt",
+  "component_contract": "configs/challenge/ch003-residual-emergence-v0.json",
+  "component_contract_sha256": "b7b63f264de79aa9c7c0ade39f7c1e353f3c581d5ed6881323949b5602f7aef1",
+  "fit_inputs": "data/local/ch002-fit-inputs-v1.npz",
+  "fit_inputs_sha256": "1e414fca8774d9dac9e76c40ddde80dcd2406fa213023855e1f86750ec284558",
+  "fault_graph": "data/local/ch002-fault-graph-initial-state-v1.npz",
+  "fault_graph_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+  "fault_grid": "data/local/ch002-ucerf3-relm-nearest-v1.npz",
+  "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+  "fault_sections": "data/local/ch002-ucerf3-fault-sections-v1.json",
+  "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+  "grid": "data/grids/california-relm-v1.json",
+  "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+  "simulation_config": "configs/evaluation/comcat25-pycsep-day7-v1.json",
+  "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+  "period": {
+    "start": "2014-01-07",
+    "end_exclusive": "2019-01-01",
+    "development_validation_opened": false
+  },
+  "geometry": {
+    "bandwidth_km": 10.0,
+    "cutoff_km": 40.0,
+    "fault_prior_odds": 4.0
+  },
+  "output": "data/local/ch003-section-compensator-v1.npz",
+  "manifest": "data/manifests/ch003-section-compensator-v1.json",
+  "claim_boundary": "Fit-period section compensators only. No CH003 forecast candidate or information-gain score is evaluated."
+}

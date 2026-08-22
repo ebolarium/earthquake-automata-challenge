@@ -6,11 +6,50 @@ from dataclasses import dataclass
 
 import numpy as np
 
+from etas_challenge.readiness_fit import SparseGeometry
+
 
 @dataclass(frozen=True, slots=True)
 class InnovationState:
     excess: np.ndarray
     variance: np.ndarray
+
+
+def aggregate_sparse_section_mass(
+    row_mass: np.ndarray,
+    geometry: SparseGeometry,
+    section_count: int,
+) -> tuple[np.ndarray, float]:
+    """Project row masses to sections and return the retained off-fault mass."""
+
+    mass = np.asarray(row_mass, dtype=float)
+    indexes = np.asarray(geometry.section_indexes)
+    probabilities = np.asarray(geometry.probabilities, dtype=float)
+    if (
+        mass.ndim != 1
+        or indexes.shape != probabilities.shape
+        or indexes.ndim != 2
+        or len(indexes) != len(mass)
+        or not np.all(np.isfinite(mass))
+        or not np.all(np.isfinite(probabilities))
+        or np.any(mass < 0)
+        or np.any(probabilities < 0)
+        or section_count <= 0
+        or np.any(indexes >= section_count)
+    ):
+        raise ValueError("invalid sparse section-mass inputs")
+    result = np.zeros(section_count, dtype=float)
+    for column in range(indexes.shape[1]):
+        selected = indexes[:, column] >= 0
+        np.add.at(
+            result,
+            indexes[selected, column],
+            mass[selected] * probabilities[selected, column],
+        )
+    off_fault = float(np.sum(mass) - np.sum(result))
+    if off_fault < -1e-12:
+        raise ValueError("section probabilities created mass")
+    return result, max(off_fault, 0.0)
 
 
 def update_compensated_cusum(
