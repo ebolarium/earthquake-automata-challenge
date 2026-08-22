@@ -1,0 +1,58 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ch004-event-history-v1",
+  "status": "completed_warmup_and_fit_development_only",
+  "tool": {
+    "name": "scripts/prepare_ch004_event_history.py",
+    "script_sha256": "6886541710afd39f19f0979554f8ad7fa4ef4b042f78469423e65691b8bcf9c9",
+    "input_module_sha256": "90df5cdaf55f16b340f13badf6f46fe2e1b6f73b4f7c317781d44ff2617ec206",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "inputs": {
+    "component_contract_sha256": "f4e291bf83ac703d45ad140f73612c0a6feb0fd7a913686195a47558fa2a8fd6",
+    "catalog_sha256": "0f05fcdbf1315a23ace109d1248848ca0cff9dde8cfdd6299bde128116a4d399",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "etas_manifest_sha256": "5cfb842067907d5285162aa64c00d42696f31e2ffe0daa3c1cbbfe2acd1b5e6d",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543"
+  },
+  "period": {
+    "history_start": "2007-01-01T00:00:00Z",
+    "scoring_start": "2014-01-07T00:00:00Z",
+    "end_exclusive": "2019-01-01T00:00:00Z",
+    "warmup_scored": false,
+    "development_validation_opened": false,
+    "issue_days": 4383,
+    "warmup_days": 2563,
+    "fit_development_days": 1820
+  },
+  "protocol": {
+    "history_boundary": "forecast before same-day observations",
+    "warmup_targets_scored": false,
+    "magnitude_rounding": 0.1,
+    "magnitude_threshold": 2.5,
+    "background_posterior": "analytical direct background cell rate / frozen total ETAS cell rate",
+    "event_fault_geometry": "four nearest UCERF3 trace sections from exact event coordinates",
+    "event_magnitudes_retained_for_candidate_dependent_reset_marks": true
+  },
+  "output": {
+    "path": "data/local/ch004-event-history-v1.npz",
+    "git_policy": "ignored_generated_data",
+    "bytes": 588624,
+    "sha256": "303242277044996840daa7f83fe62d12236eb3597870b59925f248279efc1db7"
+  },
+  "results": {
+    "events": 12127,
+    "warmup_events": 8508,
+    "fit_development_events": 3619,
+    "selected_events_before_grid": 12984,
+    "outside_relm_grid": 857,
+    "warmup_posterior_root_mass": 781.7515394648868,
+    "fit_development_posterior_root_mass": 522.7561899990094,
+    "magnitude_gte_3_5": 1905,
+    "magnitude_gte_4_0": 444,
+    "magnitude_gte_5_0": 41
+  },
+  "claim_boundary": "Event-level warmup and fit-development inputs only. No reset parameter, renewal forecast, information-gain score, validation result, or retrospective outcome is evaluated."
+}
