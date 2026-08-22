@@ -38,8 +38,10 @@ soft resets instead of an asserted initial stress map. Its synthetic component
 contract, event warmup, and fit are complete. The selected fit candidate has
 positive overall, annual-robust, and low-ETAS information gain. Its locked
 2019-2022 development validation also remained positive overall and in every
-year, with positive 30-day and 90-day bootstrap lower bounds. CH-004 is admitted
-to the still-unopened locked retrospective stage.
+year, with positive 30-day and 90-day bootstrap lower bounds. The unchanged
+model then passed the one-use 2023-2026 locked retrospective test, including
+positive 30-day and 90-day lower bounds and every required stratum. CH-004 has
+a retrospective research win and is eligible for prospective activation.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim

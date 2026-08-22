@@ -1,0 +1,215 @@
+{
+  "schema_version": 1,
+  "evaluation_id": "ch004-marked-renewal-locked-retrospective-v1",
+  "status": "locked_retrospective_completed",
+  "tool": {
+    "name": "scripts/evaluate_ch004_validation.py",
+    "script_sha256": "432a120ae39feec06194c98bcfdddbc8001255bbf61afcbcc64bdc8696ba4126",
+    "module_sha256": "4dd62b8a23ce85b4f983e9c4be0e29e29fe9fbd52213b59215610d6842f1cc66",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "repository": {
+    "model_lock_commit": "5c9db5c38f35a0359248b4a86a5bb75e91c3cca8",
+    "evaluation_code_commit": "4d659a872d1173afbe060c97fc3d78e0dd4f8f99"
+  },
+  "inputs": {
+    "config_sha256": "e0abcae3710d5c0e6edd9305de2e9e9e0d0537d9d2aee15b088e10e798d0d415",
+    "model_sha256": "57057b1c1bd9807993f491d16cc1c2c30bfb7ca86071f60b97cee7ef8dd837c8",
+    "fit_manifest_sha256": "1650ddfe5988eec2a67ee5771fe103256c8c9657050f6a2a9037222a4ef1a983",
+    "fit_config_sha256": "cca955b51772a6028a729b5f3e2835a0bd2aa68f0f526cb4528cd6eb35e69625",
+    "validation_manifest_sha256": "f1ad4cc837ef15ca645c07209ae9d960ca5fa24e4fcb321a0ae334ae9d7fca5e",
+    "challenge_contract_sha256": "526b79a2f1e3a62f76165ce43bff67e45fa6ac596bd158855deb2e4d1eced7ca",
+    "event_history_manifest_sha256": "c76069ccf00a0068a187c4c1c4464adb04ab7639165ad67271560b38bcce18fe",
+    "event_history_sha256": "56053ca2f9d853785cd78b62a2df720974c6d894e4c82a0e65090cd9b1d9b28a",
+    "fault_graph_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+    "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12"
+  },
+  "period": {
+    "start": "2023-01-01",
+    "end_exclusive": "2026-08-19",
+    "development_validation_opened": true,
+    "locked_retrospective_opened": true,
+    "issue_days": 1326,
+    "events": 3995
+  },
+  "protocol": {
+    "baseline": "frozen_etas",
+    "low_etas_threshold_rate_per_cell_day": 0.0005436737556010485,
+    "low_etas_threshold_source": "fit_locked_2014_2018_quantile",
+    "bootstrap": {
+      "replicates": 10000,
+      "mean_block_days": [
+        30,
+        90
+      ],
+      "seed": 20260821,
+      "confidence_level": 0.95
+    },
+    "forecast_boundary": "forecast before same-day observations"
+  },
+  "count_and_magnitude_invariants": {
+    "maximum_daily_expected_count_difference": 0.0,
+    "number_test": "identical to frozen ETAS by construction",
+    "magnitude_test": "identical to frozen ETAS by construction",
+    "pseudolikelihood_gain": "conditional spatial log gain; count and magnitude forecasts unchanged"
+  },
+  "diagnostics": {
+    "active_issue_days": 1130,
+    "expected_reset_weight": 0.4165871793344584,
+    "changed_event_rates": 3995,
+    "maximum_absolute_event_gain": 0.008886532948546041
+  },
+  "results": {
+    "primary": {
+      "target_events": 3995,
+      "information_gain": 1.341247314285861,
+      "information_gain_per_event": 0.0003357314929376373,
+      "relative_factor": 1.000335787857063,
+      "positive_gain_days": 882,
+      "negative_gain_days": 248,
+      "bootstrap": {
+        "30_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20260851,
+          "mean_block_days": 30,
+          "confidence_level": 0.95,
+          "lower": 0.00021085622280228586,
+          "median": 0.0003412982058415292,
+          "upper": 0.0004520706941823202
+        },
+        "90_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20260911,
+          "mean_block_days": 90,
+          "confidence_level": 0.95,
+          "lower": 0.00022287055862738327,
+          "median": 0.0003392042113125853,
+          "upper": 0.0004714207897423345
+        }
+      }
+    },
+    "m_gte_3_5": {
+      "target_events": 443,
+      "information_gain": 0.16734650259496517,
+      "information_gain_per_event": 0.0003777573422008243,
+      "relative_factor": 1.0003778287014908,
+      "positive_gain_days": 223,
+      "negative_gain_days": 68,
+      "bootstrap": {
+        "30_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20261851,
+          "mean_block_days": 30,
+          "confidence_level": 0.95,
+          "lower": 0.0001766582267180772,
+          "median": 0.0003744018907271068,
+          "upper": 0.00061612780516204
+        },
+        "90_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20261911,
+          "mean_block_days": 90,
+          "confidence_level": 0.95,
+          "lower": 0.00018200424810164019,
+          "median": 0.0003758730150414441,
+          "upper": 0.0006338447767029143
+        }
+      }
+    },
+    "m_gte_4_0": {
+      "target_events": 163,
+      "information_gain": 0.07368146462721907,
+      "information_gain_per_event": 0.0004520335253203624,
+      "relative_factor": 1.0004521357078704,
+      "positive_gain_days": 104,
+      "negative_gain_days": 22,
+      "bootstrap": {
+        "30_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20262851,
+          "mean_block_days": 30,
+          "confidence_level": 0.95,
+          "lower": 0.00015519295787403239,
+          "median": 0.00044870293790214347,
+          "upper": 0.0008542581957159094
+        },
+        "90_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20262911,
+          "mean_block_days": 90,
+          "confidence_level": 0.95,
+          "lower": 0.00016057169712582495,
+          "median": 0.0004463566519447788,
+          "upper": 0.0008421944430809818
+        }
+      }
+    },
+    "low_etas": {
+      "target_events": 894,
+      "information_gain": 1.1300819022660278,
+      "information_gain_per_event": 0.0012640737161812392,
+      "relative_factor": 1.0012648729941078,
+      "positive_gain_days": 389,
+      "negative_gain_days": 160,
+      "bootstrap": {
+        "30_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20263851,
+          "mean_block_days": 30,
+          "confidence_level": 0.95,
+          "lower": 0.0006948347546826154,
+          "median": 0.001296665779003293,
+          "upper": 0.001731915093538862
+        },
+        "90_days": {
+          "method": "stationary_daily_block_bootstrap",
+          "replicates": 10000,
+          "valid_replicates": 10000,
+          "seed": 20263911,
+          "mean_block_days": 90,
+          "confidence_level": 0.95,
+          "lower": 0.00075843826844419,
+          "median": 0.0012863381623831674,
+          "upper": 0.0017418386915358317
+        }
+      }
+    },
+    "annual_primary_igpe": {
+      "2023": 0.00061447480275672,
+      "2024": 0.00034554798414040624,
+      "2025": 0.00030346066069522046,
+      "2026": 0.00016860527923049412
+    }
+  },
+  "admission": {
+    "development_validation_passed": true,
+    "bootstrap_30_lower_positive": true,
+    "bootstrap_90_lower_nonnegative": true,
+    "required_reports_completed": true,
+    "retrospective_research_win": true,
+    "admit_prospective_activation": true
+  },
+  "outputs": {
+    "daily_paired_scores": "artifacts/ch004-marked-renewal-v1-retrospective/daily-paired-scores.csv",
+    "daily_paired_scores_sha256": "2ea28c1cbdd5cacd2e85d4e50c38a62b130d4f5223e35f4c09d314eb9b6deda8"
+  },
+  "claim_boundary": "One-use as-of-snapshot locked retrospective evidence. A research win permits prospective activation but is not a scientific ETAS-superiority claim."
+}

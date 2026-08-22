@@ -2,8 +2,8 @@
 
 ## Status
 
-Accepted as the CH-004 component contract. The 2019-2022 development
-validation passed; the locked retrospective remains unopened.
+Accepted as the CH-004 component contract. Development validation and the
+one-use locked retrospective passed; prospective activation is admitted.
 
 ## Context
 
@@ -52,8 +52,9 @@ cycle and must be reported as a limitation.
 
 Every day is scored before its events reset the clock. The fit-locked CH-004
 candidate passed 2019-2022 development validation with positive overall,
-annual, low-ETAS, and bootstrap results. The locked retrospective split remains
-closed.
+annual, low-ETAS, and bootstrap results. The locked retrospective split was
+kept closed until its one-use evaluation. The unchanged candidate subsequently
+passed that evaluation with positive 30-day and 90-day confidence lower bounds.
 
 ## Consequences
 

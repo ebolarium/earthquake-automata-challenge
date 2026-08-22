@@ -31,7 +31,7 @@ prospective activation but is not a scientific ETAS-superiority claim.
 
 ## Status
 
-Retrospective history completed; scoring protocol pre-registered and unopened.
+Completed. Retrospective research win; prospective activation admitted.
 
 The first history-construction preflight stopped before producing an artifact
 or score because the existing monthly ETAS grid ended at 2023-01-01. The
@@ -51,3 +51,22 @@ The resulting replay contains 7,170 issue days and 21,326 in-grid events from
 2007-01-01 onward. The locked 1,326-day scoring slice contains 3,995 events.
 The ignored NPZ SHA-256 is
 `56053ca2f9d853785cd78b62a2df720974c6d894e4c82a0e65090cd9b1d9b28a`.
+
+## Result
+
+The unchanged candidate achieved overall IGPE `+0.000336` over 3,995 events
+(`1.000336x` ETAS event probability). Every annual score from 2023 through the
+partial 2026 period was positive. The primary 95% stationary-bootstrap
+intervals were:
+
+- 30-day blocks: `[+0.000211, +0.000452]`.
+- 90-day blocks: `[+0.000223, +0.000471]`.
+
+The fit-locked low-ETAS stratum achieved `+0.001264` over 894 events.
+`M >= 3.5` and `M >= 4.0` achieved `+0.000378` and `+0.000452`; their 30-day
+and 90-day lower bounds were also positive. Daily counts and magnitude
+forecasts remained identical to ETAS by construction.
+
+Both frozen promotion conditions passed, so CH-004 records a retrospective
+research win and may enter prospective evaluation. This replay is
+as-of-snapshot evidence, not a scientific ETAS-superiority claim.
