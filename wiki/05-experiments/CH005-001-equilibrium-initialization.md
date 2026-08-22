@@ -38,8 +38,19 @@ this fit ablation is scored.
 
 ## Status
 
-Component and fit ablation pre-registered; catalog score unopened.
+Fit ablation completed; development validation admitted and unopened.
 
 The first execution preflight stopped at module import before loading the
 catalog or running a replay. The container script path was made explicit; no
 experimental input, initialization rule, admission rule, or score changed.
+
+## Fit Result
+
+The equilibrium mixture improved primary fit IGPE from `+0.000255` to
+`+0.000330`, a paired gain of `+0.000075` per event. The low-ETAS paired gain
+was `+0.000256`; `M >= 3.5` and `M >= 4.0` paired gains were also positive.
+Every annual paired delta from 2014 through 2018 was positive and the annual
+risk-adjusted delta was `+0.000034`.
+
+All three frozen admission conditions passed. The initialization definition is
+now locked and may be evaluated unchanged on 2019-2022 development validation.

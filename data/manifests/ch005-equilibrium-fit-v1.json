@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "experiment_id": "ch005-equilibrium-initialization-fit-v1",
+  "status": "fit_ablation_completed",
+  "tool": {
+    "name": "scripts/evaluate_ch005_equilibrium_ablation.py",
+    "script_sha256": "3b1f058dd76fd85b82448487c42e22068bce98fff9b0fc8bc38d89e4abfa952a",
+    "renewal_fit_sha256": "64dd1998ba9fd987dc04031b3a726518a18172564c11e1cfde9cb1763d18c180",
+    "renewal_quiescence_sha256": "7ba373e4f8e871d8353b89f2a09c1d66d60ab0442c0c06f1219abddf355cd829",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "repository": {
+    "parent_model_lock_commit": "5c9db5c38f35a0359248b4a86a5bb75e91c3cca8",
+    "evaluation_code_commit": "1a33337c9f849a11a1171b2f706aeb6d1bae9810"
+  },
+  "inputs": {
+    "config_sha256": "c009117f0d6b2dec19a0afdf0fc31309a4d4c5d8ed48901732fa67b56ac4d836",
+    "parent_model_sha256": "57057b1c1bd9807993f491d16cc1c2c30bfb7ca86071f60b97cee7ef8dd837c8",
+    "parent_fit_manifest_sha256": "1650ddfe5988eec2a67ee5771fe103256c8c9657050f6a2a9037222a4ef1a983",
+    "parent_fit_config_sha256": "cca955b51772a6028a729b5f3e2835a0bd2aa68f0f526cb4528cd6eb35e69625",
+    "renewal_fit_module_sha256": "64dd1998ba9fd987dc04031b3a726518a18172564c11e1cfde9cb1763d18c180",
+    "renewal_quiescence_module_sha256": "7ba373e4f8e871d8353b89f2a09c1d66d60ab0442c0c06f1219abddf355cd829",
+    "evaluation_geometry_script_sha256": "432a120ae39feec06194c98bcfdddbc8001255bbf61afcbcc64bdc8696ba4126",
+    "event_history_manifest_sha256": "015dcb66331cb74ef27fbdf9d451c17807b8afa974c0e19a3dcb8bbc7bc1f47a",
+    "event_history_sha256": "303242277044996840daa7f83fe62d12236eb3597870b59925f248279efc1db7",
+    "fault_graph_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+    "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12"
+  },
+  "period": {
+    "warmup_start": "2007-01-01",
+    "scoring_start": "2014-01-07",
+    "end_exclusive": "2019-01-01",
+    "warmup_scored": false,
+    "development_validation_opened": false,
+    "locked_retrospective_opened": false
+  },
+  "initialization": {
+    "ensemble_size": 16,
+    "seed": 20260822,
+    "member_weights": "uniform",
+    "inactive_section_age": 0.0,
+    "distribution": "unit_exponential_stationary_memoryless_hazard_age",
+    "stratification": "mid_quantiles_with_section_specific_cyclic_phases",
+    "mean_initial_age": 0.9785018739825242
+  },
+  "results": {
+    "zero_initialization": {
+      "primary": {
+        "events": 3619,
+        "igpe": 0.00025470533273113386,
+        "relative_factor": 1.0002547377728885
+      },
+      "low_etas": {
+        "events": 906,
+        "igpe": 0.0008677002980664323,
+        "relative_factor": 1.0008680768588762
+      },
+      "m_gte_3_5": {
+        "events": 466,
+        "igpe": 0.0002635041720846098,
+        "relative_factor": 1.0002635388923586
+      },
+      "m_gte_4_0": {
+        "events": 126,
+        "igpe": 0.00021443235650314577,
+        "relative_factor": 1.0002144553487644
+      }
+    },
+    "equilibrium_ensemble": {
+      "primary": {
+        "events": 3619,
+        "igpe": 0.00032994064253466027,
+        "relative_factor": 1.0003299950789353
+      },
+      "low_etas": {
+        "events": 906,
+        "igpe": 0.0011232859641617258,
+        "relative_factor": 1.0011239170861284
+      },
+      "m_gte_3_5": {
+        "events": 466,
+        "igpe": 0.0003694195712806641,
+        "relative_factor": 1.0003694878150937
+      },
+      "m_gte_4_0": {
+        "events": 126,
+        "igpe": 0.00037247049991766506,
+        "relative_factor": 1.0003725398756675
+      }
+    },
+    "paired_delta_ensemble_minus_zero": {
+      "primary": {
+        "events": 3619,
+        "igpe": 7.523530980352641e-05,
+        "relative_factor": 1.0000752381400504
+      },
+      "low_etas": {
+        "events": 906,
+        "igpe": 0.00025558566609529374,
+        "relative_factor": 1.0002556183308944
+      },
+      "m_gte_3_5": {
+        "events": 466,
+        "igpe": 0.00010591539919605434,
+        "relative_factor": 1.00010592100843
+      },
+      "m_gte_4_0": {
+        "events": 126,
+        "igpe": 0.00015803814341451913,
+        "relative_factor": 1.0001580506320997
+      }
+    },
+    "annual_primary_igpe": {
+      "zero": {
+        "2014": 0.00014163597096611375,
+        "2015": 0.00021224806216228327,
+        "2016": 0.00010341956018081751,
+        "2017": 0.0005757892183894662,
+        "2018": 0.000533648006282276
+      },
+      "ensemble": {
+        "2014": 0.00024211328451451025,
+        "2015": 0.00024353739438003684,
+        "2016": 0.0002134237799423268,
+        "2017": 0.0006695596181904007,
+        "2018": 0.0005551946903757673
+      },
+      "delta": {
+        "2014": 0.0001004773135483965,
+        "2015": 3.128933221775359e-05,
+        "2016": 0.00011000421976150932,
+        "2017": 9.377039980093467e-05,
+        "2018": 2.1546684093491354e-05
+      }
+    },
+    "robust_annual_delta": 3.418741942111663e-05
+  },
+  "diagnostics": {
+    "member_active_issue_days": [
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352,
+      1352
+    ],
+    "changed_mixture_event_rates": 3619,
+    "maximum_absolute_paired_delta": 0.01174582698405478
+  },
+  "admission": {
+    "positive_primary_delta": true,
+    "nonnegative_robust_annual_delta": true,
+    "nonnegative_low_etas_delta": true,
+    "admit_development_validation": true
+  },
+  "claim_boundary": "Fixed-parent fit-period initialization ablation only. No parameter was refit and no 2019 onward outcome is read."
+}
