@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "dataset_id": "ch003-section-compensator-v1",
+  "status": "completed_fit_development_only",
+  "tool": {
+    "name": "scripts/prepare_ch003_compensator.py",
+    "script_sha256": "1c68baeda54daa7478e12dfbe482908847b5b061bf48017fc1084ac16db72600",
+    "module_sha256": "f339a6cdd35e14e328c855e8bf63df206b440d724b50471fd0ca2f0703162aba",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "inputs": {
+    "component_contract_sha256": "b7b63f264de79aa9c7c0ade39f7c1e353f3c581d5ed6881323949b5602f7aef1",
+    "fit_inputs_sha256": "1e414fca8774d9dac9e76c40ddde80dcd2406fa213023855e1f86750ec284558",
+    "fault_graph_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+    "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+    "grid_sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+    "simulation_config_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12"
+  },
+  "period": {
+    "start": "2014-01-07",
+    "end_exclusive": "2019-01-01",
+    "development_validation_opened": false,
+    "issue_days": 1820
+  },
+  "protocol": {
+    "branches": [
+      "fm3_1_zeng",
+      "fm3_1_neokinema",
+      "fm3_1_geologic",
+      "fm3_1_abm",
+      "fm3_2_zeng",
+      "fm3_2_neokinema",
+      "fm3_2_geologic",
+      "fm3_2_abm"
+    ],
+    "observed_mass": "event ETAS-background posterior times branch-aware fault probability",
+    "expected_mass": "analytical direct-background cell rate times the same branch-aware fault probability",
+    "off_fault_mass_retained": true,
+    "geometry": {
+      "neighbors": 4,
+      "bandwidth_km": 10.0,
+      "cutoff_km": 40.0,
+      "fault_prior_odds": 4.0
+    }
+  },
+  "output": {
+    "path": "data/local/ch003-section-compensator-v1.npz",
+    "git_policy": "ignored_generated_data",
+    "bytes": 473768,
+    "sha256": "13dee5359f05c6a70fc0d7cd05d3d886160b21934df9b21ecc0f62655ea00900"
+  },
+  "results": {
+    "sections": 350,
+    "branches": 8,
+    "observed_total_root_mass_by_branch": [
+      522.7561899990087,
+      522.7561899990087,
+      522.7561899990087,
+      522.7561899990087,
+      522.7561899990093,
+      522.7561899990093,
+      522.7561899990093,
+      522.7561899990093
+    ],
+    "expected_daily_total_root_mass_by_branch": [
+      0.35124801895887525,
+      0.35124801895887525,
+      0.35124801895887525,
+      0.35124801895887525,
+      0.35124801895887525,
+      0.35124801895887525,
+      0.35124801895887525,
+      0.35124801895887525
+    ],
+    "expected_period_total_root_mass_by_branch": [
+      639.271394505153,
+      639.271394505153,
+      639.271394505153,
+      639.271394505153,
+      639.271394505153,
+      639.271394505153,
+      639.271394505153,
+      639.271394505153
+    ],
+    "observed_mass_conservation_max_abs_error": 6.821210263296962e-13,
+    "expected_mass_conservation_max_abs_error": 0.0
+  },
+  "claim_boundary": "Fit-period section compensators only. No CH003 forecast candidate or information-gain score is evaluated."
+}
