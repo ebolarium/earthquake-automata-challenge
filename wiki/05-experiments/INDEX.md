@@ -24,6 +24,7 @@
 | CH004-001 | Contract implemented | Can ETAS-normalized quiescence form a magnitude-marked renewal clock without absolute stress or hard declustering? | Synthetic marked resets and hazard ages | GR expectation, soft reset, and BPT-inspired overdue components implemented; no catalog score |
 | CH004-002 | Completed | Can a seven-year unscored warmup initialize event-level marked renewal inputs without validation access? | Frozen 2007-2018 catalog, ETAS grids, UCERF3 geometry | 2,563 warmup days and 8,508 warmup events precede the unchanged 3,619-event fit subset; no score |
 | CH004-003 | Completed | Do M4/M5/M6 reset anchors produce nondegenerate renewal ages before fitting? | CH004-002 warmup, eight UCERF3 branches | M4 anchor has 11.22% overdue coverage; M5 nearly inactive and M6 inactive; no forecast score |
+| CH004-004 | Pre-registered, unrun | Can magnitude-marked renewal quiescence beat ETAS robustly without harming low-ETAS events? | Seven-year warmup and 2014-2018 fit development | 32 Sobol candidates plus exact ETAS control frozen; no objective evaluated |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,
