@@ -67,13 +67,24 @@ def summarize(gains: np.ndarray, days: np.ndarray, all_days: np.ndarray, bootstr
 def main() -> int:
     args = parse_args()
     config = json.loads(args.config.read_text())
-    if config["period"] != {
+    validation_period = {
         "start": "2019-01-01",
         "end_exclusive": "2023-01-01",
         "development_validation_opened": True,
         "locked_retrospective_opened": False,
-    }:
-        raise ValueError("CH-007 validation period violates the frozen boundary")
+    }
+    retrospective_period = {
+        "start": "2023-01-01",
+        "end_exclusive": "2026-08-19",
+        "development_validation_opened": True,
+        "locked_retrospective_opened": True,
+    }
+    evaluation_role = config.get("evaluation_role", "development_validation")
+    if not (
+        (evaluation_role == "development_validation" and config["period"] == validation_period)
+        or (evaluation_role == "locked_retrospective" and config["period"] == retrospective_period)
+    ):
+        raise ValueError("CH-007 evaluation period violates the frozen boundary")
     if subprocess.check_output(["git", "status", "--porcelain"], cwd=ROOT, text=True):
         raise ValueError("CH-007 validation requires a clean committed worktree")
     evaluation_commit = subprocess.check_output(
@@ -82,6 +93,10 @@ def main() -> int:
     for path_key, hash_key in config["locked_files"]:
         if sha256_file(Path(config[path_key])) != config[hash_key]:
             raise ValueError(f"CH-007 locked input changed: {path_key}")
+    if evaluation_role == "locked_retrospective":
+        validation = json.loads(Path(config["validation_manifest"]).read_text())
+        if validation["admission"]["ch007_validated"] is not True:
+            raise ValueError("CH-007 did not pass development validation")
 
     with np.load(config["event_history"], allow_pickle=False) as source:
         history = {name: source[name].copy() for name in source.files}
@@ -173,7 +188,7 @@ def main() -> int:
     manifest = {
         "schema_version": 1,
         "evaluation_id": config["evaluation_id"],
-        "status": "development_validation_completed",
+        "status": f"{evaluation_role}_completed",
         "tool": {
             "name": "scripts/evaluate_ch007_validation.py",
             "script_sha256": sha256_file(Path(__file__)),

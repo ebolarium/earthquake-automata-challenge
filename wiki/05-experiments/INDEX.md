@@ -30,6 +30,7 @@
 | CH005-001 | Completed, not validated | Does stationary ETAS-hazard age initialization improve locked CH-004 over zero initialization? | Sixteen deterministic Exp(1) age members, fit then 2019-2022 validation | Validation delta +0.000008 but 30/90-day intervals cross zero; three annual deltas negative |
 | CH006-001 | Fit completed, mechanism not supported | Can discounted posterior fault susceptibility materially strengthen CH-004 renewal skill? | Seven-year warmup and 2014-2018 fit development only | Full +0.003620; frailty-off +0.003622; renewal-off approximately zero, so the gain is renewal amplitude rather than frailty |
 | CH007-001 | Validation passed | Does the stronger renewal amplitude exposed by CH-006 generalize beyond fit? | Fixed renewal-only ablation, 2019-2022 development validation | IGPE +0.003625 (14.84x parent); every year positive; paired 30/90-day lower bounds +0.001194/+0.001135; low-ETAS +0.016463 |
+| CH007-002 | Pre-registered, unrun | Does unchanged CH-007 retain a material parent advantage after 2022? | Locked 2023-2026 as-of-snapshot history | Supportive confirmation only because the period previously scored CH-004; same 2x and paired-bootstrap gates |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,
