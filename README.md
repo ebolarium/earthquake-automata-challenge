@@ -53,7 +53,12 @@ the improvement came from stronger renewal amplitude. That honest negative
 mechanism result produced `CH-007`, a locked renewal-only candidate. CH-007
 achieved `+0.003625` IGPE on 2019-2022 development validation, `14.84x` the
 unchanged CH-004 parent, with every year and paired 30/90-day bootstrap lower
-bound positive. Its 2023 onward as-of-snapshot evaluation remains unopened.
+bound positive. The unchanged model then achieved `+0.004973` IGPE on the
+2023-2026 as-of-snapshot period, `14.81x` its CH-004 parent, again with every
+year and both paired bootstrap lower bounds positive. Because that period had
+already scored CH-004, it is supportive retrospective confirmation rather than
+pristine independent evidence. CH-007 is eligible for immutable prospective
+shadow activation.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim
