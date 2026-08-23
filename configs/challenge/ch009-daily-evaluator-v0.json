@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "evaluation_id": "ch009-phase-coherent-daily-evaluator-v0",
+  "status": "evaluator_contract_no_catalog_evaluation",
+  "component_config": "configs/challenge/ch009-phase-coherent-debt-v0.json",
+  "component_config_sha256": "2c9befd8b9d2238255a3054bab1d5f1fc444eb2e42220e2a446c4afb721ee73f",
+  "frozen_control_manifest": "data/manifests/ch008-prospective-candidate-v1.json",
+  "frozen_control_manifest_sha256": "c4ce7c72ed7c64c17da0e77a9deceed2378e8ad1dce8ba50c08f770b1185d2eb",
+  "feature_module": "src/etas_challenge/phase_coherent_debt.py",
+  "feature_module_sha256": "0606ac19ff033e3ff66a18bd30336b0d89647d1066077aba122907be48d86920",
+  "evaluator_module": "src/etas_challenge/phase_coherent_debt_fit.py",
+  "evaluator_module_sha256": "78ae6150d8c37d1f1aa9dd125e181869e48e9ebaee3f8f41dbcc60f52bc7eb78",
+  "contract_test": "tests/test_phase_coherent_debt_fit.py",
+  "contract_test_sha256": "c70f2214868fdc19b64a54667b7f4ea3e08d97a1b9f64924019ac7138458fe3d",
+  "locked_files": [
+    ["component_config", "component_config_sha256"],
+    ["frozen_control_manifest", "frozen_control_manifest_sha256"],
+    ["feature_module", "feature_module_sha256"],
+    ["evaluator_module", "evaluator_module_sha256"],
+    ["contract_test", "contract_test_sha256"]
+  ],
+  "parameter_order": [
+    "short_half_life_days",
+    "long_to_short_half_life_ratio",
+    "minimum_acceleration",
+    "coherence_mix",
+    "phase_weight"
+  ],
+  "daily_ordering": [
+    "read_ch008_age_exposure_and_root_state_from_prior_issues",
+    "compute_issue_time_log_frailty",
+    "update_causal_fast_and_slow_frailty_means",
+    "compute_ch008_and_phase_coherent_section_scores",
+    "project_loading_branches_and_issue_forecast",
+    "assimilate_same_day_events_into_next_issue_state"
+  ],
+  "state_initialization": {
+    "renewal_age": "unchanged_ch008_zero_at_warmup_start",
+    "frailty_exposure_and_roots": "unchanged_ch008_zero_at_warmup_start",
+    "fast_and_slow_frailty_means": "zero_at_warmup_start",
+    "warmup_scored": false
+  },
+  "verified_invariants": {
+    "phase_weight_zero_exactly_equals_ch008_event_rates": true,
+    "phase_weight_zero_exactly_equals_ch008_event_gains": true,
+    "same_day_events_cannot_change_same_day_forecast": true,
+    "past_coherent_signal_can_change_later_forecast": true,
+    "feature_transition_is_materialized_once_not_per_issue": true
+  },
+  "next_stage_gate": {
+    "catalog_score_allowed": false,
+    "require_clean_committed_fit_preregistration": true,
+    "require_unchanged_ch008_control": true,
+    "require_all_component_ablations": true
+  },
+  "claim_boundary": "Daily evaluator and synthetic equality/leakage contract only. No CH009 catalog replay, fit objective, historical score, candidate selection, or superiority claim has been computed."
+}

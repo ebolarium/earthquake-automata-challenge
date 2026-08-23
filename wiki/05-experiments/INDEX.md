@@ -36,6 +36,7 @@
 | CH008-003 | Completed, supportive confirmation | Does CH-008 preserve incumbent superiority and frailty contribution after 2022? | Locked 2023-2026 full and ablation forecasts | IGPE +0.007865, 58.1% above CH-007; paired lower bounds positive; frailty increment +0.001816 with 30/90-day lower bounds +0.001238/+0.001270 |
 | CH008-004 | Frozen, pending activation | Can CH-008 enter prospective shadow testing without mutable artifacts or backfill? | Hash-locked model, evidence, and runtime modules | Prospective candidate frozen; separate pre-target activation manifest and collector still required |
 | CH009-001 | Contract implemented | Can phase-coherent hazard debt add a genuinely joint regime feature beyond additive CH-008? | Synthetic frailty trends and fault graphs only | Causal multiscale acceleration and four-way coherence invariants implemented; no catalog score |
+| CH009-002 | Contract implemented | Can CH-009 preserve exact CH-008 control behavior and forecast-before-assimilation ordering? | Synthetic daily replay only | Zero phase weight exactly matches CH-008 rates/gains; coherent past state affects only a later issue; no catalog score |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,

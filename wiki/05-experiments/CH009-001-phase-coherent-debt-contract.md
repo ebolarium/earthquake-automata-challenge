@@ -51,7 +51,7 @@ evidence.
 
 ## Next Step
 
-Implement a daily CH-009 evaluator around the frozen CH-008 state and verify
-exact CH-008 equality at zero phase weight. Then preregister a limited fit with
-the required acceleration, coherence, and frailty-level ablations before any
-CH-009 catalog score is read.
+Completed in CH009-002: the daily evaluator gives exact CH-008 equality at zero
+phase weight and preserves forecast-before-assimilation ordering. The next step
+is a limited, pre-registered fit with the required acceleration, coherence, and
+frailty-level ablations before any CH-009 catalog score is read.
