@@ -28,4 +28,44 @@ computed in this stage.
 
 ## Status
 
-Pre-registered and unrun.
+Completed. No 2019 onward CH-008 outcome was read.
+
+## Result
+
+The matched expanded search selected candidate 43 by the unchanged robust
+annual rule:
+
+| Quantity | CH-008 | CH-007 fit ablation |
+| --- | ---: | ---: |
+| Mean IGPE | +0.005311 | +0.003622 |
+| Robust annual IGPE | +0.002347 | +0.001399 |
+| Low-ETAS IGPE | +0.017572 | +0.012113 |
+| Parent IGPE factor | 20.85x | 14.22x |
+
+CH-008 improves mean fit IGPE by 46.6% and robust annual IGPE by 67.7% over
+the locked CH-007 fit ablation. Every annual score remains positive:
+
+- 2014: `+0.003192`.
+- 2015: `+0.004388`.
+- 2016: `+0.001935`.
+- 2017: `+0.011742`.
+- 2018: `+0.011270`.
+
+The selected `renewal_weight` is `2.9262` under the expanded `4.0` cap, and its
+background mixture is `0.2759` under the expanded `0.5` cap. The robust winner
+is therefore interior to both new ranges rather than pinned to either new upper
+boundary. In contrast, the highest-mean candidate 23 lies near both expanded
+caps but loses under the unchanged annual-risk selection rule.
+
+A fixed fit-only mechanism diagnostic gives `+0.004348` for renewal-only,
+`+0.001004` for frailty-only, and `+0.005311` for the full candidate. Unlike the
+earlier CH-006 winner, this selected point contains fit contribution from both
+components. This diagnostic is exploratory and does not reopen validation.
+
+## Conclusion
+
+The original bounds were consequential: widening them exposed a materially
+stronger and more annually robust fit region. The selected robust point no
+longer presses against the expanded caps, so another immediate bound increase
+is not indicated by this check. CH-008 remains fit-only and cannot supersede
+validated CH-007 without a separately locked future-data test.

@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "model_id": "ch008-boundary-sensitivity-v1",
+  "status": "fit_locked_validation_unseen",
+  "fit_lock_commit": "a2d6cf0ea5eb11584fdc2e2abda3a4c82bf3a751",
+  "parent_model_id": "ch004-marked-renewal-v1",
+  "selected_candidate_id": 43,
+  "selected_nonzero_candidate": true,
+  "parameters": {
+    "prior_exposure": 0.6738734718038777,
+    "memory_half_life_days": 430.581556722216,
+    "frailty_neighborhood_mix": 0.0893833797890693,
+    "minimum_log_frailty": 0.005165012553334236,
+    "frailty_weight": 0.582796124741435,
+    "renewal_weight": 2.9262037549633533,
+    "background_mixture_fraction": 0.27592468440532686
+  },
+  "fit_scores": {
+    "mean_igpe": 0.005310825664988032,
+    "relative_factor": 1.0053249530979822,
+    "parent_mean_igpe": 0.00025470533273113386,
+    "parent_igpe_factor": 20.850861691985546,
+    "robust_annual_igpe": 0.002347029191341116,
+    "low_etas_igpe": 0.017572385571300263,
+    "annual_igpe": {
+      "2014": 0.0031923854059185456,
+      "2015": 0.004388388707876487,
+      "2016": 0.0019351705216297105,
+      "2017": 0.01174195217949557,
+      "2018": 0.011270004890549662
+    },
+    "development_validation_admitted": true
+  },
+  "claim_boundary": "Post-CH007 fit-only boundary sensitivity on 2014-2018 development. No CH008 forecast, score, model selection, or parameter revision may read 2019 onward outcomes. This experiment cannot retroactively alter CH007."
+}
