@@ -43,4 +43,24 @@ CH-006 forecast or score may be read before the model is locked.
 
 ## Status
 
-Pre-registered and unrun.
+Fit completed and development validation admitted. No 2019 onward CH-006
+forecast or score has been read.
+
+## Fit Result
+
+Candidate 23 won the pre-registered robust annual rule over 3,619 events:
+
+| Quantity | CH-006 | CH-004 parent |
+| --- | ---: | ---: |
+| Mean IGPE | +0.003620 | +0.000255 |
+| Parent factor | 14.21x | 1.00x |
+| Robust annual IGPE | +0.001397 | +0.000113 |
+| Low-ETAS IGPE | +0.012071 | +0.000868 |
+
+Every annual score from 2014 through 2018 was positive. The selected state has
+a 475-day evidence half-life, combines local and neighboring fault evidence,
+and may redistribute at most 28.35% of direct background mass.
+
+The result is materially larger on fit development, but remains a fit result.
+Before validation, fixed full, renewal-only, and frailty-only ablations must be
+registered so amplitude and genuinely new state information can be separated.

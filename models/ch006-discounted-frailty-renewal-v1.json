@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "model_id": "ch006-discounted-frailty-renewal-v1",
+  "status": "fit_locked_validation_unseen",
+  "fit_lock_commit": "211058c12e76042888bcd937b274d539ddea73ad",
+  "parent_model_id": "ch004-marked-renewal-v1",
+  "selected_candidate_id": 23,
+  "selected_nonzero_candidate": true,
+  "parameters": {
+    "prior_exposure": 2.4846224805633117,
+    "memory_half_life_days": 475.00724329817876,
+    "frailty_neighborhood_mix": 0.5166337117552757,
+    "minimum_log_frailty": 0.4776196335442364,
+    "frailty_weight": 2.423616321757436,
+    "renewal_weight": 2.323531412985176,
+    "background_mixture_fraction": 0.2834929959103465
+  },
+  "fit_scores": {
+    "mean_igpe": 0.0036200084078062376,
+    "relative_factor": 1.0036265685517793,
+    "parent_mean_igpe": 0.00025470533273113386,
+    "parent_igpe_factor": 14.212534810284113,
+    "robust_annual_igpe": 0.0013970143275924807,
+    "low_etas_igpe": 0.012070816255777843,
+    "annual_igpe": {
+      "2014": 0.0019591228422293043,
+      "2015": 0.0030077437161157646,
+      "2016": 0.0010957203655490868,
+      "2017": 0.008492681149662678,
+      "2018": 0.008030345734272058
+    },
+    "development_validation_admitted": true
+  },
+  "claim_boundary": "CH-006 candidate search uses only the 2014-2018 fit-development outcomes after unscored 2007-2014 warmup. No 2019 onward CH-006 forecast or score is read."
+}
