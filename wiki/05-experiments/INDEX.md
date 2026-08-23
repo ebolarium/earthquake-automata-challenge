@@ -37,6 +37,7 @@
 | CH008-004 | Frozen, pending activation | Can CH-008 enter prospective shadow testing without mutable artifacts or backfill? | Hash-locked model, evidence, and runtime modules | Prospective candidate frozen; separate pre-target activation manifest and collector still required |
 | CH009-001 | Contract implemented | Can phase-coherent hazard debt add a genuinely joint regime feature beyond additive CH-008? | Synthetic frailty trends and fault graphs only | Causal multiscale acceleration and four-way coherence invariants implemented; no catalog score |
 | CH009-002 | Contract implemented | Can CH-009 preserve exact CH-008 control behavior and forecast-before-assimilation ordering? | Synthetic daily replay only | Zero phase weight exactly matches CH-008 rates/gains; coherent past state affects only a later issue; no catalog score |
+| CH009-003 | Pre-registered, unrun | Can phase-coherent hazard debt robustly improve CH-008 and beat its own mechanism ablations? | Known 2014-2026 all-history development benchmark | Exact CH-008 control plus 64 Sobol candidates; annual, low-ETAS, M3.5, activity, and three-ablation gates locked before scoring |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,

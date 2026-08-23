@@ -79,7 +79,9 @@ fast-minus-slow frailty acceleration, and neighboring fault support while
 retaining CH-008's ETAS-triggering and bounded-background invariants. No CH-009
 catalog score has yet been computed. Its daily evaluator now exactly reproduces
 CH-008 at zero phase weight and verifies that same-day events enter only later
-forecast state. A limited catalog fit still requires a separate pre-commit.
+forecast state. CH009-003 pre-registers a limited 64-candidate all-history
+development fit against exact CH-008, with annual robustness and three mandatory
+mechanism ablations. No CH-009 catalog score has yet been read.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim
