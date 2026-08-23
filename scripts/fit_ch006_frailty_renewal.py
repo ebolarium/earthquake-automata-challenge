@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import csv
+import argparse
 import json
 import math
 import os
@@ -33,12 +34,12 @@ def atomic_json(path: Path, payload: dict) -> None:
     os.replace(temporary, path)
 
 
-def clean_lock_commit() -> str:
+def clean_lock_commit(challenger_name: str) -> str:
     status = subprocess.check_output(
         ["git", "status", "--porcelain"], cwd=ROOT, text=True
     )
     if status:
-        raise RuntimeError("CH-006 fit requires a clean committed worktree")
+        raise RuntimeError(f"{challenger_name} fit requires a clean committed worktree")
     return subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
 
 
@@ -71,9 +72,21 @@ def write_rows(path: Path, rows: list[dict], fieldnames: list[str]) -> None:
     os.replace(temporary, path)
 
 
+def parse_args():
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=Path("configs/challenge/ch006-frailty-renewal-fit-v1.json"),
+    )
+    return parser.parse_args()
+
+
 def main() -> int:
-    config_path = Path("configs/challenge/ch006-frailty-renewal-fit-v1.json")
+    args = parse_args()
+    config_path = args.config
     config = json.loads(config_path.read_text(encoding="utf-8"))
+    challenger_name = config.get("challenger_name", "CH-006")
     if config["period"] != {
         "warmup_start": "2007-01-01",
         "scoring_start": "2014-01-07",
@@ -82,11 +95,11 @@ def main() -> int:
         "development_validation_opened": False,
         "locked_retrospective_opened": False,
     }:
-        raise ValueError("CH-006 fit period violates the pre-registered boundary")
-    lock_commit = clean_lock_commit()
+        raise ValueError(f"{challenger_name} fit period violates the pre-registered boundary")
+    lock_commit = clean_lock_commit(challenger_name)
     for path_key, hash_key in config["locked_files"]:
         if sha256_file(Path(config[path_key])) != config[hash_key]:
-            raise ValueError(f"CH-006 locked input changed: {path_key}")
+            raise ValueError(f"{challenger_name} locked input changed: {path_key}")
 
     with np.load(config["event_history"], allow_pickle=False) as source:
         history = {name: source[name].copy() for name in source.files}
@@ -176,7 +189,7 @@ def main() -> int:
     )
     model = {
         "schema_version": 1,
-        "model_id": "ch006-discounted-frailty-renewal-v1",
+        "model_id": config.get("model_id", "ch006-discounted-frailty-renewal-v1"),
         "status": "fit_locked_validation_unseen",
         "fit_lock_commit": lock_commit,
         "parent_model_id": parent_model["model_id"],
