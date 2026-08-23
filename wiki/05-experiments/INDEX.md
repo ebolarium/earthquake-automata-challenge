@@ -28,7 +28,8 @@
 | CH004-005 | Completed, retrospective admitted | Does CH-004 generalize to 2019-2022 with low-ETAS and bootstrap support? | Locked candidate 19 and frozen validation protocol | Overall IGPE +0.000244; every year and both bootstrap lower bounds positive; low-ETAS +0.001125 |
 | CH004-006 | Completed, research win | Does unchanged CH-004 pass the one-use 2023-2026 locked retrospective test? | Frozen challenge split and admitted candidate 19 | IGPE +0.000336; 30/90-day lower bounds positive; all years and required strata positive |
 | CH005-001 | Completed, not validated | Does stationary ETAS-hazard age initialization improve locked CH-004 over zero initialization? | Sixteen deterministic Exp(1) age members, fit then 2019-2022 validation | Validation delta +0.000008 but 30/90-day intervals cross zero; three annual deltas negative |
-| CH006-001 | Fit completed, validation admitted | Can discounted posterior fault susceptibility materially strengthen CH-004 renewal skill? | Seven-year warmup and 2014-2018 fit development only | Candidate 23: IGPE +0.003620 (14.21x parent), robust +0.001397, low-ETAS +0.012071; every fit year positive |
+| CH006-001 | Fit completed, mechanism not supported | Can discounted posterior fault susceptibility materially strengthen CH-004 renewal skill? | Seven-year warmup and 2014-2018 fit development only | Full +0.003620; frailty-off +0.003622; renewal-off approximately zero, so the gain is renewal amplitude rather than frailty |
+| CH007-001 | Pre-registered, unrun | Does the stronger renewal amplitude exposed by CH-006 generalize beyond fit? | Fixed renewal-only ablation, 2019-2022 validation unopened | Requires 2x parent IGPE, positive paired bootstrap bounds, all years positive, and parent-level low-ETAS skill |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,

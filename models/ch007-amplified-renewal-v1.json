@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "model_id": "ch007-amplified-renewal-v1",
+  "status": "fit_ablation_locked_validation_unseen",
+  "source_fit_commit": "e825ff3",
+  "parent_model_id": "ch004-marked-renewal-v1",
+  "source_model_id": "ch006-discounted-frailty-renewal-v1",
+  "source_candidate_id": 23,
+  "parameters": {
+    "prior_exposure": 2.4846224805633117,
+    "memory_half_life_days": 475.00724329817876,
+    "frailty_neighborhood_mix": 0.5166337117552757,
+    "minimum_log_frailty": 0.4776196335442364,
+    "frailty_weight": 0.0,
+    "renewal_weight": 2.323531412985176,
+    "background_mixture_fraction": 0.2834929959103465
+  },
+  "fit_ablation_scores": {
+    "mean_igpe": 0.003621978189676923,
+    "parent_igpe_factor": 14.220274654228986,
+    "robust_annual_igpe": 0.0013991244636645597,
+    "low_etas_igpe": 0.01211273047686645,
+    "annual_igpe": {
+      "2014": 0.001937288261549023,
+      "2015": 0.0030417433880663993,
+      "2016": 0.001095765997931086,
+      "2017": 0.008492681149662645,
+      "2018": 0.008030345734272068
+    }
+  },
+  "claim_boundary": "Post-fit CH-006 mechanism ablation using 2014-2018 development only. Frailty is fixed to zero and no 2019 onward CH-007 forecast or score has been read."
+}

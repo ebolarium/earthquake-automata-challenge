@@ -64,3 +64,16 @@ and may redistribute at most 28.35% of direct background mass.
 The result is materially larger on fit development, but remains a fit result.
 Before validation, fixed full, renewal-only, and frailty-only ablations must be
 registered so amplitude and genuinely new state information can be separated.
+
+## Mechanism Ablation
+
+The fit-only fixed ablation rejected the proposed mechanism:
+
+- Full CH-006: `+0.003620` IGPE.
+- Frailty disabled: `+0.003622` IGPE.
+- Renewal disabled: `+0.0000004` IGPE.
+
+The large fit gain comes from stronger renewal amplitude and a larger bounded
+background fraction, not the new frailty state. CH-006 is therefore not a
+frailty discovery. The renewal-only forecast is frozen separately as CH-007
+before any 2019 onward CH-007 outcome is read.
