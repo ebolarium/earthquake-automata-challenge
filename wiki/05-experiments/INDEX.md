@@ -33,7 +33,7 @@
 | CH007-002 | Completed, supportive confirmation | Does unchanged CH-007 retain a material parent advantage after 2022? | Locked 2023-2026 as-of-snapshot history | IGPE +0.004973 (14.81x parent); every year positive; paired 30/90-day lower bounds +0.002875/+0.003024; low-ETAS +0.018455 |
 | CH008-001 | Completed, fit-only | Was the amplified renewal fit truncated by its search bounds? | Same 2014-2018 fit and Sobol unit points; renewal upper 4.0, mixture upper 0.5 | IGPE +0.005311, 46.6% above CH-007 fit; robust +0.002347, 67.7% above; selected point interior to both expanded bounds |
 | CH008-002 | Validation passed | Does CH-008 validate as a distinct frailty-renewal regime? | Locked candidate and ablations, 2019-2022 development validation | IGPE +0.005213, 43.8% above CH-007; paired lower bounds positive; frailty increment +0.000802 with 30/90-day lower bounds +0.000409/+0.000401 |
-| CH008-003 | Pre-registered, unrun | Does CH-008 preserve incumbent superiority and frailty contribution after 2022? | Locked 2023-2026 full and ablation forecasts | Same CH-007 and frailty paired-bootstrap gates; supportive confirmation because parent models previously used the period |
+| CH008-003 | Completed, supportive confirmation | Does CH-008 preserve incumbent superiority and frailty contribution after 2022? | Locked 2023-2026 full and ablation forecasts | IGPE +0.007865, 58.1% above CH-007; paired lower bounds positive; frailty increment +0.001816 with 30/90-day lower bounds +0.001238/+0.001270 |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,

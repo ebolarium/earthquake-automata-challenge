@@ -65,7 +65,12 @@ frailty-renewal candidate achieved `+0.005213` IGPE on 2019-2022 validation,
 43.8% above CH-007. Full-minus-renewal frailty contribution was `+0.000802`
 per event; its paired 30/90-day lower bounds and every annual increment were
 positive. CH-008 therefore passed a distinct-regime mechanism gate and is
-admitted to a separately locked retrospective evaluation.
+admitted to a separately locked retrospective evaluation. The unchanged model
+then achieved `+0.007865` IGPE on the 2023-2026 as-of-snapshot period, 58.1%
+above CH-007. Its paired CH-007 advantage and `+0.001816` full-minus-renewal
+frailty contribution both had positive 30/90-day bootstrap lower bounds, and
+both total and frailty gains were positive in every year. CH-008 is now the
+leading challenger and is eligible for immutable prospective shadow testing.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim
