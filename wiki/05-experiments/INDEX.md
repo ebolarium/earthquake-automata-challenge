@@ -32,6 +32,7 @@
 | CH007-001 | Validation passed | Does the stronger renewal amplitude exposed by CH-006 generalize beyond fit? | Fixed renewal-only ablation, 2019-2022 development validation | IGPE +0.003625 (14.84x parent); every year positive; paired 30/90-day lower bounds +0.001194/+0.001135; low-ETAS +0.016463 |
 | CH007-002 | Completed, supportive confirmation | Does unchanged CH-007 retain a material parent advantage after 2022? | Locked 2023-2026 as-of-snapshot history | IGPE +0.004973 (14.81x parent); every year positive; paired 30/90-day lower bounds +0.002875/+0.003024; low-ETAS +0.018455 |
 | CH008-001 | Completed, fit-only | Was the amplified renewal fit truncated by its search bounds? | Same 2014-2018 fit and Sobol unit points; renewal upper 4.0, mixture upper 0.5 | IGPE +0.005311, 46.6% above CH-007 fit; robust +0.002347, 67.7% above; selected point interior to both expanded bounds |
+| CH008-002 | Pre-registered, unrun | Does CH-008 validate as a distinct frailty-renewal regime? | Locked candidate and ablations, 2019-2022 development validation | Requires CH-007 superiority and positive full-minus-renewal frailty bootstrap lower bounds before retrospective promotion |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,
