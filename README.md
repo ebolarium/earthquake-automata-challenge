@@ -70,7 +70,14 @@ then achieved `+0.007865` IGPE on the 2023-2026 as-of-snapshot period, 58.1%
 above CH-007. Its paired CH-007 advantage and `+0.001816` full-minus-renewal
 frailty contribution both had positive 30/90-day bootstrap lower bounds, and
 both total and frailty gains were positive in every year. CH-008 is now the
-leading challenger and is eligible for immutable prospective shadow testing.
+leading challenger. Its model, evidence chain, and runtime modules are frozen
+as the prospective control candidate; actual collection remains pending a
+separate pre-target activation manifest and cannot be backfilled.
+`CH-009` has begun as a distinct phase-coherent hazard-debt family. Its first
+synthetic contract combines renewal overdue, positive frailty, causal
+fast-minus-slow frailty acceleration, and neighboring fault support while
+retaining CH-008's ETAS-triggering and bounded-background invariants. No CH-009
+catalog score has yet been computed.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim

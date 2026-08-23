@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "challenger_id": "ch009-phase-coherent-hazard-debt-v0",
+  "status": "component_contract_no_catalog_evaluation",
+  "frozen_control": {
+    "candidate_manifest": "data/manifests/ch008-prospective-candidate-v1.json",
+    "candidate_manifest_sha256": "c4ce7c72ed7c64c17da0e77a9deceed2378e8ad1dce8ba50c08f770b1185d2eb",
+    "model": "models/ch008-boundary-sensitivity-v1.json",
+    "model_sha256": "72e030a4d61c512bb096c1469a409c1cf3d9206fc0d9580f2352e0d604e3fa27"
+  },
+  "feature_module": "src/etas_challenge/phase_coherent_debt.py",
+  "feature_module_sha256": "0606ac19ff033e3ff66a18bd30336b0d89647d1066077aba122907be48d86920",
+  "locked_files": [
+    ["frozen_control.candidate_manifest", "frozen_control.candidate_manifest_sha256"],
+    ["frozen_control.model", "frozen_control.model_sha256"],
+    ["feature_module", "feature_module_sha256"]
+  ],
+  "hypothesis": "A fault is most informative when renewal overdue, positive frailty, fast frailty acceleration, and neighboring-section phase support coincide; their interaction may add skill that no additive CH008 term contains.",
+  "state_contract": {
+    "frailty_trend": "causal_fast_and_slow_ewma_of_issue_time_log_frailty",
+    "acceleration": "positive_fast_minus_slow_log_frailty_above_floor",
+    "local_hazard_debt": "geometric_mean_of_overdue_positive_frailty_and_acceleration",
+    "network_coherence": "geometric_mean_of_local_debt_and_neighbor_mean_debt",
+    "loading_branch_uncertainty": "reuse_ch008_consensus_after_branch_grid_projection",
+    "absolute_initial_stress_used": false,
+    "future_catalog_state_used": false
+  },
+  "equations": {
+    "acceleration": "a_s(t)=max(EWMA_short(log_f_s)(t)-EWMA_long(log_f_s)(t)-a_min,0)",
+    "local_debt": "d_s(t)=cuberoot(overdue_s(t)*positive_frailty_s(t)*a_s(t))",
+    "coherent_debt": "c_s(t)=sqrt(d_s(t)*sum_j(P_sj*d_j(t)))",
+    "phase_feature": "q_s(t)=(1-rho)*d_s(t)+rho*c_s(t)",
+    "challenger_score": "CH008_section_score+w_phase*q_s(t)"
+  },
+  "forecast_contract": {
+    "triggered_etas_unchanged": true,
+    "direct_background_total_mass_preserved": true,
+    "reuse_ch008_background_mixture_fraction": true,
+    "reuse_ch008_maximum_log_tilt": true,
+    "zero_phase_weight_equals_ch008": true,
+    "score_before_same_day_event_assimilation": true
+  },
+  "candidate_parameter_bounds": {
+    "short_half_life_days": [14.0, 180.0],
+    "long_to_short_half_life_ratio": [2.0, 12.0],
+    "minimum_acceleration": [0.0, 0.1],
+    "coherence_mix": [0.5, 1.0],
+    "phase_weight": [0.0, 3.0]
+  },
+  "required_ablations": [
+    "unchanged_ch008_control",
+    "phase_weight_zero",
+    "acceleration_removed",
+    "network_coherence_removed",
+    "frailty_level_removed"
+  ],
+  "development_protocol": {
+    "first_stage": "synthetic_component_contract_only",
+    "historical_scoring_permitted_in_this_stage": false,
+    "historical_outcomes_known_through": "2026-08-18",
+    "historical_split_role": "development_benchmark_only",
+    "future_scientific_evidence": "immutable_prospective_forecasts_only",
+    "disclosure": "CH009 was conceived after aggregate CH008 results through 2026-08-18 were opened. No historical split can be represented as pristine unseen evidence for this family."
+  },
+  "claim_boundary": "Pure CH009 feature contract tested on synthetic arrays only. No catalog fit, historical score, candidate selection, or superiority claim is made."
+}
