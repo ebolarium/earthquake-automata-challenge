@@ -47,6 +47,13 @@ zero in 2007. A 16-member stationary ETAS-hazard age ensemble improved the fit
 period, but its small positive 2019-2022 gain was not bootstrap-robust and three
 of four annual deltas were negative. It was recorded as an informative failed
 ablation and was not promoted.
+`CH-006` added discounted Gamma-Poisson fault frailty to renewal. Its fit gain
+was much larger, but fixed ablations showed that frailty contributed no skill;
+the improvement came from stronger renewal amplitude. That honest negative
+mechanism result produced `CH-007`, a locked renewal-only candidate. CH-007
+achieved `+0.003625` IGPE on 2019-2022 development validation, `14.84x` the
+unchanged CH-004 parent, with every year and paired 30/90-day bootstrap lower
+bound positive. Its 2023 onward as-of-snapshot evaluation remains unopened.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim

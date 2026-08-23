@@ -33,4 +33,28 @@ cannot replace CH-007 after validation is opened.
 
 ## Status
 
-Pre-registered and unrun.
+Development validation completed and passed. No 2023 onward CH-007 forecast or
+score has been read.
+
+## Validation Result
+
+CH-007 achieved `+0.003625` IGPE over 5,204 events, compared with CH-004's
+`+0.000244`, a `14.84x` ratio. Every annual score was positive:
+
+| Year | CH-007 IGPE |
+| --- | ---: |
+| 2019 | +0.003598 |
+| 2020 | +0.000720 |
+| 2021 | +0.006520 |
+| 2022 | +0.007774 |
+
+Low-ETAS IGPE was `+0.016463`; `M >= 3.5` and `M >= 4.0` IGPE were
+`+0.004631` and `+0.005643`. All absolute bootstrap lower bounds were positive.
+
+Most importantly, the paired CH-007-minus-CH-004 gain was `+0.003381` per
+event. Its 95% lower bounds were `+0.001194` for 30-day blocks and `+0.001135`
+for 90-day blocks. Every pre-registered validation condition passed.
+
+The report-only full CH-006 result was slightly below CH-007, and frailty-only
+IGPE was `-0.0000028`. This confirms that the validated improvement belongs to
+amplified renewal, not the proposed frailty state.
