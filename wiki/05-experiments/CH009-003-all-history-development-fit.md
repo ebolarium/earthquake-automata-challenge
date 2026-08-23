@@ -42,7 +42,11 @@ positive.
 
 ## Status
 
-Pre-registered and unrun. No CH-009 catalog score has been read.
+Pre-registered and unrun. The first execution stopped during control preflight
+because inactive fault sections have zero-sum transition rows. It produced no
+model, manifest, candidate table, or event score. A committed v2 wrapper now
+adds neutral self-loops only to inactive rows; active graph transitions and all
+admission rules remain unchanged. No CH-009 catalog score has been read.
 
 ## Outputs
 
