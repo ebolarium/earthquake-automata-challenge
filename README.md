@@ -59,6 +59,13 @@ year and both paired bootstrap lower bounds positive. Because that period had
 already scored CH-004, it is supportive retrospective confirmation rather than
 pristine independent evidence. CH-007 is eligible for immutable prospective
 shadow activation.
+`CH-008` then widened only the renewal-weight and bounded-background search
+caps while preserving the same fit data and Sobol unit points. Its locked full
+frailty-renewal candidate achieved `+0.005213` IGPE on 2019-2022 validation,
+43.8% above CH-007. Full-minus-renewal frailty contribution was `+0.000802`
+per event; its paired 30/90-day lower bounds and every annual increment were
+positive. CH-008 therefore passed a distinct-regime mechanism gate and is
+admitted to a separately locked retrospective evaluation.
 
 The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim

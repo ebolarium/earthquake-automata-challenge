@@ -42,4 +42,52 @@ No 2023 onward CH-008 outcome may be opened unless every gate above passes.
 
 ## Status
 
-Pre-registered and unrun.
+Completed. Every pre-registered admission and mechanism gate passed. No 2023
+onward CH-008 outcome has been read.
+
+## Result
+
+CH-008 achieved `+0.005213` IGPE over 5,204 validation events, compared with
+CH-007's `+0.003625`, a 43.8% improvement. Low-ETAS IGPE was `+0.022916`
+versus CH-007's `+0.016463`. `M >= 3.5` and `M >= 4.0` IGPE were `+0.006805`
+and `+0.008580`.
+
+Every annual CH-008 score was positive:
+
+| Year | CH-008 IGPE |
+| --- | ---: |
+| 2019 | +0.004947 |
+| 2020 | +0.001226 |
+| 2021 | +0.009177 |
+| 2022 | +0.011346 |
+
+The paired CH-008-minus-CH-007 gain was `+0.001589` per event. Its 95% lower
+bounds were `+0.000692` for 30-day blocks and `+0.000663` for 90-day blocks.
+
+## Frailty Mechanism
+
+Renewal-only CH-008 achieved `+0.004411`; full CH-008 achieved `+0.005213`.
+The paired full-minus-renewal frailty increment was therefore `+0.000802` per
+event. Its lower bounds were `+0.000409` and `+0.000401` for 30- and 90-day
+blocks. Low-ETAS frailty increment was `+0.002961` with both lower bounds
+positive.
+
+Frailty contribution was positive in every validation year:
+
+| Year | Frailty increment |
+| --- | ---: |
+| 2019 | +0.000564 |
+| 2020 | +0.000382 |
+| 2021 | +0.001227 |
+| 2022 | +0.001824 |
+
+Frailty-only IGPE was independently positive at `+0.000759`, with positive
+30/90-day lower bounds. The full-minus-renewal comparison remains the primary
+mechanism evidence because it tests frailty inside the selected combined model.
+
+## Conclusion
+
+CH-008 validates as a distinct frailty-renewal regime under the locked gate,
+not merely as a higher-amplitude CH-007. It is admitted to a separately locked
+2023-2026 retrospective evaluation. This remains development-validation
+evidence and does not yet alter the prospective candidate.
