@@ -6,6 +6,7 @@ import numpy as np
 from etas_challenge.prospective_state import BootstrapCatalog
 from etas_challenge.prospective_state import catalog_history_sha256
 from etas_challenge.prospective_state import model_state_id
+from etas_challenge.prospective_state import validate_state_artifact
 
 
 class ProspectiveStateTest(unittest.TestCase):
@@ -47,6 +48,61 @@ class ProspectiveStateTest(unittest.TestCase):
             catalog.longitudes, catalog.depths_km, np.array([2.5, 3.1]),
         )
         self.assertNotEqual(first, catalog_history_sha256(changed))
+
+    def test_regional_state_artifact_contract(self):
+        as_of = "2026-08-19T00:00:00+00:00"
+        catalog = BootstrapCatalog(
+            (1,),
+            np.array(["event-a", "event-b"]),
+            np.array([1, 2], dtype=np.int64),
+            np.array([1.0, 2.0]),
+            np.array([3.0, 4.0]),
+            np.array([5.0, 6.0]),
+            np.array([2.5, 3.0]),
+        )
+        arrays = {
+            "event_ids": catalog.event_ids,
+            "origin_time_ns": catalog.origin_time_ns,
+            "latitudes": catalog.latitudes,
+            "longitudes": catalog.longitudes,
+            "depths_km": catalog.depths_km,
+            "magnitudes": catalog.magnitudes,
+            "event_etas_rates": np.array([0.2, 0.3]),
+            "event_background_probabilities": np.array([0.5, 0.4]),
+            "event_cells": np.array([0, 1]),
+            "ch008_age": np.array([1.0, 2.0]),
+            "ch008_exposure": np.array([3.0, 4.0]),
+            "ch008_roots": np.array([0.1, 0.2]),
+            "as_of": np.asarray(as_of),
+            "catalog_cutoff": np.asarray("2026-08-30T00:00:00+00:00"),
+            "etas_model_sha256": np.asarray("a" * 64),
+            "ch008_model_sha256": np.asarray("b" * 64),
+        }
+        manifest = {
+            "as_of": as_of,
+            "catalog_cutoff": "2026-08-30T00:00:00+00:00",
+            "events": 2,
+            "snapshot_ids": [1],
+            "catalog_history_sha256": catalog_history_sha256(catalog),
+            "baseline_model_sha256": "a" * 64,
+            "challenger_model_sha256": "b" * 64,
+        }
+        with self._npz(arrays) as archive:
+            result = validate_state_artifact(
+                archive, manifest, expected_state_shape=(2,), regional=True
+            )
+        self.assertEqual(result["events"], 2)
+        self.assertEqual(result["state_shape"], [2])
+
+    @staticmethod
+    def _npz(arrays):
+        import contextlib
+        import io
+
+        buffer = io.BytesIO()
+        np.savez(buffer, **arrays)
+        buffer.seek(0)
+        return contextlib.closing(np.load(buffer, allow_pickle=False))
 
 
 if __name__ == "__main__":

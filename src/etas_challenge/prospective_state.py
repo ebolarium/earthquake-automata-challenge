@@ -122,3 +122,110 @@ def catalog_history_sha256(catalog: BootstrapCatalog) -> str:
         digest.update(len(array).to_bytes(8, "big"))
         digest.update(array.tobytes(order="C"))
     return digest.hexdigest()
+
+
+def validate_state_artifact(
+    arrays,
+    manifest: dict,
+    *,
+    expected_state_shape: tuple[int, ...],
+    regional: bool,
+) -> dict:
+    """Validate one downloaded prospective state against its manifest."""
+
+    common = {
+        "event_ids", "origin_time_ns", "latitudes", "longitudes", "depths_km",
+        "magnitudes", "ch008_age", "ch008_exposure", "ch008_roots", "as_of",
+        "catalog_cutoff", "etas_model_sha256", "ch008_model_sha256",
+    }
+    regional_names = {
+        "event_etas_rates", "event_background_probabilities", "event_cells"
+    }
+    expected_names = common | (regional_names if regional else set())
+    if set(arrays.files) != expected_names:
+        raise ValueError("state artifact arrays disagree with region contract")
+
+    def scalar(name: str) -> str:
+        value = np.asarray(arrays[name])
+        if value.shape != ():
+            raise ValueError(f"state scalar is not scalar: {name}")
+        return str(value.item())
+
+    if scalar("as_of") != manifest["as_of"]:
+        raise ValueError("state as_of disagrees with manifest")
+    if scalar("catalog_cutoff") != manifest["catalog_cutoff"]:
+        raise ValueError("state catalog cutoff disagrees with manifest")
+    if scalar("etas_model_sha256") != manifest["baseline_model_sha256"]:
+        raise ValueError("state ETAS model hash disagrees with manifest")
+    if scalar("ch008_model_sha256") != manifest["challenger_model_sha256"]:
+        raise ValueError("state CH-008 model hash disagrees with manifest")
+
+    event_ids = np.asarray(arrays["event_ids"])
+    event_count = len(event_ids)
+    event_arrays = {
+        name: np.asarray(arrays[name])
+        for name in (
+            "origin_time_ns", "latitudes", "longitudes", "depths_km", "magnitudes"
+        )
+    }
+    if manifest["events"] != event_count or any(
+        value.shape != (event_count,) for value in event_arrays.values()
+    ):
+        raise ValueError("state event arrays disagree")
+    if event_ids.shape != (event_count,) or len(np.unique(event_ids)) != event_count:
+        raise ValueError("state event IDs are not unique")
+    origin_time_ns = event_arrays["origin_time_ns"].astype(np.int64, copy=False)
+    if np.any(np.diff(origin_time_ns) < 0):
+        raise ValueError("state events are not time ordered")
+    as_of = datetime.fromisoformat(manifest["as_of"])
+    as_of_ns = int(np.datetime64(as_of.replace(tzinfo=None), "ns").astype(np.int64))
+    if event_count and int(origin_time_ns[-1]) >= as_of_ns:
+        raise ValueError("state contains an event at or after as_of")
+    numeric = np.concatenate(
+        [event_arrays[name].astype(np.float64, copy=False) for name in event_arrays]
+    )
+    if np.any(~np.isfinite(numeric)):
+        raise ValueError("state event arrays contain non-finite values")
+    if np.any(np.abs(event_arrays["latitudes"]) > 90) or np.any(
+        np.abs(event_arrays["longitudes"]) > 180
+    ):
+        raise ValueError("state event coordinates are invalid")
+
+    catalog = BootstrapCatalog(
+        tuple(manifest["snapshot_ids"]),
+        event_ids,
+        origin_time_ns,
+        event_arrays["latitudes"],
+        event_arrays["longitudes"],
+        event_arrays["depths_km"],
+        event_arrays["magnitudes"],
+    )
+    if catalog_history_sha256(catalog) != manifest["catalog_history_sha256"]:
+        raise ValueError("state catalog history hash disagrees")
+
+    for name in ("ch008_age", "ch008_exposure", "ch008_roots"):
+        value = np.asarray(arrays[name])
+        if value.shape != expected_state_shape or np.any(~np.isfinite(value)) or np.any(value < 0):
+            raise ValueError(f"invalid CH-008 state array: {name}")
+    if regional:
+        rates = np.asarray(arrays["event_etas_rates"])
+        probabilities = np.asarray(arrays["event_background_probabilities"])
+        cells = np.asarray(arrays["event_cells"])
+        if any(value.shape != (event_count,) for value in (rates, probabilities, cells)):
+            raise ValueError("regional ETAS event arrays disagree")
+        if (
+            np.any(~np.isfinite(rates))
+            or np.any(rates <= 0)
+            or np.any(~np.isfinite(probabilities))
+            or np.any(probabilities < 0)
+            or np.any(probabilities > 1)
+            or np.any(cells < 0)
+            or np.any(cells >= expected_state_shape[0])
+        ):
+            raise ValueError("regional ETAS event state is invalid")
+    return {
+        "events": event_count,
+        "state_shape": list(expected_state_shape),
+        "first_event_ns": None if not event_count else int(origin_time_ns[0]),
+        "last_event_ns": None if not event_count else int(origin_time_ns[-1]),
+    }

@@ -106,6 +106,14 @@ Repeat with `--region chile-subduction` and `--region california-relm`. A rerun
 with identical inputs is idempotent. If a checkpoint already exists with a
 different state or artifact hash, the command fails instead of replacing it.
 
+After all three states exist, verify their database records, canonical manifests,
+S3 objects, catalog boundaries, model hashes, and latent-array contracts:
+
+```bash
+python scripts/verify_prospective_initial_states.py \
+  --as-of "2026-08-19T00:00:00+00:00"
+```
+
 These are activation inputs, not backfilled forecasts, and do not count toward
 the prospective claim. The next runtime stage advances them causally from the
 checkpoint boundary to the first dry-run issue time before any target forecast
