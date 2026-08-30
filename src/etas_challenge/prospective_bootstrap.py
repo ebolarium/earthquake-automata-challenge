@@ -32,3 +32,20 @@ def calendar_year_windows(start: datetime, cutoff: datetime) -> list[tuple[datet
         windows.append((current, end))
         current = end
     return windows
+
+
+def validate_contiguous_windows(
+    windows: list[tuple[datetime, datetime]], start: datetime, cutoff: datetime
+) -> None:
+    if not windows:
+        raise ValueError("bootstrap has no stored windows")
+    cursor = start
+    for window_start, window_end in sorted(windows):
+        if window_start != cursor:
+            relation = "overlap" if window_start < cursor else "gap"
+            raise ValueError(f"bootstrap window {relation} at {cursor.isoformat()}")
+        if window_end <= window_start:
+            raise ValueError("bootstrap contains a non-increasing window")
+        cursor = window_end
+    if cursor != cutoff:
+        raise ValueError(f"bootstrap ends at {cursor.isoformat()}, expected {cutoff.isoformat()}")

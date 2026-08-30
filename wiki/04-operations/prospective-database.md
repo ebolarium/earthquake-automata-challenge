@@ -65,3 +65,11 @@ python scripts/bootstrap_prospective_catalogs.py \
 The importer starts with UTC calendar-year requests. If an FDSN result limit is
 reached, it bisects only that interval. Completed windows are skipped on rerun;
 `--refresh` explicitly preserves a revised source response as another version.
+
+After all regions finish, verify continuous temporal coverage, unique event
+identities, database row counts, and S3 checksum metadata:
+
+```bash
+python scripts/verify_prospective_bootstrap.py \
+  --cutoff "2026-08-30T18:47:21.112951+00:00"
+```

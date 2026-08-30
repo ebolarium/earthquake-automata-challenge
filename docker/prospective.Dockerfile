@@ -15,6 +15,7 @@ COPY data/regions ./data/regions
 COPY scripts/migrate_database.py ./scripts/migrate_database.py
 COPY scripts/collect_prospective_catalogs.py ./scripts/collect_prospective_catalogs.py
 COPY scripts/bootstrap_prospective_catalogs.py ./scripts/bootstrap_prospective_catalogs.py
+COPY scripts/verify_prospective_bootstrap.py ./scripts/verify_prospective_bootstrap.py
 COPY scripts/seed_prospective_database.py ./scripts/seed_prospective_database.py
 COPY scripts/verify_object_storage.py ./scripts/verify_object_storage.py
 COPY scripts/verify_prospective_protocol.py ./scripts/verify_prospective_protocol.py

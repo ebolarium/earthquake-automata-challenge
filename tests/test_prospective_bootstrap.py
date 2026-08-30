@@ -4,6 +4,7 @@ import json
 import unittest
 
 from etas_challenge.prospective_bootstrap import auxiliary_start, calendar_year_windows
+from etas_challenge.prospective_bootstrap import validate_contiguous_windows
 from etas_challenge.prospective_catalog import CatalogSnapshot
 from etas_challenge.prospective_persistence import snapshot_identity
 
@@ -59,6 +60,24 @@ class ProspectiveBootstrapTest(unittest.TestCase):
         self.assertNotEqual(
             snapshot_identity(snapshot, "rolling"), snapshot_identity(snapshot, "bootstrap")
         )
+
+    def test_contiguous_window_validation_rejects_gaps_and_overlaps(self):
+        start = datetime(2024, 1, 1, tzinfo=timezone.utc)
+        middle = datetime(2025, 1, 1, tzinfo=timezone.utc)
+        cutoff = datetime(2026, 1, 1, tzinfo=timezone.utc)
+        validate_contiguous_windows([(start, middle), (middle, cutoff)], start, cutoff)
+        with self.assertRaisesRegex(ValueError, "gap"):
+            validate_contiguous_windows(
+                [(start, middle), (datetime(2025, 2, 1, tzinfo=timezone.utc), cutoff)],
+                start,
+                cutoff,
+            )
+        with self.assertRaisesRegex(ValueError, "overlap"):
+            validate_contiguous_windows(
+                [(start, middle), (datetime(2024, 12, 1, tzinfo=timezone.utc), cutoff)],
+                start,
+                cutoff,
+            )
 
 
 if __name__ == "__main__":
