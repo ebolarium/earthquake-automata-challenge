@@ -116,6 +116,7 @@ def verify_region(connection, client, storage, protocol: dict, region: dict, as_
     admitted_builders = {
         "scripts/build_prospective_initial_states.py",
         "scripts/advance_prospective_bootstrap_states.py",
+        "scripts/advance_prospective_daily_states.py",
     }
     if builder_name not in admitted_builders:
         raise ValueError("state builder is not admitted")

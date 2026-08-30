@@ -156,3 +156,31 @@ Repeat for Chile and California. California uses exactly 10,000 ETAS continuatio
 catalogs on every advanced day containing observations; the command rejects a
 lower simulation count. After all three complete, run the state verifier at the
 new `as_of` boundary.
+
+## Daily checkpoint and forecast publication
+
+Migration `006_forecast_run_state.sql` binds every forecast run to the exact
+model checkpoint used to create it. The daily publisher stores one grid, one
+summary, and one manifest for ETAS and CH-008 in S3, then records all six object
+hashes in PostgreSQL before marking the run `published`.
+
+Run the following chain at `00:05 UTC`. The rolling advance derives yesterday's
+and today's UTC boundaries from the clock, admits only events from the completed
+day, and preserves the parent checkpoint rather than modifying it:
+
+```bash
+python scripts/collect_prospective_catalogs.py --lookback-days 30 && \
+python scripts/advance_prospective_daily_states.py && \
+python scripts/publish_prospective_forecasts.py
+```
+
+Publication is rejected after `00:15 UTC`, before the checkpoint boundary, or
+when the 1,425-minute lead-time requirement is not met. A successful rerun for
+an already published target returns `already_published`; conflicting checkpoint,
+snapshot, or artifact identities fail closed.
+
+California artifacts contain the complete one-day ETAS and CH-008 expected-count
+grids for the following UTC day. New Zealand and Chile retain their exact
+continuous-space ETAS triggering contract and publish the pre-target latent
+direct-background maps changed by CH-008. Both model artifacts preserve total
+mass, so their paired compensator difference remains zero.

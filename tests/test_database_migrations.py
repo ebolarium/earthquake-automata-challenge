@@ -18,6 +18,7 @@ class DatabaseMigrationTest(unittest.TestCase):
                 "003_catalog_snapshot_identity.sql",
                 "004_catalog_snapshot_windows.sql",
                 "005_model_states.sql",
+                "006_forecast_run_state.sql",
             ],
         )
         self.assertEqual(len(migration_checksum(migrations[0])), 64)
