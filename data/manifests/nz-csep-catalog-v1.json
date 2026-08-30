@@ -1,0 +1,229 @@
+{
+  "schema_version": 1,
+  "catalog_id": "nz-csep-catalog-v1",
+  "protocol": "configs/regions/new-zealand-csep-v1.json",
+  "protocol_sha256": "d642346ec2ae20faee1f1d72486f6044ae7b13fd8aa14f7921fa4516c92e64d6",
+  "region_manifest_sha256": "b6190dfda399bded5f3cf927db013c44e10175f87509f7258757b3a0d7ac191f",
+  "region_sha256": "e7b68401782f7f05a9c53ebe5d4eb4bbe1a127804480d5607f0bec3ffa27f0d0",
+  "request": {
+    "url": "https://service.geonet.org.nz/fdsnws/event/1/query",
+    "base_parameters": {
+      "format": "text",
+      "minlatitude": "-47.8",
+      "maxlatitude": "-33.9",
+      "minlongitude": "165.7",
+      "maxlongitude": "179.2",
+      "minmagnitude": "4.0",
+      "maxdepth": "39.999999999",
+      "eventtype": "earthquake",
+      "orderby": "time-asc"
+    },
+    "chunking": "calendar_year_utc"
+  },
+  "raw_files": [
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1987.txt",
+      "sha256": "0f5bd958db0bda83804f35e95d7ca8c1a0839e0228511d3891298a4c780be090",
+      "bytes": 10137
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1988.txt",
+      "sha256": "93f8a59195c51ebda4e4fbcdca922575f3e2877a875fe9394a272f662c0ead75",
+      "bytes": 5478
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1989.txt",
+      "sha256": "09e81f8839f433f561eb3d96e35fd16351a7321ae06ecf82b3b367fa9e9d06b2",
+      "bytes": 7065
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1990.txt",
+      "sha256": "feaafa5eae093307b4e9c3f2270b8ec6aac16910f20886d6b7b5161a20d73d1a",
+      "bytes": 14107
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1991.txt",
+      "sha256": "01f854390294fe37b4c195aa07f3aa33aba597cc57b6656c58880a7e27cb157e",
+      "bytes": 9095
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1992.txt",
+      "sha256": "dcba7b7875e5ceed8d278295609c4ed8bcfe11d06126e86c66713ab8d4d6a0e7",
+      "bytes": 15837
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1993.txt",
+      "sha256": "b1ef7d27b5de7a1dbe575e5eff02a0b011ae0618bda4b03e48d949c3f1feb213",
+      "bytes": 34749
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1994.txt",
+      "sha256": "ed51d1c060293ac8bda89e9e9507871edc88a2bf1665ee2b387130b759c1ffcc",
+      "bytes": 38893
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1995.txt",
+      "sha256": "7bc32cf29113c7290491955f725730de7210b01f78f40d4bf3b650a29ac293ce",
+      "bytes": 23190
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1996.txt",
+      "sha256": "fd67fddccb82c08a50aae4b3b07a05387c58966a9acb2937e2f57377afe7a537",
+      "bytes": 10190
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1997.txt",
+      "sha256": "040491199dc9bd897b052cc9b87632c98ad3e62684bf01a05c3986921b29b220",
+      "bytes": 33819
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1998.txt",
+      "sha256": "975f3b16c21198bf78b77c0b3444cc70219a55659a71902d6d8d344ff716ca4e",
+      "bytes": 10323
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/1999.txt",
+      "sha256": "298942581ad7b85ea7678412f7c59e74d052f3bb921ca507ae4f2c9ecabe146f",
+      "bytes": 10412
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2000.txt",
+      "sha256": "8fcbb74fadfcad901b1fe323639db940dc403719b1fe834f1e00acc805df05c3",
+      "bytes": 11511
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2001.txt",
+      "sha256": "dfab2f5e4fb09664a026a68675d6b88498ded27b7fbe5d304f802b2b7a17d81f",
+      "bytes": 9902
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2002.txt",
+      "sha256": "77da57e78fe9b46dd25051df0efbdf120db1a0657e524d627d26043cb8c851ee",
+      "bytes": 12881
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2003.txt",
+      "sha256": "e4240c0b705adf82dfc77c74fbd5df9a1db139a23847317e6d1a153930e96b98",
+      "bytes": 41322
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2004.txt",
+      "sha256": "2627d6591b045fa7e48ea593060578ed9637853d69dad81df75b8ba4eaf83da7",
+      "bytes": 10003
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2005.txt",
+      "sha256": "0b525e9a029ced637e55ed6b59300d5c3a94191ac4a60fd705012ba36cc09973",
+      "bytes": 9292
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2006.txt",
+      "sha256": "d67f8bf420acd8ebb013f490a66e16940450068fd652d4ad5cd9fbc894b777df",
+      "bytes": 6950
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2007.txt",
+      "sha256": "254488782b6f4d7123abc1eb338f2946440dd1f5f5d411d6c8da4fc399c1e448",
+      "bytes": 11407
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2008.txt",
+      "sha256": "9af8ee0202241d7e354322523b7f120c63f7906d75d3508dbafc6beb2bcc7251",
+      "bytes": 9013
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2009.txt",
+      "sha256": "c27ab3e5dd81295efb83603522f59e19b7ae33084ce213a017e168d296865ef2",
+      "bytes": 43832
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2010.txt",
+      "sha256": "059a83ece708b310c4fe0c157d1543dfc7e1814f240b08ed7525e7337b326060",
+      "bytes": 25973
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2011.txt",
+      "sha256": "7569b479ff0263ef4e7b56c227ce7e3ec8f6ce682578742f260b9b2ac6cf1507",
+      "bytes": 24521
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2012.txt",
+      "sha256": "af27c4c13a681bf307e1cea9b86fa2c676446aeda01c7812e0a679699de5aa64",
+      "bytes": 14018
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2013.txt",
+      "sha256": "0f236c4540eb11c7af8ea30bff1907e0b886851b5606dc76294b6cd6c57f9d8d",
+      "bytes": 23455
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2014.txt",
+      "sha256": "edf5ef734131375ac7150df3e77764d13d3e1734121b6711efc766b09a286065",
+      "bytes": 9964
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2015.txt",
+      "sha256": "d854303588bbfbe6c67478a172268ed3d09f60c82bbe655060d1c71f0ba5e904",
+      "bytes": 9717
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2016.txt",
+      "sha256": "e6b4e2bdabff7bd0b6a908a03201edb21c90524de60277989ba050899a6e6281",
+      "bytes": 80897
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2017.txt",
+      "sha256": "dac4467c7ede9091b817200becac96fdf4caa061e26a6b0d63d24fe3b08288ce",
+      "bytes": 19424
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2018.txt",
+      "sha256": "4c9eafdd5357b166449ecd0415440933032fcb5f8150f28f79d63f812e6d86b7",
+      "bytes": 9465
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2019.txt",
+      "sha256": "c1f30fa7ac11d47dcfc1ab2554f75453d8eaef0eb1eb2861e06a41df28d1ed8d",
+      "bytes": 10261
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2020.txt",
+      "sha256": "d8fca481dbe2af3ef7b503b3c75a64cd3a77f0adf35ae1b5330d0e8e7309060b",
+      "bytes": 10164
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2021.txt",
+      "sha256": "cc2c37d7475d31a9bd10bd8b1087b8b817885fd35f2286772cfa6e62a98065a6",
+      "bytes": 7254
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2022.txt",
+      "sha256": "7ede4732dad87abd280d53498bf27e39fe0576bd326fafd65847443669369d65",
+      "bytes": 6714
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2023.txt",
+      "sha256": "537a868ce8c2df23d0bb2ab50322cae21cb00de92fb1a3feeaa1653a7f078984",
+      "bytes": 8819
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2024.txt",
+      "sha256": "b8bcbbf0e0de8948a70fcc7cf8e0e5c16ff024b02bfee7c2618f144a1f68a185",
+      "bytes": 6902
+    },
+    {
+      "path": "data/raw/geonet/nz-csep-v1/2025.txt",
+      "sha256": "c15ef73776a0e51cbc3514561d28d877fadf761aedc8811d89bdc31feb7563a8",
+      "bytes": 9618
+    }
+  ],
+  "parsed_events": 5558,
+  "output_path": "data/catalogs/new-zealand-csep-v1/catalog.csv",
+  "output_sha256": "54e33a60f03719635125e643af8f898a2278f1365fd1097db602f529576e0096",
+  "accepted_events": 4322,
+  "period_counts": {
+    "fit": 2052,
+    "external_evaluation": 2270
+  },
+  "claim_boundary": "Region, thresholds, model, and periods were fixed before querying GeoNet event counts or computing any New Zealand rate. This is a retrospective external-region test, not pristine prospective evidence; major New Zealand sequences are publicly known."
+}

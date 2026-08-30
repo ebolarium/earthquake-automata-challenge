@@ -1,0 +1,680 @@
+{
+  "schema_version": 1,
+  "analysis_id": "fern-ch008-region-a-posthoc-diagnostic-v1",
+  "status": "completed",
+  "analysis_role": "posthoc_explanation_not_model_selection",
+  "source_result_sha256": "a734d25c55f78b343887bb5c5e7a95ebb727ea322c73a767f17d6066a122ce04",
+  "source_model_sha256": "72e030a4d61c512bb096c1469a409c1cf3d9206fc0d9580f2352e0d604e3fa27",
+  "parent_model_sha256": "57057b1c1bd9807993f491d16cc1c2c30bfb7ca86071f60b97cee7ef8dd837c8",
+  "analysis_script_sha256": "a0b6dcf8765bc62fd4973daf737dff2ccd5a043521e310b81731a8de116b2095",
+  "results": {
+    "A": {
+      "etas_mu_per_km2_day": 1.3127636430059628e-07,
+      "etas_background_events_per_day": 0.030327687846703436,
+      "periods": {
+        "development_validation": {
+          "full_igpe": {
+            "events": 128,
+            "mean": 0.016236492915113386,
+            "median": 0.0021761508673506028,
+            "positive_fraction": 0.703125,
+            "total": 2.0782710931345134
+          },
+          "renewal_only_igpe": {
+            "events": 128,
+            "mean": 0.013368403290037665,
+            "median": 0.0019423706903822094,
+            "positive_fraction": 0.734375,
+            "total": 1.7111556211248211
+          },
+          "frailty_only_igpe": {
+            "events": 128,
+            "mean": 0.0027622498130685045,
+            "median": -0.0006204316569355588,
+            "positive_fraction": 0.421875,
+            "total": 0.3535679760727686
+          },
+          "frailty_increment_over_renewal_only": {
+            "events": 128,
+            "mean": 0.002868089625075722,
+            "median": -0.0009061693923324385,
+            "positive_fraction": 0.4140625,
+            "total": 0.3671154720096924
+          },
+          "renewal_increment_over_frailty_only": {
+            "events": 128,
+            "mean": 0.013474243102044882,
+            "median": 0.0019205824154711966,
+            "positive_fraction": 0.7109375,
+            "total": 1.7247031170617448
+          },
+          "etas_background_probability": {
+            "mean": 0.3888174852065266,
+            "median": 0.33845690078090246,
+            "q10": 0.004962089124823122,
+            "q90": 0.8564985815144835
+          },
+          "gain_background_probability_correlation": 0.09786986139020791
+        },
+        "locked_test": {
+          "full_igpe": {
+            "events": 153,
+            "mean": 0.009002708070620192,
+            "median": 4.9702446373046605e-05,
+            "positive_fraction": 0.738562091503268,
+            "total": 1.3774143348048893
+          },
+          "renewal_only_igpe": {
+            "events": 153,
+            "mean": 0.007905556723925117,
+            "median": 4.8501925972713435e-06,
+            "positive_fraction": 0.6862745098039216,
+            "total": 1.209550178760543
+          },
+          "frailty_only_igpe": {
+            "events": 153,
+            "mean": 0.0010973025719601707,
+            "median": -5.0207554486444105e-08,
+            "positive_fraction": 0.45098039215686275,
+            "total": 0.1678872935099061
+          },
+          "frailty_increment_over_renewal_only": {
+            "events": 153,
+            "mean": 0.0010971513466950752,
+            "median": -8.80564001176322e-08,
+            "positive_fraction": 0.45098039215686275,
+            "total": 0.1678641560443465
+          },
+          "renewal_increment_over_frailty_only": {
+            "events": 153,
+            "mean": 0.007905405498660022,
+            "median": 3.971872477031457e-06,
+            "positive_fraction": 0.6405228758169934,
+            "total": 1.2095270412949835
+          },
+          "etas_background_probability": {
+            "mean": 0.204852133696189,
+            "median": 0.010388911646597608,
+            "q10": 1.590019575837494e-05,
+            "q90": 0.7290081273573967
+          },
+          "gain_background_probability_correlation": 0.39929673647594327
+        }
+      },
+      "locked_test_diagnostics": {
+        "by_year": {
+          "2004": {
+            "events": 17,
+            "mean": 0.016196025323502228,
+            "median": 0.0067777702911699465,
+            "positive_fraction": 1.0,
+            "total": 0.2753324304995379
+          },
+          "2005": {
+            "events": 28,
+            "mean": 0.007510075725402046,
+            "median": 0.0001155594818950803,
+            "positive_fraction": 0.7142857142857143,
+            "total": 0.2102821203112573
+          },
+          "2006": {
+            "events": 15,
+            "mean": 0.017589829765473953,
+            "median": 0.0009905433279952171,
+            "positive_fraction": 0.7333333333333333,
+            "total": 0.2638474464821093
+          },
+          "2007": {
+            "events": 6,
+            "mean": 0.0452169910056135,
+            "median": 0.011863605296249599,
+            "positive_fraction": 0.8333333333333334,
+            "total": 0.271301946033681
+          },
+          "2008": {
+            "events": 36,
+            "mean": 0.004456140806781098,
+            "median": 1.4323174085120873e-05,
+            "positive_fraction": 0.8333333333333334,
+            "total": 0.1604210690441195
+          },
+          "2009": {
+            "events": 14,
+            "mean": 0.010800098326030698,
+            "median": 0.01046458847942377,
+            "positive_fraction": 0.6428571428571429,
+            "total": 0.15120137656442978
+          },
+          "2010": {
+            "events": 8,
+            "mean": 0.004827221526746536,
+            "median": -0.00210522461438549,
+            "positive_fraction": 0.375,
+            "total": 0.038617772213972286
+          },
+          "2011": {
+            "events": 29,
+            "mean": 0.00022104047088904462,
+            "median": 2.3896993749871523e-06,
+            "positive_fraction": 0.6206896551724138,
+            "total": 0.006410173655782294
+          }
+        },
+        "by_magnitude": {
+          "4.5-4.9": {
+            "events": 94,
+            "mean": 0.009286854989388874,
+            "median": 0.00017425624915703611,
+            "positive_fraction": 0.7340425531914894,
+            "total": 0.8729643690025541
+          },
+          "5.0-5.9": {
+            "events": 47,
+            "mean": 0.009520768603827263,
+            "median": 4.4512116622951236e-05,
+            "positive_fraction": 0.723404255319149,
+            "total": 0.4474761243798814
+          },
+          "6.0+": {
+            "events": 12,
+            "mean": 0.004747820118537826,
+            "median": 1.1527497373994732e-05,
+            "positive_fraction": 0.8333333333333334,
+            "total": 0.056973841422453916
+          }
+        },
+        "highest_total_gain_cells_min_3_events": [
+          {
+            "cell": 10,
+            "events": 8,
+            "mean_igpe": 0.07481013618308881,
+            "total_gain": 0.5984810894647105,
+            "latitude": [
+              36.5,
+              37.0
+            ],
+            "longitude": [
+              142.0,
+              142.5
+            ]
+          },
+          {
+            "cell": 18,
+            "events": 4,
+            "mean_igpe": 0.0427944501224632,
+            "total_gain": 0.1711778004898528,
+            "latitude": [
+              37.0,
+              37.5
+            ],
+            "longitude": [
+              142.0,
+              142.5
+            ]
+          },
+          {
+            "cell": 11,
+            "events": 7,
+            "mean_igpe": 0.019897267698336052,
+            "total_gain": 0.13928087388835236,
+            "latitude": [
+              36.5,
+              37.0
+            ],
+            "longitude": [
+              142.5,
+              143.0
+            ]
+          },
+          {
+            "cell": 54,
+            "events": 3,
+            "mean_igpe": 0.026342844238042867,
+            "total_gain": 0.0790285327141286,
+            "latitude": [
+              39.0,
+              39.5
+            ],
+            "longitude": [
+              144.0,
+              144.5
+            ]
+          },
+          {
+            "cell": 36,
+            "events": 22,
+            "mean_igpe": 0.002879864933208042,
+            "total_gain": 0.06335702853057693,
+            "latitude": [
+              38.0,
+              38.5
+            ],
+            "longitude": [
+              143.0,
+              143.5
+            ]
+          }
+        ],
+        "lowest_total_gain_cells_min_3_events": [
+          {
+            "cell": 31,
+            "events": 3,
+            "mean_igpe": -0.022301122777317887,
+            "total_gain": -0.06690336833195366,
+            "latitude": [
+              37.5,
+              38.0
+            ],
+            "longitude": [
+              144.5,
+              145.0
+            ]
+          },
+          {
+            "cell": 39,
+            "events": 17,
+            "mean_igpe": -0.0015126989430854206,
+            "total_gain": -0.02571588203245215,
+            "latitude": [
+              38.0,
+              38.5
+            ],
+            "longitude": [
+              144.5,
+              145.0
+            ]
+          },
+          {
+            "cell": 69,
+            "events": 4,
+            "mean_igpe": -0.003375533169853313,
+            "total_gain": -0.013502132679413251,
+            "latitude": [
+              40.0,
+              40.5
+            ],
+            "longitude": [
+              143.5,
+              144.0
+            ]
+          },
+          {
+            "cell": 53,
+            "events": 6,
+            "mean_igpe": -0.0011258791201750932,
+            "total_gain": -0.006755274721050559,
+            "latitude": [
+              39.0,
+              39.5
+            ],
+            "longitude": [
+              143.5,
+              144.0
+            ]
+          },
+          {
+            "cell": 52,
+            "events": 3,
+            "mean_igpe": -0.002011920520668498,
+            "total_gain": -0.006035761562005494,
+            "latitude": [
+              39.0,
+              39.5
+            ],
+            "longitude": [
+              143.0,
+              143.5
+            ]
+          }
+        ],
+        "highest_gain_events": [
+          {
+            "time_utc": "2007-06-17T03:15:56.690000+00:00",
+            "magnitude": 4.5,
+            "cell": 10,
+            "igpe": 0.18887032863069733,
+            "etas_background_probability": 0.6655993106830855
+          },
+          {
+            "time_utc": "2006-02-21T04:44:48.500000+00:00",
+            "magnitude": 5.2,
+            "cell": 10,
+            "igpe": 0.1756631478184142,
+            "etas_background_probability": 0.6075526253468091
+          },
+          {
+            "time_utc": "2005-02-05T01:16:37.020000+00:00",
+            "magnitude": 5.0,
+            "cell": 10,
+            "igpe": 0.17248952508224016,
+            "etas_background_probability": 0.8806408043562314
+          },
+          {
+            "time_utc": "2004-11-26T12:20:55.420000+00:00",
+            "magnitude": 4.7,
+            "cell": 46,
+            "igpe": 0.08177002127351433,
+            "etas_background_probability": 0.9644127060034979
+          },
+          {
+            "time_utc": "2005-08-26T06:09:08.900000+00:00",
+            "magnitude": 4.5,
+            "cell": 11,
+            "igpe": 0.07530292378734452,
+            "etas_background_probability": 0.7457701222157561
+          },
+          {
+            "time_utc": "2007-02-06T14:15:51.500000+00:00",
+            "magnitude": 4.5,
+            "cell": 18,
+            "igpe": 0.06533206663620436,
+            "etas_background_probability": 0.7397434518037568
+          },
+          {
+            "time_utc": "2004-02-28T09:33:31.140000+00:00",
+            "magnitude": 4.7,
+            "cell": 10,
+            "igpe": 0.06029606139175552,
+            "etas_background_probability": 0.531214076131744
+          },
+          {
+            "time_utc": "2009-01-05T23:52:53.550000+00:00",
+            "magnitude": 5.0,
+            "cell": 27,
+            "igpe": 0.05405127066502972,
+            "etas_background_probability": 0.7235004883519701
+          },
+          {
+            "time_utc": "2009-08-07T22:30:32.410000+00:00",
+            "magnitude": 4.7,
+            "cell": 18,
+            "igpe": 0.04644521487189179,
+            "etas_background_probability": 0.4348692291178801
+          },
+          {
+            "time_utc": "2010-10-19T21:50:24.670000+00:00",
+            "magnitude": 4.5,
+            "cell": 2,
+            "igpe": 0.044240603033289125,
+            "etas_background_probability": 0.3778594055006216
+          }
+        ],
+        "lowest_gain_events": [
+          {
+            "time_utc": "2005-11-01T16:09:48+00:00",
+            "magnitude": 5.2,
+            "cell": 31,
+            "igpe": -0.03852475329223465,
+            "etas_background_probability": 0.9717375834668905
+          },
+          {
+            "time_utc": "2005-11-14T21:38:51.380000+00:00",
+            "magnitude": 7.2,
+            "cell": 39,
+            "igpe": -0.03814573440031314,
+            "etas_background_probability": 0.9546014423165876
+          },
+          {
+            "time_utc": "2009-06-18T23:51:45.400000+00:00",
+            "magnitude": 5.0,
+            "cell": 62,
+            "igpe": -0.02428116819181566,
+            "etas_background_probability": 0.8324486316943748
+          },
+          {
+            "time_utc": "2008-01-24T16:06:59.100000+00:00",
+            "magnitude": 4.6,
+            "cell": 21,
+            "igpe": -0.01762088354903371,
+            "etas_background_probability": 0.6807775723174553
+          },
+          {
+            "time_utc": "2010-01-06T14:20:41.800000+00:00",
+            "magnitude": 5.2,
+            "cell": 31,
+            "igpe": -0.017095098620770393,
+            "etas_background_probability": 0.9089369365751798
+          },
+          {
+            "time_utc": "2009-04-26T03:56:41.320000+00:00",
+            "magnitude": 4.7,
+            "cell": 12,
+            "igpe": -0.015121796423321766,
+            "etas_background_probability": 0.5513678509271527
+          },
+          {
+            "time_utc": "2010-01-17T06:04:38.530000+00:00",
+            "magnitude": 5.6,
+            "cell": 45,
+            "igpe": -0.012804288392879436,
+            "etas_background_probability": 0.418127756082917
+          },
+          {
+            "time_utc": "2009-01-25T14:50:43.710000+00:00",
+            "magnitude": 4.5,
+            "cell": 31,
+            "igpe": -0.011283516418948616,
+            "etas_background_probability": 0.38789432396523826
+          },
+          {
+            "time_utc": "2009-12-20T14:30:25.330000+00:00",
+            "magnitude": 4.7,
+            "cell": 76,
+            "igpe": -0.009594996342002674,
+            "etas_background_probability": 0.5888010675248836
+          },
+          {
+            "time_utc": "2005-07-02T00:31:46.900000+00:00",
+            "magnitude": 5.5,
+            "cell": 60,
+            "igpe": -0.009052990605278722,
+            "etas_background_probability": 0.22992187547916823
+          }
+        ],
+        "exclude_highest_gain_cell": {
+          "events": 145,
+          "mean": 0.005371953416139167,
+          "median": 3.51517640814865e-05,
+          "positive_fraction": 0.7241379310344828,
+          "total": 0.7789332453401792
+        },
+        "exclude_top_three_gain_cells": {
+          "events": 134,
+          "mean": 0.0034960788877759254,
+          "median": 3.2439712808009875e-05,
+          "positive_fraction": 0.7014925373134329,
+          "total": 0.468474570961974
+        }
+      }
+    },
+    "B": {
+      "etas_mu_per_km2_day": 1.9217819081797296e-08,
+      "etas_background_events_per_day": 0.0076411414090725785,
+      "periods": {
+        "development_validation": {
+          "full_igpe": {
+            "events": 726,
+            "mean": -0.00038429097021333575,
+            "median": -0.00010230569747171621,
+            "positive_fraction": 0.05922865013774105,
+            "total": -0.27899524437488177
+          },
+          "renewal_only_igpe": {
+            "events": 726,
+            "mean": -0.00044021337962661563,
+            "median": -0.00010563654476012638,
+            "positive_fraction": 0.05509641873278237,
+            "total": -0.31959491360892295
+          },
+          "frailty_only_igpe": {
+            "events": 726,
+            "mean": 6.546096303516487e-05,
+            "median": 4.897119306303181e-07,
+            "positive_fraction": 0.5674931129476584,
+            "total": 0.047524659163529694
+          },
+          "frailty_increment_over_renewal_only": {
+            "events": 726,
+            "mean": 5.5922409413279846e-05,
+            "median": 6.714846768266048e-07,
+            "positive_fraction": 0.5785123966942148,
+            "total": 0.040599669234041166
+          },
+          "renewal_increment_over_frailty_only": {
+            "events": 726,
+            "mean": -0.00044975193324850075,
+            "median": -0.00010691897692681703,
+            "positive_fraction": 0.06060606060606061,
+            "total": -0.32651990353841154
+          },
+          "etas_background_probability": {
+            "mean": 0.024791161885697337,
+            "median": 0.009260765834307117,
+            "q10": 0.00023629140006508942,
+            "q90": 0.050044210843984215
+          },
+          "gain_background_probability_correlation": 0.12648428125520558
+        },
+        "locked_test": {
+          "full_igpe": {
+            "events": 889,
+            "mean": -2.5641563566811508e-05,
+            "median": -1.96738271102634e-05,
+            "positive_fraction": 0.3160854893138358,
+            "total": -0.02279535001089543
+          },
+          "renewal_only_igpe": {
+            "events": 889,
+            "mean": -0.00010462077061242433,
+            "median": -3.6554270078151225e-05,
+            "positive_fraction": 0.2440944881889764,
+            "total": -0.09300786507444524
+          },
+          "frailty_only_igpe": {
+            "events": 889,
+            "mean": 8.448870619797054e-05,
+            "median": 1.2449216342222806e-05,
+            "positive_fraction": 0.8346456692913385,
+            "total": 0.07511045980999581
+          },
+          "frailty_increment_over_renewal_only": {
+            "events": 889,
+            "mean": 7.897920704561282e-05,
+            "median": 9.595371190079567e-06,
+            "positive_fraction": 0.8357705286839145,
+            "total": 0.0702125150635498
+          },
+          "renewal_increment_over_frailty_only": {
+            "events": 889,
+            "mean": -0.00011013026976478205,
+            "median": -3.7624501657792636e-05,
+            "positive_fraction": 0.2452193475815523,
+            "total": -0.09790580982089124
+          },
+          "etas_background_probability": {
+            "mean": 0.019474747939333324,
+            "median": 0.003586423688200029,
+            "q10": 6.769386776717804e-05,
+            "q90": 0.04292919908308701
+          },
+          "gain_background_probability_correlation": 0.5415873660218328
+        }
+      }
+    },
+    "C": {
+      "etas_mu_per_km2_day": 2.8424285265522847e-09,
+      "etas_background_events_per_day": 0.0037666210643943158,
+      "periods": {
+        "development_validation": {
+          "full_igpe": {
+            "events": 263,
+            "mean": 4.0662492918405696e-06,
+            "median": -3.8496095638002954e-07,
+            "positive_fraction": 0.26996197718631176,
+            "total": 0.0010694235637540698
+          },
+          "renewal_only_igpe": {
+            "events": 263,
+            "mean": 0.0,
+            "median": 0.0,
+            "positive_fraction": 0.0,
+            "total": 0.0
+          },
+          "frailty_only_igpe": {
+            "events": 263,
+            "mean": 4.0662492918405696e-06,
+            "median": -3.8496095638002954e-07,
+            "positive_fraction": 0.26996197718631176,
+            "total": 0.0010694235637540698
+          },
+          "frailty_increment_over_renewal_only": {
+            "events": 263,
+            "mean": 4.0662492918405696e-06,
+            "median": -3.8496095638002954e-07,
+            "positive_fraction": 0.26996197718631176,
+            "total": 0.0010694235637540698
+          },
+          "renewal_increment_over_frailty_only": {
+            "events": 263,
+            "mean": 0.0,
+            "median": 0.0,
+            "positive_fraction": 0.0,
+            "total": 0.0
+          },
+          "etas_background_probability": {
+            "mean": 0.024272962062302592,
+            "median": 0.0034912014064343,
+            "q10": 3.5646900734909535e-05,
+            "q90": 0.04373838863449585
+          },
+          "gain_background_probability_correlation": -0.20978460947428496
+        },
+        "locked_test": {
+          "full_igpe": {
+            "events": 354,
+            "mean": 1.9244670374838022e-05,
+            "median": 5.048653867412622e-08,
+            "positive_fraction": 0.5903954802259888,
+            "total": 0.00681261331269266
+          },
+          "renewal_only_igpe": {
+            "events": 354,
+            "mean": 0.0,
+            "median": 0.0,
+            "positive_fraction": 0.0,
+            "total": 0.0
+          },
+          "frailty_only_igpe": {
+            "events": 354,
+            "mean": 1.9244670374838022e-05,
+            "median": 5.048653867412622e-08,
+            "positive_fraction": 0.5903954802259888,
+            "total": 0.00681261331269266
+          },
+          "frailty_increment_over_renewal_only": {
+            "events": 354,
+            "mean": 1.9244670374838022e-05,
+            "median": 5.048653867412622e-08,
+            "positive_fraction": 0.5903954802259888,
+            "total": 0.00681261331269266
+          },
+          "renewal_increment_over_frailty_only": {
+            "events": 354,
+            "mean": 0.0,
+            "median": 0.0,
+            "positive_fraction": 0.0,
+            "total": 0.0
+          },
+          "etas_background_probability": {
+            "mean": 0.018714735922819362,
+            "median": 0.0014005935638552458,
+            "q10": 8.332035665574465e-06,
+            "q90": 0.03122676107038843
+          },
+          "gain_background_probability_correlation": -0.053892549653182034
+        }
+      }
+    }
+  },
+  "claim_boundary": "Outcome-informed diagnostic only. Ablations and strata explain FERN-001 but cannot promote, tune, or independently validate a model."
+}

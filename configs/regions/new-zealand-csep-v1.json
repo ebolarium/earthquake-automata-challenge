@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "protocol_id": "new-zealand-csep-external-v1",
+  "status": "geometry_locked_catalog_unopened",
+  "source": {
+    "region": "pyCSEP nz_csep_region",
+    "pycsep_version": "0.6.3",
+    "region_resource": "csep/artifacts/Regions/nz.testing.nodes.dat",
+    "catalog": "GeoNet FDSN Event Web Service",
+    "catalog_url": "https://service.geonet.org.nz/fdsnws/event/1/query",
+    "catalog_documentation": "https://www.geonet.org.nz/data/access/FDSN",
+    "testing_centre_reference": "https://doi.org/10.1007/s00024-010-0082-4"
+  },
+  "region": {
+    "mask_spacing_degrees": 0.1,
+    "published_node_count": 6343,
+    "longitude_origin_bounds": [165.7, 179.1],
+    "latitude_origin_bounds": [-47.8, -34.0],
+    "latent_spacing_degrees": 0.5,
+    "maximum_depth_km_exclusive": 40.0,
+    "minimum_magnitude": 4.0,
+    "event_type": "earthquake"
+  },
+  "periods": {
+    "fit": ["1987-01-01T00:00:00+00:00", "2008-01-01T00:00:00+00:00"],
+    "external_evaluation": ["2008-01-01T00:00:00+00:00", "2026-01-01T00:00:00+00:00"]
+  },
+  "claim_boundary": "Region, thresholds, model, and periods were fixed before querying GeoNet event counts or computing any New Zealand rate. This is a retrospective external-region test, not pristine prospective evidence; major New Zealand sequences are publicly known."
+}

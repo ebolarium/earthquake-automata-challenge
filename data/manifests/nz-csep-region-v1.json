@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "region_id": "nz-csep-v1",
+  "pycsep_version": "0.6.3",
+  "source_resource": "csep/artifacts/Regions/nz.testing.nodes.dat",
+  "protocol_sha256": "d642346ec2ae20faee1f1d72486f6044ae7b13fd8aa14f7921fa4516c92e64d6",
+  "output": "data/regions/nz-csep-v1.npz",
+  "output_sha256": "e7b68401782f7f05a9c53ebe5d4eb4bbe1a127804480d5607f0bec3ffa27f0d0",
+  "nodes": 6343,
+  "longitude_origin_bounds": [
+    165.7,
+    179.1
+  ],
+  "latitude_origin_bounds": [
+    -47.8,
+    -34.0
+  ]
+}

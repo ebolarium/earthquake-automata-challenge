@@ -15,5 +15,7 @@ data/*
 !data/grids/*.json
 !data/manifests/
 !data/manifests/*.json
+!data/regions/
+!data/regions/*.npz
 
 reference/upstream/

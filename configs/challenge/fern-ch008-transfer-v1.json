@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "experiment_id": "fern-ch008-zero-refit-transfer-v1",
+  "status": "pre_registered_unrun",
+  "hypothesis": "The fit-locked CH008 renewal and frailty mechanism adds event-level information gain over a train-only ETAS baseline outside California.",
+  "regions": "configs/regions/fern-japan-v1.json",
+  "source_model": "models/ch008-boundary-sensitivity-v1.json",
+  "parent_model": "models/ch004-marked-renewal-v1.json",
+  "native_etas_module": "src/etas_challenge/etas_native.py",
+  "regional_adapter_module": "src/etas_challenge/fern_ch008.py",
+  "adaptation": {
+    "kind": "regional_equal_angle_latent_grid",
+    "spacing_degrees": 0.5,
+    "neighbors": 8,
+    "fault_sections_used": false,
+    "branch_consensus": "single_regional_branch_identity",
+    "state_catalog": "region_target_catalog_at_etas_completeness_threshold",
+    "feature_catalog_used": false,
+    "parameter_refit": false,
+    "daily_order": "forecast_then_assimilate_same_day_events",
+    "etas_background": "uniform_mu_times_spherical_cell_area",
+    "event_root_probability": "mu_over_conditional_etas_rate"
+  },
+  "evaluation": {
+    "development_validation": ["1996-01-01T00:00:00+09:00", "2004-01-01T00:00:00+09:00"],
+    "locked_test": ["2004-01-01T00:00:00+09:00", "2011-03-11T14:46:18+09:00"],
+    "primary_metric": "mean_log_challenger_rate_over_etas_rate_per_event",
+    "relative_factor": "exp(mean_igpe)",
+    "bootstrap_mean_block_days": [30, 90],
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260830,
+    "confidence_level": 0.95
+  },
+  "claim_boundary": "Zero-refit external transport test on a hash-locked current JMA bulletin snapshot. Catalog counts do not reproduce FERN's unavailable historical JMA snapshot, so results compare CH008 only with the locally fitted academic ETAS baseline and are not claimed as a direct numerical comparison with FERN."
+}

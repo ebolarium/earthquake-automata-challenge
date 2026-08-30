@@ -1,0 +1,265 @@
+{
+  "schema_version": 1,
+  "experiment_id": "fern-ch008-zero-refit-transfer-v1",
+  "status": "completed",
+  "config_sha256": "80c5f09d9248598b3eb24e12c0c0cc9501cc1aab24db93484c1cc228b9516cb5",
+  "protocol_sha256": "3db50fa252f4b5a0291c2d9f5fc250a8ed30763e70ce69be612a2132ea77cf44",
+  "catalog_manifest_sha256": "de40bf0c9a85cc328b817c3058fe98f96531bea75e95c698dda77d14a6c147f5",
+  "source_model_sha256": "72e030a4d61c512bb096c1469a409c1cf3d9206fc0d9580f2352e0d604e3fa27",
+  "parent_model_sha256": "57057b1c1bd9807993f491d16cc1c2c30bfb7ca86071f60b97cee7ef8dd837c8",
+  "native_etas_module_sha256": "a833974874e05dcd4f24d914b405da37ee83f99e744cf5c503ec73d886812161",
+  "regional_adapter_module_sha256": "7131867aed822deae877baa398c3b9e22c2b344e5fe6bc88eefc761b7c4be9d3",
+  "evaluation_script_sha256": "ffcc0878975422c0546b2c2f5efe74d5d264d803ae914d3976cd4087d1d0e562",
+  "results": {
+    "A": {
+      "etas_parameters_sha256": "55b32382dc131242a0809eea07f9f2f88007463784bfc412bafc7f2843d2ab15",
+      "etas_train_events": 988,
+      "etas_beta": 1.9591980821253818,
+      "etas_final_parameters": {
+        "log10_mu": -6.881813459575723,
+        "log10_iota": null,
+        "log10_k0": -0.8646111300499197,
+        "a": 2.5028749077813464,
+        "log10_c": -2.4281397405684615,
+        "omega": -0.03033654894914802,
+        "log10_tau": 3.9369373807759147,
+        "log10_d": 1.3566271656648634,
+        "gamma": 1.0756954535466414,
+        "rho": 0.994919681728466
+      },
+      "catalog_sha256": "07c7126bea794a3ef17daab9cd1628a4cffacf358d410a689246005536a6b134",
+      "grid_cells": 96,
+      "periods": {
+        "development_validation": {
+          "events": 128,
+          "mean_igpe": 0.016236492915113386,
+          "relative_factor": 1.0163690210587562,
+          "total_log_likelihood_gain": 2.0782710931345134,
+          "positive_event_fraction": 0.703125,
+          "bootstrap": {
+            "30_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20260860,
+              "mean_block_days": 30,
+              "confidence_level": 0.95,
+              "lower": 0.009299268536281678,
+              "median": 0.0163260421021256,
+              "upper": 0.02530257883730768
+            },
+            "90_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20260920,
+              "mean_block_days": 90,
+              "confidence_level": 0.95,
+              "lower": 0.009208417099637637,
+              "median": 0.01630270233942198,
+              "upper": 0.025822151889067706
+            }
+          }
+        },
+        "locked_test": {
+          "events": 153,
+          "mean_igpe": 0.009002708070620192,
+          "relative_factor": 1.0090433543308301,
+          "total_log_likelihood_gain": 1.3774143348048893,
+          "positive_event_fraction": 0.738562091503268,
+          "bootstrap": {
+            "30_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20261360,
+              "mean_block_days": 30,
+              "confidence_level": 0.95,
+              "lower": 0.004498345318815357,
+              "median": 0.008977444030748571,
+              "upper": 0.01640760660081617
+            },
+            "90_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20261420,
+              "mean_block_days": 90,
+              "confidence_level": 0.95,
+              "lower": 0.004721533272324947,
+              "median": 0.009026350675741066,
+              "upper": 0.016303527462249865
+            }
+          }
+        }
+      }
+    },
+    "B": {
+      "etas_parameters_sha256": "f836d876de7f322b149a4b1064fc350ec4e3b246096481b1c6693ecec1073907",
+      "etas_train_events": 2016,
+      "etas_beta": 1.8288546970094197,
+      "etas_final_parameters": {
+        "log10_mu": -7.716295899418918,
+        "log10_iota": null,
+        "log10_k0": 1.8808683881226609,
+        "a": 1.8734967179252493,
+        "log10_c": -1.9265197072709104,
+        "omega": -0.0027756353406426276,
+        "log10_tau": 3.6449963068418705,
+        "log10_d": 2.686543031113221,
+        "gamma": 0.4243125073922206,
+        "rho": 1.3818902860792985
+      },
+      "catalog_sha256": "c13986dc579723f13f5b92d9e6c6fb683245264d3c4b604a8d6bed9f130154a7",
+      "grid_cells": 180,
+      "periods": {
+        "development_validation": {
+          "events": 726,
+          "mean_igpe": -0.00038429097021333575,
+          "relative_factor": 0.9996157828601038,
+          "total_log_likelihood_gain": -0.27899524437488177,
+          "positive_event_fraction": 0.05922865013774105,
+          "bootstrap": {
+            "30_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20261860,
+              "mean_block_days": 30,
+              "confidence_level": 0.95,
+              "lower": -0.000498832834825292,
+              "median": -0.00038434587756165466,
+              "upper": -0.00028681815177259275
+            },
+            "90_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20261920,
+              "mean_block_days": 90,
+              "confidence_level": 0.95,
+              "lower": -0.0005049324408202775,
+              "median": -0.0003878493794952097,
+              "upper": -0.0002860852703522354
+            }
+          }
+        },
+        "locked_test": {
+          "events": 889,
+          "mean_igpe": -2.5641563566811508e-05,
+          "relative_factor": 0.9999743587651753,
+          "total_log_likelihood_gain": -0.02279535001089543,
+          "positive_event_fraction": 0.3160854893138358,
+          "bootstrap": {
+            "30_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20262360,
+              "mean_block_days": 30,
+              "confidence_level": 0.95,
+              "lower": -8.26129668742726e-05,
+              "median": -2.551819473703902e-05,
+              "upper": 3.00228902984115e-05
+            },
+            "90_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20262420,
+              "mean_block_days": 90,
+              "confidence_level": 0.95,
+              "lower": -9.035149289343398e-05,
+              "median": -2.531383327473799e-05,
+              "upper": 3.219807134389656e-05
+            }
+          }
+        }
+      }
+    },
+    "C": {
+      "etas_parameters_sha256": "d4e3c427fcc5de6cbbf9568cdb6b5cb027774237668566ce5f997c33b9129337",
+      "etas_train_events": 1320,
+      "etas_beta": 2.2676214093468685,
+      "etas_final_parameters": {
+        "log10_mu": -8.546310446926666,
+        "log10_iota": null,
+        "log10_k0": 0.22807335371295412,
+        "a": 1.9041144735582323,
+        "log10_c": -2.3281547694793376,
+        "omega": -0.045050349067607916,
+        "log10_tau": 3.838376208100846,
+        "log10_d": 2.317184212830324,
+        "gamma": 0.6181781081506653,
+        "rho": 0.9627121747842572
+      },
+      "catalog_sha256": "1b8ff984a56d207937c85c7c87d9ef80eb65a0a17f2c9dd53639aab54a5aa1c0",
+      "grid_cells": 572,
+      "periods": {
+        "development_validation": {
+          "events": 263,
+          "mean_igpe": 4.0662492918405696e-06,
+          "relative_factor": 1.000004066257559,
+          "total_log_likelihood_gain": 0.0010694235637540698,
+          "positive_event_fraction": 0.26996197718631176,
+          "bootstrap": {
+            "30_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20262860,
+              "mean_block_days": 30,
+              "confidence_level": 0.95,
+              "lower": -3.141278773518125e-06,
+              "median": 4.033691261649303e-06,
+              "upper": 1.2452614047458228e-05
+            },
+            "90_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20262920,
+              "mean_block_days": 90,
+              "confidence_level": 0.95,
+              "lower": -3.880874068755868e-06,
+              "median": 3.9275032160264316e-06,
+              "upper": 1.2398030092774476e-05
+            }
+          }
+        },
+        "locked_test": {
+          "events": 354,
+          "mean_igpe": 1.9244670374838022e-05,
+          "relative_factor": 1.0000192448555547,
+          "total_log_likelihood_gain": 0.00681261331269266,
+          "positive_event_fraction": 0.5903954802259888,
+          "bootstrap": {
+            "30_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20263360,
+              "mean_block_days": 30,
+              "confidence_level": 0.95,
+              "lower": -2.5138985685278973e-06,
+              "median": 1.7388911362385593e-05,
+              "upper": 5.9427301248371685e-05
+            },
+            "90_days": {
+              "method": "stationary_daily_block_bootstrap",
+              "replicates": 10000,
+              "valid_replicates": 10000,
+              "seed": 20263420,
+              "mean_block_days": 90,
+              "confidence_level": 0.95,
+              "lower": -2.073173195981768e-06,
+              "median": 1.7831055378027064e-05,
+              "upper": 5.845752216810306e-05
+            }
+          }
+        }
+      }
+    }
+  },
+  "claim_boundary": "Zero-refit external transport test on a hash-locked current JMA bulletin snapshot. Catalog counts do not reproduce FERN's unavailable historical JMA snapshot, so results compare CH008 only with the locally fitted academic ETAS baseline and are not claimed as a direct numerical comparison with FERN."
+}

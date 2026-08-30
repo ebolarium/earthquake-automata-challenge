@@ -1,0 +1,245 @@
+{
+  "schema_version": 1,
+  "catalog_id": "fern-japan-catalog-v1",
+  "config": "configs/regions/fern-japan-v1.json",
+  "config_sha256": "3db50fa252f4b5a0291c2d9f5fc250a8ed30763e70ce69be612a2132ea77cf44",
+  "sources": [
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1967.zip",
+      "sha256": "cd0ee6b3b421cf190e68878b1716a912b69c0a6c4fac26e22657c2735fde099c",
+      "bytes": 1114718
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1983.zip",
+      "sha256": "e3f19ccbbd2b3c0aee9a9db0ba5d3a1b1d489eb32d2382467fb48a702088ad58",
+      "bytes": 158157
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1984.zip",
+      "sha256": "b80ba5301e7e14fc23f2ee6cefc6425be1bb292000069d4f39bdaca8d947f7e6",
+      "bytes": 116739
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1985.zip",
+      "sha256": "3878aca0d6843026a651de1cff646f39e72cb3c476ddf7935a69d3277b35328f",
+      "bytes": 156996
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1986.zip",
+      "sha256": "ba3489bbad711796aeebb2fa46aca6670e9b7028fd92055b4a346ac4bd8ec7d1",
+      "bytes": 190285
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1987.zip",
+      "sha256": "bab047df876fc4b0f93b6e759d8a5f001f42f63bd98e3957548bdf90d31ae45b",
+      "bytes": 245940
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1988.zip",
+      "sha256": "d562b58d6fa104d603d903306fe38c2f11bbfb160c8be45196693f01897f633a",
+      "bytes": 380335
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1989.zip",
+      "sha256": "1cbd84b44879fc61c24ca5a5b093a3d53a6b1fda169420f11ffe22116e14c2b3",
+      "bytes": 368601
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1990.zip",
+      "sha256": "0b7c5d110d1adbdb2a5d13159e739c7b50d83f59d5caf385d92f22ed208846e7",
+      "bytes": 342370
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1991.zip",
+      "sha256": "eca3bfdc94354fdc455c3e23b7fdcd7366b81a81d2406b66b143277902f8054c",
+      "bytes": 334578
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1992.zip",
+      "sha256": "1e797e4931a0309b9486dd8597418f79e9839c209851858771fda8a1eb02e88e",
+      "bytes": 444044
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1993.zip",
+      "sha256": "6192999cad09698bf9382c3249eb94f4580ac6319af772af5dc065b91bd936d1",
+      "bytes": 652572
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1994.zip",
+      "sha256": "162ffbc73296538504144e01cb4ced363e6ae604598ff8804b4bf2e87728ea59",
+      "bytes": 755738
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1995.zip",
+      "sha256": "f97fce53d777a26eb23be949ff4aeed821618d6cb6a98e756be1f3de83a9efa9",
+      "bytes": 1528535
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1996.zip",
+      "sha256": "a48e64ae305a70bce4ce69dba3726dfdd0a82844efef57bf7a5512881d4daf6c",
+      "bytes": 1341515
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h199701.zip",
+      "sha256": "c2ce3fd9f8fc023a6463086324b1ed29b53ae2c55d021998a0c3210e162172dd",
+      "bytes": 1083079
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h199710.zip",
+      "sha256": "25349273dfc4ce50ed24ee555c881bd64af5662d400be2d7fbd0d6044d4caead",
+      "bytes": 452012
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1998.zip",
+      "sha256": "3fb6d3978438fefa7252feeeaa170bb14b52c2b1b6efddd64dcca8592910123b",
+      "bytes": 2153080
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h1999.zip",
+      "sha256": "9fcd40f01cdf9ffa6eccea508c423fe7b52a8c0fd4e270213c4f1ad932b2c4ac",
+      "bytes": 2019749
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2000.zip",
+      "sha256": "268441420d9c90b1cb96f42934aefdb107a4d12c5947adafbfeb24af597d15c2",
+      "bytes": 2892423
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2001.zip",
+      "sha256": "c8f53ad26b3c0c0d47df3319a5a59aaaf3057472805d2b9c361657d7a1ae6222",
+      "bytes": 3250829
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2002.zip",
+      "sha256": "147332012805aab6c4562a938faab69d3b5941a38c2af3e26a27b61433ec2e22",
+      "bytes": 3498623
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2003.zip",
+      "sha256": "daccbdd30accf4de88cab2fbda5347de5633bad229ac37652c42407375cc0f14",
+      "bytes": 3901001
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2004.zip",
+      "sha256": "3c0df93946c2e8abe576c8c8021c1e2c6caf4cec7119e7032fcf8de75e5e7f89",
+      "bytes": 3687416
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2005.zip",
+      "sha256": "44a7530f8c6f7ac5ea045ed87bcd9b6eff854eec44c1d88bc5c93a67bd3352b7",
+      "bytes": 3632542
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2006.zip",
+      "sha256": "e7eae228f85bc6977fa9ac60f9ac5525826a9143bff0f476e99fe35afbc65c45",
+      "bytes": 3183976
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2007.zip",
+      "sha256": "c1d2bdd16a077e2575eea05635eee2df0822fbcbe65e65d98c26fb2dba666515",
+      "bytes": 3488351
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2008.zip",
+      "sha256": "6522f9820eb069b9e684fe36a6c72314422e91145966417f56714424b0dcafab",
+      "bytes": 3535259
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2009.zip",
+      "sha256": "ae28c6274b1ec1b74a0a8c0642eada0ee76e909dbfa68927c859231ebabc9801",
+      "bytes": 3802556
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2010.zip",
+      "sha256": "b7f83eaefd73512711c68749a76b65223a03e46d5f917a0e81b5114a4c808fe7",
+      "bytes": 3688946
+    },
+    {
+      "url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/hypo/h2011.zip",
+      "sha256": "30980319b7fb72101c508e16b44a9e1ad124f4a94a9c31b0260df1df6745729b",
+      "bytes": 7955061
+    }
+  ],
+  "parsed_events": 2132648,
+  "outputs": {
+    "A": {
+      "target_path": "data/catalogs/fern-japan-v1/region-a-target.csv",
+      "target_sha256": "07c7126bea794a3ef17daab9cd1628a4cffacf358d410a689246005536a6b134",
+      "target_events": 3327,
+      "feature_path": "data/catalogs/fern-japan-v1/region-a-features.csv",
+      "feature_sha256": "0bdfb7afab8985dda7c74dbd29062d8fd934d153650f53ea6f46819b09951d7f",
+      "feature_events": 24875
+    },
+    "B": {
+      "target_path": "data/catalogs/fern-japan-v1/region-b-target.csv",
+      "target_sha256": "c13986dc579723f13f5b92d9e6c6fb683245264d3c4b604a8d6bed9f130154a7",
+      "target_events": 4762,
+      "feature_path": "data/catalogs/fern-japan-v1/region-b-features.csv",
+      "feature_sha256": "fc149d4fc6b17c8cb66f11ec97eeb8d4650e9e431521ae5433bea28f0c198bef",
+      "feature_events": 18498
+    },
+    "C": {
+      "target_path": "data/catalogs/fern-japan-v1/region-c-target.csv",
+      "target_sha256": "1b8ff984a56d207937c85c7c87d9ef80eb65a0a17f2c9dd53639aab54a5aa1c0",
+      "target_events": 3246,
+      "feature_path": "data/catalogs/fern-japan-v1/region-c-features.csv",
+      "feature_sha256": "453b20129f7cddb6b4cbc297329f857eff6cc5de21cb83b969ec8fb9d3ab6a4c",
+      "feature_events": 45256
+    }
+  },
+  "period_counts": {
+    "A": {
+      "train": 988,
+      "validation": 128,
+      "test_pre_tohoku": 153,
+      "test_calendar_ambiguity": 1078
+    },
+    "B": {
+      "train": 2016,
+      "validation": 726,
+      "test_pre_tohoku": 889,
+      "test_calendar_ambiguity": 942
+    },
+    "C": {
+      "train": 1320,
+      "validation": 263,
+      "test_pre_tohoku": 354,
+      "test_calendar_ambiguity": 626
+    }
+  },
+  "published_target_counts": {
+    "A": {
+      "train": 1238,
+      "validation": 397,
+      "test_calendar_ambiguity": 517
+    },
+    "B": {
+      "train": 1686,
+      "validation": 1159,
+      "test_calendar_ambiguity": 1027
+    },
+    "C": {
+      "train": 1325,
+      "validation": 524,
+      "test_calendar_ambiguity": 592
+    }
+  },
+  "count_deltas": {
+    "A": {
+      "train": -250,
+      "validation": -269,
+      "test_calendar_ambiguity": 561
+    },
+    "B": {
+      "train": 330,
+      "validation": -433,
+      "test_calendar_ambiguity": -85
+    },
+    "C": {
+      "train": -5,
+      "validation": -261,
+      "test_calendar_ambiguity": 34
+    }
+  },
+  "claim_boundary": "FERN geography and temporal split reproduction only. No CH-008 score or Japanese model selection is authorized by this protocol. The paper's pre-Tohoku statement conflicts with its eight-year 2004-2011 count table, so both endpoints must be reported."
+}

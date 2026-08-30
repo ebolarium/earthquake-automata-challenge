@@ -1,5 +1,9 @@
 # Experiment Index
 
+- [FERN-001: Japan Three-Region Transport Protocol](FERN-001-japan-protocol.md)
+- [FERN-002: Exposure-Normalized Renewal](FERN-002-normalized-renewal.md)
+- [NZ-001: New Zealand External-Region Test](NZ-001-external-region.md)
+
 | ID | Status | Question | Data | Result |
 | --- | --- | --- | --- | --- |
 | REF-001 | Completed | Can the pinned ETAS compatibility commit reproduce the checked-in EarthquakeNPP ComCat_25 outputs? | EarthquakeNPP ComCat_25 | Parameters and likelihood aligned |
@@ -38,6 +42,9 @@
 | CH009-001 | Contract implemented | Can phase-coherent hazard debt add a genuinely joint regime feature beyond additive CH-008? | Synthetic frailty trends and fault graphs only | Causal multiscale acceleration and four-way coherence invariants implemented; no catalog score |
 | CH009-002 | Contract implemented | Can CH-009 preserve exact CH-008 control behavior and forecast-before-assimilation ordering? | Synthetic daily replay only | Zero phase weight exactly matches CH-008 rates/gains; coherent past state affects only a later issue; no catalog score |
 | CH009-003 | Pre-registered, unrun; preflight corrected | Can phase-coherent hazard debt robustly improve CH-008 and beat its own mechanism ablations? | Known 2014-2026 all-history development benchmark | Initial control preflight produced no score; inactive transition rows receive neutral self-loops in v2; search and all gates unchanged |
+| FERN-001 | Completed, mixed; broad transport rejected | Does fit-locked CH-008 transport beyond California without parameter refitting? | Hash-locked current JMA bulletin, FERN regions A/B/C | A test IGPE +0.009003 with positive 30/90-day lower bounds; B and C test intervals cross zero, and B validation is negative |
+| FERN-002 | Completed, development validation passed | Can one train-data-only exposure normalization make the CH-008 renewal clock comparable across A/B/C? | FERN-001 train-only ETAS fits; 1996-2003 development validation | A/B/C IGPE +0.010242/+0.001134/+0.001342; all 30/90-day lower bounds positive; 2004 onward untouched |
+| NZ-001 | Completed, external-region admitted | Does frozen exposure-normalized CH-008 beat train-only ETAS in an external non-Japan region? | Official New Zealand CSEP mask; GeoNet M4+, depth under 40 km; 2,270 evaluation events | IGPE +0.018561; 30/90-day lower bounds +0.012006/+0.011817; all six three-year epochs positive |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,

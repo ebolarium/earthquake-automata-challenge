@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "experiment_id": "fern-ch008-exposure-normalized-development-v1",
+  "status": "pre_registered_unrun",
+  "analysis_role": "outcome_informed_development_experiment",
+  "source_experiment": "data/manifests/fern-ch008-zero-refit-transfer-v1.json",
+  "regions": "configs/regions/fern-japan-v1.json",
+  "source_model": "models/ch008-boundary-sensitivity-v1.json",
+  "parent_model": "models/ch004-marked-renewal-v1.json",
+  "native_etas_module": "src/etas_challenge/etas_native.py",
+  "normalized_adapter_module": "src/etas_challenge/fern_ch008_normalized.py",
+  "normalization": {
+    "target_mean_cell_prevalidation_exposure": 1.0,
+    "formula": "scale_r=1/(mean_cell_etas_background_mass_r*days_from_auxiliary_start_to_validation)",
+    "scaled_terms": ["expected_daily_renewal_hazard", "observed_marked_renewal_reset_mass"],
+    "unchanged_terms": ["frailty", "etas_triggering", "etas_background_mass", "ch008_parameters"],
+    "outcome_fit": false,
+    "candidate_count": 1
+  },
+  "evaluation": {
+    "period": ["1996-01-01T00:00:00+09:00", "2004-01-01T00:00:00+09:00"],
+    "forbidden_period_start": "2004-01-01T00:00:00+09:00",
+    "bootstrap_mean_block_days": [30, 90],
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260831,
+    "confidence_level": 0.95
+  },
+  "admission_rule": {
+    "all_three_region_mean_igpe_positive": true,
+    "all_three_region_30_day_lower_bound_positive": true,
+    "all_three_region_90_day_lower_bound_nonnegative": true
+  },
+  "claim_boundary": "Conceived after FERN-001 validation and test outcomes were opened. Validation is reused development evidence only. The script must not calculate any event rate, state, score, stratum, or diagnostic at or after 2004-01-01 JST."
+}

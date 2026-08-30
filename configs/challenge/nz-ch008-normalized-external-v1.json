@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "experiment_id": "nz-ch008-normalized-external-v1",
+  "status": "pre_registered_unrun",
+  "analysis_role": "retrospective_external_geography_test",
+  "region_protocol": "configs/regions/new-zealand-csep-v1.json",
+  "region_manifest": "data/manifests/nz-csep-region-v1.json",
+  "catalog_manifest": "data/manifests/nz-csep-catalog-v1.json",
+  "source_model": "models/ch008-boundary-sensitivity-v1.json",
+  "parent_model": "models/ch004-marked-renewal-v1.json",
+  "native_etas_module": "src/etas_challenge/etas_native.py",
+  "normalized_adapter_module": "src/etas_challenge/fern_ch008_normalized.py",
+  "masked_grid_module": "src/etas_challenge/masked_grid.py",
+  "adaptation": {
+    "mask_spacing_degrees": 0.1,
+    "latent_spacing_degrees": 0.5,
+    "target_mean_cell_prefit_exposure": 1.0,
+    "parameter_refit": false,
+    "candidate_count": 1
+  },
+  "evaluation": {
+    "period": ["2008-01-01T00:00:00+00:00", "2026-01-01T00:00:00+00:00"],
+    "bootstrap_mean_block_days": [30, 90],
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 20260830,
+    "confidence_level": 0.95
+  },
+  "admission_rule": {
+    "mean_igpe_positive": true,
+    "30_day_lower_bound_positive": true,
+    "90_day_lower_bound_nonnegative": true
+  },
+  "claim_boundary": "New Zealand geometry, catalog rules, periods, frozen CH-008 parameters, train-only exposure normalization, metrics, and gates were fixed before querying GeoNet event counts or computing New Zealand rates. This is a retrospective external-geography test, not pristine prospective evidence."
+}

@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "protocol_id": "fern-japan-three-region-v1",
+  "source": {
+    "catalog": "JMA Seismological Bulletin hypocenter files",
+    "index_url": "https://www.data.jma.go.jp/eqev/data/bulletin/hypo_e.html",
+    "format_url": "https://www.data.jma.go.jp/eqev/data/bulletin/data/format/hypfmt_e.html",
+    "paper_url": "https://doi.org/10.1038/s41598-023-38033-9",
+    "supplement_url": "https://static-content.springer.com/esm/art%3A10.1038%2Fs41598-023-38033-9/MediaObjects/41598_2023_38033_MOESM1_ESM.pdf",
+    "upstream_code_url": "https://github.com/google-research/google-research/tree/master/earthquakes_fern"
+  },
+  "periods": {
+    "train": ["1979-01-01T00:00:00+09:00", "1996-01-01T00:00:00+09:00"],
+    "validation": ["1996-01-01T00:00:00+09:00", "2004-01-01T00:00:00+09:00"],
+    "test_pre_tohoku": ["2004-01-01T00:00:00+09:00", "2011-03-11T14:46:18+09:00"],
+    "test_calendar_ambiguity": ["2004-01-01T00:00:00+09:00", "2012-01-01T00:00:00+09:00"]
+  },
+  "regions": [
+    {"name": "A", "longitude": [141.0, 145.0], "latitude": [36.0, 42.0], "target_magnitude": 4.5, "feature_magnitude": 3.0, "maximum_depth_km": 100.0},
+    {"name": "B", "longitude": [145.0, 154.0], "latitude": [42.0, 47.0], "target_magnitude": 4.5, "feature_magnitude": 3.0, "maximum_depth_km": 100.0},
+    {"name": "C", "longitude": [141.0, 154.0], "latitude": [36.0, 47.0], "target_magnitude": 5.0, "feature_magnitude": 3.0, "maximum_depth_km": 100.0}
+  ],
+  "published_target_counts": {
+    "A": {"train": 1238, "validation": 397, "test_calendar_ambiguity": 517},
+    "B": {"train": 1686, "validation": 1159, "test_calendar_ambiguity": 1027},
+    "C": {"train": 1325, "validation": 524, "test_calendar_ambiguity": 592}
+  },
+  "claim_boundary": "FERN geography and temporal split reproduction only. No CH-008 score or Japanese model selection is authorized by this protocol. The paper's pre-Tohoku statement conflicts with its eight-year 2004-2011 count table, so both endpoints must be reported."
+}

@@ -87,6 +87,9 @@ The frozen retrospective test can promote a model to prospective evaluation;
 it cannot by itself support a scientific ETAS-superiority claim. That claim
 requires the separate one-year prospective gate in the challenge contract.
 
+The Turkish technical dossier prepared for external scientific review is
+available at `wiki/07-scientific-review/CH008-scientific-dossier-tr.md`.
+
 ## Locked Reference
 
 - EarthquakeNPP commit: `26d18048e1ca8ff2b02c7016b993de48ed0760f5`
