@@ -35,6 +35,9 @@ evaluation = [
   "typing-extensions==4.16.0",
   "tzdata==2026.3",
 ]
+prospective = [
+  "psycopg[binary]==3.3.4",
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
