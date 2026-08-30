@@ -1,6 +1,8 @@
 #!/bin/sh
 set -eu
 
+python scripts/verify_prospective_protocol.py
+
 if [ "${AUTO_MIGRATE:-1}" = "1" ]; then
   python scripts/migrate_database.py
 fi

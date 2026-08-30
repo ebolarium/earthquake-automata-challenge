@@ -10,7 +10,10 @@ class DatabaseMigrationTest(unittest.TestCase):
     def test_repository_migrations_are_ordered_and_unique(self):
         root = Path(__file__).resolve().parents[1]
         migrations = discover_migrations(root / "db" / "migrations")
-        self.assertEqual([path.name for path in migrations], ["001_prospective_core.sql"])
+        self.assertEqual(
+            [path.name for path in migrations],
+            ["001_prospective_core.sql", "002_optional_region_depth.sql"],
+        )
         self.assertEqual(len(migration_checksum(migrations[0])), 64)
 
     def test_duplicate_versions_are_rejected(self):

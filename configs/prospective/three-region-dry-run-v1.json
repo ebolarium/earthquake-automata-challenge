@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "protocol_id": "ch008-three-region-dry-run-v1",
+  "status": "ready_not_started",
+  "mode": "dry_run",
+  "counts_toward_prospective_claim": false,
+  "duration_days": 14,
+  "issue_contract": {
+    "frequency": "daily",
+    "target_window": "next_utc_day",
+    "history_boundary": "strictly_before_issue_time",
+    "persist_before_target_start": true,
+    "backfill_permitted": false,
+    "schedule": "set_after_runtime_benchmark_before_dry_run"
+  },
+  "catalog_revision_contract": {
+    "raw_response_preserved": true,
+    "first_observed_score": "provisional",
+    "settled_score_delay_days": 7,
+    "settled_score_label": "final"
+  },
+  "artifact_contract": {
+    "s3_prefix": "prospective/v1/dry-run",
+    "forecast_format": "compressed_npz",
+    "manifest_format": "json",
+    "sha256_required": true
+  },
+  "challenger": {
+    "model_path": "models/ch008-boundary-sensitivity-v1.json",
+    "model_sha256": "72e030a4d61c512bb096c1469a409c1cf3d9206fc0d9580f2352e0d604e3fa27",
+    "california_runtime_path": "src/etas_challenge/frailty_renewal_fit.py",
+    "california_runtime_sha256": "004bb95b64789bd909e408e3d220bae4982284d85e6925202566e2776c4015cf",
+    "normalized_runtime_path": "src/etas_challenge/fern_ch008_normalized.py",
+    "normalized_runtime_sha256": "a85e8da1b501e5c43d3374714d9014683bb37b40c33bee179ae2dd7e2a7b7f16"
+  },
+  "regions": [
+    {
+      "region_id": "california-relm",
+      "name": "California RELM",
+      "catalog_source": "USGS ANSS ComCat FDSN",
+      "catalog_endpoint": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+      "geometry": {
+        "type": "grid_mask",
+        "path": "data/grids/california-relm-v1.json",
+        "sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+        "cells": 7682,
+        "spacing_degrees": 0.1
+      },
+      "minimum_magnitude": 2.5,
+      "minimum_depth_km": null,
+      "maximum_depth_km_exclusive": null,
+      "etas_model_path": "models/etas/california-comcat25-v1.json",
+      "etas_model_sha256": "a87aa34b7b716f4c1b78ca62eef5c0add9a14e722a1081be899b63ef39d08b22",
+      "ch008_geometry": "ucerf3_fault_network",
+      "renewal_exposure_scale": 1.0
+    },
+    {
+      "region_id": "new-zealand-csep",
+      "name": "New Zealand CSEP",
+      "catalog_source": "GeoNet FDSN Event Web Service",
+      "catalog_endpoint": "https://service.geonet.org.nz/fdsnws/event/1/query",
+      "geometry": {
+        "type": "published_grid_mask",
+        "path": "data/regions/nz-csep-v1.npz",
+        "sha256": "e7b68401782f7f05a9c53ebe5d4eb4bbe1a127804480d5607f0bec3ffa27f0d0",
+        "cells": 6343,
+        "spacing_degrees": 0.1,
+        "latent_spacing_degrees": 0.5
+      },
+      "minimum_magnitude": 4.0,
+      "minimum_depth_km": 0.0,
+      "maximum_depth_km_exclusive": 40.0,
+      "etas_model_path": "models/etas/new-zealand-csep-v1.json",
+      "etas_model_sha256": "aab87d0645082ecab3d789db2bcb308c400578971dd5d33d55c57902d25ba3c1",
+      "ch008_geometry": "latent_cell_neighborhood",
+      "renewal_exposure_scale": 0.4772598372902653
+    },
+    {
+      "region_id": "chile-subduction",
+      "name": "Chile subduction corridor",
+      "catalog_source": "USGS ANSS ComCat FDSN",
+      "catalog_endpoint": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+      "geometry": {
+        "type": "rectangle",
+        "longitude": [-76.0, -66.0],
+        "latitude": [-56.0, -17.0],
+        "cells": 1560,
+        "spacing_degrees": 0.5,
+        "protocol_path": "configs/regions/chile-subduction-v1.json",
+        "protocol_sha256": "7a1975c3967712ece537549bf0043328eb0f094b386efd091e6a5309afde8101"
+      },
+      "minimum_magnitude": 4.5,
+      "minimum_depth_km": 0.0,
+      "maximum_depth_km_exclusive": 100.0,
+      "etas_model_path": "models/etas/chile-subduction-v1.json",
+      "etas_model_sha256": "936cf0f2f6fc28723e3ca4a2b2c450ab784b782280f40960fd0228941f0e87cd",
+      "ch008_geometry": "latent_cell_neighborhood",
+      "renewal_exposure_scale": 4.261045999817415
+    }
+  ],
+  "promotion_boundary": {
+    "dry_run_scores_are_scientifically_discarded": true,
+    "activation_requires_new_manifest": true,
+    "prospective_duration_days": 365,
+    "prospective_minimum_events_combined": 500,
+    "model_or_feature_change_requires_new_protocol": true
+  }
+}
