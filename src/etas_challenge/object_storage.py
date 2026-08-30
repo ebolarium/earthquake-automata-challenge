@@ -72,6 +72,30 @@ def storage_health(config: ObjectStorageConfig, client=None) -> tuple[bool, str 
     return True, None
 
 
+def put_verified_bytes(
+    config: ObjectStorageConfig,
+    key: str,
+    payload: bytes,
+    content_type: str,
+    client=None,
+) -> str:
+    if not key.startswith(f"{config.prefix}/"):
+        raise ValueError("object key is outside configured prefix")
+    active = client or config.client()
+    checksum = hashlib.sha256(payload).hexdigest()
+    active.put_object(
+        Bucket=config.bucket,
+        Key=key,
+        Body=payload,
+        ContentType=content_type,
+        Metadata={"sha256": checksum},
+    )
+    metadata = active.head_object(Bucket=config.bucket, Key=key)
+    if int(metadata["ContentLength"]) != len(payload) or metadata.get("Metadata", {}).get("sha256") != checksum:
+        raise RuntimeError("uploaded object metadata disagrees")
+    return checksum
+
+
 def write_read_delete_probe(config: ObjectStorageConfig, client=None) -> dict:
     active = client or config.client()
     probe_id = uuid.uuid4().hex

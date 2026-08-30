@@ -12,7 +12,11 @@ class DatabaseMigrationTest(unittest.TestCase):
         migrations = discover_migrations(root / "db" / "migrations")
         self.assertEqual(
             [path.name for path in migrations],
-            ["001_prospective_core.sql", "002_optional_region_depth.sql"],
+            [
+                "001_prospective_core.sql",
+                "002_optional_region_depth.sql",
+                "003_catalog_snapshot_identity.sql",
+            ],
         )
         self.assertEqual(len(migration_checksum(migrations[0])), 64)
 

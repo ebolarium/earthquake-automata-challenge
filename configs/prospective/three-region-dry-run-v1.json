@@ -26,12 +26,18 @@
     "sha256_required": true
   },
   "challenger": {
+    "california_model_id": "ch008-california-v1",
+    "normalized_model_id": "ch008-normalized-v1",
     "model_path": "models/ch008-boundary-sensitivity-v1.json",
     "model_sha256": "72e030a4d61c512bb096c1469a409c1cf3d9206fc0d9580f2352e0d604e3fa27",
     "california_runtime_path": "src/etas_challenge/frailty_renewal_fit.py",
     "california_runtime_sha256": "004bb95b64789bd909e408e3d220bae4982284d85e6925202566e2776c4015cf",
     "normalized_runtime_path": "src/etas_challenge/fern_ch008_normalized.py",
     "normalized_runtime_sha256": "a85e8da1b501e5c43d3374714d9014683bb37b40c33bee179ae2dd7e2a7b7f16"
+  },
+  "baseline_runtime": {
+    "path": "src/etas_challenge/etas_native.py",
+    "sha256": "a833974874e05dcd4f24d914b405da37ee83f99e744cf5c503ec73d886812161"
   },
   "regions": [
     {
@@ -49,6 +55,8 @@
       "minimum_magnitude": 2.5,
       "minimum_depth_km": null,
       "maximum_depth_km_exclusive": null,
+      "baseline_model_id": "etas-california-comcat25-v1",
+      "challenger_model_id": "ch008-california-v1",
       "etas_model_path": "models/etas/california-comcat25-v1.json",
       "etas_model_sha256": "a87aa34b7b716f4c1b78ca62eef5c0add9a14e722a1081be899b63ef39d08b22",
       "ch008_geometry": "ucerf3_fault_network",
@@ -70,6 +78,8 @@
       "minimum_magnitude": 4.0,
       "minimum_depth_km": 0.0,
       "maximum_depth_km_exclusive": 40.0,
+      "baseline_model_id": "etas-new-zealand-csep-v1",
+      "challenger_model_id": "ch008-normalized-v1",
       "etas_model_path": "models/etas/new-zealand-csep-v1.json",
       "etas_model_sha256": "aab87d0645082ecab3d789db2bcb308c400578971dd5d33d55c57902d25ba3c1",
       "ch008_geometry": "latent_cell_neighborhood",
@@ -92,6 +102,8 @@
       "minimum_magnitude": 4.5,
       "minimum_depth_km": 0.0,
       "maximum_depth_km_exclusive": 100.0,
+      "baseline_model_id": "etas-chile-subduction-v1",
+      "challenger_model_id": "ch008-normalized-v1",
       "etas_model_path": "models/etas/chile-subduction-v1.json",
       "etas_model_sha256": "936cf0f2f6fc28723e3ca4a2b2c450ab784b782280f40960fd0228941f0e87cd",
       "ch008_geometry": "latent_cell_neighborhood",

@@ -5,6 +5,7 @@ from unittest.mock import patch
 
 from etas_challenge.object_storage import ObjectStorageConfig
 from etas_challenge.object_storage import object_key
+from etas_challenge.object_storage import put_verified_bytes
 from etas_challenge.object_storage import storage_health
 from etas_challenge.object_storage import write_read_delete_probe
 
@@ -17,10 +18,14 @@ class FakeS3:
         return {"KeyCount": 0}
 
     def put_object(self, Bucket, Key, Body, **kwargs):
-        self.objects[(Bucket, Key)] = Body
+        self.objects[(Bucket, Key)] = (Body, kwargs.get("Metadata", {}))
 
     def get_object(self, Bucket, Key):
-        return {"Body": io.BytesIO(self.objects[(Bucket, Key)])}
+        return {"Body": io.BytesIO(self.objects[(Bucket, Key)][0])}
+
+    def head_object(self, Bucket, Key):
+        body, metadata = self.objects[(Bucket, Key)]
+        return {"ContentLength": len(body), "Metadata": metadata}
 
     def delete_object(self, Bucket, Key):
         del self.objects[(Bucket, Key)]
@@ -57,6 +62,14 @@ class ObjectStorageTest(unittest.TestCase):
         self.assertEqual(result["status"], "ok")
         self.assertEqual(client.objects, {})
         self.assertEqual(storage_health(self.config, client), (True, None))
+
+    def test_verified_upload_is_confined_to_prefix(self):
+        client = FakeS3()
+        key = "prospective/v1/dry-run/test.txt"
+        checksum = put_verified_bytes(self.config, key, b"test", "text/plain", client)
+        self.assertEqual(len(checksum), 64)
+        with self.assertRaisesRegex(ValueError, "outside configured prefix"):
+            put_verified_bytes(self.config, "other/test.txt", b"test", "text/plain", client)
 
     def test_missing_settings_are_rejected(self):
         with patch.dict(os.environ, {}, clear=True):

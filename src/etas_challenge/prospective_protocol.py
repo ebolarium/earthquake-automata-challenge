@@ -38,6 +38,10 @@ def validate_protocol(path: Path, root: Path) -> dict:
             protocol["challenger"]["normalized_runtime_path"],
             protocol["challenger"]["normalized_runtime_sha256"],
         ),
+        (
+            protocol["baseline_runtime"]["path"],
+            protocol["baseline_runtime"]["sha256"],
+        ),
     ]
     for region in regions:
         locked_files.append((region["etas_model_path"], region["etas_model_sha256"]))

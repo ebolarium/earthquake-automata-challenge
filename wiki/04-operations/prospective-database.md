@@ -35,3 +35,17 @@ with `S3_ENDPOINT_URL`, `S3_BUCKET`, `S3_REGION`, `S3_ACCESS_KEY_ID`,
 `S3_SECRET_ACCESS_KEY`, and `S3_PREFIX`. Set `VERIFY_OBJECT_STORAGE=1` to run a
 temporary write/read/delete integrity probe at startup. Set
 `REQUIRE_OBJECT_STORAGE=1` to include prefix access in the worker health check.
+
+## Catalog collection
+
+The rolling collector preserves each raw FDSN response in object storage and
+records the filtered event versions in PostgreSQL. Its default lookback is 30
+days so recent catalog revisions remain observable:
+
+```bash
+python scripts/collect_prospective_catalogs.py
+```
+
+Use `--cutoff` for a reproducible manual run and `--region` to limit a smoke
+test. An identical region/cutoff/content combination is idempotent; changed
+provider content at the same cutoff is retained as a new snapshot version.

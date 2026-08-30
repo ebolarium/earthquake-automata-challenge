@@ -13,6 +13,8 @@ COPY models ./models
 COPY data/grids ./data/grids
 COPY data/regions ./data/regions
 COPY scripts/migrate_database.py ./scripts/migrate_database.py
+COPY scripts/collect_prospective_catalogs.py ./scripts/collect_prospective_catalogs.py
+COPY scripts/seed_prospective_database.py ./scripts/seed_prospective_database.py
 COPY scripts/verify_object_storage.py ./scripts/verify_object_storage.py
 COPY scripts/verify_prospective_protocol.py ./scripts/verify_prospective_protocol.py
 COPY docker/prospective-entrypoint.sh ./docker/prospective-entrypoint.sh
