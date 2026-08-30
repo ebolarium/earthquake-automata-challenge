@@ -27,3 +27,11 @@ schema change must be a new numbered migration.
 - `forecast_runs` and `forecast_artifacts`: issue-time runs and uploaded files.
 - `daily_scores`: provisional and final ETAS-versus-CH-008 scores.
 - `incidents`: missed runs, source outages, and operational deviations.
+
+## Object storage
+
+Forecast artifacts use a separate S3-compatible store. Configure the worker
+with `S3_ENDPOINT_URL`, `S3_BUCKET`, `S3_REGION`, `S3_ACCESS_KEY_ID`,
+`S3_SECRET_ACCESS_KEY`, and `S3_PREFIX`. Set `VERIFY_OBJECT_STORAGE=1` to run a
+temporary write/read/delete integrity probe at startup. Set
+`REQUIRE_OBJECT_STORAGE=1` to include prefix access in the worker health check.

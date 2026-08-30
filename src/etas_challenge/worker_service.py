@@ -8,6 +8,9 @@ import json
 import os
 from urllib.parse import urlsplit
 
+from etas_challenge.object_storage import ObjectStorageConfig
+from etas_challenge.object_storage import storage_health
+
 
 def database_health(database_url: str | None) -> tuple[bool, str | None]:
     if not database_url:
@@ -20,6 +23,20 @@ def database_health(database_url: str | None) -> tuple[bool, str | None]:
     except Exception:
         return False, "database_unavailable"
     return True, None
+
+
+def combined_health(
+    database_url: str | None,
+    require_object_storage: bool,
+) -> tuple[bool, str | None]:
+    healthy, reason = database_health(database_url)
+    if not healthy or not require_object_storage:
+        return healthy, reason
+    try:
+        config = ObjectStorageConfig.from_environment()
+    except ValueError:
+        return False, "object_storage_config_invalid"
+    return storage_health(config)
 
 
 def handler_factory(checker):
@@ -61,7 +78,12 @@ def main() -> None:
     host = os.environ.get("HOST", "127.0.0.1")
     port = int(os.environ.get("PORT", "8080"))
     database_url = os.environ.get("DATABASE_URL")
-    server = create_server(host, port, lambda: database_health(database_url))
+    require_storage = os.environ.get("REQUIRE_OBJECT_STORAGE", "0") == "1"
+    server = create_server(
+        host,
+        port,
+        lambda: combined_health(database_url, require_storage),
+    )
     print(f"Prospective worker listening on http://{host}:{port}", flush=True)
     try:
         server.serve_forever()

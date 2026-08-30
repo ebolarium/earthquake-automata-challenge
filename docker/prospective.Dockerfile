@@ -8,11 +8,14 @@ RUN python -m pip install --no-cache-dir ".[prospective]"
 
 COPY db ./db
 COPY scripts/migrate_database.py ./scripts/migrate_database.py
+COPY scripts/verify_object_storage.py ./scripts/verify_object_storage.py
 COPY docker/prospective-entrypoint.sh ./docker/prospective-entrypoint.sh
 
 ENV HOST=0.0.0.0 \
     PORT=8080 \
-    AUTO_MIGRATE=1
+    AUTO_MIGRATE=1 \
+    VERIFY_OBJECT_STORAGE=0 \
+    REQUIRE_OBJECT_STORAGE=0
 
 EXPOSE 8080
 
