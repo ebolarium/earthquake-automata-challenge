@@ -22,6 +22,14 @@ class GeoNetCatalogTest(unittest.TestCase):
         ]
         self.assertEqual(parse_fdsn_text(lines), [])
 
+    def test_accepts_usgs_text_without_event_type_column(self):
+        lines = [
+            "#EventID|Time|Latitude|Longitude|Depth/km|MagType|Magnitude\n",
+            "us1|2020-01-01T00:00:00|-30|-71|12|mww|5.0\n",
+        ]
+        events = parse_fdsn_text(lines)
+        self.assertEqual(events[0].event_type, "earthquake")
+
 
 if __name__ == "__main__":
     unittest.main()

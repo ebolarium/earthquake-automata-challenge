@@ -1,0 +1,101 @@
+{
+  "schema_version": 1,
+  "experiment_id": "chile-ch008-normalized-external-v1",
+  "status": "completed_admitted",
+  "config_sha256": "611f8f03a3ea0ab95e06f6da728cf402a26d22b1d3e8d100bea9d884567fc5cc",
+  "protocol_sha256": "7a1975c3967712ece537549bf0043328eb0f094b386efd091e6a5309afde8101",
+  "catalog_manifest_sha256": "d33f866468a645a15b0e95344357a8fb12330a192a7614bab0c66212937cf9d8",
+  "etas_parameters_sha256": "4e40f7ccb4016a087282e69fb603fb07503b55f2466025d617bc293b0101e331",
+  "source_model_sha256": "72e030a4d61c512bb096c1469a409c1cf3d9206fc0d9580f2352e0d604e3fa27",
+  "parent_model_sha256": "57057b1c1bd9807993f491d16cc1c2c30bfb7ca86071f60b97cee7ef8dd837c8",
+  "evaluation_script_sha256": "9c9a2485ffd05bd8621381b1a52ecdefa579ec7872503da4997cc724967fb13e",
+  "renewal_exposure_scale": 4.261045999817415,
+  "grid": {
+    "cells": 1560,
+    "area_km2": 3810342.2880689707
+  },
+  "external_evaluation": {
+    "events": 1909,
+    "mean_igpe": 0.009718429432842497,
+    "relative_factor": 1.0097658067213977,
+    "total_log_likelihood_gain": 18.552481787296326,
+    "positive_event_fraction": 0.9308538501833421,
+    "bootstrap": {
+      "30_days": {
+        "method": "stationary_daily_block_bootstrap",
+        "replicates": 10000,
+        "valid_replicates": 10000,
+        "seed": 20260931,
+        "mean_block_days": 30,
+        "confidence_level": 0.95,
+        "lower": 0.006862269018537285,
+        "median": 0.009938134859753256,
+        "upper": 0.013219454027598542
+      },
+      "90_days": {
+        "method": "stationary_daily_block_bootstrap",
+        "replicates": 10000,
+        "valid_replicates": 10000,
+        "seed": 20260991,
+        "mean_block_days": 90,
+        "confidence_level": 0.95,
+        "lower": 0.006321081950704385,
+        "median": 0.009993158428771545,
+        "upper": 0.014348440020000013
+      }
+    },
+    "annual": {
+      "2015": {
+        "events": 553,
+        "mean_igpe": 0.001716753522615649
+      },
+      "2016": {
+        "events": 217,
+        "mean_igpe": 0.005642583811908051
+      },
+      "2017": {
+        "events": 174,
+        "mean_igpe": 0.006845384187573639
+      },
+      "2018": {
+        "events": 110,
+        "mean_igpe": 0.012073158452885343
+      },
+      "2019": {
+        "events": 140,
+        "mean_igpe": 0.010084067886360635
+      },
+      "2020": {
+        "events": 151,
+        "mean_igpe": 0.012811976605270264
+      },
+      "2021": {
+        "events": 134,
+        "mean_igpe": 0.012831401510764165
+      },
+      "2022": {
+        "events": 130,
+        "mean_igpe": 0.016904803549743184
+      },
+      "2023": {
+        "events": 106,
+        "mean_igpe": 0.01757514237946523
+      },
+      "2024": {
+        "events": 99,
+        "mean_igpe": 0.02441081083707138
+      },
+      "2025": {
+        "events": 95,
+        "mean_igpe": 0.024384068664862455
+      }
+    }
+  },
+  "admission_gates": {
+    "mean_igpe_positive": true,
+    "30_day_lower_bound_positive": true,
+    "90_day_lower_bound_nonnegative": true
+  },
+  "admitted": true,
+  "claim_boundary": "One frozen exposure-normalized CH-008 candidate is evaluated once against train-only academic ETAS. No Chile outcome may select parameters, geometry, thresholds, periods, normalization, metrics, or gates."
+}

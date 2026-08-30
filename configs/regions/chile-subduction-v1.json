@@ -1,0 +1,27 @@
+{
+  "schema_version": 1,
+  "protocol_id": "chile-subduction-external-v1",
+  "status": "protocol_locked_catalog_unopened",
+  "source": {
+    "catalog": "USGS ANSS Comprehensive Earthquake Catalog",
+    "catalog_url": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+    "catalog_documentation": "https://earthquake.usgs.gov/fdsnws/event/1/USGS",
+    "regional_authority": "Centro Sismologico Nacional, Universidad de Chile",
+    "regional_data_policy": "https://sismologia.cl/accesos/uso-de-datos.html"
+  },
+  "region": {
+    "name": "Chile subduction corridor",
+    "longitude": [-76.0, -66.0],
+    "latitude": [-56.0, -17.0],
+    "spacing_degrees": 0.5,
+    "maximum_depth_km_exclusive": 100.0,
+    "minimum_magnitude": 4.5,
+    "event_type": "earthquake"
+  },
+  "periods": {
+    "fit": ["2000-01-01T00:00:00+00:00", "2015-01-01T00:00:00+00:00"],
+    "external_evaluation": ["2015-01-01T00:00:00+00:00", "2026-01-01T00:00:00+00:00"]
+  },
+  "prior_count_disclosure": "Before this protocol was fixed, one public USGS power-planning count was queried for calendar 2025 using the same bounding box at M4+, without depth filtering. No M4.5 historical catalog, event locations, ETAS parameters, CH-008 rates, or scores were opened.",
+  "claim_boundary": "The exact M4.5 threshold, depth rule, geometry, periods, frozen CH-008 parameters, train-only exposure normalization, metrics, and gates were fixed before querying the protocol catalog or computing any Chile rate. This is a retrospective external-geography test, not prospective evidence."
+}

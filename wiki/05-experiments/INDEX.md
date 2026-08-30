@@ -3,6 +3,7 @@
 - [FERN-001: Japan Three-Region Transport Protocol](FERN-001-japan-protocol.md)
 - [FERN-002: Exposure-Normalized Renewal](FERN-002-normalized-renewal.md)
 - [NZ-001: New Zealand External-Region Test](NZ-001-external-region.md)
+- [CHILE-001: Chile External-Region Test](CHILE-001-external-region.md)
 
 | ID | Status | Question | Data | Result |
 | --- | --- | --- | --- | --- |
@@ -45,6 +46,7 @@
 | FERN-001 | Completed, mixed; broad transport rejected | Does fit-locked CH-008 transport beyond California without parameter refitting? | Hash-locked current JMA bulletin, FERN regions A/B/C | A test IGPE +0.009003 with positive 30/90-day lower bounds; B and C test intervals cross zero, and B validation is negative |
 | FERN-002 | Completed, development validation passed | Can one train-data-only exposure normalization make the CH-008 renewal clock comparable across A/B/C? | FERN-001 train-only ETAS fits; 1996-2003 development validation | A/B/C IGPE +0.010242/+0.001134/+0.001342; all 30/90-day lower bounds positive; 2004 onward untouched |
 | NZ-001 | Completed, external-region admitted | Does frozen exposure-normalized CH-008 beat train-only ETAS in an external non-Japan region? | Official New Zealand CSEP mask; GeoNet M4+, depth under 40 km; 2,270 evaluation events | IGPE +0.018561; 30/90-day lower bounds +0.012006/+0.011817; all six three-year epochs positive |
+| CHILE-001 | Completed, external-region admitted | Does frozen exposure-normalized CH-008 beat train-only ETAS in the Chilean subduction corridor? | Locked ComCat M4.5+, depth under 100 km; 2000-2014 fit and 2015-2025 external evaluation; 1,909 evaluation events | IGPE +0.009718; 30/90-day lower bounds +0.006862/+0.006321; all eleven years positive |
 
 Each experiment receives a dedicated document before execution. The document
 must state the hypothesis, frozen inputs, command, environment, metrics,

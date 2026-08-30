@@ -1,0 +1,163 @@
+{
+  "schema_version": 1,
+  "catalog_id": "chile-subduction-catalog-v1",
+  "protocol": "configs/regions/chile-subduction-v1.json",
+  "protocol_sha256": "7a1975c3967712ece537549bf0043328eb0f094b386efd091e6a5309afde8101",
+  "request": {
+    "url": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+    "base_parameters": {
+      "format": "text",
+      "minlatitude": "-56.0",
+      "maxlatitude": "-17.0",
+      "minlongitude": "-76.0",
+      "maxlongitude": "-66.0",
+      "minmagnitude": "4.5",
+      "maxdepth": "99.999999999",
+      "eventtype": "earthquake",
+      "orderby": "time-asc"
+    },
+    "chunking": "calendar_year_utc"
+  },
+  "raw_files": [
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2000.txt",
+      "sha256": "49254ead0ee96c82c326bb8830055246aee9dc47151e23ebcdb0c1f05b4aa43d",
+      "bytes": 8378
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2001.txt",
+      "sha256": "2dbb490427fc50458d0bbaeb0a6586d6f02d6fea53bb79821bb6ffd42188b33b",
+      "bytes": 32193
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2002.txt",
+      "sha256": "733f3b5cf1da6ff2dce0fd15b10b350fcaa85fc649d765d0c5c968e382fac608",
+      "bytes": 12982
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2003.txt",
+      "sha256": "e7a6b511ad1a867fce71147df4c81c953e3fd1bb2cf3425d3fb8895e6410c927",
+      "bytes": 10311
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2004.txt",
+      "sha256": "7c55209c95eca2c8874479c9eb80854d4802d24d09544bdf0401520bff1920fe",
+      "bytes": 13738
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2005.txt",
+      "sha256": "ecce672c7dacd0bb59ee95f9287d631c794adff624a7ac97fec0c788232e1570",
+      "bytes": 9927
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2006.txt",
+      "sha256": "6eaca2832ec52e4b259a8b479c3427c2cb19cefb87ebee7f1d2ff001f0c73a27",
+      "bytes": 16566
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2007.txt",
+      "sha256": "8977285e237855ccc3b60de1e53936bec615da4de493ec6258572d12fef3aa87",
+      "bytes": 25940
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2008.txt",
+      "sha256": "2a97b414afc08a1d5d7c5f34f1b7a933522f594664c20992f57b5d3361cbae6c",
+      "bytes": 14064
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2009.txt",
+      "sha256": "7669a97ce89eb4a4f28dd30521062eb016328af9a7da6ba4cc7ffc4bc9e1d643",
+      "bytes": 12428
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2010.txt",
+      "sha256": "e08bcd57406e6d9104a0ab4863a47fdc49633a907b14211831829dd9b504c07b",
+      "bytes": 139354
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2011.txt",
+      "sha256": "f02780be8175f511421d7bf77fb6f12248b55068c7d1d752c819d1ec03c3f5bb",
+      "bytes": 33968
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2012.txt",
+      "sha256": "c69941985aa9a3a261f786bc586594f500cd62e516b46f777f454925e1e34d2a",
+      "bytes": 22300
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2013.txt",
+      "sha256": "ef917c2eead4f2d0bc3ce74c94c645e32cebaea2ccdf83d0fabb6f89e8fda847",
+      "bytes": 16921
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2014.txt",
+      "sha256": "6fe0b33e82385633b1664cde2ddfde5e65fac88e761ffedbeb28dba0fe88833f",
+      "bytes": 51028
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2015.txt",
+      "sha256": "b80398c39caac66b25887b1dd0934618dff2dc06a3d5879029ddc8b785df9e0d",
+      "bytes": 64241
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2016.txt",
+      "sha256": "df49fa8d512a73e9285ac92ef9d83426a5f470a5cd58e6588d72c8c7991de148",
+      "bytes": 25647
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2017.txt",
+      "sha256": "abd428bb172d80a5b0049892613b9b0ed03a3a3f22ffe8d62f887fe45a9f42f2",
+      "bytes": 20797
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2018.txt",
+      "sha256": "bb62102995bbce56d1d171b23ae39d202452474e4445a68dbabc01b65e9533ec",
+      "bytes": 13046
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2019.txt",
+      "sha256": "794e64fded5f6f3c02452869371c4c155bc62e8af380d25b72a85a98e0fed8af",
+      "bytes": 16620
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2020.txt",
+      "sha256": "5d99b05280393771cfaf89501feaf24dcc84529fbfaf211fe45adaa91ef57471",
+      "bytes": 17863
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2021.txt",
+      "sha256": "6ecc8dc4aa2a84488fd6b02495e5a2adc9cbeb800800bdad13a8ac9842378a54",
+      "bytes": 15972
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2022.txt",
+      "sha256": "eb38511db94e69c2e28c3bc1c19e25606e429256e8c90fc45a5f81c20be4a3dd",
+      "bytes": 15439
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2023.txt",
+      "sha256": "cdc3c2b0c7b54083a2cd19de5d839628f3dc927a086da8dbbbb0fcf9fd144e6b",
+      "bytes": 12743
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2024.txt",
+      "sha256": "1cbc06e5828534e432feb553c363e2d3707005a968e98335a9e0f3835359194c",
+      "bytes": 11904
+    },
+    {
+      "path": "data/raw/usgs/chile-subduction-v1/2025.txt",
+      "sha256": "e4912826aff8aaccf40e78c7e3227a8708e664d96f32a2f39ce54662fcf5ae2e",
+      "bytes": 11344
+    }
+  ],
+  "parsed_events": 5531,
+  "output_path": "data/catalogs/chile-subduction-v1/catalog.csv",
+  "output_sha256": "ee9cb161bbbadcc22e83dfbad0949941ea6dedaa281efbe34f0efc6e19c768b3",
+  "accepted_events": 5531,
+  "period_counts": {
+    "fit": 3622,
+    "external_evaluation": 1909
+  },
+  "prior_count_disclosure": "Before this protocol was fixed, one public USGS power-planning count was queried for calendar 2025 using the same bounding box at M4+, without depth filtering. No M4.5 historical catalog, event locations, ETAS parameters, CH-008 rates, or scores were opened.",
+  "claim_boundary": "The exact M4.5 threshold, depth rule, geometry, periods, frozen CH-008 parameters, train-only exposure normalization, metrics, and gates were fixed before querying the protocol catalog or computing any Chile rate. This is a retrospective external-geography test, not prospective evidence."
+}

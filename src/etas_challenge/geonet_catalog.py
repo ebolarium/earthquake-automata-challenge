@@ -40,6 +40,12 @@ def parse_fdsn_text(lines: Iterable[str]) -> list[GeoNetEvent]:
                 return parts[index].strip()
         raise ValueError(f"missing FDSN column: {names[0]}")
 
+    def optional_field(parts: list[str], default: str, *names: str) -> str:
+        try:
+            return field(parts, *names)
+        except ValueError:
+            return default
+
     required = ("eventid", "time", "latitude", "longitude", "depth/km", "magnitude")
     if not all(name in columns for name in required):
         raise ValueError("unrecognized GeoNet FDSN text header")
@@ -57,7 +63,7 @@ def parse_fdsn_text(lines: Iterable[str]) -> list[GeoNetEvent]:
                 depth_km=float(field(parts, "depth/km")),
                 magnitude=float(field(parts, "magnitude")),
                 magnitude_type=field(parts, "magnitudetype", "magtype"),
-                event_type=field(parts, "eventtype"),
+                event_type=optional_field(parts, "earthquake", "eventtype"),
             )
         except (ValueError, OverflowError):
             continue

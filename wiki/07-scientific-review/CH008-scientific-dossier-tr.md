@@ -2,7 +2,7 @@
 
 **Bilimsel değerlendirme dosyası**
 
-**Sürüm:** 1.0
+**Sürüm:** 1.1
 
 **Tarih:** 30 Ağustos 2026
 
@@ -33,7 +33,8 @@ kazancı ürettiğini göstermektedir. En güçlü kanıtlar şunlardır:
 
 - Kaliforniya 2019-2022: 5.204 olayda IGPE `+0,005213`;
 - Kaliforniya 2023-18 Ağustos 2026: 3.995 olayda IGPE `+0,007865`;
-- Yeni Zelanda 2008-2025 dış-coğrafya testi: 2.270 olayda IGPE `+0,018561`.
+- Yeni Zelanda 2008-2025 dış-coğrafya testi: 2.270 olayda IGPE `+0,018561`;
+- Şili 2015-2025 dış-coğrafya testi: 1.909 olayda IGPE `+0,009718`.
 
 Bu sonuçlar cesaret vericidir, ancak **ETAS'a prospektif üstünlük iddiası
 oluşturmaz**. Modelin değişmeden, tahminler hedef zamanından önce kalıcı olarak
@@ -255,8 +256,8 @@ yenilenme maruziyeti `1` olur. CH-008'in yedi parametresi değiştirilmez ve hed
 dönemin olayları bu ölçeği belirlemez.
 
 Bu katman CH-008'in **bölgesel adaptörüdür**. Kaliforniya uygulamasındaki
-UCERF3 fay geometrisi yerine Japonya ve Yeni Zelanda'da `0,5` derecelik komşu
-hücre grafiği kullanılmıştır. Bu nedenle dış-bölge sonuçları aynı mekanizma ve
+UCERF3 fay geometrisi yerine Japonya, Yeni Zelanda ve Şili'de `0,5` derecelik
+komşu hücre grafiği kullanılmıştır. Bu nedenle dış-bölge sonuçları aynı mekanizma ve
 aynı parametre ailesini sınar, fakat Kaliforniya yürütülebilir dosyasının birebir
 aynı geometrik temsili değildir.
 
@@ -322,6 +323,7 @@ zamansal kararlılığa, büyüklük tabakalarına ve prospektif tekrara dayanma
 | Japonya B | 1996-2003 | M4,5+ | 726 | +0,001134 | 1,001135 | +0,000841 | +0,000792 | Sonuçtan sonra geliştirilmiş bölgesel adaptör |
 | Japonya C | 1996-2003 | M5,0+ | 263 | +0,001342 | 1,001343 | +0,000832 | +0,000795 | Sonuçtan sonra geliştirilmiş bölgesel adaptör |
 | Yeni Zelanda CSEP | 2008-2025 | M4,0+, derinlik <40 km | 2.270 | +0,018561 | 1,018735 | +0,012006 | +0,011817 | Ön-kayıtlı dış-coğrafya retrospektifi |
+| Şili dalma-batma koridoru | 2015-2025 | M4,5+, derinlik <100 km | 1.909 | +0,009718 | 1,009766 | +0,006862 | +0,006321 | Ön-kayıtlı dış-coğrafya retrospektifi |
 
 ### 12.2 Kaliforniya mekanizma ayrıştırması
 
@@ -343,6 +345,14 @@ Yeni Zelanda'nın altı üç-yıllık diliminin tamamı pozitiftir: `+0,007946`,
 artış ilgi çekicidir, fakat katalog homojenliği, ağ değişimleri ve olay
 büyüklüğü revizyonları incelenmeden fiziksel rejim değişimi olarak
 yorumlanmamalıdır.
+
+### 12.4 Şili zamansal kararlılığı
+
+Şili'nin 2015-2025 arasındaki on bir yıllık IGPE değerinin tamamı pozitiftir;
+değerler `+0,001717` ile `+0,024411` arasındadır. Protokol, M4,5 tarihsel katalog
+açılmadan önce kilitlenmiş; yalnızca aynı dikdörtgende derinlik filtresiz 2025
+M4+ olay sayısı güç planlaması amacıyla önceden görülmüştür. Bu sonuç güçlü bir
+dış-coğrafya retrospektifidir, prospektif kanıt değildir.
 
 ## 13. Neden ETAS'tan daha iyi olabilir?
 
@@ -373,31 +383,33 @@ değil, ETAS-normalize katalog durumlarıdır.
 - Frailty katkısı renewal-only ablation'a karşı eşleştirilmiş olarak sınanmıştır.
 - 30 ve 90 günlük blok bootstrap sonuçları zamansal kümelenmeyi hesaba katmaya
   çalışır.
-- Ana Kaliforniya dönemlerinin tüm yılları; Yeni Zelanda'nın tüm üç-yıllık
-  dilimleri pozitiftir.
-- Yeni Zelanda bölgesi, eşikler ve kabul kapıları olay sayıları açılmadan önce
-  kaydedilmiştir.
+- Ana Kaliforniya dönemlerinin tüm yılları, Yeni Zelanda'nın tüm üç-yıllık
+  dilimleri ve Şili'nin on bir yılının tamamı pozitiftir.
+- Yeni Zelanda ve Şili bölgeleri, eşikler ve kabul kapıları hedef katalogları
+  açılmadan önce kaydedilmiştir.
 
 ## 15. Sınırlılıklar ve kuruldan saklanmaması gereken noktalar
 
 1. **Prospektif kanıt yoktur.** Bütün skorlanan dönemler bugün geçmiştedir.
-2. **Beş bağımsız bölge yoktur.** Beş bölgesel skor tanımı vardır. Japonya C,
+2. **Altı bağımsız bölge yoktur.** Altı bölgesel skor tanımı vardır. Japonya C,
    A ve B alanlarını kapsar; sonuçlar korelasyonludur.
 3. **Japonya kanıtı geliştirme niteliğindedir.** Bölgesel normalizasyon Japonya
    sonuçları görüldükten sonra geliştirilmiş ve 1996-2003 döneminde sınanmıştır.
    Normalize model için 2004 sonrası ayrılmış test henüz raporlanmamıştır.
-4. **Üç ana coğrafi sistem vardır:** Kaliforniya, Japonya ve Yeni Zelanda.
+4. **Dört ana coğrafi sistem vardır:** Kaliforniya, Japonya, Yeni Zelanda ve
+   Şili. Japonya prospektif protokolden çıkarılırsa geriye üç ana sistem kalır.
 5. **Geometrik uygulamalar aynı değildir.** Kaliforniya UCERF3 fay ağı ve dal
-   consensus'u; Japonya/Yeni Zelanda hücre-komşuluk adaptörünü kullanır.
+   consensus'u; Japonya/Yeni Zelanda/Şili hücre-komşuluk adaptörünü kullanır.
 6. **Hedef eşikleri farklıdır.** Kaliforniya M2,5+, Japonya M4,5/M5+, Yeni
-   Zelanda M4+ kullanır. Ham IGPE'ler doğrudan eşdeğer etki büyüklükleri değildir.
+   Zelanda M4+ ve Şili M4,5+ kullanır. Ham IGPE'ler doğrudan eşdeğer etki
+   büyüklükleri değildir.
 7. **Kataloglar sonradan revize olabilir.** Retrospektif son katalog, gerçek
    zamanda mevcut ilk katalogdan daha kaliteli olabilir.
 8. **Model büyüklük tahminini değiştirmez.** Mevcut kazanç esas olarak mekânsal
    arka plan tahsisindedir.
 9. **Bir yıllık güç sınırlı olabilir.** Japonya A gibi seyrek alanlarda tek yıl
    güvenilir bölge-bazlı üstünlük kararı için az olay üretebilir.
-10. **Çoklu karşılaştırma riski vardır.** Beş skorun hepsini bağımsız başarı
+10. **Çoklu karşılaştırma riski vardır.** Altı skorun hepsini bağımsız başarı
     kapısı saymak yanlış-pozitif oranını ve kanıt yorumunu bozar.
 11. **Dış bölgelerde ETAS ve adaptör protokolü birleştirilmelidir.** Retrospektif
     bölgesel event-intensity değerlendirmesi ile önceden yayımlanan günlük grid
@@ -425,7 +437,8 @@ konular tek bir sürümlü protokolde kesinleştirilmelidir:
 - sonuç ne olursa olsun eksiksiz yayımlama taahhüdü.
 
 Önerilen birincil karar, örtüşmeyen coğrafi sistemler üzerinde önceden tanımlı
-bir birleşik eşleştirilmiş IGPE olmalı; beş skor alanı ayrı ayrı raporlanmalıdır.
+bir birleşik eşleştirilmiş IGPE olmalı; seçilen prospektif alanlar ayrı ayrı
+raporlanmalıdır.
 Bir yıllık süre sabit olabilir, fakat kesin üstünlük kararı için önceden
 belirlenmiş minimum olay sayısı sağlanmazsa test otomatik olarak uzamalıdır.
 
@@ -463,6 +476,8 @@ Ana model ve kanıt zinciri SHA-256 ile kilitlenmiştir:
   `data/manifests/fern-ch008-exposure-normalized-validation-v1.json`
 - Yeni Zelanda dış-bölge sonucu:
   `data/manifests/nz-ch008-normalized-external-v1.json`
+- Şili dış-bölge sonucu:
+  `data/manifests/chile-ch008-normalized-external-v1.json`
 - Ana yürütme modülleri:
   `src/etas_challenge/frailty_renewal_fit.py`,
   `src/etas_challenge/renewal_quiescence.py`,
@@ -506,7 +521,8 @@ uzun süredir sıfırlanmadığını; frailty ise gözlenen bağımsız olay kü
 ETAS beklentisine göre kalıcı fazlasını temsil eder. Bu iki sinyal yalnızca
 ETAS arka plan kütlesinin `%27,6`'ya kadar olan bölümünü yeniden konumlandırır.
 
-Retrospektif sonuçlar tutarlı biçimde pozitiftir ve Yeni Zelanda testi coğrafi
-taşınabilirlik için önemli destek sağlamıştır. Bununla birlikte mevcut doğru
+Retrospektif sonuçlar tutarlı biçimde pozitiftir; Yeni Zelanda ve ön-kayıtlı
+Şili testleri coğrafi taşınabilirlik için önemli destek sağlamıştır. Bununla
+birlikte mevcut doğru
 bilimsel ifade şudur: **CH-008, prospektif sınamaya değer, hash-kilitli bir ETAS
 challenger'ıdır; ETAS'a prospektif üstünlüğü henüz gösterilmemiştir.**
