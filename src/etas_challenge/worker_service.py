@@ -62,7 +62,10 @@ def handler_factory(checker):
             self.send_header("Cache-Control", "no-store")
             self.send_header("X-Content-Type-Options", "nosniff")
             self.end_headers()
-            self.wfile.write(encoded)
+            try:
+                self.wfile.write(encoded)
+            except (BrokenPipeError, ConnectionResetError):
+                pass
 
         def log_message(self, format, *args):
             print(f"{self.address_string()} - {format % args}", flush=True)
