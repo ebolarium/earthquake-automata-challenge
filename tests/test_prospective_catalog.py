@@ -40,6 +40,12 @@ class ProspectiveCatalogTest(unittest.TestCase):
         self.assertEqual(new_zealand["maxdepth"], "39.999999999")
         self.assertEqual(chile["maxdepth"], "99.999999999")
 
+    def test_empty_fdsn_response_is_a_valid_empty_snapshot(self):
+        events = parse_and_filter(
+            self.regions["new-zealand-csep"], self.root, b"", self.start, self.cutoff
+        )
+        self.assertEqual(events, ())
+
 
 if __name__ == "__main__":
     unittest.main()

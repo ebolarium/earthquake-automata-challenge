@@ -50,7 +50,7 @@ def persist_snapshot(connection, protocol: dict, snapshot, artifact_key: str, ca
                 (region_id, captured_at, source_cutoff_at, source_request, artifact_key,
                  content_sha256, event_count, snapshot_identity)
             VALUES (%s, %s, %s, %s::jsonb, %s, %s, %s, %s)
-            ON CONFLICT (snapshot_identity) DO NOTHING
+            ON CONFLICT (snapshot_identity) WHERE snapshot_identity IS NOT NULL DO NOTHING
             RETURNING snapshot_id
             """,
             (
@@ -128,7 +128,7 @@ def main() -> int:
             snapshot = fetch_snapshot(region, ROOT, start, cutoff)
             suffix = (
                 f"dry-run/catalogs/{snapshot.region_id}/"
-                f"{cutoff.strftime('%Y/%m/%d/%H%M%S')}-{snapshot.content_sha256}.txt"
+                f"{cutoff.strftime('%Y/%m/%d/%H%M%S%f')}-{snapshot.content_sha256}.txt"
             )
             key = object_key(storage, suffix)
             put_verified_bytes(storage, key, snapshot.raw_payload, "text/plain; charset=utf-8", client)
@@ -136,7 +136,13 @@ def main() -> int:
                 snapshot_id = persist_snapshot(connection, protocol, snapshot, key, datetime.now(timezone.utc))
             results.append({"region_id": snapshot.region_id, "snapshot_id": snapshot_id, "events": len(snapshot.events), "sha256": snapshot.content_sha256})
         except Exception as error:
-            failures.append({"region_id": region["region_id"], "error": type(error).__name__})
+            failures.append(
+                {
+                    "region_id": region["region_id"],
+                    "error": type(error).__name__,
+                    "message": str(error)[:500],
+                }
+            )
             record_incident(database_url, protocol["protocol_id"], region["region_id"], error)
     print(json.dumps({"status": "ok" if not failures else "failed", "cutoff": cutoff.isoformat(), "snapshots": results, "failures": failures}, sort_keys=True))
     return 1 if failures else 0

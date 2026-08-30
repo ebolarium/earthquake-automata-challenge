@@ -108,6 +108,9 @@ def _inside(region: dict, root: Path, events: list[GeoNetEvent]) -> np.ndarray:
 
 
 def parse_and_filter(region: dict, root: Path, raw_payload: bytes, start: datetime, cutoff: datetime) -> tuple[GeoNetEvent, ...]:
+    # FDSN services return HTTP 204 with an empty body when no events match.
+    if not raw_payload.strip():
+        return ()
     parsed = parse_fdsn_text(raw_payload.decode("utf-8").splitlines())
     inside = _inside(region, root, parsed) if parsed else np.asarray([], dtype=bool)
     accepted = []
