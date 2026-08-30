@@ -49,3 +49,19 @@ python scripts/collect_prospective_catalogs.py
 Use `--cutoff` for a reproducible manual run and `--region` to limit a smoke
 test. An identical region/cutoff/content combination is idempotent; changed
 provider content at the same cutoff is retained as a new snapshot version.
+
+## Historical bootstrap
+
+Before forecast generation, import each region's history from the
+`auxiliary_start` frozen in its ETAS model. The cutoff is mandatory so an
+interrupted run can be resumed against the same boundary:
+
+```bash
+python scripts/bootstrap_prospective_catalogs.py \
+  --cutoff "2026-08-30T18:47:21.112951+00:00" \
+  --region new-zealand-csep
+```
+
+The importer starts with UTC calendar-year requests. If an FDSN result limit is
+reached, it bisects only that interval. Completed windows are skipped on rerun;
+`--refresh` explicitly preserves a revised source response as another version.

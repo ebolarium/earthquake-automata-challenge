@@ -15,7 +15,8 @@ sys.path.insert(0, str(ROOT / "src"))
 
 from etas_challenge.object_storage import ObjectStorageConfig  # noqa: E402
 from etas_challenge.object_storage import object_key, put_verified_bytes  # noqa: E402
-from etas_challenge.prospective_catalog import event_payload, fetch_snapshot  # noqa: E402
+from etas_challenge.prospective_catalog import fetch_snapshot  # noqa: E402
+from etas_challenge.prospective_persistence import persist_snapshot  # noqa: E402
 from etas_challenge.prospective_protocol import validate_protocol  # noqa: E402
 
 
@@ -35,53 +36,6 @@ def parse_args():
     parser.add_argument("--lookback-days", type=int, default=int(os.environ.get("CATALOG_LOOKBACK_DAYS", "30")))
     parser.add_argument("--region", action="append", dest="regions")
     return parser.parse_args()
-
-
-def persist_snapshot(connection, protocol: dict, snapshot, artifact_key: str, captured_at: datetime) -> int:
-    source_request = {
-        "url": snapshot.request_url,
-        "parameters": snapshot.request_parameters,
-        "window": [snapshot.start.isoformat(), snapshot.cutoff.isoformat()],
-    }
-    with connection.cursor() as cursor:
-        cursor.execute(
-            """
-            INSERT INTO prospective.catalog_snapshots
-                (region_id, captured_at, source_cutoff_at, source_request, artifact_key,
-                 content_sha256, event_count, snapshot_identity)
-            VALUES (%s, %s, %s, %s::jsonb, %s, %s, %s, %s)
-            ON CONFLICT (snapshot_identity) WHERE snapshot_identity IS NOT NULL DO NOTHING
-            RETURNING snapshot_id
-            """,
-            (
-                snapshot.region_id, captured_at, snapshot.cutoff, json.dumps(source_request),
-                artifact_key, snapshot.content_sha256, len(snapshot.events), snapshot.snapshot_identity,
-            ),
-        )
-        returned = cursor.fetchone()
-        if returned is None:
-            cursor.execute(
-                "SELECT snapshot_id FROM prospective.catalog_snapshots WHERE snapshot_identity = %s",
-                (snapshot.snapshot_identity,),
-            )
-            snapshot_id = cursor.fetchone()[0]
-        else:
-            snapshot_id = returned[0]
-        for event in snapshot.events:
-            cursor.execute(
-                """
-                INSERT INTO prospective.catalog_event_versions
-                    (snapshot_id, source_event_id, origin_time, latitude, longitude,
-                     depth_km, magnitude, magnitude_type, source_updated_at, payload)
-                VALUES (%s, %s, %s, %s, %s, %s, %s, %s, NULL, %s::jsonb)
-                ON CONFLICT (snapshot_id, source_event_id) DO NOTHING
-                """,
-                (
-                    snapshot_id, event.event_id, event.time_utc, event.latitude, event.longitude,
-                    event.depth_km, event.magnitude, event.magnitude_type, json.dumps(event_payload(event)),
-                ),
-            )
-    return snapshot_id
 
 
 def record_incident(database_url: str, protocol_id: str, region_id: str, error: Exception) -> None:
@@ -133,7 +87,7 @@ def main() -> int:
             key = object_key(storage, suffix)
             put_verified_bytes(storage, key, snapshot.raw_payload, "text/plain; charset=utf-8", client)
             with psycopg.connect(database_url) as connection:
-                snapshot_id = persist_snapshot(connection, protocol, snapshot, key, datetime.now(timezone.utc))
+                snapshot_id = persist_snapshot(connection, snapshot, key, datetime.now(timezone.utc))
             results.append({"region_id": snapshot.region_id, "snapshot_id": snapshot_id, "events": len(snapshot.events), "sha256": snapshot.content_sha256})
         except Exception as error:
             failures.append(

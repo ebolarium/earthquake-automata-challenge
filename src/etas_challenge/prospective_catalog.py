@@ -8,6 +8,7 @@ import hashlib
 import json
 from pathlib import Path
 from urllib.parse import urlencode
+from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
 import numpy as np
@@ -31,10 +32,10 @@ class CatalogSnapshot:
     def content_sha256(self) -> str:
         return hashlib.sha256(self.raw_payload).hexdigest()
 
-    @property
-    def snapshot_identity(self) -> str:
-        value = f"{self.region_id}\n{self.cutoff.isoformat()}\n{self.content_sha256}"
-        return hashlib.sha256(value.encode("utf-8")).hexdigest()
+
+
+class CatalogResultLimitError(RuntimeError):
+    """Raised when an FDSN service requires a smaller query window."""
 
 
 def _bounds(region: dict, root: Path) -> tuple[float, float, float, float]:
@@ -136,8 +137,16 @@ def fetch_snapshot(region: dict, root: Path, start: datetime, cutoff: datetime, 
     parameters = request_parameters(region, root, start, cutoff)
     url = f"{region['catalog_endpoint']}?{urlencode(parameters)}"
     request = Request(url, headers={"User-Agent": "earthquake-automata-challenge/1.0"})
-    with urlopen(request, timeout=timeout) as response:
-        payload = response.read()
+    try:
+        with urlopen(request, timeout=timeout) as response:
+            payload = response.read()
+    except HTTPError as error:
+        body = error.read().decode("utf-8", errors="replace")
+        normalized = body.lower()
+        limit_markers = ("search limit", "exceeds", "too many", "maximum number")
+        if error.code == 400 and any(marker in normalized for marker in limit_markers):
+            raise CatalogResultLimitError(body[:1000]) from error
+        raise
     events = parse_and_filter(region, root, payload, start, cutoff)
     return CatalogSnapshot(region["region_id"], start, cutoff, region["catalog_endpoint"], parameters, payload, events)
 

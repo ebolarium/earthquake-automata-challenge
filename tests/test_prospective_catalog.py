@@ -1,7 +1,12 @@
+import io
 from datetime import datetime, timezone
 from pathlib import Path
 import unittest
+from unittest.mock import patch
+from urllib.error import HTTPError
 
+from etas_challenge.prospective_catalog import CatalogResultLimitError
+from etas_challenge.prospective_catalog import fetch_snapshot
 from etas_challenge.prospective_catalog import parse_and_filter
 from etas_challenge.prospective_catalog import request_parameters
 
@@ -45,6 +50,20 @@ class ProspectiveCatalogTest(unittest.TestCase):
             self.regions["new-zealand-csep"], self.root, b"", self.start, self.cutoff
         )
         self.assertEqual(events, ())
+
+    def test_fdsn_result_limit_requests_a_smaller_window(self):
+        error = HTTPError(
+            "https://example.test",
+            400,
+            "Bad Request",
+            {},
+            io.BytesIO(b"20001 matching events exceeds search limit of 20000"),
+        )
+        with patch("etas_challenge.prospective_catalog.urlopen", side_effect=error):
+            with self.assertRaises(CatalogResultLimitError):
+                fetch_snapshot(
+                    self.regions["california-relm"], self.root, self.start, self.cutoff
+                )
 
 
 if __name__ == "__main__":
