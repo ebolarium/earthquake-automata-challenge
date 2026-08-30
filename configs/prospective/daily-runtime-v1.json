@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "runtime_id": "ch008-three-region-daily-runtime-v1",
+  "status": "locked_before_dry_run",
+  "issue_schedule": {
+    "catalog_collection_utc": "00:05:00",
+    "forecast_deadline_utc": "00:15:00",
+    "target_start_offset_days": 1,
+    "target_duration_days": 1,
+    "minimum_lead_time_minutes": 1425
+  },
+  "history_contract": {
+    "state_boundary": "UTC midnight",
+    "forecast_before_target_observations": true,
+    "same_day_observations_affect_next_state_only": true,
+    "catalog_event_predicate": "origin_time < state_boundary"
+  },
+  "paired_score_contract": {
+    "primary_metric": "sum(log(ch008_conditional_rate / etas_conditional_rate)) / events",
+    "etas_triggering": "identical_between_models",
+    "expected_event_count": "identical_between_models",
+    "magnitude_distribution": "identical_between_models",
+    "challenger_change": "bounded_mass_preserving_direct_background_redistribution",
+    "daily_compensator_gain": 0.0
+  },
+  "california_etas_grid": {
+    "method": "native_etas_continuation_monte_carlo_with_analytical_background_roots",
+    "simulations": 10000,
+    "random_seed": 20260830,
+    "horizon_days": 1,
+    "simulation_reference": "configs/evaluation/comcat25-pycsep-day7-v1.json",
+    "simulation_reference_sha256": "42553d795a2c7027b84b33a40ac429c02712b3789512cbd5cbe28d77cc374e12",
+    "benchmark": {
+      "platform": "MacBook M4 24GB via arm64 Docker",
+      "issue_time": "2026-08-19T00:00:00Z",
+      "history_events": 52021,
+      "elapsed_seconds": 2.659874625999999,
+      "expected_count": 3.796247957211062
+    }
+  },
+  "regional_etas": {
+    "method": "native_sequential_conditional_point_intensity",
+    "new_event_evaluation": "strict_prior_catalog_order",
+    "forecast_artifact": "pre_target_latent_background_mass_map"
+  },
+  "activation": {
+    "dry_run_first_issue": null,
+    "dry_run_first_target": null,
+    "prospective_claim_started": false
+  }
+}

@@ -110,7 +110,16 @@ def verify_region(connection, client, storage, protocol: dict, region: dict, as_
     ch008_sha = sha256_file(CH008_MODEL_PATH)
     if manifest["baseline_model_sha256"] != etas_sha or manifest["challenger_model_sha256"] != ch008_sha:
         raise ValueError("state model hashes disagree with locked files")
-    if manifest["state_builder_sha256"] != sha256_file(STATE_BUILDER_PATH):
+    builder_name = manifest.get("method", {}).get(
+        "state_builder", "scripts/build_prospective_initial_states.py"
+    )
+    admitted_builders = {
+        "scripts/build_prospective_initial_states.py",
+        "scripts/advance_prospective_bootstrap_states.py",
+    }
+    if builder_name not in admitted_builders:
+        raise ValueError("state builder is not admitted")
+    if manifest["state_builder_sha256"] != sha256_file(ROOT / builder_name):
         raise ValueError("state builder hash disagrees")
     if manifest["state_replay_module_sha256"] != sha256_file(REPLAY_MODULE_PATH):
         raise ValueError("state replay hash disagrees")

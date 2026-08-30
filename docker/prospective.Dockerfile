@@ -9,6 +9,8 @@ RUN python -m pip install --no-cache-dir ".[prospective]"
 COPY db ./db
 COPY configs/prospective ./configs/prospective
 COPY configs/regions ./configs/regions
+COPY configs/challenge/ch008-retrospective-v1.json ./configs/challenge/ch008-retrospective-v1.json
+COPY configs/evaluation/comcat25-pycsep-day7-v1.json ./configs/evaluation/comcat25-pycsep-day7-v1.json
 COPY models ./models
 COPY data/grids ./data/grids
 COPY data/regions ./data/regions
@@ -18,6 +20,7 @@ COPY scripts/migrate_database.py ./scripts/migrate_database.py
 COPY scripts/collect_prospective_catalogs.py ./scripts/collect_prospective_catalogs.py
 COPY scripts/bootstrap_prospective_catalogs.py ./scripts/bootstrap_prospective_catalogs.py
 COPY scripts/build_prospective_initial_states.py ./scripts/build_prospective_initial_states.py
+COPY scripts/advance_prospective_bootstrap_states.py ./scripts/advance_prospective_bootstrap_states.py
 COPY scripts/verify_prospective_initial_states.py ./scripts/verify_prospective_initial_states.py
 COPY scripts/verify_prospective_bootstrap.py ./scripts/verify_prospective_bootstrap.py
 COPY scripts/seed_prospective_database.py ./scripts/seed_prospective_database.py

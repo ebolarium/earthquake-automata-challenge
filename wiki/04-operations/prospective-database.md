@@ -118,3 +118,41 @@ These are activation inputs, not backfilled forecasts, and do not count toward
 the prospective claim. The next runtime stage advances them causally from the
 checkpoint boundary to the first dry-run issue time before any target forecast
 is persisted.
+
+## Daily runtime contract
+
+The pre-dry-run runtime is locked in
+`configs/prospective/daily-runtime-v1.json`. Catalog collection is scheduled for
+`00:05 UTC`; forecast publication must finish by `00:15 UTC`; each issue targets
+the following UTC day. This leaves a minimum lead time of 1,425 minutes.
+
+California retains the frozen 10,000-catalog native ETAS continuation with
+analytical direct background roots. A full local M4 benchmark took 2.66 seconds
+for one issue with 52,021 history events, so no simulation-count reduction is
+needed. New Zealand and Chile use their locked sequential conditional ETAS
+intensity adapters.
+
+CH-008 does not change ETAS triggering, expected counts, or magnitudes. The
+pre-target artifact fixes only its bounded, mass-preserving direct-background
+redistribution. Consequently the paired compensator difference is exactly zero
+and the primary score remains the event-wise conditional log-rate ratio used in
+the locked retrospective evaluation.
+
+## Bootstrap state advance
+
+The verified initial states can be advanced only within the same fixed bootstrap
+cutoff. The operation creates a new checkpoint and never replaces its parent.
+Start with New Zealand:
+
+```bash
+python scripts/advance_prospective_bootstrap_states.py \
+  --from-as-of "2026-08-19T00:00:00+00:00" \
+  --to-as-of "2026-08-30T00:00:00+00:00" \
+  --catalog-cutoff "2026-08-30T18:47:21.112951+00:00" \
+  --region new-zealand-csep
+```
+
+Repeat for Chile and California. California uses exactly 10,000 ETAS continuation
+catalogs on every advanced day containing observations; the command rejects a
+lower simulation count. After all three complete, run the state verifier at the
+new `as_of` boundary.
