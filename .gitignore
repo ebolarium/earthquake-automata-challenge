@@ -17,5 +17,7 @@ data/*
 !data/manifests/*.json
 !data/regions/
 !data/regions/*.npz
+!data/production/
+!data/production/*
 
 reference/upstream/

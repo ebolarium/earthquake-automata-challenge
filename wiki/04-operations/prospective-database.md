@@ -24,6 +24,7 @@ schema change must be a new numbered migration.
 - `protocols` and `regions`: activation rules, catalog contracts, and regional
   normalization constants.
 - `catalog_snapshots` and `catalog_event_versions`: as-observed input history.
+- `model_states`: immutable ETAS-history and CH-008 latent-state checkpoints.
 - `forecast_runs` and `forecast_artifacts`: issue-time runs and uploaded files.
 - `daily_scores`: provisional and final ETAS-versus-CH-008 scores.
 - `incidents`: missed runs, source outages, and operational deviations.
@@ -73,3 +74,39 @@ identities, database row counts, and S3 checksum metadata:
 python scripts/verify_prospective_bootstrap.py \
   --cutoff "2026-08-30T18:47:21.112951+00:00"
 ```
+
+## Initial model states
+
+Migration `005_model_states.sql` records one deterministic checkpoint per
+protocol, region, and UTC boundary. The checkpoint artifact is stored in S3;
+PostgreSQL stores its object key, byte count, SHA-256, source snapshot IDs, and
+manifest identity.
+
+The initial boundary is the end of the locked California retrospective replay:
+`2026-08-19T00:00:00Z`. Only events satisfying `origin_time < as_of` enter the
+checkpoint. The catalog history hash is computed from that admitted event slice,
+not from later events that happen to share the final bootstrap source object.
+
+California uses the exact locked CH-008 terminal `age`, `exposure`, and `roots`
+arrays. New Zealand and Chile reconstruct those arrays by a native full-history
+replay. All three artifacts include the complete pre-boundary ETAS event history,
+because ETAS has no smaller sufficient runtime state in this implementation.
+
+After deploying the image that applies migration `005`, build New Zealand first
+as a small production smoke test:
+
+```bash
+python scripts/build_prospective_initial_states.py \
+  --as-of "2026-08-19T00:00:00+00:00" \
+  --catalog-cutoff "2026-08-30T18:47:21.112951+00:00" \
+  --region new-zealand-csep
+```
+
+Repeat with `--region chile-subduction` and `--region california-relm`. A rerun
+with identical inputs is idempotent. If a checkpoint already exists with a
+different state or artifact hash, the command fails instead of replacing it.
+
+These are activation inputs, not backfilled forecasts, and do not count toward
+the prospective claim. The next runtime stage advances them causally from the
+checkpoint boundary to the first dry-run issue time before any target forecast
+is persisted.

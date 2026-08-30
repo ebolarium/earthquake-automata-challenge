@@ -17,6 +17,7 @@ from etas_challenge.prospective_bootstrap import auxiliary_start  # noqa: E402
 from etas_challenge.prospective_bootstrap import utc_timestamp  # noqa: E402
 from etas_challenge.prospective_bootstrap import validate_contiguous_windows  # noqa: E402
 from etas_challenge.prospective_protocol import validate_protocol  # noqa: E402
+from etas_challenge.prospective_state import selected_bootstrap_snapshots  # noqa: E402
 
 
 PROTOCOL_PATH = ROOT / "configs/prospective/three-region-dry-run-v1.json"
@@ -28,34 +29,6 @@ def parse_args():
     parser.add_argument("--region", action="append", dest="regions")
     parser.add_argument("--skip-object-storage", action="store_true")
     return parser.parse_args()
-
-
-def selected_snapshots(connection, region_id: str, start, cutoff) -> list[dict]:
-    rows = connection.execute(
-        """
-        SELECT DISTINCT ON (source_start_at, source_cutoff_at)
-               snapshot_id, source_start_at, source_cutoff_at, event_count,
-               artifact_key, content_sha256
-        FROM prospective.catalog_snapshots
-        WHERE region_id = %s
-          AND collection_kind = 'bootstrap'
-          AND source_start_at >= %s
-          AND source_cutoff_at <= %s
-        ORDER BY source_start_at, source_cutoff_at, captured_at DESC, snapshot_id DESC
-        """,
-        (region_id, start, cutoff),
-    ).fetchall()
-    return [
-        {
-            "snapshot_id": row[0],
-            "start": row[1],
-            "cutoff": row[2],
-            "event_count": row[3],
-            "artifact_key": row[4],
-            "content_sha256": row[5],
-        }
-        for row in rows
-    ]
 
 
 def event_statistics(connection, snapshot_ids: list[int]) -> dict:
@@ -78,7 +51,7 @@ def event_statistics(connection, snapshot_ids: list[int]) -> dict:
 
 def verify_region(connection, client, bucket: str, region: dict, root: Path, cutoff) -> dict:
     start = auxiliary_start(region, root)
-    snapshots = selected_snapshots(connection, region["region_id"], start, cutoff)
+    snapshots = selected_bootstrap_snapshots(connection, region["region_id"], start, cutoff)
     validate_contiguous_windows(
         [(item["start"], item["cutoff"]) for item in snapshots], start, cutoff
     )

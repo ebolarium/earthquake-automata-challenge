@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "state_id": "california-ch008-seed-20260819-v1",
+  "status": "locked_retrospective_terminal_state",
+  "region_id": "california-relm",
+  "as_of": "2026-08-19T00:00:00Z",
+  "history_boundary": "forecast_before_same_day_observations",
+  "tool": {
+    "name": "scripts/build_california_ch008_seed.py",
+    "script_sha256": "5e1945499d11f0e34b0dfc0f4b3fcd1ab15c8debb488e8e97b528a597dac1b98",
+    "replay_module_sha256": "569fc6548f7ee674070a8638be1e7788c6acfca1a5644b08af6bf38895db7eb7",
+    "python": "3.11.11",
+    "numpy": "1.26.4"
+  },
+  "inputs": {
+    "config": "configs/challenge/ch008-retrospective-v1.json",
+    "config_sha256": "112d16579d86afc6d4c4dba79a474b9b50dc1c05deeff1675eddb2e8c2d04919",
+    "event_history_sha256": "56053ca2f9d853785cd78b62a2df720974c6d894e4c82a0e65090cd9b1d9b28a",
+    "fault_graph_sha256": "5a6a6e11ad63721156101799b0d4eef0c3ae863e1572aa5253b48d501b7a397d",
+    "fault_grid_sha256": "22cf898588edc5fcbfbc39798cb07317b2aa6f29a355cb2a99631dd746ba93e9",
+    "fault_sections_sha256": "890d1a907ace5cd0d28e1e2f227669c4a8066397fe86a6d36ac4e610b7351543",
+    "parent_model_sha256": "57057b1c1bd9807993f491d16cc1c2c30bfb7ca86071f60b97cee7ef8dd837c8",
+    "ch008_model_sha256": "72e030a4d61c512bb096c1469a409c1cf3d9206fc0d9580f2352e0d604e3fa27"
+  },
+  "output": {
+    "path": "data/production/california-ch008-seed-20260819-v1.npz",
+    "sha256": "c69a3a431544a5b95eac1dbd3681e74d0c4cd90001badc714cdd2304abb4e366",
+    "bytes": 13357,
+    "arrays": {
+      "age": [
+        8,
+        350
+      ],
+      "exposure": [
+        8,
+        350
+      ],
+      "roots": [
+        8,
+        350
+      ]
+    }
+  },
+  "claim_boundary": "Exact terminal latent state of the locked California CH-008 retrospective replay; no prospective observation or score is read."
+}

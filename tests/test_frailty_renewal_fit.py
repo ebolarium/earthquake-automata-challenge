@@ -3,6 +3,7 @@ import unittest
 import numpy as np
 
 from etas_challenge.frailty_renewal_fit import FrailtyRenewalFitEvaluator
+from etas_challenge.prospective_replay import replay_california_ch008_state
 from etas_challenge.renewal_fit import RenewalFitEvaluator
 from etas_challenge.readiness_fit import SparseGeometry
 
@@ -52,6 +53,18 @@ class FrailtyRenewalFitTest(unittest.TestCase):
         )
         self.assertEqual(result.event_gains[0], 0.0)
         self.assertGreater(result.event_gains[1], 0.0)
+
+    def test_terminal_state_retains_fault_localized_root_evidence(self):
+        parent = self.evaluator().parent
+        state = replay_california_ch008_state(
+            parent,
+            np.array([4.0, 0.5, 0.5, 0.0, 0.0, 0.0, 1.0]),
+            np.array([0.1, 100.0, 0.0, 0.0, 3.0, 0.0, 0.2]),
+        )
+        self.assertEqual(state.age.shape, (1, 2))
+        self.assertEqual(state.exposure.shape, (1, 2))
+        self.assertGreater(state.roots[0, 0], state.roots[0, 1])
+        self.assertTrue(np.all(state.age >= 0))
 
 
 if __name__ == "__main__":
