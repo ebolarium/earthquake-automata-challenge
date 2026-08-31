@@ -43,6 +43,7 @@ FORECAST_MODULE_PATH = ROOT / "src/etas_challenge/prospective_forecast.py"
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--issue-time", type=utc_timestamp)
     parser.add_argument("--state-as-of", type=utc_timestamp)
     parser.add_argument("--region", action="append", dest="regions")
     return parser.parse_args()
@@ -239,7 +240,7 @@ def main() -> int:
         raise SystemExit("DATABASE_URL is required")
     import psycopg
 
-    issue_time = utc_now()
+    issue_time = args.issue_time or utc_now()
     state_as_of = args.state_as_of or issue_time.replace(
         hour=0, minute=0, second=0, microsecond=0
     )

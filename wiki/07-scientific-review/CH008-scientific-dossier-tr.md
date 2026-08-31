@@ -331,8 +331,8 @@ zamansal kararlılığa, büyüklük tabakalarına ve prospektif tekrara dayanma
 | Japonya A | 1996-2003 | M4,5+ | 128 | +0,010242 | 1,010295 | +0,006743 | +0,006797 | Sonuçtan sonra geliştirilmiş bölgesel adaptör |
 | Japonya B | 1996-2003 | M4,5+ | 726 | +0,001134 | 1,001135 | +0,000841 | +0,000792 | Sonuçtan sonra geliştirilmiş bölgesel adaptör |
 | Japonya C | 1996-2003 | M5,0+ | 263 | +0,001342 | 1,001343 | +0,000832 | +0,000795 | Sonuçtan sonra geliştirilmiş bölgesel adaptör |
-| Yeni Zelanda CSEP | 2008-2025 | M4,0+, derinlik <40 km | 2.270 | +0,018561 | 1,018735 | +0,012006 | +0,011817 | Ön-kayıtlı dış-coğrafya retrospektifi |
-| Şili dalma-batma koridoru | 2015-2025 | M4,5+, derinlik <100 km | 1.909 | +0,009718 | 1,009766 | +0,006862 | +0,006321 | Ön-kayıtlı dış-coğrafya retrospektifi |
+| Yeni Zelanda CSEP | 2008-2025 | M4,0+, derinlik <40 km | 2.270 | +0,018561 | 1,018735 | +0,012006 | +0,011817 | Keşifsel dış-coğrafya retrospektifi |
+| Şili dalma-batma koridoru | 2015-2025 | M4,5+, derinlik <100 km | 1.909 | +0,009718 | 1,009766 | +0,006862 | +0,006321 | Keşifsel dış-coğrafya retrospektifi |
 
 ### 12.2 Kaliforniya mekanizma ayrıştırması
 
@@ -394,8 +394,9 @@ değil, ETAS-normalize katalog durumlarıdır.
   çalışır.
 - Ana Kaliforniya dönemlerinin tüm yılları, Yeni Zelanda'nın tüm üç-yıllık
   dilimleri ve Şili'nin on bir yılının tamamı pozitiftir.
-- Yeni Zelanda ve Şili bölgeleri, eşikler ve kabul kapıları hedef katalogları
-  açılmadan önce kaydedilmiştir.
+- Yeni Zelanda ve Şili sonuçları coğrafi taşınabilirliği destekler; ancak adaptör
+  freeze'i ile sonuçlar aynı commit'te bulunduğundan doğrulayıcı bağımsızlıkları
+  Git zaman sırasıyla kanıtlanamaz ve keşifsel olarak sınıflandırılır.
 
 ## 15. Sınırlılıklar ve kuruldan saklanmaması gereken noktalar
 
@@ -532,8 +533,8 @@ uzun süredir sıfırlanmadığını; frailty ise gözlenen bağımsız olay kü
 ETAS beklentisine göre kalıcı fazlasını temsil eder. Bu iki sinyal yalnızca
 ETAS arka plan kütlesinin `%27,6`'ya kadar olan bölümünü yeniden konumlandırır.
 
-Retrospektif sonuçlar tutarlı biçimde pozitiftir; Yeni Zelanda ve ön-kayıtlı
-Şili testleri coğrafi taşınabilirlik için önemli destek sağlamıştır. Bununla
+Retrospektif sonuçlar tutarlı biçimde pozitiftir; keşifsel Yeni Zelanda ve Şili
+testleri coğrafi taşınabilirlik için destek sağlamıştır. Bununla
 birlikte mevcut doğru
 bilimsel ifade şudur: **CH-008, prospektif sınamaya değer, hash-kilitli bir ETAS
 challenger'ıdır; ETAS'a prospektif üstünlüğü henüz gösterilmemiştir.**

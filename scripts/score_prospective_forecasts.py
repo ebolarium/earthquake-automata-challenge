@@ -326,19 +326,123 @@ def persist_score(connection, protocol_id: str, region: dict, run: dict, snapsho
             raise RuntimeError("stored prospective score disagrees")
 
 
-def record_incident(connection, protocol_id: str, run: dict, error: Exception) -> None:
+def record_incident(
+    connection, protocol_id: str, run: dict, revision: str, error: Exception
+) -> None:
+    details = {
+        "region": run["region_id"],
+        "issue_date": (run["target_start"].date() - timedelta(days=1)).isoformat(),
+        "failure_class": "scoring_service_outage",
+        "cause": f"{type(error).__name__}: {error}"[:1000],
+        "attempt_count": 1,
+        "affected_event_count": None,
+        "resolution": "defer_scoring",
+        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "affected_date_range": [
+            run["target_start"].date().isoformat(),
+            (run["target_end"].date() - timedelta(days=1)).isoformat(),
+        ],
+        "score_revision": revision,
+    }
+    existing = connection.execute(
+        """
+        SELECT incident_id, COALESCE((details->>'attempt_count')::integer, 0)
+        FROM prospective.incidents
+        WHERE protocol_id = %s AND region_id = %s AND run_id = %s
+          AND incident_type = 'scoring_service_outage' AND resolved_at IS NULL
+          AND details->>'score_revision' = %s
+        ORDER BY occurred_at DESC LIMIT 1
+        """,
+        (protocol_id, run["region_id"], run["run_id"], revision),
+    ).fetchone()
+    if existing is None:
+        connection.execute(
+            """
+            INSERT INTO prospective.incidents
+                (protocol_id, region_id, run_id, severity, incident_type,
+                 message, details, occurred_at)
+            VALUES (%s, %s, %s, 'warning', 'scoring_service_outage',
+                    %s, %s::jsonb, %s)
+            """,
+            (
+                protocol_id, run["region_id"], run["run_id"], str(error)[:1000],
+                json.dumps(details), datetime.now(timezone.utc),
+            ),
+        )
+    else:
+        details["attempt_count"] = int(existing[1]) + 1
+        details["timestamp_utc"] = datetime.now(timezone.utc).isoformat()
+        connection.execute(
+            """
+            UPDATE prospective.incidents
+            SET message = %s, details = %s::jsonb, occurred_at = %s
+            WHERE incident_id = %s
+            """,
+            (
+                str(error)[:1000], json.dumps(details),
+                datetime.now(timezone.utc), existing[0],
+            ),
+        )
     connection.execute(
         """
-        INSERT INTO prospective.incidents
-            (protocol_id, region_id, run_id, severity, incident_type,
-             message, details, occurred_at)
-        VALUES (%s, %s, %s, 'critical', 'forecast_scoring_failed',
-                %s, %s::jsonb, %s)
+        UPDATE prospective.region_day_operations
+        SET scoring_status = 'deferred', failed_stage = 'scoring',
+            scoring_attempt_count = scoring_attempt_count + 1,
+            failure_cause = %s, updated_at = now()
+        WHERE protocol_id = %s AND region_id = %s AND target_date = %s
+          AND publication_status = 'published'
         """,
         (
-            protocol_id, run["region_id"], run["run_id"], str(error)[:1000],
-            json.dumps({"error_type": type(error).__name__}),
-            datetime.now(timezone.utc),
+            details["cause"], protocol_id, run["region_id"],
+            run["target_start"].date(),
+        ),
+    )
+
+
+def record_scoring_recovery(
+    connection, protocol_id: str, run: dict, revision: str, event_count: int
+) -> None:
+    connection.execute(
+        """
+        UPDATE prospective.incidents
+        SET resolved_at = now(),
+            details = jsonb_set(
+                jsonb_set(details, '{resolution}', '"scored_after_recovery"'),
+                '{affected_event_count}', to_jsonb(%s::integer)
+            )
+        WHERE protocol_id = %s AND region_id = %s AND run_id = %s
+          AND incident_type = 'scoring_service_outage' AND resolved_at IS NULL
+          AND details->>'score_revision' = %s
+        """,
+        (event_count, protocol_id, run["region_id"], run["run_id"], revision),
+    )
+    connection.execute(
+        """
+        UPDATE prospective.region_day_operations operation
+        SET scoring_status = CASE WHEN EXISTS (
+                SELECT 1 FROM prospective.incidents incident
+                WHERE incident.protocol_id = %s
+                  AND incident.region_id = %s
+                  AND incident.run_id = %s
+                  AND incident.incident_type = 'scoring_service_outage'
+                  AND incident.resolved_at IS NULL
+            ) THEN 'deferred' ELSE 'scored' END,
+            failed_stage = CASE WHEN EXISTS (
+                SELECT 1 FROM prospective.incidents incident
+                WHERE incident.protocol_id = %s
+                  AND incident.region_id = %s
+                  AND incident.run_id = %s
+                  AND incident.incident_type = 'scoring_service_outage'
+                  AND incident.resolved_at IS NULL
+            ) THEN 'scoring' ELSE NULL END,
+            failure_cause = NULL, affected_event_count = %s, updated_at = now()
+        WHERE operation.protocol_id = %s AND operation.region_id = %s
+          AND operation.target_date = %s AND operation.publication_status = 'published'
+        """,
+        (
+            protocol_id, run["region_id"], run["run_id"],
+            protocol_id, run["region_id"], run["run_id"], event_count,
+            protocol_id, run["region_id"], run["target_start"].date(),
         ),
     )
 
@@ -386,6 +490,10 @@ def main() -> int:
                         connection, protocol["protocol_id"], region, run, snapshot,
                         revision, summary, metrics,
                     )
+                    record_scoring_recovery(
+                        connection, protocol["protocol_id"], run, revision,
+                        summary["event_count"],
+                    )
                     connection.commit()
                     result = {
                         "region_id": run["region_id"],
@@ -398,7 +506,7 @@ def main() -> int:
                 except Exception as error:
                     connection.rollback()
                     record_incident(
-                        connection, protocol["protocol_id"], run, error
+                        connection, protocol["protocol_id"], run, revision, error
                     )
                     connection.commit()
                     failures.append({

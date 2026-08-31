@@ -75,11 +75,15 @@ The daily schedule is:
 The production command is:
 
 ```bash
-python scripts/collect_prospective_catalogs.py --lookback-days 30 && \
-python scripts/advance_prospective_daily_states.py && \
-python scripts/publish_prospective_forecasts.py && \
-python scripts/score_prospective_forecasts.py
+python scripts/run_prospective_daily.py
 ```
+
+The launch guard applies the frozen downtime policy independently per region
+and pipeline stage. It uses three attempts with 60/300-second backoff, preserves
+one logical catalog cutoff across retries, rejects publication after `00:15
+UTC`, records missed publications separately from deferred scoring, and makes
+the pooled primary claim inconclusive if a regional invalidation threshold is
+crossed.
 
 ## Locked Reference
 

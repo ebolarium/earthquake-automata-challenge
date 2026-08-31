@@ -149,6 +149,25 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         """,
         (protocol_id,),
     ).fetchone()
+    operational_rows = connection.execute(
+        """
+        SELECT region_id, primary_eligible, missed_region_days,
+               consecutive_missed_days, invalidated_at, invalidation_reason
+        FROM prospective.region_operational_status
+        WHERE protocol_id = %s
+        """,
+        (protocol_id,),
+    ).fetchall()
+    operational = {
+        row[0]: {
+            "primary_eligible": bool(row[1]),
+            "missed_region_days": int(row[2]),
+            "consecutive_missed_days": int(row[3]),
+            "invalidated_at": _iso(row[4]),
+            "invalidation_reason": row[5],
+        }
+        for row in operational_rows
+    }
     regions = []
     for row in region_rows:
         region_id = row[0]
@@ -164,6 +183,13 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
             "latest_catalog": latest_catalogs.get(region_id),
             "provisional": _score_summary(region_scores, "provisional"),
             "final": _score_summary(region_scores, "final"),
+            "operations": operational.get(region_id, {
+                "primary_eligible": True,
+                "missed_region_days": 0,
+                "consecutive_missed_days": 0,
+                "invalidated_at": None,
+                "invalidation_reason": None,
+            }),
         })
     latest_targets = {
         item["latest_forecast"]["target_start"]
@@ -177,11 +203,15 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         for item in regions
     )
     open_incidents = int(incident_row[0])
+    pooled_primary_eligible = all(
+        item["operations"]["primary_eligible"] for item in regions
+    )
     pipeline_status = (
         "ok"
         if published_regions == len(regions)
         and len(latest_targets) == 1
         and open_incidents == 0
+        and pooled_primary_eligible
         else "attention"
     )
     planned_days = int(protocol_row[2])
@@ -202,6 +232,9 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         "published_regions": published_regions,
         "open_incidents": open_incidents,
         "last_incident_at": _iso(incident_row[1]),
+        "pooled_primary_claim_status": (
+            "eligible" if pooled_primary_eligible else "inconclusive"
+        ),
         "dry_run": _dry_run_progress(
             scores, [row[0] for row in region_rows], planned_days
         ),

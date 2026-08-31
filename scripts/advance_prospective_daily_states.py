@@ -43,6 +43,7 @@ ADVANCE_RUNTIME_PATH = ROOT / "scripts/advance_prospective_bootstrap_states.py"
 
 def parse_args():
     parser = argparse.ArgumentParser()
+    parser.add_argument("--cutoff", type=utc_timestamp)
     parser.add_argument("--region", action="append", dest="regions")
     return parser.parse_args()
 
@@ -135,7 +136,7 @@ def main() -> int:
         raise SystemExit("DATABASE_URL is required")
     import psycopg
 
-    cutoff = datetime.now(timezone.utc)
+    cutoff = args.cutoff or datetime.now(timezone.utc)
     to_as_of = cutoff.replace(hour=0, minute=0, second=0, microsecond=0)
     from_as_of = to_as_of - timedelta(days=1)
     protocol = validate_protocol(PROTOCOL_PATH, ROOT)

@@ -1,0 +1,80 @@
+{
+  "$schema": "ch008-downtime-policy-v1",
+  "status": "frozen_before_prospective_launch",
+  "retry": {
+    "max_attempts": 3,
+    "backoff_seconds": [60, 300],
+    "hard_deadline_utc_offset": "00:15:00",
+    "note": "Deadline is relative to the 00:00:00Z issue boundary. No pre-publication retry may execute after the deadline; a retry that would cross it is not attempted and the region-day is marked per failure_class below.",
+    "isolation": "per-region, per-pipeline-stage; one region's retries never block or delay another region's publication",
+    "cutoff_consistency": "All retries within a series use the same persisted logical catalog cutoff. Forecast publication uses a separate publication_issue_time persisted once after catalog and state completion; publication retries reuse it. Neither timestamp may be re-derived from wall-clock time within or across retries for that region-day."
+  },
+  "late_prediction": {
+    "rule": "reject",
+    "note": "A prediction not persisted before its publication deadline closes is never generated retroactively."
+  },
+  "region_day_failure": {
+    "publication_missed": {
+      "definition": "No prediction was persisted before the publication deadline closed.",
+      "handling": "exclude_from_N",
+      "recoverable": false
+    },
+    "scoring_service_outage": {
+      "definition": "Prediction was published on time, but the catalog or scoring service was unavailable at provisional or final scoring time.",
+      "handling": "defer_scoring",
+      "recoverable": true,
+      "note": "Not counted as missed. Scored once the catalog or scoring service recovers against the originally published forecast and the protocol-defined provisional or final catalog window."
+    },
+    "missingness_assumption": "none_assumed",
+    "reporting_requirement": "Every excluded or deferred region-day must log failure_class, cause, event count in the affected window, and affected date range. No missing-at-random or other statistical assumption about missingness is made; large events can plausibly both be scoring targets and causes of service load spikes, so missingness may be informative."
+  },
+  "region_invalidation": {
+    "trigger": "missed_region_days / total_scheduled_region_days > threshold_pct OR consecutive_missed_days >= consecutive_day_limit",
+    "total_scheduled_region_days": 365,
+    "total_scheduled_region_days_note": "365 calendar days per region, fixed at pre-registration regardless of actual outcomes. At threshold_pct = 0.05, invalidation triggers once a region's publication_missed count reaches 19 days.",
+    "threshold_pct": 0.05,
+    "consecutive_day_limit": 7,
+    "region_effect": "region_marked_invalid_for_primary_promotion; region continues running and reporting as secondary evidence",
+    "pooled_primary_claim_effect": "three_region_primary_claim_inconclusive",
+    "note": "missed_region_days counts publication_missed only; deferred scoring does not count toward invalidation."
+  },
+  "test_extension": {
+    "calendar_allowed": false,
+    "note": "The 365-day calendar is fixed regardless of invalidation. Missed days are not replaced with added days.",
+    "event_count_gate": {
+      "minimum_pooled_target_events": 500,
+      "if_not_reached_by_day_365": "result_inconclusive_not_failed",
+      "note": "Event count is a minimum threshold, not a pre-fixed target; earthquake occurrence cannot be scheduled."
+    }
+  },
+  "incident_logging": {
+    "storage": "postgresql: prospective.incidents",
+    "export": "periodic immutable export to object storage (append-only)",
+    "visibility": "surfaced in dashboard incident status view",
+    "required_fields": [
+      "region",
+      "issue_date",
+      "failure_class",
+      "cause",
+      "attempt_count",
+      "affected_event_count",
+      "resolution",
+      "timestamp_utc"
+    ]
+  },
+  "adapter_freeze_verification": {
+    "rule": "For any future region, the adapter/protocol freeze commit and the result-generation commit must be separate, with the freeze commit containing no result or evaluation artifacts.",
+    "external_timestamp": "freeze commit hash sealed via a GitHub Actions run record and/or OpenTimestamps or RFC 3161 proof, not git author or committer date alone",
+    "verification": "automated script checks that the freeze tree has none of the declared result paths, the result commit is a strict descendant, and the external proof records the freeze hash",
+    "retrospective_labeling": "New Zealand and Chile retrospective results are exploratory external evidence, not confirmatory or pre-registered, because freeze and result shared a commit"
+  },
+  "determinism": {
+    "requirement": "Re-running a failed or retried region-day must reproduce byte-identical output given the same seed and inputs. Non-deterministic recovery is itself an incident."
+  },
+  "implementation_status": {
+    "policy_frozen": true,
+    "code_wired": true,
+    "tests_written": true,
+    "note": "The launch guard validates this policy, isolates region-stage retries, persists missed and deferred states, enforces invalidation thresholds, and is covered by deadline and threshold tests."
+  }
+}

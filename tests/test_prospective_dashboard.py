@@ -49,7 +49,7 @@ class ProspectiveDashboardTest(unittest.TestCase):
             ("new-zealand-csep", date(2026, 9, 1), "provisional", 0, 0.0, None, target),
         ]
         connection = Connection([
-            [("draft", config, 14, 1)], regions, runs, catalogs, scores, [(0, None)],
+            [("draft", config, 14, 1)], regions, runs, catalogs, scores, [(0, None)], [],
         ])
         result = build_dashboard(connection, "protocol", now=target)
         self.assertEqual(result["pipeline_status"], "ok")
@@ -67,11 +67,30 @@ class ProspectiveDashboardTest(unittest.TestCase):
             "catalog_revision_contract": {"settled_score_delay_days": 7},
         }
         connection = Connection([
-            [("draft", config, 14, 1)], [], [], [], [], [(1, datetime(2026, 9, 1, tzinfo=timezone.utc))],
+            [("draft", config, 14, 1)], [], [], [], [],
+            [(1, datetime(2026, 9, 1, tzinfo=timezone.utc))], [],
         ])
         result = build_dashboard(connection, "protocol")
         self.assertEqual(result["pipeline_status"], "attention")
         self.assertEqual(result["open_incidents"], 1)
+
+    def test_invalid_region_makes_pooled_claim_inconclusive(self):
+        config = {
+            "mode": "dry_run",
+            "counts_toward_prospective_claim": False,
+            "catalog_revision_contract": {"settled_score_delay_days": 7},
+        }
+        target = datetime(2026, 9, 1, tzinfo=timezone.utc)
+        regions = [("california-relm", "California", "USGS", 2.5, None, None)]
+        runs = [("california-relm", "run", target, target, target, "published", target, "state", 6)]
+        operations = [("california-relm", False, 19, 3, target, "missed_region_days_reached_19")]
+        connection = Connection([
+            [("active", config, 365, 500)], regions, runs, [], [], [(0, None)], operations,
+        ])
+        result = build_dashboard(connection, "protocol", now=target)
+        self.assertEqual(result["pipeline_status"], "attention")
+        self.assertEqual(result["pooled_primary_claim_status"], "inconclusive")
+        self.assertFalse(result["regions"][0]["operations"]["primary_eligible"])
 
     def test_dry_run_progress_requires_every_region_and_final_settlement(self):
         regions = ["california", "new-zealand", "chile"]

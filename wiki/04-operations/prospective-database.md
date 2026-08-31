@@ -17,10 +17,7 @@ target window.
 The production schedule runs at `00:05 UTC`:
 
 ```bash
-python scripts/collect_prospective_catalogs.py --lookback-days 30 && \
-python scripts/advance_prospective_daily_states.py && \
-python scripts/publish_prospective_forecasts.py && \
-python scripts/score_prospective_forecasts.py
+python scripts/run_prospective_daily.py
 ```
 
 The prospective PostgreSQL database stores operational metadata and scores,
@@ -192,11 +189,15 @@ and today's UTC boundaries from the clock, admits only events from the completed
 day, and preserves the parent checkpoint rather than modifying it:
 
 ```bash
-python scripts/collect_prospective_catalogs.py --lookback-days 30 && \
-python scripts/advance_prospective_daily_states.py && \
-python scripts/publish_prospective_forecasts.py && \
-python scripts/score_prospective_forecasts.py
+python scripts/run_prospective_daily.py
 ```
+
+This command is the launch guard for
+`configs/challenge/ch008-downtime-policy.json`. It runs each region in an
+isolated worker, keeps the logical `00:05 UTC` cutoff fixed across retries, and
+never retries a pre-publication stage beyond `00:15 UTC`. A publication failure
+is permanently recorded as `missed`; a scoring failure for an already published
+forecast remains recoverable and is recorded as `deferred`.
 
 Publication is rejected after `00:15 UTC`, before the checkpoint boundary, or
 when the 1,425-minute lead-time requirement is not met. A successful rerun for

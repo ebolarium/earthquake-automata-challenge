@@ -55,7 +55,8 @@ function renderDryRun() {
 
 function renderStatus() {
   const ok = state.dashboard.pipeline_status === "ok";
-  setText("status-label", ok ? "Pipeline çalışıyor" : "Kontrol gerekli");
+  const invalid = state.dashboard.pooled_primary_claim_status === "inconclusive";
+  setText("status-label", invalid ? "Birincil iddia sonuçsuz" : ok ? "Pipeline çalışıyor" : "Kontrol gerekli");
   setText("updated-label", `${formatDateTime(state.dashboard.generated_at)} UTC`);
   document.getElementById("status-dot").className = ok ? "ok" : "attention";
 }
@@ -170,7 +171,7 @@ function renderRegions() {
     const forecast = region.latest_forecast;
     row.append(
       cell(primary(region.name, `M≥${region.minimum_magnitude.toFixed(1)} · ${region.catalog_source}`)),
-      cell(status(forecast)),
+      cell(status(forecast, region.operations)),
       cell(forecast ? formatDate(forecast.target_start) : "—"),
       cell(primary(region.latest_catalog ? formatDateTime(region.latest_catalog.cutoff) : "—", region.latest_catalog ? `${region.latest_catalog.window_events} olay / 30 gün` : "Snapshot yok")),
       cell(scoreValue(region.provisional)),
@@ -225,7 +226,7 @@ function handleChartPointer(event) {
 }
 
 function primary(titleText, detailText) { const wrap = document.createElement("div"); wrap.className = "primary-cell"; const title = document.createElement("strong"); const detail = document.createElement("small"); title.textContent = titleText; detail.textContent = detailText; wrap.append(title, detail); return wrap; }
-function status(forecast) { const span = document.createElement("span"); span.className = `status-pill${forecast && forecast.status === "published" ? "" : " waiting"}`; span.textContent = forecast && forecast.status === "published" ? "Yayınlandı" : "Bekleniyor"; return span; }
+function status(forecast, operations) { const span = document.createElement("span"); const invalid = operations && !operations.primary_eligible; span.className = `status-pill${forecast && forecast.status === "published" && !invalid ? "" : " waiting"}`; span.textContent = invalid ? "Birincil kapsam dışı" : forecast && forecast.status === "published" ? "Yayınlandı" : "Bekleniyor"; return span; }
 function scoreValue(summary) { if (!summary.days) return "Bekleniyor"; const span = document.createElement("span"); span.className = gainClass(summary.mean_igpe); span.textContent = `${formatGain(summary.mean_igpe)} · ${summary.events} olay`; return span; }
 function resultLabel(value) { if (value === null) return "Olay yok"; const span = document.createElement("span"); span.className = gainClass(value); span.textContent = value > 0 ? "CH-008" : value < 0 ? "ETAS" : "Eşit"; return span; }
 function cell(content) { const td = document.createElement("td"); if (content instanceof Node) td.appendChild(content); else td.textContent = content; return td; }

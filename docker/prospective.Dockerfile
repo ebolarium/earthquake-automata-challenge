@@ -10,6 +10,7 @@ COPY db ./db
 COPY configs/prospective ./configs/prospective
 COPY configs/regions ./configs/regions
 COPY configs/challenge/ch008-retrospective-v1.json ./configs/challenge/ch008-retrospective-v1.json
+COPY configs/challenge/ch008-downtime-policy.json ./configs/challenge/ch008-downtime-policy.json
 COPY configs/evaluation/comcat25-pycsep-day7-v1.json ./configs/evaluation/comcat25-pycsep-day7-v1.json
 COPY models ./models
 COPY data/grids ./data/grids
@@ -25,6 +26,8 @@ COPY scripts/advance_prospective_bootstrap_states.py ./scripts/advance_prospecti
 COPY scripts/advance_prospective_daily_states.py ./scripts/advance_prospective_daily_states.py
 COPY scripts/publish_prospective_forecasts.py ./scripts/publish_prospective_forecasts.py
 COPY scripts/score_prospective_forecasts.py ./scripts/score_prospective_forecasts.py
+COPY scripts/run_prospective_daily.py ./scripts/run_prospective_daily.py
+COPY scripts/verify_adapter_freeze.py ./scripts/verify_adapter_freeze.py
 COPY scripts/verify_prospective_initial_states.py ./scripts/verify_prospective_initial_states.py
 COPY scripts/verify_prospective_bootstrap.py ./scripts/verify_prospective_bootstrap.py
 COPY scripts/seed_prospective_database.py ./scripts/seed_prospective_database.py

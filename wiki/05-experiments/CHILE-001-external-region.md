@@ -4,7 +4,7 @@
 
 Does the single frozen exposure-normalized CH-008 model beat a train-only academic ETAS fit in a non-Japan Chilean subduction corridor?
 
-## Frozen protocol
+## Recorded protocol
 
 - Rectangle: 76-66 W and 56-17 S, represented at 0.5 degrees.
 - USGS ComCat earthquakes, M4.5+, depth below 100 km.
@@ -28,7 +28,7 @@ docker run --rm -v "$PWD:/workspace" -w /workspace -e PYTHONPATH=src etas-challe
 
 ## Result
 
-Completed and admitted. The catalog contained 3,622 fit events and 1,909
+Completed as exploratory external evidence. The catalog contained 3,622 fit events and 1,909
 external-evaluation events. CH-008 achieved:
 
 - mean IGPE: `+0.009718`;
@@ -37,6 +37,8 @@ external-evaluation events. CH-008 achieved:
 - 30-day bootstrap 95% lower bound: `+0.006862`;
 - 90-day bootstrap 95% lower bound: `+0.006321`.
 
-All eleven annual IGPE values from 2015 through 2025 were positive. All three
-pre-registered admission gates passed. This is strong retrospective
-external-geography evidence; it is not prospective evidence.
+All eleven annual IGPE values from 2015 through 2025 were positive and all three
+recorded gates passed. However, the adapter freeze and result artifacts first
+appeared in the same Git commit, so repository ordering cannot establish
+confirmatory independence. This is exploratory retrospective
+external-geography evidence; it is not pre-registered or prospective evidence.

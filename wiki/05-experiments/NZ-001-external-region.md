@@ -4,7 +4,7 @@
 
 Does the single frozen exposure-normalized CH-008 model beat a train-only academic ETAS fit in the official New Zealand CSEP testing region?
 
-## Frozen protocol
+## Recorded protocol
 
 - Exact pyCSEP 0.6.3 `nz_csep_region` mask: 6,343 cells at 0.1 degrees.
 - GeoNet FDSN earthquakes, M4+, depth below 40 km.
@@ -36,10 +36,13 @@ docker run --rm -v "$PWD:/workspace" -w /workspace -e PYTHONPATH=src etas-challe
 
 ## Result
 
-Completed and admitted. The external period contains 2,270 events. CH-008
+Completed as exploratory external evidence. The external period contains 2,270 events. CH-008
 achieved mean IGPE +0.018561 (relative factor 1.018735) and total log-likelihood
 gain +42.134. The 95% lower bounds were +0.012006 for 30-day blocks and
 +0.011817 for 90-day blocks. All six three-year epochs were positive.
 
-The frozen model therefore passed every pre-registered NZ-001 gate. This is
-strong retrospective external-geography evidence, not prospective evidence.
+The model passed every recorded NZ-001 gate. However, the adapter freeze and
+result artifacts first appeared in the same Git commit, so repository ordering
+cannot prove that the result was unavailable at freeze time. This result is
+therefore exploratory external-geography evidence, not confirmatory,
+pre-registered, or prospective evidence.
