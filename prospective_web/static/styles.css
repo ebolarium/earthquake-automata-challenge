@@ -31,6 +31,8 @@ button { color: inherit; font: inherit; letter-spacing: 0; }
 .brand-mark span:nth-child(2) { width: 12px; transform: rotate(-10deg); }
 .brand-mark span:nth-child(3) { width: 18px; transform: rotate(5deg); }
 .header-actions { gap: 10px; }
+.language-link { min-width: 30px; height: 28px; display: inline-flex; align-items: center; justify-content: center; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; text-decoration: none; font-size: 10px; font-weight: 750; }
+.language-link:hover { color: var(--teal); border-color: var(--teal); }
 .system-status { gap: 9px; text-align: right; }
 .system-status i { width: 8px; height: 8px; border-radius: 50%; background: #a8b1ae; }
 .system-status i.ok { background: var(--green); }

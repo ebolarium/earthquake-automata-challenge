@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f5">
+    <meta name="description" content="Live CH-008 versus ETAS prospective earthquake forecast evaluation in California, New Zealand, and Chile.">
+    <title>CH-008 Prospective Test</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <h1>CH-008 Prospective Test</h1>
+          <p>ETAS comparison · 3 regions</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <a class="language-link" href="/" lang="tr" hreflang="tr">TR</a>
+        <div class="system-status">
+          <i id="status-dot" aria-hidden="true"></i>
+          <div><strong id="status-label">Connecting</strong><span id="updated-label">—</span></div>
+        </div>
+        <button class="icon-button" id="refresh-button" type="button" title="Refresh data" aria-label="Refresh data">↻</button>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Dashboard views">
+      <button class="tab active" type="button" data-view="overview" aria-selected="true">Overview</button>
+      <button class="tab" type="button" data-view="scores" aria-selected="false">Daily Scores</button>
+      <button class="tab" type="button" data-view="protocol" aria-selected="false">Protocol</button>
+      <a class="tab tab-link" href="/en/about.html">Method</a>
+    </nav>
+
+    <main>
+      <section class="view active" id="overview-view">
+        <section class="run-notice awaiting-scores" id="run-notice" role="status" aria-live="polite">
+          <div class="notice-copy">
+            <span id="run-eyebrow">DRY RUN</span>
+            <strong id="run-title">Calculating status</strong>
+            <small id="run-detail">Loading score progress.</small>
+          </div>
+          <div class="notice-progress">
+            <strong id="run-progress-label">0/14 days</strong>
+            <div class="progress-track" aria-hidden="true"><i id="run-progress-bar"></i></div>
+          </div>
+        </section>
+
+        <div class="metric-strip" aria-label="Prospective test summary">
+          <article class="metric"><span>Latest target day</span><strong id="metric-target">—</strong><small>UTC</small></article>
+          <article class="metric"><span>Published regions</span><strong id="metric-regions">—</strong><small>3 regions</small></article>
+          <article class="metric accent"><span>Provisional IGPE</span><strong id="metric-igpe">—</strong><small id="metric-factor">relative to ETAS</small></article>
+          <article class="metric"><span>Scored events</span><strong id="metric-events">—</strong><small id="metric-days">0 days</small></article>
+        </div>
+
+        <div class="toolbar">
+          <div class="segmented" id="region-filter" role="group" aria-label="Region filter"></div>
+          <div class="legend"><span class="legend-ch008"></span>CH-008 gain <span class="legend-etas"></span>ETAS gain</div>
+        </div>
+
+        <div class="overview-grid">
+          <section class="chart-panel" aria-labelledby="chart-title">
+            <div class="section-heading">
+              <div><h2 id="chart-title">Daily information gain</h2><p id="chart-subtitle">Provisional scores</p></div>
+              <strong id="chart-total">—</strong>
+            </div>
+            <div class="chart-stage" id="chart-stage">
+              <canvas id="score-chart" aria-label="Daily information gain chart"></canvas>
+              <div class="empty-state" id="chart-empty">Waiting for the first score</div>
+              <div class="chart-tooltip" id="chart-tooltip" role="status"></div>
+            </div>
+          </section>
+
+          <aside class="score-summary">
+            <div class="summary-block"><span>Provisional</span><strong id="provisional-score">—</strong><small id="provisional-detail">No score yet</small></div>
+            <div class="summary-block"><span>Final</span><strong id="final-score">—</strong><small id="final-detail">7-day settlement window</small></div>
+            <div class="summary-block"><span>Open incidents</span><strong id="incident-count">—</strong><small id="incident-detail">—</small></div>
+          </aside>
+        </div>
+
+        <section class="data-section" aria-labelledby="regions-title">
+          <div class="section-heading"><div><h2 id="regions-title">Region status</h2><p>Latest publication and catalog snapshot</p></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Region</th><th>Forecast</th><th>Target</th><th>Catalog</th><th>Provisional</th><th>Final</th></tr></thead>
+              <tbody id="regions-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="scores-view">
+        <div class="view-heading"><span>EVENT-WISE LOG RATE RATIO</span><h2>Daily ETAS–CH-008 scores</h2><p>Provisional catalog observations and final revisions frozen seven days later.</p></div>
+        <div class="table-wrap score-table-wrap">
+          <table>
+            <thead><tr><th>Target day</th><th>Region</th><th>Revision</th><th>Events</th><th>Total gain</th><th>IGPE</th><th>Result</th></tr></thead>
+            <tbody id="scores-body"></tbody>
+          </table>
+          <div class="table-empty" id="scores-empty">No completed target day yet.</div>
+        </div>
+      </section>
+
+      <section class="view" id="protocol-view">
+        <div class="view-heading"><span>LOCKED BEFORE DRY RUN</span><h2>Test protocol</h2><p>The model and catalog contract remain unchanged throughout the run.</p></div>
+        <div class="protocol-grid">
+          <section><h3>Study</h3><dl id="protocol-facts"></dl></section>
+          <section><h3>Scoring</h3><dl>
+            <div><dt>Primary metric</dt><dd>Event-wise log ratio</dd></div>
+            <div><dt>Compensator difference</dt><dd>0 · mass preserved</dd></div>
+            <div><dt>Provisional</dt><dd>First complete daily snapshot</dd></div>
+            <div><dt>Final</dt><dd>After 7 days</dd></div>
+          </dl></section>
+          <section><h3>Regions</h3><div class="protocol-regions" id="protocol-regions"></div></section>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer"><span>CH-008 Prospective Test</span><a href="mailto:hello@bboga.com">hello@bboga.com</a></footer>
+    <div class="error-banner" id="error-banner" role="alert"></div>
+    <script src="/app-en.js" defer></script>
+  </body>
+</html>

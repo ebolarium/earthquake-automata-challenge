@@ -16,8 +16,8 @@ async function loadDashboard() {
     state.dashboard = await response.json();
     renderAll();
   } catch (error) {
-    showError(`Dashboard verisi alınamadı: ${error.message}`);
-    setText("status-label", "Veri kullanılamıyor");
+    showError(`Dashboard data could not be loaded: ${error.message}`);
+    setText("status-label", "Data unavailable");
     document.getElementById("status-dot").className = "attention";
   } finally {
     refresh.classList.remove("loading");
@@ -39,23 +39,23 @@ function renderDryRun() {
   const progress = state.dashboard.dry_run;
   const notice = document.getElementById("run-notice");
   const copy = {
-    awaiting_scores: ["Dry run başladı", "İlk tamamlanmış hedef gününün skoru bekleniyor."],
-    running: ["Dry run sürüyor", `${progress.provisional_days}/${progress.planned_days} ortak hedef günü skorlandı.`],
-    settling: ["14 günlük dry run tamamlandı", `Final skorların kesinleşmesi bekleniyor: ${progress.final_days}/${progress.planned_days} gün.`],
-    complete: ["Dry run tamamlandı", `${progress.final_days}/${progress.planned_days} günlük final skor hazır. Sonuçlar değerlendirmeye hazır.`],
+    awaiting_scores: ["Dry run started", "Waiting for the first completed target-day score."],
+    running: ["Dry run in progress", `${progress.provisional_days}/${progress.planned_days} common target days scored.`],
+    settling: ["14-day dry run completed", `Waiting for final score settlement: ${progress.final_days}/${progress.planned_days} days.`],
+    complete: ["Dry run complete", `${progress.final_days}/${progress.planned_days} final daily scores are ready for review.`],
   }[progress.phase];
   const shownDays = progress.phase === "settling" || progress.phase === "complete" ? progress.final_days : progress.provisional_days;
   notice.className = `run-notice ${progress.phase.replace("_", "-")}`;
-  setText("run-eyebrow", progress.phase === "complete" ? "TAMAMLANDI" : progress.phase === "settling" ? "KESİNLEŞME" : "DRY RUN");
+  setText("run-eyebrow", progress.phase === "complete" ? "COMPLETE" : progress.phase === "settling" ? "SETTLEMENT" : "DRY RUN");
   setText("run-title", copy[0]);
   setText("run-detail", copy[1]);
-  setText("run-progress-label", `${shownDays}/${progress.planned_days} gün`);
+  setText("run-progress-label", `${shownDays}/${progress.planned_days} days`);
   document.getElementById("run-progress-bar").style.width = `${Math.min(100, shownDays / progress.planned_days * 100)}%`;
 }
 
 function renderStatus() {
   const ok = state.dashboard.pipeline_status === "ok";
-  setText("status-label", ok ? "Pipeline çalışıyor" : "Kontrol gerekli");
+  setText("status-label", ok ? "Pipeline operational" : "Review required");
   setText("updated-label", `${formatDateTime(state.dashboard.generated_at)} UTC`);
   document.getElementById("status-dot").className = ok ? "ok" : "attention";
 }
@@ -70,11 +70,11 @@ function aggregate(scores) {
   const events = scores.reduce((sum, score) => sum + score.event_count, 0);
   const gain = scores.reduce((sum, score) => sum + score.total_gain, 0);
   const mean = events ? gain / events : null;
-  return { days: scores.length, events, gain, mean };
+  return { days: new Set(scores.map((score) => score.target_date)).size, events, gain, mean };
 }
 
 function renderFilters() {
-  const labels = [["all", "Tümü"], ...state.dashboard.regions.map((region) => [region.region_id, shortRegion(region.name)])];
+  const labels = [["all", "All"], ...state.dashboard.regions.map((region) => [region.region_id, shortRegion(region.name)])];
   const control = document.getElementById("region-filter");
   control.replaceChildren();
   labels.forEach(([id, label]) => {
@@ -89,21 +89,21 @@ function renderFilters() {
 
 function renderMetrics() {
   const provisional = aggregate(selectedScores());
-  setText("metric-target", state.dashboard.latest_target_start ? formatDate(state.dashboard.latest_target_start) : "Bekleniyor");
+  setText("metric-target", state.dashboard.latest_target_start ? formatDate(state.dashboard.latest_target_start) : "Pending");
   setText("metric-regions", `${state.dashboard.published_regions}/3`);
   setText("metric-igpe", formatGain(provisional.mean));
-  setText("metric-factor", provisional.mean === null ? "ETAS'a göre" : `${formatFactor(Math.exp(provisional.mean))} göreli oran`);
+  setText("metric-factor", provisional.mean === null ? "relative to ETAS" : `${formatFactor(Math.exp(provisional.mean))} relative factor`);
   setText("metric-events", formatInteger(provisional.events));
-  setText("metric-days", `${state.dashboard.dry_run.provisional_days}/${state.dashboard.dry_run.planned_days} ortak gün`);
+  setText("metric-days", `${state.dashboard.dry_run.provisional_days}/${state.dashboard.dry_run.planned_days} common days`);
   renderSummary("provisional", aggregate(selectedScores("provisional")));
   renderSummary("final", aggregate(selectedScores("final")));
   setText("incident-count", formatInteger(state.dashboard.open_incidents));
-  setText("incident-detail", state.dashboard.open_incidents ? "Açık kayıt var" : "Açık uyarı yok");
+  setText("incident-detail", state.dashboard.open_incidents ? "Open records require review" : "No open warnings");
 }
 
 function renderSummary(id, value) {
   setText(`${id}-score`, formatGain(value.mean));
-  setText(`${id}-detail`, value.days ? `${value.events} olay · ${formatSigned(value.gain)} toplam` : (id === "final" ? "7 günlük uzlaşma penceresi" : "Henüz skor yok"));
+  setText(`${id}-detail`, value.days ? `${value.events} events · ${formatSigned(value.gain)} total` : (id === "final" ? "7-day settlement window" : "No score yet"));
 }
 
 function renderChart() {
@@ -111,7 +111,7 @@ function renderChart() {
   document.getElementById("chart-empty").classList.toggle("hidden", scores.length > 0);
   const total = aggregate(scores);
   setText("chart-total", total.mean === null ? "—" : `${formatSigned(total.mean)} IGPE`);
-  setText("chart-subtitle", `${state.region === "all" ? "Tüm bölgeler" : regionName(state.region)} · provisional`);
+  setText("chart-subtitle", `${state.region === "all" ? "All regions" : regionName(state.region)} · provisional`);
   resizeCanvas();
 }
 
@@ -172,7 +172,7 @@ function renderRegions() {
       cell(primary(region.name, `M≥${region.minimum_magnitude.toFixed(1)} · ${region.catalog_source}`)),
       cell(status(forecast)),
       cell(forecast ? formatDate(forecast.target_start) : "—"),
-      cell(primary(region.latest_catalog ? formatDateTime(region.latest_catalog.cutoff) : "—", region.latest_catalog ? `${region.latest_catalog.window_events} olay / 30 gün` : "Snapshot yok")),
+      cell(primary(region.latest_catalog ? formatDateTime(region.latest_catalog.cutoff) : "—", region.latest_catalog ? `${region.latest_catalog.window_events} events / 30 days` : "No snapshot")),
       cell(scoreValue(region.provisional)),
       cell(scoreValue(region.final)),
     );
@@ -199,7 +199,7 @@ function renderProtocol() {
   const protocol = state.dashboard.protocol;
   const facts = document.getElementById("protocol-facts");
   facts.replaceChildren();
-  [["Kimlik", protocol.protocol_id], ["Mod", "14 günlük dry run"], ["Prospektif iddia", protocol.counts_toward_prospective_claim ? "Dahil" : "Dahil değil"], ["Bölge", "3"], ["Final gecikmesi", `${protocol.settled_score_delay_days} gün`]].forEach(([label, value]) => {
+  [["Identifier", protocol.protocol_id], ["Mode", "14-day dry run"], ["Prospective claim", protocol.counts_toward_prospective_claim ? "Included" : "Not included"], ["Regions", "3"], ["Final delay", `${protocol.settled_score_delay_days} days`]].forEach(([label, value]) => {
     const div = document.createElement("div"); const dt = document.createElement("dt"); const dd = document.createElement("dd"); dt.textContent = label; dd.textContent = value; div.append(dt, dd); facts.appendChild(div);
   });
   const regions = document.getElementById("protocol-regions");
@@ -218,38 +218,41 @@ function handleChartPointer(event) {
   const x = event.clientX - rect.left;
   const point = state.points.find((item) => Math.abs(item.x - x) <= Math.max(9, item.width));
   if (!point) { tooltip.classList.remove("visible"); return; }
-  tooltip.innerHTML = `<strong>${formatDate(point.score.target_date)}</strong><br>${regionName(point.score.region_id)} · ${formatGain(point.score.mean_igpe)} IGPE<br>${point.score.event_count} olay`;
+  tooltip.innerHTML = `<strong>${formatDate(point.score.target_date)}</strong><br>${regionName(point.score.region_id)} · ${formatGain(point.score.mean_igpe)} IGPE<br>${point.score.event_count} events`;
   tooltip.style.left = `${Math.min(point.x + 10, rect.width - 150)}px`;
   tooltip.style.top = `${Math.max(point.y - 50, 8)}px`;
   tooltip.classList.add("visible");
 }
 
 function primary(titleText, detailText) { const wrap = document.createElement("div"); wrap.className = "primary-cell"; const title = document.createElement("strong"); const detail = document.createElement("small"); title.textContent = titleText; detail.textContent = detailText; wrap.append(title, detail); return wrap; }
-function status(forecast) { const span = document.createElement("span"); span.className = `status-pill${forecast && forecast.status === "published" ? "" : " waiting"}`; span.textContent = forecast && forecast.status === "published" ? "Yayınlandı" : "Bekleniyor"; return span; }
-function scoreValue(summary) { if (!summary.days) return "Bekleniyor"; const span = document.createElement("span"); span.className = gainClass(summary.mean_igpe); span.textContent = `${formatGain(summary.mean_igpe)} · ${summary.events} olay`; return span; }
-function resultLabel(value) { if (value === null) return "Olay yok"; const span = document.createElement("span"); span.className = gainClass(value); span.textContent = value > 0 ? "CH-008" : value < 0 ? "ETAS" : "Eşit"; return span; }
+function status(forecast) { const span = document.createElement("span"); span.className = `status-pill${forecast && forecast.status === "published" ? "" : " waiting"}`; span.textContent = forecast && forecast.status === "published" ? "Published" : "Pending"; return span; }
+function scoreValue(summary) { if (!summary.days) return "Pending"; const span = document.createElement("span"); span.className = gainClass(summary.mean_igpe); span.textContent = `${formatGain(summary.mean_igpe)} · ${summary.events} events`; return span; }
+function resultLabel(value) { if (value === null) return "No events"; const span = document.createElement("span"); span.className = gainClass(value); span.textContent = value > 0 ? "CH-008" : value < 0 ? "ETAS" : "Tie"; return span; }
 function cell(content) { const td = document.createElement("td"); if (content instanceof Node) td.appendChild(content); else td.textContent = content; return td; }
 function gainClass(value) { return value > 0 ? "gain-positive" : value < 0 ? "gain-negative" : "gain-neutral"; }
 function regionName(id) { return state.dashboard.regions.find((region) => region.region_id === id)?.name || id; }
-function shortRegion(name) { return name.includes("California") ? "California" : name.includes("Zealand") ? "Yeni Zelanda" : "Şili"; }
-function depthLabel(region) { const min = region.minimum_depth_km ?? 0; return region.maximum_depth_km === null ? `${min}+ km derinlik` : `${min}–${region.maximum_depth_km} km derinlik`; }
+function shortRegion(name) { return name.includes("California") ? "California" : name.includes("Zealand") ? "New Zealand" : "Chile"; }
+function depthLabel(region) { const min = region.minimum_depth_km ?? 0; return region.maximum_depth_km === null ? `${min}+ km depth` : `${min}–${region.maximum_depth_km} km depth`; }
 function formatGain(value) { return value === null || value === undefined ? "—" : formatSigned(value, 4); }
 function formatSigned(value, digits = 3) { return `${value > 0 ? "+" : ""}${Number(value).toFixed(digits)}`; }
 function formatFactor(value) { return `${Number(value).toFixed(4)}×`; }
-function formatInteger(value) { return new Intl.NumberFormat("tr-TR").format(value); }
-function formatDate(value) { return new Intl.DateTimeFormat("tr-TR", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(value)); }
-function formatShortDate(value) { return new Intl.DateTimeFormat("tr-TR", { day: "2-digit", month: "short", timeZone: "UTC" }).format(new Date(value)); }
-function formatDateTime(value) { return new Intl.DateTimeFormat("tr-TR", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "UTC", hour12: false }).format(new Date(value)); }
+function formatInteger(value) { return new Intl.NumberFormat("en-GB").format(value); }
+function formatDate(value) { return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", year: "numeric", timeZone: "UTC" }).format(new Date(value)); }
+function formatShortDate(value) { return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", timeZone: "UTC" }).format(new Date(value)); }
+function formatDateTime(value) { return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short", hour: "2-digit", minute: "2-digit", timeZone: "UTC", hour12: false }).format(new Date(value)); }
 function setText(id, value) { document.getElementById(id).textContent = value; }
 function showError(message) { const banner = document.getElementById("error-banner"); banner.textContent = message; banner.classList.add("visible"); }
 function hideError() { document.getElementById("error-banner").classList.remove("visible"); }
 
-document.querySelectorAll(".tab[data-view]").forEach((button) => button.addEventListener("click", () => {
-  document.querySelectorAll(".tab").forEach((item) => { const active = item === button; item.classList.toggle("active", active); item.setAttribute("aria-selected", String(active)); });
-  document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
-  document.getElementById(`${button.dataset.view}-view`).classList.add("active");
-  if (button.dataset.view === "overview") requestAnimationFrame(resizeCanvas);
-}));
+document.querySelectorAll(".tab").forEach((button) => {
+  if (!button.dataset.view) return;
+  button.addEventListener("click", () => {
+    document.querySelectorAll(".tab[data-view]").forEach((item) => { const active = item === button; item.classList.toggle("active", active); item.setAttribute("aria-selected", String(active)); });
+    document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
+    document.getElementById(`${button.dataset.view}-view`).classList.add("active");
+    if (button.dataset.view === "overview") requestAnimationFrame(resizeCanvas);
+  });
+});
 document.getElementById("refresh-button").addEventListener("click", loadDashboard);
 canvas.addEventListener("pointermove", handleChartPointer);
 canvas.addEventListener("pointerleave", () => tooltip.classList.remove("visible"));

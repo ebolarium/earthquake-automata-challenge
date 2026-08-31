@@ -53,6 +53,12 @@ class WorkerServiceTest(unittest.TestCase):
             content = response.read()
             self.assertIn("CH-008 Yöntem ve Bilimsel Protokol".encode(), content)
             self.assertIn(b"hello@bboga.com", content)
+        with urllib.request.urlopen(f"{base}/en/") as response:
+            self.assertIn(b"CH-008 Prospective Test", response.read())
+        with urllib.request.urlopen(f"{base}/en/about.html") as response:
+            content = response.read()
+            self.assertIn(b"CH-008 Method and Scientific Protocol", content)
+            self.assertIn(b"hello@bboga.com", content)
 
 
 if __name__ == "__main__":
