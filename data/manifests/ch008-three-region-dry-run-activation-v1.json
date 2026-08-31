@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "activation_id": "ch008-three-region-dry-run-activation-v1",
+  "status": "active",
+  "purpose": "non_claim_operational_dry_run",
+  "counts_toward_prospective_claim": false,
+  "protocol": {
+    "protocol_id": "ch008-three-region-dry-run-v1",
+    "path": "configs/prospective/three-region-dry-run-v1.json",
+    "sha256": "c9e9dbcaa7bbcbd58de19a48c63fe9099aa27596691a4d9555755e950f0574a1"
+  },
+  "runtime": {
+    "runtime_id": "ch008-three-region-daily-runtime-v1",
+    "path": "configs/prospective/daily-runtime-v1.json",
+    "sha256": "e41f4ed66d2b072b542f4a698688cf282ba8f1c865f13fdb55bb43acc9cac80c",
+    "forecast_publication_commit": "30ef7e03716a5c7a5199323d8383b40509676901",
+    "daily_scoring_commit": "dcb6ed10a0f6e232da9d6fee0ff3f7094dbc89ff"
+  },
+  "first_issue": {
+    "issue_time": "2026-08-31T00:05:18.514765+00:00",
+    "state_as_of": "2026-08-31T00:00:00+00:00",
+    "target_start": "2026-09-01T00:00:00+00:00",
+    "target_end": "2026-09-02T00:00:00+00:00",
+    "catalog_cutoff": "2026-08-31T00:05:04.555867+00:00",
+    "publication_completed_before_target": true,
+    "backfilled": false
+  },
+  "regions": [
+    {
+      "region_id": "california-relm",
+      "catalog_snapshot_id": 136,
+      "catalog_events": 102,
+      "catalog_content_sha256": "48464e5d2500edc8fabe491306995924f7b5c1886d3c7b93fd97d71e91f76d8e",
+      "state_id": "0720b9d960b5212d360c29b037c0faa905024d59d89a8116ac899ef997497d64",
+      "state_artifact_sha256": "3f272f4e706fe096ee433964eb2ed2e8c7c3a16d414857e1d39bde603b7dcd5a",
+      "forecast_run_id": "3d9715a3eb5dd6a1bf1315db59fafa331adead6d48dd21e37853800003e355b1",
+      "forecast_artifacts": 6
+    },
+    {
+      "region_id": "new-zealand-csep",
+      "catalog_snapshot_id": 137,
+      "catalog_events": 4,
+      "catalog_content_sha256": "374635511f07dc72fc5ca422fff8bc234ed9a8a5712c63cef27963668334d993",
+      "state_id": "a86fc9757302b87845df5a4400b29812eb0db3eea3c9a8275983f698438e0f17",
+      "state_artifact_sha256": "ca0ad2a49d45b83347aa86d3b31e78a5f4c8169c0cad56989d44f73e791a51a5",
+      "forecast_run_id": "5dd28cdffe7a16339028be0744406ad37f00dffe78af7d5bf39d363f862b49aa",
+      "forecast_artifacts": 6
+    },
+    {
+      "region_id": "chile-subduction",
+      "catalog_snapshot_id": 138,
+      "catalog_events": 5,
+      "catalog_content_sha256": "d4fd422c86fcda8dd55595f9d500d4c79bbfdfc39217f7faad663b798276dba6",
+      "state_id": "7c7a8cc1c4295ddcd66a4f6607fe4ccc36dbcea40ece464a9f85550151a582da",
+      "state_artifact_sha256": "03c822c5478dde4c0d8237f2e5da75cad5576ed30782d1ff905cae6ac7d9707b",
+      "forecast_run_id": "feb2dd436945d0cfca93cbb192785d26a2ae0989b8f3827304f17f3b675ea831",
+      "forecast_artifacts": 6
+    }
+  ],
+  "artifact_authority": {
+    "metadata": "PostgreSQL prospective.forecast_artifacts",
+    "payloads": "Hetzner S3 prospective/v1/dry-run/forecasts/2026-09-01",
+    "content_sha256_recorded_per_artifact": true,
+    "artifact_hashes_copied_into_this_manifest": false,
+    "reason": "This repository record was reconstructed from the successful first-run output. The database and object store remain authoritative for all six per-region content hashes. The dry run is operational and excluded from the scientific claim."
+  },
+  "promotion_boundary": {
+    "dry_run_scores_are_scientifically_discarded": true,
+    "prospective_365_day_test_started": false,
+    "prospective_activation_manifest": "data/manifests/prospective-challenge-v1.json",
+    "prospective_activation_manifest_status": "not_created"
+  }
+}

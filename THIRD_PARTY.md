@@ -1,5 +1,8 @@
 # Third-Party Software
 
+Original Earthquake Automata Challenge code is licensed under MIT. The entries
+below are separate upstream projects and retain their own licenses.
+
 The reference runner installs upstream software at immutable Git commits. The
 challenge implementation must keep provenance and licensing visible whenever
 code is reused or redistributed.

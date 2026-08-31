@@ -2,7 +2,7 @@ FROM python:3.11.11-slim-bookworm
 
 WORKDIR /app
 
-COPY pyproject.toml README.md ./
+COPY pyproject.toml README.md LICENSE ./
 COPY src ./src
 RUN python -m pip install --no-cache-dir ".[prospective]"
 

@@ -42,11 +42,13 @@ positive.
 
 ## Status
 
-Pre-registered and unrun. The first execution stopped during control preflight
+Stopped and not promoted. The first execution stopped during control preflight
 because inactive fault sections have zero-sum transition rows. It produced no
 model, manifest, candidate table, or event score. A committed v2 wrapper now
 adds neutral self-loops only to inactive rows; active graph transitions and all
-admission rules remain unchanged. No CH-009 catalog score has been read.
+admission rules remain unchanged. Development was then explicitly stopped
+before any CH-009 catalog score was read. CH-008 remains the unchanged leading
+challenger and no CH-009 output enters the prospective pipeline.
 
 ## Outputs
 

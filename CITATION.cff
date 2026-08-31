@@ -1,0 +1,21 @@
+cff-version: 1.2.0
+message: "If you use this software or its evaluation protocol, please cite it using this metadata."
+title: "Earthquake Automata Challenge: CH-008 Prospective ETAS Evaluation"
+type: software
+authors:
+  - family-names: "Ebolarium"
+repository-code: "https://github.com/ebolarium/earthquake-automata-challenge"
+url: "https://github.com/ebolarium/earthquake-automata-challenge"
+version: 0.1.0
+date-released: 2026-08-31
+license: MIT
+keywords:
+  - earthquake forecasting
+  - ETAS
+  - prospective evaluation
+  - information gain
+  - reproducible research
+abstract: >-
+  A reproducibility-first implementation of a spatial-temporal ETAS baseline
+  and the CH-008 mass-preserving renewal-frailty challenger, including locked
+  retrospective evidence and a three-region prospective evaluation pipeline.

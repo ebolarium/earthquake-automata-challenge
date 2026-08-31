@@ -6,7 +6,16 @@
 
 **Tarih:** 30 Ağustos 2026
 
-**Durum:** Retrospektif kanıt tamamlandı; prospektif test henüz başlamadı.
+**Durum (belge kesimi):** Retrospektif kanıt tamamlandı; prospektif test henüz başlamadı.
+
+> **31 Ağustos 2026 operasyon güncellemesi:** Bu dosya bilim kuruluna sunulan
+> retrospektif kanıtın tarihsel kesimini korur. Belge hazırlandıktan sonra,
+> bilimsel iddiaya dahil edilmeyen 14 günlük üç-bölgeli operasyonel dry run
+> başlatılmıştır. İlk issue `2026-08-31T00:05:18Z`, ilk hedef başlangıcı
+> `2026-09-01T00:00:00Z`'dir. Otoriter çalışma kimlikleri
+> `data/manifests/ch008-three-region-dry-run-activation-v1.json` içinde
+> kaydedilmiştir. 365 günlük, minimum 500 olaylı prospektif üstünlük testi hâlâ
+> başlamamıştır ve ayrı bir aktivasyon manifesti gerektirir.
 
 ## 1. Yönetici özeti
 
@@ -484,9 +493,11 @@ Ana model ve kanıt zinciri SHA-256 ile kilitlenmiştir:
   `src/etas_challenge/fault_frailty.py`,
   `src/etas_challenge/residual_emergence.py`
 
-Mevcut `ch008-prospective-candidate-v1` durumu `frozen_pending_activation`'dır.
-Bu kayıt prospektif toplamanın başladığını iddia etmez; ilk hedef pencereden önce
-ayrı bir aktivasyon manifesti gerekir ve geriye dönük tahmin üretmek yasaktır.
+`ch008-prospective-candidate-v1` bilimsel aday kaydı
+`frozen_pending_activation` durumundadır. Sonradan başlatılan operasyonel dry
+run bu statüyü değiştirmez ve bilimsel iddiaya sayılmaz. 365 günlük test için
+ilk hedef penceresinden önce ayrı `prospective-challenge-v1.json` aktivasyon
+manifesti gerekir; geriye dönük tahmin üretmek yasaktır.
 
 ## 19. Kaynaklar
 

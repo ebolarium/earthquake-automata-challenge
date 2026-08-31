@@ -25,5 +25,12 @@ catalog window count toward the 365-day and 500-event prospective gate.
 
 ## Status
 
-Frozen and pending activation infrastructure. Historical fit, validation, and
-retrospective scores cannot change after this point.
+Frozen. Historical fit, validation, and retrospective scores cannot change
+after this point.
+
+An operational, non-claim three-region dry run first issued forecasts at
+`2026-08-31T00:05:18Z`; its repository record is
+`data/manifests/ch008-three-region-dry-run-activation-v1.json`. This dry run is
+scientifically discarded and does not satisfy the activation boundary above.
+The 365-day, minimum 500-event scientific test remains pending its separate
+pre-target `data/manifests/prospective-challenge-v1.json` activation manifest.

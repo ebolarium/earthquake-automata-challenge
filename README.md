@@ -1,5 +1,7 @@
 # Earthquake Automata Challenge
 
+[![Test](https://github.com/ebolarium/earthquake-automata-challenge/actions/workflows/test.yml/badge.svg)](https://github.com/ebolarium/earthquake-automata-challenge/actions/workflows/test.yml)
+
 An independent, reproducibility-first project for implementing and testing a
 published earthquake forecasting baseline before developing challengers.
 
@@ -10,85 +12,74 @@ repository does not import code, databases, predictions, or runtime state from
 
 ## Current Milestone
 
-The locked EarthquakeNPP `ComCat_25` reproduction, native likelihood alignment,
-clean local catalog export, leakage-free daily replay, documented pyCSEP day-7
-consistency gate, and independent ETAS forecast page are complete. Challenge V1
-is now frozen. `CH-001`, an ETAS residual-emergence spatial challenger, was
-developed only on the admitted fit and validation splits.
-Its leakage-free catalog matrix and matching frozen ETAS grid offset are
-complete. The first fit-only linear residual artifact is now locked without
-opening the retrospective split. Its development-validation mean gain was
-positive but uncertain, and performance in low-ETAS cells was negative; this
-candidate is not promoted to the locked retrospective test. The current
-milestone is `CH-002`, a separate latent fault-readiness challenger that
-preserves ETAS triggering and redistributes only its direct background mass.
-Its first pre-registered 33-candidate fit selected a very small fit-period gain,
-but the report-only 2018 holdout was negative. The candidate is locked as a
-negative result and was not admitted to development validation.
-`CH-003` now begins a distinct residual-emergence family: it watches for
-persistent, fault-network-coherent departures from ETAS and can redistribute at
-most 10% of direct background mass. Its synthetic component contract is frozen;
-its branch-aware compensator and risk-sensitive fit are complete. Some active
-candidates had tiny positive mean gains, but none passed annual robustness or
-the low-ETAS veto. The exact ETAS control was selected, and CH-003 was not
-admitted to development validation.
-`CH-004` now begins a complementary marked-renewal quiescence family. It measures
-fault-local silence in expected ETAS root-hazard units and uses magnitude-scaled
-soft resets instead of an asserted initial stress map. Its synthetic component
-contract, event warmup, and fit are complete. The selected fit candidate has
-positive overall, annual-robust, and low-ETAS information gain. Its locked
-2019-2022 development validation also remained positive overall and in every
-year, with positive 30-day and 90-day bootstrap lower bounds. The unchanged
-model then passed the one-use 2023-2026 locked retrospective test, including
-positive 30-day and 90-day lower bounds and every required stratum. CH-004 has
-a retrospective research win and is eligible for prospective activation.
-`CH-005` tested whether that result depended on setting every renewal age to
-zero in 2007. A 16-member stationary ETAS-hazard age ensemble improved the fit
-period, but its small positive 2019-2022 gain was not bootstrap-robust and three
-of four annual deltas were negative. It was recorded as an informative failed
-ablation and was not promoted.
-`CH-006` added discounted Gamma-Poisson fault frailty to renewal. Its fit gain
-was much larger, but fixed ablations showed that frailty contributed no skill;
-the improvement came from stronger renewal amplitude. That honest negative
-mechanism result produced `CH-007`, a locked renewal-only candidate. CH-007
-achieved `+0.003625` IGPE on 2019-2022 development validation, `14.84x` the
-unchanged CH-004 parent, with every year and paired 30/90-day bootstrap lower
-bound positive. The unchanged model then achieved `+0.004973` IGPE on the
-2023-2026 as-of-snapshot period, `14.81x` its CH-004 parent, again with every
-year and both paired bootstrap lower bounds positive. Because that period had
-already scored CH-004, it is supportive retrospective confirmation rather than
-pristine independent evidence. CH-007 is eligible for immutable prospective
-shadow activation.
-`CH-008` then widened only the renewal-weight and bounded-background search
-caps while preserving the same fit data and Sobol unit points. Its locked full
-frailty-renewal candidate achieved `+0.005213` IGPE on 2019-2022 validation,
-43.8% above CH-007. Full-minus-renewal frailty contribution was `+0.000802`
-per event; its paired 30/90-day lower bounds and every annual increment were
-positive. CH-008 therefore passed a distinct-regime mechanism gate and is
-admitted to a separately locked retrospective evaluation. The unchanged model
-then achieved `+0.007865` IGPE on the 2023-2026 as-of-snapshot period, 58.1%
-above CH-007. Its paired CH-007 advantage and `+0.001816` full-minus-renewal
-frailty contribution both had positive 30/90-day bootstrap lower bounds, and
-both total and frailty gains were positive in every year. CH-008 is now the
-leading challenger. Its model, evidence chain, and runtime modules are frozen
-as the prospective control candidate; actual collection remains pending a
-separate pre-target activation manifest and cannot be backfilled.
-`CH-009` has begun as a distinct phase-coherent hazard-debt family. Its first
-synthetic contract combines renewal overdue, positive frailty, causal
-fast-minus-slow frailty acceleration, and neighboring fault support while
-retaining CH-008's ETAS-triggering and bounded-background invariants. No CH-009
-catalog score has yet been computed. Its daily evaluator now exactly reproduces
-CH-008 at zero phase weight and verifies that same-day events enter only later
-forecast state. CH009-003 pre-registers a limited 64-candidate all-history
-development fit against exact CH-008, with annual robustness and three mandatory
-mechanism ablations. No CH-009 catalog score has yet been read.
+CH-008 is the frozen leading challenger. It preserves ETAS triggering,
+magnitude distribution, and total expected count while redistributing only a
+bounded fraction of direct-background mass using causal renewal and discounted
+Gamma-Poisson frailty states.
 
-The frozen retrospective test can promote a model to prospective evaluation;
-it cannot by itself support a scientific ETAS-superiority claim. That claim
-requires the separate one-year prospective gate in the challenge contract.
+The following stages are complete:
 
-The Turkish technical dossier prepared for external scientific review is
-available at `wiki/07-scientific-review/CH008-scientific-dossier-tr.md`.
+- locked EarthquakeNPP `ComCat_25` reproduction and native ETAS alignment;
+- clean local catalog export and leakage-free daily replay;
+- pyCSEP integration and reference consistency checks;
+- CH-008 fit, one-use development validation, locked retrospective evaluation,
+  mechanism ablations, and external-region tests in New Zealand and Chile;
+- PostgreSQL/S3 daily collection, state, publication, and scoring pipeline;
+- bilingual live dashboard and complete Turkish/English method pages.
+
+The three-region 14-day operational dry run is active. Its first issue was
+`2026-08-31T00:05:18Z` for the target day beginning `2026-09-01T00:00:00Z`.
+California, New Zealand, and Chile each published six forecast artifacts before
+the target window. The committed operational record is
+`data/manifests/ch008-three-region-dry-run-activation-v1.json`.
+
+Dry-run scores are scientifically discarded. The separate 365-day, minimum
+500-event prospective claim has **not** started and still requires
+`data/manifests/prospective-challenge-v1.json` before its first target window.
+No forecast may be backfilled, and any model, feature, threshold, or geometry
+change requires a new protocol identity.
+
+CH-001 through CH-009, including negative results and stopped candidates, are
+preserved in [`wiki/05-experiments/INDEX.md`](wiki/05-experiments/INDEX.md).
+The external-review dossier is
+[`wiki/07-scientific-review/CH008-scientific-dossier-tr.md`](wiki/07-scientific-review/CH008-scientific-dossier-tr.md).
+
+## CH-008 Evidence
+
+| Domain | Evaluation period | Events | IGPE over ETAS |
+| --- | --- | ---: | ---: |
+| California | 2019-2022 | 5,204 | +0.005213 |
+| California | 2023-2026-08-18 | 3,995 | +0.007865 |
+| New Zealand CSEP | 2008-2025 | 2,270 | +0.018561 |
+| Chile subduction corridor | 2015-2025 | 1,909 | +0.009718 |
+
+These are retrospective results, not a claim that CH-008 will outperform ETAS
+prospectively or predict the exact time, location, or magnitude of an
+earthquake. See the dossier and the bilingual method page for metrics,
+uncertainty, catalog contracts, and limitations.
+
+## Prospective Runtime
+
+The production worker uses PostgreSQL for catalog identities, model states,
+forecast runs, scores, and incidents. Large immutable payloads are written to
+S3-compatible object storage with SHA-256 metadata.
+
+The daily schedule is:
+
+1. collect rolling FDSN catalogs at `00:05 UTC`;
+2. causally advance each regional state to UTC midnight;
+3. publish ETAS and CH-008 forecasts for the next UTC day by `00:15 UTC`;
+4. score completed target days provisionally;
+5. freeze final scores after the seven-day catalog revision window.
+
+The production command is:
+
+```bash
+python scripts/collect_prospective_catalogs.py --lookback-days 30 && \
+python scripts/advance_prospective_daily_states.py && \
+python scripts/publish_prospective_forecasts.py && \
+python scripts/score_prospective_forecasts.py
+```
 
 ## Locked Reference
 
@@ -108,8 +99,12 @@ upstream reproducibility gap is recorded explicitly in the manifest and wiki.
 ```text
 artifacts/       Generated outputs, never committed
 configs/         Immutable experiment configurations
-data/            Local catalogs, with committed manifests only
+data/            Locked small runtime inputs and committed manifests
+db/              Append-only PostgreSQL migrations
+docker/          Reference, web, and prospective production images
+prospective_web/ Bilingual live dashboard and scientific method pages
 reference/       Reference-run instructions and temporary upstream checkout
+scripts/         Reproduction, fitting, evaluation, and operations commands
 src/             Native implementation
 tests/           Contract, formula, and alignment tests
 web/             Independent ETAS forecast server and static application
@@ -122,6 +117,7 @@ wiki/            Literature, decisions, protocols, and experiment records
 PYTHONPATH=src python3 -m unittest discover -s tests
 PYTHONPATH=src python3 -m etas_challenge.contracts data/manifests/reference-comcat25.json
 PYTHONPATH=src python3 scripts/verify_challenge_freeze.py
+PYTHONPATH=src python3 scripts/verify_prospective_protocol.py
 ```
 
 Generate the leakage-free catalog feature matrix admitted for `CH-001`:
@@ -269,6 +265,15 @@ Cartopy version.
 ETAS evaluation imports SeismoStats without declaring it in package metadata.
 The container therefore pins the commit named by the historical ETAS
 requirements file. See `THIRD_PARTY.md` for the license boundary.
+
+## Citation and License
+
+Citation metadata is provided in [`CITATION.cff`](CITATION.cff). Original
+project code is available under the [MIT License](LICENSE); third-party
+software and reference environments retain their own licenses as documented in
+[`THIRD_PARTY.md`](THIRD_PARTY.md).
+
+Scientific questions, criticism, and collaboration: `hello@bboga.com`.
 
 ## Scientific Boundary
 

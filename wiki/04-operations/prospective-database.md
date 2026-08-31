@@ -1,5 +1,28 @@
 # Prospective Database
 
+## Current operational status
+
+The non-claim three-region dry run is active. Its first issue was
+`2026-08-31T00:05:18.514765Z`, targeting `2026-09-01T00:00:00Z` through
+`2026-09-02T00:00:00Z`. All three regions published six artifacts before the
+target window. The reconstructed repository record is
+`data/manifests/ch008-three-region-dry-run-activation-v1.json`; PostgreSQL
+`prospective.forecast_artifacts` and the corresponding S3 objects remain the
+authority for each artifact content hash.
+
+This dry run does not activate the 365-day scientific claim. That transition
+still requires `data/manifests/prospective-challenge-v1.json` before its first
+target window.
+
+The production schedule runs at `00:05 UTC`:
+
+```bash
+python scripts/collect_prospective_catalogs.py --lookback-days 30 && \
+python scripts/advance_prospective_daily_states.py && \
+python scripts/publish_prospective_forecasts.py && \
+python scripts/score_prospective_forecasts.py
+```
+
 The prospective PostgreSQL database stores operational metadata and scores,
 not forecast grids. Large catalog snapshots, forecast grids, and manifests are
 stored as object artifacts; PostgreSQL records their keys and SHA-256 hashes.
