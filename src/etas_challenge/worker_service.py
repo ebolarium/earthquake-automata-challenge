@@ -14,8 +14,12 @@ from etas_challenge.object_storage import storage_health
 from etas_challenge.prospective_dashboard import read_dashboard
 
 
-ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_STATIC = ROOT / "prospective_web" / "static"
+DEFAULT_STATIC = Path(
+    os.environ.get(
+        "PROSPECTIVE_STATIC_DIR",
+        Path.cwd() / "prospective_web" / "static",
+    )
+)
 PROTOCOL_ID = "ch008-three-region-dry-run-v1"
 
 
