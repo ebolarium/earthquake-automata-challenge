@@ -67,7 +67,9 @@ def handler_factory(checker, dashboard_reader=None, static_dir=None):
                 return
             if path == "/":
                 self.path = "/index.html"
-            elif path not in ("/index.html", "/styles.css", "/app.js"):
+            elif path not in (
+                "/index.html", "/about.html", "/styles.css", "/about.css", "/app.js"
+            ):
                 self.send_error(HTTPStatus.NOT_FOUND)
                 return
             super().do_GET()

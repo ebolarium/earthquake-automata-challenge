@@ -49,6 +49,10 @@ class WorkerServiceTest(unittest.TestCase):
         with urllib.request.urlopen(f"{base}/api/dashboard") as response:
             self.assertEqual(json.load(response), dashboard)
             self.assertEqual(response.headers["Cache-Control"], "no-store")
+        with urllib.request.urlopen(f"{base}/about.html") as response:
+            content = response.read()
+            self.assertIn("CH-008 Yöntem ve Bilimsel Protokol".encode(), content)
+            self.assertIn(b"hello@bboga.com", content)
 
 
 if __name__ == "__main__":
