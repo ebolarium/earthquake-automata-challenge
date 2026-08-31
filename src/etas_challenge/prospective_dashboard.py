@@ -16,11 +16,39 @@ def _score_summary(rows: list[dict], revision: str) -> dict:
     total = sum(row["total_gain"] for row in selected)
     mean = None if not events else total / events
     return {
-        "days": len(selected),
+        "days": len({row["target_date"] for row in selected}),
         "events": events,
         "total_gain": total,
         "mean_igpe": mean,
         "relative_factor": None if mean is None else math.exp(mean),
+    }
+
+
+def _dry_run_progress(rows: list[dict], region_ids: list[str], planned_days: int) -> dict:
+    expected = set(region_ids)
+
+    def complete_days(revision: str) -> int:
+        coverage = {}
+        for row in rows:
+            if row["revision"] == revision:
+                coverage.setdefault(row["target_date"], set()).add(row["region_id"])
+        return sum(regions >= expected for regions in coverage.values()) if expected else 0
+
+    provisional_days = complete_days("provisional")
+    final_days = complete_days("final")
+    if final_days >= planned_days:
+        phase = "complete"
+    elif provisional_days >= planned_days:
+        phase = "settling"
+    elif provisional_days:
+        phase = "running"
+    else:
+        phase = "awaiting_scores"
+    return {
+        "phase": phase,
+        "planned_days": planned_days,
+        "provisional_days": min(provisional_days, planned_days),
+        "final_days": min(final_days, planned_days),
     }
 
 
@@ -156,8 +184,9 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         and open_incidents == 0
         else "attention"
     )
+    planned_days = int(protocol_row[2])
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "generated_at": generated_at.isoformat(),
         "pipeline_status": pipeline_status,
         "protocol": {
@@ -165,7 +194,7 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
             "database_status": protocol_row[0],
             "mode": config["mode"],
             "counts_toward_prospective_claim": config["counts_toward_prospective_claim"],
-            "planned_days": int(protocol_row[2]),
+            "planned_days": planned_days,
             "minimum_events": int(protocol_row[3]),
             "settled_score_delay_days": config["catalog_revision_contract"]["settled_score_delay_days"],
         },
@@ -173,6 +202,9 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         "published_regions": published_regions,
         "open_incidents": open_incidents,
         "last_incident_at": _iso(incident_row[1]),
+        "dry_run": _dry_run_progress(
+            scores, [row[0] for row in region_rows], planned_days
+        ),
         "provisional": _score_summary(scores, "provisional"),
         "final": _score_summary(scores, "final"),
         "regions": regions,

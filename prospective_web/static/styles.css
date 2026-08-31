@@ -51,6 +51,21 @@ button { color: inherit; font: inherit; letter-spacing: 0; }
 main { max-width: 1480px; margin: 0 auto; padding: 18px 24px 34px; }
 .view { display: none; }
 .view.active { display: block; }
+.run-notice { min-height: 74px; margin-bottom: 12px; padding: 12px 15px; display: flex; align-items: center; justify-content: space-between; gap: 24px; background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--teal); border-radius: var(--radius); }
+.run-notice.settling { border-left-color: var(--yellow); }
+.run-notice.complete { border-left-color: var(--green); background: #f2f8f4; }
+.notice-copy { min-width: 0; display: grid; gap: 3px; }
+.notice-copy span { color: var(--teal); font-size: 9px; font-weight: 750; }
+.run-notice.settling .notice-copy span { color: #8a6519; }
+.run-notice.complete .notice-copy span { color: var(--green); }
+.notice-copy strong { font-size: 14px; }
+.notice-copy small { color: var(--muted); font-size: 10px; }
+.notice-progress { width: min(230px, 32%); flex: 0 0 auto; display: grid; gap: 7px; }
+.notice-progress > strong { text-align: right; font-size: 11px; font-variant-numeric: tabular-nums; }
+.progress-track { height: 5px; overflow: hidden; background: var(--surface-muted); border-radius: 2px; }
+.progress-track i { width: 0; height: 100%; display: block; background: var(--teal); transition: width 250ms ease; }
+.run-notice.settling .progress-track i { background: var(--yellow); }
+.run-notice.complete .progress-track i { background: var(--green); }
 .metric-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
 .metric { min-height: 92px; padding: 13px 15px; display: grid; align-content: space-between; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
 .metric.accent { border-top: 3px solid var(--teal); }
@@ -142,6 +157,8 @@ dd { margin: 0; text-align: right; font-size: 11px; font-weight: 650; }
   .brand p, .system-status div { display: none; }
   .tabs { padding: 0 14px; gap: 18px; }
   main { padding: 12px 14px 28px; }
+  .run-notice { align-items: stretch; flex-direction: column; gap: 10px; }
+  .notice-progress { width: 100%; }
   .metric-strip { gap: 7px; }
   .metric { min-height: 82px; padding: 10px; }
   .metric strong { font-size: 22px; }

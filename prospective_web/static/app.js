@@ -26,12 +26,31 @@ async function loadDashboard() {
 
 function renderAll() {
   renderStatus();
+  renderDryRun();
   renderFilters();
   renderMetrics();
   renderChart();
   renderRegions();
   renderScores();
   renderProtocol();
+}
+
+function renderDryRun() {
+  const progress = state.dashboard.dry_run;
+  const notice = document.getElementById("run-notice");
+  const copy = {
+    awaiting_scores: ["Dry run başladı", "İlk tamamlanmış hedef gününün skoru bekleniyor."],
+    running: ["Dry run sürüyor", `${progress.provisional_days}/${progress.planned_days} ortak hedef günü skorlandı.`],
+    settling: ["14 günlük dry run tamamlandı", `Final skorların kesinleşmesi bekleniyor: ${progress.final_days}/${progress.planned_days} gün.`],
+    complete: ["Dry run tamamlandı", `${progress.final_days}/${progress.planned_days} günlük final skor hazır. Sonuçlar değerlendirmeye hazır.`],
+  }[progress.phase];
+  const shownDays = progress.phase === "settling" || progress.phase === "complete" ? progress.final_days : progress.provisional_days;
+  notice.className = `run-notice ${progress.phase.replace("_", "-")}`;
+  setText("run-eyebrow", progress.phase === "complete" ? "TAMAMLANDI" : progress.phase === "settling" ? "KESİNLEŞME" : "DRY RUN");
+  setText("run-title", copy[0]);
+  setText("run-detail", copy[1]);
+  setText("run-progress-label", `${shownDays}/${progress.planned_days} gün`);
+  document.getElementById("run-progress-bar").style.width = `${Math.min(100, shownDays / progress.planned_days * 100)}%`;
 }
 
 function renderStatus() {
@@ -75,7 +94,7 @@ function renderMetrics() {
   setText("metric-igpe", formatGain(provisional.mean));
   setText("metric-factor", provisional.mean === null ? "ETAS'a göre" : `${formatFactor(Math.exp(provisional.mean))} göreli oran`);
   setText("metric-events", formatInteger(provisional.events));
-  setText("metric-days", `${formatInteger(provisional.days)} skor satırı`);
+  setText("metric-days", `${state.dashboard.dry_run.provisional_days}/${state.dashboard.dry_run.planned_days} ortak gün`);
   renderSummary("provisional", aggregate(selectedScores("provisional")));
   renderSummary("final", aggregate(selectedScores("final")));
   setText("incident-count", formatInteger(state.dashboard.open_incidents));

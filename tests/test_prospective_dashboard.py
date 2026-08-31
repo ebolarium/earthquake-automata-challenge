@@ -1,7 +1,7 @@
 from datetime import date, datetime, timezone
 import unittest
 
-from etas_challenge.prospective_dashboard import build_dashboard
+from etas_challenge.prospective_dashboard import _dry_run_progress, build_dashboard
 
 
 class Result:
@@ -57,6 +57,8 @@ class ProspectiveDashboardTest(unittest.TestCase):
         self.assertEqual(result["provisional"]["events"], 2)
         self.assertAlmostEqual(result["provisional"]["mean_igpe"], 0.1)
         self.assertEqual(result["regions"][0]["latest_forecast"]["artifacts"], 6)
+        self.assertEqual(result["provisional"]["days"], 1)
+        self.assertEqual(result["dry_run"]["phase"], "awaiting_scores")
 
     def test_open_incident_marks_pipeline_attention(self):
         config = {
@@ -70,6 +72,46 @@ class ProspectiveDashboardTest(unittest.TestCase):
         result = build_dashboard(connection, "protocol")
         self.assertEqual(result["pipeline_status"], "attention")
         self.assertEqual(result["open_incidents"], 1)
+
+    def test_dry_run_progress_requires_every_region_and_final_settlement(self):
+        regions = ["california", "new-zealand", "chile"]
+        provisional = [
+            {
+                "region_id": region,
+                "target_date": f"2026-09-{day:02d}",
+                "revision": "provisional",
+            }
+            for day in range(1, 15)
+            for region in regions
+        ]
+        incomplete_final = [
+            {
+                "region_id": region,
+                "target_date": f"2026-09-{day:02d}",
+                "revision": "final",
+            }
+            for day in range(1, 8)
+            for region in regions
+        ]
+        settling = _dry_run_progress(provisional + incomplete_final, regions, 14)
+        self.assertEqual(settling["phase"], "settling")
+        self.assertEqual(settling["provisional_days"], 14)
+        self.assertEqual(settling["final_days"], 7)
+
+        remaining_final = [
+            {
+                "region_id": region,
+                "target_date": f"2026-09-{day:02d}",
+                "revision": "final",
+            }
+            for day in range(8, 15)
+            for region in regions
+        ]
+        complete = _dry_run_progress(
+            provisional + incomplete_final + remaining_final, regions, 14
+        )
+        self.assertEqual(complete["phase"], "complete")
+        self.assertEqual(complete["final_days"], 14)
 
 
 if __name__ == "__main__":

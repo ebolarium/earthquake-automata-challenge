@@ -34,6 +34,18 @@
 
     <main>
       <section class="view active" id="overview-view">
+        <section class="run-notice awaiting-scores" id="run-notice" role="status" aria-live="polite">
+          <div class="notice-copy">
+            <span id="run-eyebrow">DRY RUN</span>
+            <strong id="run-title">Durum hesaplanıyor</strong>
+            <small id="run-detail">Skor ilerlemesi yükleniyor.</small>
+          </div>
+          <div class="notice-progress">
+            <strong id="run-progress-label">0/14 gün</strong>
+            <div class="progress-track" aria-hidden="true"><i id="run-progress-bar"></i></div>
+          </div>
+        </section>
+
         <div class="metric-strip" aria-label="Prospektif test özeti">
           <article class="metric"><span>Son hedef günü</span><strong id="metric-target">—</strong><small>UTC</small></article>
           <article class="metric"><span>Yayınlanan bölgeler</span><strong id="metric-regions">—</strong><small>3 bölge</small></article>
