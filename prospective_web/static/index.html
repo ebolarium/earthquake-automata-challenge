@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f4f6f5">
+    <title>CH-008 Prospective Test</title>
+    <link rel="icon" href="data:,">
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div>
+          <h1>CH-008 Prospective Test</h1>
+          <p>ETAS karşılaştırması · 3 bölge</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <div class="system-status">
+          <i id="status-dot" aria-hidden="true"></i>
+          <div><strong id="status-label">Bağlanıyor</strong><span id="updated-label">—</span></div>
+        </div>
+        <button class="icon-button" id="refresh-button" type="button" title="Veriyi yenile" aria-label="Veriyi yenile">↻</button>
+      </div>
+    </header>
+
+    <nav class="tabs" aria-label="Dashboard görünümleri">
+      <button class="tab active" type="button" data-view="overview" aria-selected="true">Genel Bakış</button>
+      <button class="tab" type="button" data-view="scores" aria-selected="false">Günlük Skorlar</button>
+      <button class="tab" type="button" data-view="protocol" aria-selected="false">Protokol</button>
+    </nav>
+
+    <main>
+      <section class="view active" id="overview-view">
+        <div class="metric-strip" aria-label="Prospektif test özeti">
+          <article class="metric"><span>Son hedef günü</span><strong id="metric-target">—</strong><small>UTC</small></article>
+          <article class="metric"><span>Yayınlanan bölgeler</span><strong id="metric-regions">—</strong><small>3 bölge</small></article>
+          <article class="metric accent"><span>Provisional IGPE</span><strong id="metric-igpe">—</strong><small id="metric-factor">ETAS'a göre</small></article>
+          <article class="metric"><span>Skorlanan olay</span><strong id="metric-events">—</strong><small id="metric-days">0 gün</small></article>
+        </div>
+
+        <div class="toolbar">
+          <div class="segmented" id="region-filter" role="group" aria-label="Bölge filtresi"></div>
+          <div class="legend"><span class="legend-ch008"></span>CH-008 kazancı <span class="legend-etas"></span>ETAS kazancı</div>
+        </div>
+
+        <div class="overview-grid">
+          <section class="chart-panel" aria-labelledby="chart-title">
+            <div class="section-heading">
+              <div><h2 id="chart-title">Günlük bilgi kazancı</h2><p id="chart-subtitle">Provisional skorlar</p></div>
+              <strong id="chart-total">—</strong>
+            </div>
+            <div class="chart-stage" id="chart-stage">
+              <canvas id="score-chart" aria-label="Günlük bilgi kazancı grafiği"></canvas>
+              <div class="empty-state" id="chart-empty">İlk skor bekleniyor</div>
+              <div class="chart-tooltip" id="chart-tooltip" role="status"></div>
+            </div>
+          </section>
+
+          <aside class="score-summary">
+            <div class="summary-block"><span>Provisional</span><strong id="provisional-score">—</strong><small id="provisional-detail">Henüz skor yok</small></div>
+            <div class="summary-block"><span>Final</span><strong id="final-score">—</strong><small id="final-detail">7 günlük uzlaşma penceresi</small></div>
+            <div class="summary-block"><span>Açık incident</span><strong id="incident-count">—</strong><small id="incident-detail">—</small></div>
+          </aside>
+        </div>
+
+        <section class="data-section" aria-labelledby="regions-title">
+          <div class="section-heading"><div><h2 id="regions-title">Bölge durumu</h2><p>Son yayın ve katalog snapshot’ı</p></div></div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Bölge</th><th>Tahmin</th><th>Hedef</th><th>Katalog</th><th>Provisional</th><th>Final</th></tr></thead>
+              <tbody id="regions-body"></tbody>
+            </table>
+          </div>
+        </section>
+      </section>
+
+      <section class="view" id="scores-view">
+        <div class="view-heading"><span>EVENT-WISE LOG RATE RATIO</span><h2>Günlük ETAS–CH-008 skorları</h2><p>Provisional ve yedi gün sonra dondurulan final katalog sürümleri.</p></div>
+        <div class="table-wrap score-table-wrap">
+          <table>
+            <thead><tr><th>Hedef günü</th><th>Bölge</th><th>Sürüm</th><th>Olay</th><th>Toplam kazanç</th><th>IGPE</th><th>Sonuç</th></tr></thead>
+            <tbody id="scores-body"></tbody>
+          </table>
+          <div class="table-empty" id="scores-empty">Tamamlanmış hedef günü henüz yok.</div>
+        </div>
+      </section>
+
+      <section class="view" id="protocol-view">
+        <div class="view-heading"><span>LOCKED BEFORE DRY RUN</span><h2>Test protokolü</h2><p>Model ve katalog sözleşmesi çalışma boyunca değiştirilmez.</p></div>
+        <div class="protocol-grid">
+          <section><h3>Çalışma</h3><dl id="protocol-facts"></dl></section>
+          <section><h3>Skorlama</h3><dl>
+            <div><dt>Birincil metrik</dt><dd>Olay başına log oranı</dd></div>
+            <div><dt>Kompansatör farkı</dt><dd>0 · kütle korunuyor</dd></div>
+            <div><dt>Provisional</dt><dd>İlk tam günlük snapshot</dd></div>
+            <div><dt>Final</dt><dd>7 gün sonra</dd></div>
+          </dl></section>
+          <section><h3>Bölgeler</h3><div class="protocol-regions" id="protocol-regions"></div></section>
+        </div>
+      </section>
+    </main>
+
+    <div class="error-banner" id="error-banner" role="alert"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

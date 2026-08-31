@@ -16,6 +16,7 @@ COPY data/grids ./data/grids
 COPY data/regions ./data/regions
 COPY data/production ./data/production
 COPY data/manifests/california-ch008-seed-20260819-v1.json ./data/manifests/california-ch008-seed-20260819-v1.json
+COPY prospective_web ./prospective_web
 COPY scripts/migrate_database.py ./scripts/migrate_database.py
 COPY scripts/collect_prospective_catalogs.py ./scripts/collect_prospective_catalogs.py
 COPY scripts/bootstrap_prospective_catalogs.py ./scripts/bootstrap_prospective_catalogs.py
