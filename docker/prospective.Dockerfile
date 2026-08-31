@@ -23,6 +23,7 @@ COPY scripts/build_prospective_initial_states.py ./scripts/build_prospective_ini
 COPY scripts/advance_prospective_bootstrap_states.py ./scripts/advance_prospective_bootstrap_states.py
 COPY scripts/advance_prospective_daily_states.py ./scripts/advance_prospective_daily_states.py
 COPY scripts/publish_prospective_forecasts.py ./scripts/publish_prospective_forecasts.py
+COPY scripts/score_prospective_forecasts.py ./scripts/score_prospective_forecasts.py
 COPY scripts/verify_prospective_initial_states.py ./scripts/verify_prospective_initial_states.py
 COPY scripts/verify_prospective_bootstrap.py ./scripts/verify_prospective_bootstrap.py
 COPY scripts/seed_prospective_database.py ./scripts/seed_prospective_database.py

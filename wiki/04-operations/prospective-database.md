@@ -171,7 +171,8 @@ day, and preserves the parent checkpoint rather than modifying it:
 ```bash
 python scripts/collect_prospective_catalogs.py --lookback-days 30 && \
 python scripts/advance_prospective_daily_states.py && \
-python scripts/publish_prospective_forecasts.py
+python scripts/publish_prospective_forecasts.py && \
+python scripts/score_prospective_forecasts.py
 ```
 
 Publication is rejected after `00:15 UTC`, before the checkpoint boundary, or
@@ -184,3 +185,20 @@ grids for the following UTC day. New Zealand and Chile retain their exact
 continuous-space ETAS triggering contract and publish the pre-target latent
 direct-background maps changed by CH-008. Both model artifacts preserve total
 mass, so their paired compensator difference remains zero.
+
+## Daily scoring
+
+The scorer runs after publication but only considers forecast targets whose UTC
+window has already ended. Migration `007_daily_score_run.sql` links every score
+to its immutable forecast run. The first rolling snapshot that fully covers the
+target produces the `provisional` score. The first snapshot crossing the locked
+seven-day settlement threshold produces the separate `final` score; neither row
+is subsequently replaced.
+
+California events are scored against the two published daily RELM grids. New
+Zealand and Chile reconstruct the sequential ETAS conditional event intensity
+from the forecast's frozen pre-lead-day state and events already observed inside
+the target window, then add only the CH-008 background delta published before
+the target. Event IDs, rates, log-rate gains, snapshot hash, and forecast hashes
+are retained in the score metrics. Empty target days are valid and record zero
+total gain with a null per-event mean.
