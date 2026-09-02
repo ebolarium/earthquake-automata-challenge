@@ -6,6 +6,7 @@
     "backoff_seconds": [60, 300],
     "hard_deadline_utc_offset": "00:15:00",
     "note": "Deadline is relative to the 00:00:00Z issue boundary. No pre-publication retry may execute after the deadline; a retry that would cross it is not attempted and the region-day is marked per failure_class below.",
+    "scoring_independence": "Scoring of previously published forecasts runs even when the current region-day publication fails. It uses the same attempt/backoff limits but is not constrained by the current publication deadline because it cannot alter a forecast.",
     "isolation": "per-region, per-pipeline-stage; one region's retries never block or delay another region's publication",
     "cutoff_consistency": "All retries within a series use the same persisted logical catalog cutoff. Forecast publication uses a separate publication_issue_time persisted once after catalog and state completion; publication retries reuse it. Neither timestamp may be re-derived from wall-clock time within or across retries for that region-day."
   },

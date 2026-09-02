@@ -26,6 +26,8 @@ gets at most three attempts, separated by 60 and 300 seconds, while retaining a
 single logical catalog cutoff. A separate publication issue time is persisted
 once after catalog/state completion and reused by publication retries. Forecast
 publication after `00:15 UTC` is forbidden and cannot be backfilled.
+Scoring of earlier, timely forecasts remains independent of the current day's
+publication outcome and may recover after that publication deadline.
 
 A forecast not published by the deadline is a missed region-day and is excluded
 from both the primary-score numerator and event denominator. It is never imputed

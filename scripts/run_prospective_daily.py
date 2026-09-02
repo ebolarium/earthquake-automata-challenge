@@ -341,6 +341,24 @@ def export_incident_log(database_url: str, protocol_id: str, issue_time: datetim
     return {"object_key": key, "sha256": checksum, "incidents": len(rows)}
 
 
+def run_scoring_cycle(region_id: str, retry: dict):
+    command = [
+        sys.executable, "scripts/score_prospective_forecasts.py", "--region", region_id,
+    ]
+    started = datetime.now(timezone.utc)
+    deadline = started + timedelta(
+        seconds=sum(int(value) for value in retry["backoff_seconds"]) + 60
+    )
+    return run_with_retries(
+        lambda: run_command(command),
+        max_attempts=int(retry["max_attempts"]),
+        backoff_seconds=retry["backoff_seconds"],
+        deadline=deadline,
+        now=lambda: datetime.now(timezone.utc),
+        sleep=time.sleep,
+    )
+
+
 def execute_region(
     region_id: str,
     issue_time: datetime,
@@ -410,6 +428,8 @@ def execute_region(
                 invalidation = refresh_invalidation(
                     database_url, protocol_id, region_id, policy
                 )
+                score = run_scoring_cycle(region_id, retry)
+                attempts["scoring"] = score.attempts
                 return {
                     "region_id": region_id,
                     "status": "publication_missed",
@@ -446,6 +466,8 @@ def execute_region(
             invalidation = refresh_invalidation(
                 database_url, protocol_id, region_id, policy
             )
+            score = run_scoring_cycle(region_id, retry)
+            attempts["scoring"] = score.attempts
             return {
                 "region_id": region_id,
                 "status": "publication_missed",
@@ -454,17 +476,7 @@ def execute_region(
                 "primary_eligible": not invalidation.invalid,
             }
 
-    score_command = [
-        python, "scripts/score_prospective_forecasts.py", "--region", region_id,
-    ]
-    score = run_with_retries(
-        lambda: run_command(score_command),
-        max_attempts=int(retry["max_attempts"]),
-        backoff_seconds=retry["backoff_seconds"],
-        deadline=deadline,
-        now=lambda: datetime.now(timezone.utc),
-        sleep=time.sleep,
-    )
+    score = run_scoring_cycle(region_id, retry)
     attempts["scoring"] = score.attempts
     record_terminal_state(
         database_url, protocol_id, region_id, issue_time, target_date,
