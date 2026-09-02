@@ -62,7 +62,7 @@ function renderStatus() {
 }
 
 function selectedScores(revision = "provisional") {
-  return state.dashboard.daily_scores.filter((score) =>
+  return (state.dashboard?.daily_scores || []).filter((score) =>
     score.revision === revision && (state.region === "all" || score.region_id === state.region)
   );
 }

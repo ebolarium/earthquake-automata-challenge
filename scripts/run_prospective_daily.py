@@ -188,6 +188,24 @@ def record_terminal_state(
                     protocol_id, region_id, issue_time.date().isoformat(),
                 ),
             )
+        elif publication_status == "published":
+            connection.execute(
+                """
+                UPDATE prospective.incidents
+                SET resolved_at = now(),
+                    details = jsonb_set(
+                        details, '{operational_recovery}',
+                        to_jsonb(%s::text)
+                    )
+                WHERE protocol_id = %s AND region_id = %s
+                  AND incident_type = 'publication_missed'
+                  AND resolved_at IS NULL
+                """,
+                (
+                    f"next_successful_publication:{target_date.isoformat()}",
+                    protocol_id, region_id,
+                ),
+            )
 
 
 def refresh_invalidation(database_url: str, protocol_id: str, region_id: str, policy: dict):

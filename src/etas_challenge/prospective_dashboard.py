@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
+from datetime import datetime, time, timedelta, timezone
 import math
 
 
@@ -203,6 +203,20 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         for item in regions
     )
     open_incidents = int(incident_row[0])
+    issue_boundary = datetime.combine(
+        generated_at.astimezone(timezone.utc).date(), time.min, timezone.utc
+    )
+    expected_minimum_target = issue_boundary + (
+        timedelta(days=1)
+        if generated_at.astimezone(timezone.utc) > issue_boundary + timedelta(minutes=15)
+        else timedelta(0)
+    )
+    forecast_current = all(
+        item["latest_forecast"] is not None
+        and datetime.fromisoformat(item["latest_forecast"]["target_start"])
+        >= expected_minimum_target
+        for item in regions
+    )
     pooled_primary_eligible = all(
         item["operations"]["primary_eligible"] for item in regions
     )
@@ -210,6 +224,7 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         "ok"
         if published_regions == len(regions)
         and len(latest_targets) == 1
+        and forecast_current
         and open_incidents == 0
         and pooled_primary_eligible
         else "attention"
@@ -229,6 +244,8 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
             "settled_score_delay_days": config["catalog_revision_contract"]["settled_score_delay_days"],
         },
         "latest_target_start": next(iter(latest_targets)) if len(latest_targets) == 1 else None,
+        "expected_minimum_target_start": expected_minimum_target.isoformat(),
+        "forecast_current": forecast_current,
         "published_regions": published_regions,
         "open_incidents": open_incidents,
         "last_incident_at": _iso(incident_row[1]),

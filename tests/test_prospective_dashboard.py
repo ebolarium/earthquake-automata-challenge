@@ -1,4 +1,4 @@
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 import unittest
 
 from etas_challenge.prospective_dashboard import _dry_run_progress, build_dashboard
@@ -53,6 +53,7 @@ class ProspectiveDashboardTest(unittest.TestCase):
         ])
         result = build_dashboard(connection, "protocol", now=target)
         self.assertEqual(result["pipeline_status"], "ok")
+        self.assertTrue(result["forecast_current"])
         self.assertEqual(result["published_regions"], 3)
         self.assertEqual(result["provisional"]["events"], 2)
         self.assertAlmostEqual(result["provisional"]["mean_igpe"], 0.1)
@@ -91,6 +92,23 @@ class ProspectiveDashboardTest(unittest.TestCase):
         self.assertEqual(result["pipeline_status"], "attention")
         self.assertEqual(result["pooled_primary_claim_status"], "inconclusive")
         self.assertFalse(result["regions"][0]["operations"]["primary_eligible"])
+
+    def test_forecast_is_stale_after_publication_deadline(self):
+        config = {
+            "mode": "dry_run",
+            "counts_toward_prospective_claim": False,
+            "catalog_revision_contract": {"settled_score_delay_days": 7},
+        }
+        target = datetime(2026, 9, 1, tzinfo=timezone.utc)
+        generated = datetime(2026, 9, 2, 8, tzinfo=timezone.utc)
+        regions = [("california-relm", "California", "USGS", 2.5, None, None)]
+        runs = [("california-relm", "run", target, target, target + timedelta(days=1), "published", target, "state", 6)]
+        connection = Connection([
+            [("active", config, 365, 500)], regions, runs, [], [], [(0, None)], [],
+        ])
+        result = build_dashboard(connection, "protocol", now=generated)
+        self.assertFalse(result["forecast_current"])
+        self.assertEqual(result["pipeline_status"], "attention")
 
     def test_dry_run_progress_requires_every_region_and_final_settlement(self):
         regions = ["california", "new-zealand", "chile"]
