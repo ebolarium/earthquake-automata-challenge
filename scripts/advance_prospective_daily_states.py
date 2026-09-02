@@ -26,6 +26,7 @@ from advance_prospective_bootstrap_states import read_verified_object  # noqa: E
 from advance_prospective_bootstrap_states import verify_source_prefix  # noqa: E402
 from etas_challenge.object_storage import ObjectStorageConfig  # noqa: E402
 from etas_challenge.object_storage import object_key, put_verified_bytes  # noqa: E402
+from etas_challenge.prospective_bootstrap import utc_timestamp  # noqa: E402
 from etas_challenge.prospective_protocol import validate_protocol  # noqa: E402
 from etas_challenge.prospective_state import BootstrapCatalog  # noqa: E402
 from etas_challenge.prospective_state import catalog_history_sha256  # noqa: E402

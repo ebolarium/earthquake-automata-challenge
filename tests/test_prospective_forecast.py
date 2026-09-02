@@ -11,6 +11,7 @@ from etas_challenge.prospective_forecast import enforce_publication_deadline
 from etas_challenge.prospective_forecast import forecast_run_id
 from etas_challenge.prospective_replay import CH008State
 from scripts.advance_prospective_daily_states import append_completed_day
+from scripts.advance_prospective_daily_states import parse_args as parse_advance_args
 
 
 PARENT = {
@@ -66,6 +67,17 @@ class RollingConnection:
 
 
 class ProspectiveForecastTest(unittest.TestCase):
+    def test_daily_advance_accepts_fixed_cutoff(self):
+        from unittest.mock import patch
+
+        with patch(
+            "sys.argv",
+            ["advance", "--cutoff", "2026-09-01T00:05:00Z", "--region", "region"],
+        ):
+            args = parse_advance_args()
+        self.assertEqual(args.cutoff.isoformat(), "2026-09-01T00:05:00+00:00")
+        self.assertEqual(args.regions, ["region"])
+
     def test_deadline_contract_targets_the_next_utc_day(self):
         boundary = datetime(2026, 8, 31, tzinfo=timezone.utc)
         target_start, target_end = enforce_publication_deadline(
