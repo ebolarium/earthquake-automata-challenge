@@ -29,6 +29,7 @@
 
     <nav class="tabs" aria-label="Dashboard görünümleri">
       <button class="tab active" type="button" data-view="overview" aria-selected="true">Genel Bakış</button>
+      <button class="tab" type="button" data-view="maps" aria-selected="false">Tahmin Haritaları</button>
       <button class="tab" type="button" data-view="scores" aria-selected="false">Günlük Skorlar</button>
       <button class="tab" type="button" data-view="protocol" aria-selected="false">Protokol</button>
       <a class="tab tab-link" href="/about.html">Yöntem</a>
@@ -89,6 +90,39 @@
             </table>
           </div>
         </section>
+      </section>
+
+      <section class="view" id="maps-view">
+        <div class="view-heading"><span>PUBLISHED FORECAST ARTIFACTS</span><h2>Günlük mekânsal tahminler</h2><p>Hedef günü başlamadan önce yayımlanan ETAS ve CH-008 hücre değerleri.</p></div>
+        <div class="map-toolbar">
+          <div class="control-block"><span>Bölge</span><div class="segmented map-regions" id="map-region-control" role="group" aria-label="Harita bölgesi"></div></div>
+          <div class="control-block"><span>Katman</span><div class="segmented" id="map-layer-control" role="group" aria-label="Tahmin katmanı">
+            <button class="segment" type="button" data-map-layer="etas">ETAS</button>
+            <button class="segment" type="button" data-map-layer="ch008">CH-008</button>
+            <button class="segment active" type="button" data-map-layer="log_ratio">Fark</button>
+          </div></div>
+        </div>
+        <div class="forecast-map-layout">
+          <section class="forecast-map-panel" aria-labelledby="forecast-map-title">
+            <div class="section-heading"><div><h2 id="forecast-map-title">Tahmin yükleniyor</h2><p id="forecast-map-window">—</p></div><strong id="forecast-map-layer">Fark</strong></div>
+            <div class="forecast-map-stage" id="forecast-map-stage">
+              <canvas id="forecast-grid-map" aria-label="Yayımlanmış günlük deprem tahmin haritası"></canvas>
+              <div class="map-empty" id="forecast-map-empty">Harita yükleniyor</div>
+              <div class="chart-tooltip" id="forecast-map-tooltip" role="status"></div>
+            </div>
+            <div class="map-scale"><span id="map-scale-low">ETAS yüksek</span><i id="map-scale-ramp"></i><span id="map-scale-high">CH-008 yüksek</span></div>
+          </section>
+          <aside class="map-facts">
+            <dl>
+              <div><dt>Hedef günü</dt><dd id="map-fact-target">—</dd></div>
+              <div><dt>Yayın zamanı</dt><dd id="map-fact-published">—</dd></div>
+              <div><dt>Hücre</dt><dd id="map-fact-cells">—</dd></div>
+              <div><dt>ETAS katman toplamı</dt><dd id="map-fact-etas">—</dd></div>
+              <div><dt>CH-008 katman toplamı</dt><dd id="map-fact-ch008">—</dd></div>
+            </dl>
+            <p id="map-semantics-note">—</p>
+          </aside>
+        </div>
       </section>
 
       <section class="view" id="scores-view">

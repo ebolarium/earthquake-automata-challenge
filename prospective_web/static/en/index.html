@@ -30,6 +30,7 @@
 
     <nav class="tabs" aria-label="Dashboard views">
       <button class="tab active" type="button" data-view="overview" aria-selected="true">Overview</button>
+      <button class="tab" type="button" data-view="maps" aria-selected="false">Forecast Maps</button>
       <button class="tab" type="button" data-view="scores" aria-selected="false">Daily Scores</button>
       <button class="tab" type="button" data-view="protocol" aria-selected="false">Protocol</button>
       <a class="tab tab-link" href="/en/about.html">Method</a>
@@ -90,6 +91,39 @@
             </table>
           </div>
         </section>
+      </section>
+
+      <section class="view" id="maps-view">
+        <div class="view-heading"><span>PUBLISHED FORECAST ARTIFACTS</span><h2>Daily spatial forecasts</h2><p>ETAS and CH-008 cell values published before the target day began.</p></div>
+        <div class="map-toolbar">
+          <div class="control-block"><span>Region</span><div class="segmented map-regions" id="map-region-control" role="group" aria-label="Map region"></div></div>
+          <div class="control-block"><span>Layer</span><div class="segmented" id="map-layer-control" role="group" aria-label="Forecast layer">
+            <button class="segment" type="button" data-map-layer="etas">ETAS</button>
+            <button class="segment" type="button" data-map-layer="ch008">CH-008</button>
+            <button class="segment active" type="button" data-map-layer="log_ratio">Difference</button>
+          </div></div>
+        </div>
+        <div class="forecast-map-layout">
+          <section class="forecast-map-panel" aria-labelledby="forecast-map-title">
+            <div class="section-heading"><div><h2 id="forecast-map-title">Loading forecast</h2><p id="forecast-map-window">—</p></div><strong id="forecast-map-layer">Difference</strong></div>
+            <div class="forecast-map-stage" id="forecast-map-stage">
+              <canvas id="forecast-grid-map" aria-label="Published daily earthquake forecast map"></canvas>
+              <div class="map-empty" id="forecast-map-empty">Loading map</div>
+              <div class="chart-tooltip" id="forecast-map-tooltip" role="status"></div>
+            </div>
+            <div class="map-scale"><span id="map-scale-low">ETAS higher</span><i id="map-scale-ramp"></i><span id="map-scale-high">CH-008 higher</span></div>
+          </section>
+          <aside class="map-facts">
+            <dl>
+              <div><dt>Target day</dt><dd id="map-fact-target">—</dd></div>
+              <div><dt>Published</dt><dd id="map-fact-published">—</dd></div>
+              <div><dt>Cells</dt><dd id="map-fact-cells">—</dd></div>
+              <div><dt>ETAS layer total</dt><dd id="map-fact-etas">—</dd></div>
+              <div><dt>CH-008 layer total</dt><dd id="map-fact-ch008">—</dd></div>
+            </dl>
+            <p id="map-semantics-note">—</p>
+          </aside>
+        </div>
       </section>
 
       <section class="view" id="scores-view">

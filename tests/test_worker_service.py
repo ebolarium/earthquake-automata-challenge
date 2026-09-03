@@ -10,13 +10,14 @@ from etas_challenge.worker_service import create_server
 
 
 class WorkerServiceTest(unittest.TestCase):
-    def start_server(self, result, dashboard=None):
+    def start_server(self, result, dashboard=None, forecast_map=None):
         static = Path(__file__).resolve().parents[1] / "prospective_web" / "static"
         try:
             server = create_server(
                 "127.0.0.1", 0, lambda: result,
                 None if dashboard is None else lambda: dashboard,
                 static,
+                None if forecast_map is None else lambda region: forecast_map(region),
             )
         except PermissionError:
             self.skipTest("local sockets are unavailable in this sandbox")
@@ -42,13 +43,18 @@ class WorkerServiceTest(unittest.TestCase):
 
     def test_serves_dashboard_and_static_application(self):
         dashboard = {"schema_version": 1, "pipeline_status": "ok", "regions": []}
-        base = self.start_server((True, None), dashboard)
+        base = self.start_server(
+            (True, None), dashboard,
+            lambda region: {"region_id": region, "layers": {}},
+        )
         with urllib.request.urlopen(f"{base}/") as response:
             self.assertIn(b"CH-008 Prospective Test", response.read())
             self.assertEqual(response.headers["X-Frame-Options"], "DENY")
         with urllib.request.urlopen(f"{base}/api/dashboard") as response:
             self.assertEqual(json.load(response), dashboard)
             self.assertEqual(response.headers["Cache-Control"], "no-store")
+        with urllib.request.urlopen(f"{base}/api/forecast-map?region=california-relm") as response:
+            self.assertEqual(response.status, HTTPStatus.OK)
         with urllib.request.urlopen(f"{base}/about.html") as response:
             content = response.read()
             self.assertIn("CH-008 Yöntem ve Bilimsel Protokol".encode(), content)
@@ -59,6 +65,20 @@ class WorkerServiceTest(unittest.TestCase):
             content = response.read()
             self.assertIn(b"CH-008 Method and Scientific Protocol", content)
             self.assertIn(b"hello@bboga.com", content)
+
+    def test_forecast_map_requires_region_and_handles_unknown_region(self):
+        def reader(region):
+            if region != "california-relm":
+                raise LookupError(region)
+            return {"region_id": region, "layers": {}}
+
+        base = self.start_server((True, None), forecast_map=reader)
+        with self.assertRaises(urllib.error.HTTPError) as missing:
+            urllib.request.urlopen(f"{base}/api/forecast-map")
+        self.assertEqual(missing.exception.code, HTTPStatus.BAD_REQUEST)
+        with self.assertRaises(urllib.error.HTTPError) as unknown:
+            urllib.request.urlopen(f"{base}/api/forecast-map?region=unknown")
+        self.assertEqual(unknown.exception.code, HTTPStatus.NOT_FOUND)
 
 
 if __name__ == "__main__":

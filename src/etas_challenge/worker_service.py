@@ -7,11 +7,12 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
 from pathlib import Path
-from urllib.parse import urlsplit
+from urllib.parse import parse_qs, urlsplit
 
 from etas_challenge.object_storage import ObjectStorageConfig
 from etas_challenge.object_storage import storage_health
 from etas_challenge.prospective_dashboard import read_dashboard
+from etas_challenge.prospective_map import ForecastMapReader
 
 
 DEFAULT_STATIC = Path(
@@ -50,7 +51,7 @@ def combined_health(
     return storage_health(config)
 
 
-def handler_factory(checker, dashboard_reader=None, static_dir=None):
+def handler_factory(checker, dashboard_reader=None, static_dir=None, map_reader=None):
     static_root = Path(static_dir or DEFAULT_STATIC).resolve()
 
     class WorkerRequestHandler(SimpleHTTPRequestHandler):
@@ -64,6 +65,9 @@ def handler_factory(checker, dashboard_reader=None, static_dir=None):
                 return
             if path == "/api/dashboard":
                 self._serve_dashboard()
+                return
+            if path == "/api/forecast-map":
+                self._serve_forecast_map()
                 return
             if path == "/":
                 self.path = "/index.html"
@@ -130,6 +134,34 @@ def handler_factory(checker, dashboard_reader=None, static_dir=None):
             except (BrokenPipeError, ConnectionResetError):
                 pass
 
+        def _serve_forecast_map(self):
+            if map_reader is None:
+                self._json_error(HTTPStatus.SERVICE_UNAVAILABLE, "forecast_map_unavailable")
+                return
+            query = parse_qs(urlsplit(self.path).query)
+            region_id = query.get("region", [""])[0]
+            if not region_id:
+                self._json_error(HTTPStatus.BAD_REQUEST, "region_required")
+                return
+            try:
+                body = map_reader(region_id)
+            except LookupError:
+                self._json_error(HTTPStatus.NOT_FOUND, "forecast_map_not_found")
+                return
+            except Exception:
+                self._json_error(HTTPStatus.SERVICE_UNAVAILABLE, "forecast_map_unavailable")
+                return
+            encoded = json.dumps(body, separators=(",", ":")).encode("utf-8")
+            self.send_response(HTTPStatus.OK)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            try:
+                self.wfile.write(encoded)
+            except (BrokenPipeError, ConnectionResetError):
+                pass
+
         def _json_error(self, status, reason):
             encoded = json.dumps({"status": "error", "reason": reason}).encode("utf-8")
             self.send_response(status)
@@ -148,9 +180,11 @@ def handler_factory(checker, dashboard_reader=None, static_dir=None):
     return WorkerRequestHandler
 
 
-def create_server(host: str, port: int, checker, dashboard_reader=None, static_dir=None):
+def create_server(
+    host: str, port: int, checker, dashboard_reader=None, static_dir=None, map_reader=None
+):
     return ThreadingHTTPServer(
-        (host, port), handler_factory(checker, dashboard_reader, static_dir)
+        (host, port), handler_factory(checker, dashboard_reader, static_dir, map_reader)
     )
 
 
@@ -159,6 +193,12 @@ def main() -> None:
     port = int(os.environ.get("PORT", "8080"))
     database_url = os.environ.get("DATABASE_URL")
     require_storage = os.environ.get("REQUIRE_OBJECT_STORAGE", "0") == "1"
+    map_reader = None
+    if database_url:
+        try:
+            map_reader = ForecastMapReader(database_url, PROTOCOL_ID)
+        except ValueError:
+            pass
     server = create_server(
         host,
         port,
@@ -168,6 +208,7 @@ def main() -> None:
             if not database_url
             else lambda: read_dashboard(database_url, PROTOCOL_ID)
         ),
+        map_reader=map_reader,
     )
     print(f"Prospective worker listening on http://{host}:{port}", flush=True)
     try:

@@ -1,10 +1,17 @@
 "use strict";
 
-const state = { dashboard: null, region: "all", points: [] };
+const state = {
+  dashboard: null, region: "all", points: [], mapRegion: "california-relm",
+  mapLayer: "log_ratio", mapData: null, mapCache: new Map(), mapPoints: [],
+};
 const canvas = document.getElementById("score-chart");
 const context = canvas.getContext("2d");
 const stage = document.getElementById("chart-stage");
 const tooltip = document.getElementById("chart-tooltip");
+const mapCanvas = document.getElementById("forecast-grid-map");
+const mapContext = mapCanvas.getContext("2d");
+const mapStage = document.getElementById("forecast-map-stage");
+const mapTooltip = document.getElementById("forecast-map-tooltip");
 
 async function loadDashboard() {
   const refresh = document.getElementById("refresh-button");
@@ -33,7 +40,148 @@ function renderAll() {
   renderRegions();
   renderScores();
   renderProtocol();
+  renderMapRegionControl();
 }
+
+async function loadForecastMap(force = false) {
+  const empty = document.getElementById("forecast-map-empty");
+  empty.textContent = "Harita yükleniyor";
+  empty.classList.remove("hidden");
+  mapTooltip.classList.remove("visible");
+  try {
+    if (!force && state.mapCache.has(state.mapRegion)) {
+      state.mapData = state.mapCache.get(state.mapRegion);
+    } else {
+      const response = await fetch(`/api/forecast-map?region=${encodeURIComponent(state.mapRegion)}`, { cache: "no-store" });
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      state.mapData = await response.json();
+      state.mapCache.set(state.mapRegion, state.mapData);
+    }
+    renderForecastMap();
+    empty.classList.add("hidden");
+  } catch (error) {
+    state.mapData = null;
+    empty.textContent = "Tahmin haritası kullanılamıyor";
+    showError(`Tahmin haritası alınamadı: ${error.message}`);
+  }
+}
+
+function renderMapRegionControl() {
+  const control = document.getElementById("map-region-control");
+  control.replaceChildren();
+  state.dashboard.regions.forEach((region) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = `segment${state.mapRegion === region.region_id ? " active" : ""}`;
+    button.textContent = shortRegion(region.name);
+    button.addEventListener("click", () => {
+      state.mapRegion = region.region_id;
+      renderMapRegionControl();
+      loadForecastMap();
+    });
+    control.appendChild(button);
+  });
+}
+
+function renderForecastMap() {
+  const data = state.mapData;
+  if (!data) return;
+  const layerNames = { etas: "ETAS", ch008: "CH-008", log_ratio: "Fark" };
+  setText("forecast-map-title", data.region_name);
+  setText("forecast-map-window", `${formatDateTime(data.target_start)} → ${formatDateTime(data.target_end)} UTC`);
+  setText("forecast-map-layer", layerNames[state.mapLayer]);
+  setText("map-fact-target", formatDate(data.target_start));
+  setText("map-fact-published", `${formatDateTime(data.published_at)} UTC`);
+  setText("map-fact-cells", formatInteger(data.summary.cells));
+  setText("map-fact-etas", formatMapTotal(data.summary.etas_total));
+  setText("map-fact-ch008", formatMapTotal(data.summary.ch008_total));
+  setText("map-semantics-note", data.semantics === "one_day_expected_count_per_cell"
+    ? "Kaliforniya katmanları hücre başına bir günlük toplam beklenen olay sayısını gösterir."
+    : "Bu bölgedeki katmanlar, sıralı ETAS değerlendirmesinde kullanılan hedef öncesi doğrudan arka plan kütlesini gösterir.");
+  const scale = document.querySelector(".map-scale");
+  scale.classList.toggle("sequential", state.mapLayer !== "log_ratio");
+  setText("map-scale-low", state.mapLayer === "log_ratio" ? "ETAS yüksek" : "Düşük");
+  setText("map-scale-high", state.mapLayer === "log_ratio" ? "CH-008 yüksek" : "Yüksek");
+  resizeForecastMap();
+}
+
+function resizeForecastMap() {
+  if (!state.mapData) return;
+  const rect = mapStage.getBoundingClientRect();
+  if (rect.width <= 0 || rect.height <= 0) return;
+  const ratio = Math.min(window.devicePixelRatio || 1, 2);
+  mapCanvas.width = Math.max(1, Math.round(rect.width * ratio));
+  mapCanvas.height = Math.max(1, Math.round(rect.height * ratio));
+  mapCanvas.style.width = `${rect.width}px`;
+  mapCanvas.style.height = `${rect.height}px`;
+  mapContext.setTransform(ratio, 0, 0, ratio, 0, 0);
+  drawForecastMap(rect.width, rect.height);
+}
+
+function drawForecastMap(width, height) {
+  const data = state.mapData;
+  mapContext.clearRect(0, 0, width, height);
+  mapContext.fillStyle = "#edf1ef";
+  mapContext.fillRect(0, 0, width, height);
+  const origins = data.origins;
+  const values = data.layers[state.mapLayer];
+  const spacing = data.spacing_degrees;
+  const longitudes = origins.map((point) => point[0]);
+  const latitudes = origins.map((point) => point[1]);
+  const bounds = {
+    minLon: Math.min(...longitudes), maxLon: Math.max(...longitudes) + spacing,
+    minLat: Math.min(...latitudes), maxLat: Math.max(...latitudes) + spacing,
+  };
+  const cosine = Math.max(0.35, Math.cos((bounds.minLat + bounds.maxLat) / 2 * Math.PI / 180));
+  const padding = 22;
+  const scale = Math.min((width - padding * 2) / ((bounds.maxLon - bounds.minLon) * cosine), (height - padding * 2) / (bounds.maxLat - bounds.minLat));
+  const usedWidth = (bounds.maxLon - bounds.minLon) * cosine * scale;
+  const usedHeight = (bounds.maxLat - bounds.minLat) * scale;
+  const left = (width - usedWidth) / 2;
+  const top = (height - usedHeight) / 2;
+  const positives = values.filter((value) => value > 0);
+  const logs = positives.map((value) => Math.log10(value));
+  const low = quantile(logs, 0.02);
+  const high = quantile(logs, 0.98);
+  const differenceExtent = Math.max(0.000001, quantile(values.map(Math.abs), 0.98));
+  state.mapPoints = [];
+  origins.forEach(([longitude, latitude], index) => {
+    const x = left + (longitude - bounds.minLon) * cosine * scale;
+    const y = top + (bounds.maxLat - latitude - spacing) * scale;
+    const cellWidth = spacing * cosine * scale + 0.45;
+    const cellHeight = spacing * scale + 0.45;
+    const value = values[index];
+    const normalized = state.mapLayer === "log_ratio"
+      ? Math.max(-1, Math.min(1, value / differenceExtent))
+      : high === low ? 0.5 : Math.max(0, Math.min(1, (Math.log10(Math.max(value, Number.MIN_VALUE)) - low) / (high - low)));
+    mapContext.fillStyle = state.mapLayer === "log_ratio" ? differenceColor(normalized) : rateColor(normalized);
+    mapContext.fillRect(x, y, cellWidth, cellHeight);
+    state.mapPoints.push({ x, y, width: cellWidth, height: cellHeight, longitude, latitude, value });
+  });
+}
+
+function handleMapPointer(event) {
+  const rect = mapCanvas.getBoundingClientRect();
+  const x = event.clientX - rect.left;
+  const y = event.clientY - rect.top;
+  const point = state.mapPoints.find((item) => x >= item.x && x <= item.x + item.width && y >= item.y && y <= item.y + item.height);
+  if (!point) { mapTooltip.classList.remove("visible"); return; }
+  const value = state.mapLayer === "log_ratio" ? formatSigned(point.value, 4) : formatMapTotal(point.value);
+  mapTooltip.innerHTML = `<strong>${point.latitude.toFixed(2)}°, ${point.longitude.toFixed(2)}°</strong><br>${value}`;
+  mapTooltip.style.left = `${Math.min(x + 10, rect.width - 125)}px`;
+  mapTooltip.style.top = `${Math.max(y - 42, 8)}px`;
+  mapTooltip.classList.add("visible");
+}
+
+function quantile(values, probability) {
+  if (!values.length) return 0;
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.min(sorted.length - 1, Math.floor((sorted.length - 1) * probability))];
+}
+function mixColor(from, to, amount) { return `rgb(${from.map((value, index) => Math.round(value + (to[index] - value) * amount)).join(",")})`; }
+function rateColor(value) { return value < 0.55 ? mixColor([238, 241, 213], [216, 162, 55], value / 0.55) : mixColor([216, 162, 55], [8, 127, 122], (value - 0.55) / 0.45); }
+function differenceColor(value) { return value < 0 ? mixColor([244, 246, 245], [207, 91, 76], -value) : mixColor([244, 246, 245], [8, 127, 122], value); }
+function formatMapTotal(value) { return Number(value).toLocaleString("tr-TR", { maximumSignificantDigits: 5 }); }
 
 function renderDryRun() {
   const progress = state.dashboard.dry_run;
@@ -250,9 +398,24 @@ document.querySelectorAll(".tab[data-view]").forEach((button) => button.addEvent
   document.querySelectorAll(".view").forEach((view) => view.classList.remove("active"));
   document.getElementById(`${button.dataset.view}-view`).classList.add("active");
   if (button.dataset.view === "overview") requestAnimationFrame(resizeCanvas);
+  if (button.dataset.view === "maps") {
+    if (state.mapData && state.mapData.region_id === state.mapRegion) requestAnimationFrame(resizeForecastMap);
+    else loadForecastMap();
+  }
 }));
-document.getElementById("refresh-button").addEventListener("click", loadDashboard);
+document.querySelectorAll("[data-map-layer]").forEach((button) => button.addEventListener("click", () => {
+  state.mapLayer = button.dataset.mapLayer;
+  document.querySelectorAll("[data-map-layer]").forEach((item) => item.classList.toggle("active", item === button));
+  renderForecastMap();
+}));
+document.getElementById("refresh-button").addEventListener("click", async () => {
+  await loadDashboard();
+  if (state.mapData) loadForecastMap(true);
+});
 canvas.addEventListener("pointermove", handleChartPointer);
 canvas.addEventListener("pointerleave", () => tooltip.classList.remove("visible"));
+mapCanvas.addEventListener("pointermove", handleMapPointer);
+mapCanvas.addEventListener("pointerleave", () => mapTooltip.classList.remove("visible"));
 new ResizeObserver(resizeCanvas).observe(stage);
+new ResizeObserver(resizeForecastMap).observe(mapStage);
 loadDashboard();
