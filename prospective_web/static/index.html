@@ -90,6 +90,17 @@
             </table>
           </div>
         </section>
+
+        <section class="newsletter-band" aria-labelledby="newsletter-title">
+          <div class="newsletter-copy"><span>GÜNLÜK DURUM RAPORU</span><h2 id="newsletter-title">Her sabah 06:00’da e-postanda</h2><p>Yayın durumu, incident’lar ve ETAS–CH-008 skorlarının kısa özeti.</p></div>
+          <form class="newsletter-form" id="newsletter-form">
+            <label for="newsletter-email">E-posta adresi</label>
+            <div><input id="newsletter-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="name@example.com" required><button type="submit">Kaydol</button></div>
+            <input class="newsletter-trap" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <small id="newsletter-message">Kayıt doğrulamadan sonra etkinleşir; her e-postadan çıkabilirsin.</small>
+          </form>
+          <div class="newsletter-count"><strong id="newsletter-count">—</strong><span>kayıtlı abone</span></div>
+        </section>
       </section>
 
       <section class="view" id="maps-view">

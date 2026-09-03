@@ -4,6 +4,7 @@ from __future__ import annotations
 
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
+import html
 import json
 import os
 from pathlib import Path
@@ -11,6 +12,7 @@ from urllib.parse import parse_qs, urlsplit
 
 from etas_challenge.object_storage import ObjectStorageConfig
 from etas_challenge.object_storage import storage_health
+from etas_challenge.newsletter import NewsletterService
 from etas_challenge.prospective_dashboard import read_dashboard
 from etas_challenge.prospective_map import ForecastMapReader
 
@@ -51,7 +53,10 @@ def combined_health(
     return storage_health(config)
 
 
-def handler_factory(checker, dashboard_reader=None, static_dir=None, map_reader=None):
+def handler_factory(
+    checker, dashboard_reader=None, static_dir=None, map_reader=None,
+    newsletter_service=None,
+):
     static_root = Path(static_dir or DEFAULT_STATIC).resolve()
 
     class WorkerRequestHandler(SimpleHTTPRequestHandler):
@@ -69,6 +74,15 @@ def handler_factory(checker, dashboard_reader=None, static_dir=None, map_reader=
             if path == "/api/forecast-map":
                 self._serve_forecast_map()
                 return
+            if path == "/api/newsletter":
+                self._serve_newsletter_status()
+                return
+            if path == "/newsletter/confirm":
+                self._serve_newsletter_confirmation()
+                return
+            if path == "/newsletter/unsubscribe":
+                self._serve_unsubscribe_page()
+                return
             if path == "/":
                 self.path = "/index.html"
             elif path in ("/en", "/en/"):
@@ -80,6 +94,19 @@ def handler_factory(checker, dashboard_reader=None, static_dir=None, map_reader=
                 self.send_error(HTTPStatus.NOT_FOUND)
                 return
             super().do_GET()
+
+        def do_POST(self):
+            path = urlsplit(self.path).path
+            if path == "/api/newsletter":
+                self._serve_newsletter_subscription()
+                return
+            if path == "/api/newsletter/unsubscribe":
+                self._serve_newsletter_unsubscribe(one_click=True)
+                return
+            if path == "/newsletter/unsubscribe":
+                self._serve_newsletter_unsubscribe(one_click=False)
+                return
+            self.send_error(HTTPStatus.NOT_FOUND)
 
         def end_headers(self):
             self.send_header("X-Content-Type-Options", "nosniff")
@@ -162,8 +189,109 @@ def handler_factory(checker, dashboard_reader=None, static_dir=None, map_reader=
             except (BrokenPipeError, ConnectionResetError):
                 pass
 
-        def _json_error(self, status, reason):
-            encoded = json.dumps({"status": "error", "reason": reason}).encode("utf-8")
+        def _serve_newsletter_status(self):
+            if newsletter_service is None:
+                self._json_error(HTTPStatus.SERVICE_UNAVAILABLE, "newsletter_unavailable")
+                return
+            try:
+                count = newsletter_service.active_count()
+            except Exception:
+                self._json_error(HTTPStatus.SERVICE_UNAVAILABLE, "newsletter_unavailable")
+                return
+            self._json_response(HTTPStatus.OK, {"status": "ok", "subscribers": count})
+
+        def _serve_newsletter_subscription(self):
+            if newsletter_service is None:
+                self._json_error(HTTPStatus.SERVICE_UNAVAILABLE, "newsletter_unavailable")
+                return
+            if self.headers.get_content_type() != "application/json":
+                self._json_error(HTTPStatus.UNSUPPORTED_MEDIA_TYPE, "json_required")
+                return
+            try:
+                length = int(self.headers.get("Content-Length", "0"))
+                if length <= 0 or length > 4096:
+                    raise ValueError("invalid body length")
+                body = json.loads(self.rfile.read(length))
+                if body.get("company"):
+                    self._json_response(HTTPStatus.ACCEPTED, {"status": "pending"})
+                    return
+                result = newsletter_service.subscribe(
+                    str(body.get("email", "")), str(body.get("locale", "tr"))
+                )
+            except (ValueError, json.JSONDecodeError):
+                self._json_error(HTTPStatus.BAD_REQUEST, "invalid_subscription")
+                return
+            except Exception:
+                self._json_error(HTTPStatus.SERVICE_UNAVAILABLE, "newsletter_unavailable")
+                return
+            self._json_response(
+                HTTPStatus.ACCEPTED,
+                {"status": "pending"},
+            )
+
+        def _serve_newsletter_confirmation(self):
+            token = parse_qs(urlsplit(self.path).query).get("token", [""])[0]
+            if newsletter_service is None or not token or len(token) > 128:
+                self._html_message("Bağlantı geçersiz", "The link is invalid.")
+                return
+            try:
+                result = newsletter_service.confirm(token)
+            except Exception:
+                self._html_message("İşlem tamamlanamadı", "Please try again later.", error=True)
+                return
+            if result == "confirmed":
+                self._html_message("Abonelik doğrulandı", "Your subscription is confirmed.")
+            else:
+                self._html_message("Bağlantı geçersiz", "The link is invalid.", error=True)
+
+        def _serve_unsubscribe_page(self):
+            token = parse_qs(urlsplit(self.path).query).get("token", [""])[0]
+            if not token or len(token) > 128:
+                self._html_message("Bağlantı geçersiz", "The link is invalid.", error=True)
+                return
+            action = f"/newsletter/unsubscribe?token={html.escape(token, quote=True)}"
+            body = f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>CH-008 Newsletter</title><link rel="stylesheet" href="/styles.css"></head>
+<body><main class="subscription-page"><h1>Abonelikten çık</h1><p>CH-008 günlük durum raporlarını artık almak istemiyor musun?</p><form method="post" action="{action}"><button>Aboneliği sonlandır</button></form><small>Unsubscribe from the CH-008 daily status report.</small></main></body></html>"""
+            self._html_response(HTTPStatus.OK, body)
+
+        def _serve_newsletter_unsubscribe(self, *, one_click):
+            token = parse_qs(urlsplit(self.path).query).get("token", [""])[0]
+            if newsletter_service is None or not token or len(token) > 128:
+                self._html_message("Bağlantı geçersiz", "The link is invalid.", error=True)
+                return
+            try:
+                result = newsletter_service.unsubscribe(token)
+            except Exception:
+                self._html_message("İşlem tamamlanamadı", "Please try again later.", error=True)
+                return
+            if one_click and result == "unsubscribed":
+                self.send_response(HTTPStatus.NO_CONTENT)
+                self.send_header("Cache-Control", "no-store")
+                self.end_headers()
+            elif result == "unsubscribed":
+                self._html_message("Abonelik sonlandırıldı", "You have been unsubscribed.")
+            else:
+                self._html_message("Bağlantı geçersiz", "The link is invalid.", error=True)
+
+        def _html_message(self, title, copy, error=False):
+            body = f"""<!doctype html><html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>{html.escape(title)}</title><link rel="stylesheet" href="/styles.css"></head>
+<body><main class="subscription-page {'error' if error else ''}"><span>CH-008 PROSPECTIVE TEST</span><h1>{html.escape(title)}</h1><p>{html.escape(copy)}</p><a href="/">Dashboard</a></main></body></html>"""
+            self._html_response(HTTPStatus.OK, body)
+
+        def _html_response(self, status, body):
+            encoded = body.encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            try:
+                self.wfile.write(encoded)
+            except (BrokenPipeError, ConnectionResetError):
+                pass
+
+        def _json_response(self, status, body):
+            encoded = json.dumps(body, separators=(",", ":")).encode("utf-8")
             self.send_response(status)
             self.send_header("Content-Type", "application/json; charset=utf-8")
             self.send_header("Content-Length", str(len(encoded)))
@@ -174,6 +302,9 @@ def handler_factory(checker, dashboard_reader=None, static_dir=None, map_reader=
             except (BrokenPipeError, ConnectionResetError):
                 pass
 
+        def _json_error(self, status, reason):
+            self._json_response(status, {"status": "error", "reason": reason})
+
         def log_message(self, format, *args):
             print(f"{self.address_string()} - {format % args}", flush=True)
 
@@ -181,10 +312,13 @@ def handler_factory(checker, dashboard_reader=None, static_dir=None, map_reader=
 
 
 def create_server(
-    host: str, port: int, checker, dashboard_reader=None, static_dir=None, map_reader=None
+    host: str, port: int, checker, dashboard_reader=None, static_dir=None, map_reader=None,
+    newsletter_service=None,
 ):
     return ThreadingHTTPServer(
-        (host, port), handler_factory(checker, dashboard_reader, static_dir, map_reader)
+        (host, port), handler_factory(
+            checker, dashboard_reader, static_dir, map_reader, newsletter_service
+        )
     )
 
 
@@ -194,6 +328,7 @@ def main() -> None:
     database_url = os.environ.get("DATABASE_URL")
     require_storage = os.environ.get("REQUIRE_OBJECT_STORAGE", "0") == "1"
     map_reader = None
+    newsletter_service = NewsletterService(database_url) if database_url else None
     if database_url:
         try:
             map_reader = ForecastMapReader(database_url, PROTOCOL_ID)
@@ -209,6 +344,7 @@ def main() -> None:
             else lambda: read_dashboard(database_url, PROTOCOL_ID)
         ),
         map_reader=map_reader,
+        newsletter_service=newsletter_service,
     )
     print(f"Prospective worker listening on http://{host}:{port}", flush=True)
     try:

@@ -26,6 +26,7 @@ The following stages are complete:
   mechanism ablations, and external-region tests in New Zealand and Chile;
 - PostgreSQL/S3 daily collection, state, publication, and scoring pipeline;
 - bilingual live dashboard and complete Turkish/English method pages.
+- checksum-verified forecast maps and a double-opt-in daily status newsletter.
 
 The three-region 14-day operational dry run is active. Its first issue was
 `2026-08-31T00:05:18Z` for the target day beginning `2026-09-01T00:00:00Z`.
@@ -77,6 +78,16 @@ The production command is:
 ```bash
 python scripts/run_prospective_daily.py
 ```
+
+The independent morning newsletter command is:
+
+```bash
+python scripts/send_daily_newsletter.py
+```
+
+It runs as a separate `03:00 UTC` (`06:00` Turkey time) Coolify task and cannot
+block forecast publication. Setup and delivery guarantees are documented in
+[`wiki/04-operations/prospective-newsletter.md`](wiki/04-operations/prospective-newsletter.md).
 
 The launch guard applies the frozen downtime policy independently per region
 and pipeline stage. It uses three attempts with 60/300-second backoff, preserves

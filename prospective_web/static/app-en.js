@@ -66,6 +66,44 @@ async function loadForecastMap(force = false) {
   }
 }
 
+async function loadNewsletterStatus() {
+  try {
+    const response = await fetch("/api/newsletter", { cache: "no-store" });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    const result = await response.json();
+    setText("newsletter-count", formatInteger(result.subscribers));
+  } catch (_) {
+    setText("newsletter-count", "—");
+  }
+}
+
+async function submitNewsletter(event) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const button = form.querySelector("button");
+  const message = document.getElementById("newsletter-message");
+  const data = new FormData(form);
+  button.disabled = true;
+  message.className = "";
+  message.textContent = "Processing subscription…";
+  try {
+    const response = await fetch("/api/newsletter", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: data.get("email"), company: data.get("company"), locale: "en" }),
+    });
+    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    form.reset();
+    message.className = "success";
+    message.textContent = "Confirmation sent. Please check your inbox.";
+  } catch (_) {
+    message.className = "error";
+    message.textContent = "Subscription could not be completed. Please try again later.";
+  } finally {
+    button.disabled = false;
+  }
+}
+
 function renderMapRegionControl() {
   const control = document.getElementById("map-region-control");
   control.replaceChildren();
@@ -413,8 +451,10 @@ document.querySelectorAll("[data-map-layer]").forEach((button) => button.addEven
 }));
 document.getElementById("refresh-button").addEventListener("click", async () => {
   await loadDashboard();
+  loadNewsletterStatus();
   if (state.mapData) loadForecastMap(true);
 });
+document.getElementById("newsletter-form").addEventListener("submit", submitNewsletter);
 canvas.addEventListener("pointermove", handleChartPointer);
 canvas.addEventListener("pointerleave", () => tooltip.classList.remove("visible"));
 mapCanvas.addEventListener("pointermove", handleMapPointer);
@@ -422,3 +462,4 @@ mapCanvas.addEventListener("pointerleave", () => mapTooltip.classList.remove("vi
 new ResizeObserver(resizeCanvas).observe(stage);
 new ResizeObserver(resizeForecastMap).observe(mapStage);
 loadDashboard();
+loadNewsletterStatus();

@@ -27,6 +27,7 @@ COPY scripts/advance_prospective_daily_states.py ./scripts/advance_prospective_d
 COPY scripts/publish_prospective_forecasts.py ./scripts/publish_prospective_forecasts.py
 COPY scripts/score_prospective_forecasts.py ./scripts/score_prospective_forecasts.py
 COPY scripts/run_prospective_daily.py ./scripts/run_prospective_daily.py
+COPY scripts/send_daily_newsletter.py ./scripts/send_daily_newsletter.py
 COPY scripts/verify_adapter_freeze.py ./scripts/verify_adapter_freeze.py
 COPY scripts/verify_prospective_initial_states.py ./scripts/verify_prospective_initial_states.py
 COPY scripts/verify_prospective_bootstrap.py ./scripts/verify_prospective_bootstrap.py

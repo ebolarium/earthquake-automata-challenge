@@ -9,8 +9,24 @@ from pathlib import Path
 from etas_challenge.worker_service import create_server
 
 
+class Newsletter:
+    def active_count(self):
+        return 12
+
+    def subscribe(self, email, locale):
+        if "@" not in email:
+            raise ValueError(email)
+        return type("Result", (), {"status": "pending", "confirmation_sent": True})()
+
+    def confirm(self, token):
+        return "confirmed" if token == "valid" else "invalid"
+
+    def unsubscribe(self, token):
+        return "unsubscribed" if token == "valid" else "invalid"
+
+
 class WorkerServiceTest(unittest.TestCase):
-    def start_server(self, result, dashboard=None, forecast_map=None):
+    def start_server(self, result, dashboard=None, forecast_map=None, newsletter=None):
         static = Path(__file__).resolve().parents[1] / "prospective_web" / "static"
         try:
             server = create_server(
@@ -18,6 +34,7 @@ class WorkerServiceTest(unittest.TestCase):
                 None if dashboard is None else lambda: dashboard,
                 static,
                 None if forecast_map is None else lambda region: forecast_map(region),
+                newsletter,
             )
         except PermissionError:
             self.skipTest("local sockets are unavailable in this sandbox")
@@ -79,6 +96,32 @@ class WorkerServiceTest(unittest.TestCase):
         with self.assertRaises(urllib.error.HTTPError) as unknown:
             urllib.request.urlopen(f"{base}/api/forecast-map?region=unknown")
         self.assertEqual(unknown.exception.code, HTTPStatus.NOT_FOUND)
+
+    def test_newsletter_count_subscription_confirmation_and_unsubscribe(self):
+        base = self.start_server((True, None), newsletter=Newsletter())
+        with urllib.request.urlopen(f"{base}/api/newsletter") as response:
+            self.assertEqual(json.load(response)["subscribers"], 12)
+        request = urllib.request.Request(
+            f"{base}/api/newsletter",
+            data=json.dumps({"email": "a@example.com", "locale": "tr"}).encode(),
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        with urllib.request.urlopen(request) as response:
+            self.assertEqual(response.status, HTTPStatus.ACCEPTED)
+            self.assertEqual(json.load(response), {"status": "pending"})
+        with urllib.request.urlopen(f"{base}/newsletter/confirm?token=valid") as response:
+            self.assertIn("Abonelik doğrulandı".encode(), response.read())
+        unsubscribe = urllib.request.Request(
+            f"{base}/newsletter/unsubscribe?token=valid", data=b"", method="POST"
+        )
+        with urllib.request.urlopen(unsubscribe) as response:
+            self.assertIn("Abonelik sonlandırıldı".encode(), response.read())
+        one_click = urllib.request.Request(
+            f"{base}/api/newsletter/unsubscribe?token=valid", data=b"", method="POST"
+        )
+        with urllib.request.urlopen(one_click) as response:
+            self.assertEqual(response.status, HTTPStatus.NO_CONTENT)
 
 
 if __name__ == "__main__":

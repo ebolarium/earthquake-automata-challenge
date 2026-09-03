@@ -91,6 +91,17 @@
             </table>
           </div>
         </section>
+
+        <section class="newsletter-band" aria-labelledby="newsletter-title">
+          <div class="newsletter-copy"><span>DAILY STATUS REPORT</span><h2 id="newsletter-title">In your inbox every morning at 06:00 TRT</h2><p>A concise summary of publication health, incidents, and ETAS–CH-008 scores.</p></div>
+          <form class="newsletter-form" id="newsletter-form">
+            <label for="newsletter-email">Email address</label>
+            <div><input id="newsletter-email" name="email" type="email" autocomplete="email" maxlength="254" placeholder="name@example.com" required><button type="submit">Subscribe</button></div>
+            <input class="newsletter-trap" name="company" type="text" tabindex="-1" autocomplete="off" aria-hidden="true">
+            <small id="newsletter-message">Active after email confirmation; unsubscribe from any report.</small>
+          </form>
+          <div class="newsletter-count"><strong id="newsletter-count">—</strong><span>subscribers</span></div>
+        </section>
       </section>
 
       <section class="view" id="maps-view">
