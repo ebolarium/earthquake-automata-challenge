@@ -226,11 +226,11 @@ function renderDryRun() {
   const notice = document.getElementById("run-notice");
   const copy = {
     awaiting_scores: ["Dry run başladı", "İlk tamamlanmış hedef gününün skoru bekleniyor."],
-    running: ["Dry run sürüyor", `${progress.provisional_days}/${progress.planned_days} ortak hedef günü skorlandı.`],
-    settling: ["14 günlük dry run tamamlandı", `Final skorların kesinleşmesi bekleniyor: ${progress.final_days}/${progress.planned_days} gün.`],
-    complete: ["Dry run tamamlandı", `${progress.final_days}/${progress.planned_days} günlük final skor hazır. Sonuçlar değerlendirmeye hazır.`],
+    running: ["Dry run sürüyor", `Takvim ${progress.calendar_days_elapsed}/${progress.planned_days} · ${progress.successful_scored_days} başarılı skor günü.`],
+    settling: ["14 günlük sabit pencere tamamlandı", `Başarılı ${progress.successful_scored_days} günün final skorları bekleniyor: ${progress.final_days}/${progress.successful_scored_days}.`],
+    complete: ["Dry run tamamlandı", `${progress.final_days} başarılı gün kesinleşti · ${progress.missed_calendar_days} gün kaçırıldı.`],
   }[progress.phase];
-  const shownDays = progress.phase === "settling" || progress.phase === "complete" ? progress.final_days : progress.provisional_days;
+  const shownDays = progress.calendar_days_elapsed;
   notice.className = `run-notice ${progress.phase.replace("_", "-")}`;
   setText("run-eyebrow", progress.phase === "complete" ? "TAMAMLANDI" : progress.phase === "settling" ? "KESİNLEŞME" : "DRY RUN");
   setText("run-title", copy[0]);
@@ -281,7 +281,7 @@ function renderMetrics() {
   setText("metric-igpe", formatGain(provisional.mean));
   setText("metric-factor", provisional.mean === null ? "ETAS'a göre" : `${formatFactor(Math.exp(provisional.mean))} göreli oran`);
   setText("metric-events", formatInteger(provisional.events));
-  setText("metric-days", `${state.dashboard.dry_run.provisional_days}/${state.dashboard.dry_run.planned_days} ortak gün`);
+  setText("metric-days", `${state.dashboard.dry_run.successful_scored_days} başarılı · ${state.dashboard.dry_run.calendar_days_elapsed}/${state.dashboard.dry_run.planned_days} takvim`);
   renderSummary("provisional", aggregate(selectedScores("provisional")));
   renderSummary("final", aggregate(selectedScores("final")));
   setText("incident-count", formatInteger(state.dashboard.open_incidents));

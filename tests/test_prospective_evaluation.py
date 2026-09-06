@@ -38,6 +38,7 @@ class ProspectiveEvaluationTest(unittest.TestCase):
             "published_regions": 1,
             "open_incidents": 0,
             "last_incident_at": None,
+            "last_open_incident_at": None,
             "pooled_primary_claim_status": "eligible",
             "regions": [{
                 "region_id": "test-region",
@@ -51,6 +52,8 @@ class ProspectiveEvaluationTest(unittest.TestCase):
                 "operations": {
                     "primary_eligible": True,
                     "missed_region_days": 0,
+                    "current_consecutive_missed_days": 0,
+                    "longest_consecutive_missed_days": 0,
                 },
                 "provisional": summary,
                 "final": empty,

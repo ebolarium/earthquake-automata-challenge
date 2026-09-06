@@ -152,6 +152,7 @@ def build_evaluation(
             "published_regions": dashboard.get("published_regions"),
             "open_incidents": dashboard.get("open_incidents"),
             "last_incident_at": dashboard.get("last_incident_at"),
+            "last_open_incident_at": dashboard.get("last_open_incident_at"),
             "pooled_primary_claim_status": dashboard.get("pooled_primary_claim_status"),
             "missed_region_days_are_excluded_not_scored_as_zero": True,
             "late_forecasts_are_rejected": True,
@@ -163,6 +164,7 @@ def build_evaluation(
             "Separate provisional scores from catalog-settled final scores.",
             "Inspect each region; do not infer broad geographic generalization from only a pooled mean.",
             "Report missed days, invalidated regions, open incidents, and forecast freshness.",
+            "Treat missed_region_days and longest_consecutive_missed_days as historical totals; current_consecutive_missed_days describes the active outage streak.",
             "Do not call CH-008 superior without the pre-registered event gate and uncertainty analysis.",
             "Do not interpret these rate forecasts as exact earthquake time, location, or magnitude predictions.",
         ],
@@ -187,6 +189,7 @@ def evaluation_markdown(evaluation: dict) -> str:
         f"Mode: {status['protocol_mode']}",
         f"Counts toward prospective claim: {str(status['counts_toward_prospective_claim']).lower()}",
         f"Pipeline status: {status['pipeline_status']}",
+        f"Open incidents: {evaluation['operational_integrity']['open_incidents']}",
         f"Claim assessment: {status['claim_assessment']}",
         "",
         "## Current descriptive result",
@@ -211,6 +214,8 @@ def evaluation_markdown(evaluation: dict) -> str:
             f"IGPE={score['mean_igpe_nat_per_event']}, "
             f"direction={score['descriptive_direction']}, "
             f"missed_days={operations.get('missed_region_days', 0)}, "
+            f"current_missed_streak={operations.get('current_consecutive_missed_days', 0)}, "
+            f"longest_missed_streak={operations.get('longest_consecutive_missed_days', 0)}, "
             f"primary_eligible={operations.get('primary_eligible', True)}"
         )
     lines.extend([

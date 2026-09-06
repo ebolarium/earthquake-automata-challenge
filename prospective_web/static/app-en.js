@@ -226,11 +226,11 @@ function renderDryRun() {
   const notice = document.getElementById("run-notice");
   const copy = {
     awaiting_scores: ["Dry run started", "Waiting for the first completed target-day score."],
-    running: ["Dry run in progress", `${progress.provisional_days}/${progress.planned_days} common target days scored.`],
-    settling: ["14-day dry run completed", `Waiting for final score settlement: ${progress.final_days}/${progress.planned_days} days.`],
-    complete: ["Dry run complete", `${progress.final_days}/${progress.planned_days} final daily scores are ready for review.`],
+    running: ["Dry run in progress", `Calendar ${progress.calendar_days_elapsed}/${progress.planned_days} · ${progress.successful_scored_days} successfully scored days.`],
+    settling: ["Fixed 14-day window complete", `Waiting for final settlement of ${progress.successful_scored_days} successful days: ${progress.final_days}/${progress.successful_scored_days}.`],
+    complete: ["Dry run complete", `${progress.final_days} successful days settled · ${progress.missed_calendar_days} days missed.`],
   }[progress.phase];
-  const shownDays = progress.phase === "settling" || progress.phase === "complete" ? progress.final_days : progress.provisional_days;
+  const shownDays = progress.calendar_days_elapsed;
   notice.className = `run-notice ${progress.phase.replace("_", "-")}`;
   setText("run-eyebrow", progress.phase === "complete" ? "COMPLETE" : progress.phase === "settling" ? "SETTLEMENT" : "DRY RUN");
   setText("run-title", copy[0]);
@@ -281,7 +281,7 @@ function renderMetrics() {
   setText("metric-igpe", formatGain(provisional.mean));
   setText("metric-factor", provisional.mean === null ? "relative to ETAS" : `${formatFactor(Math.exp(provisional.mean))} relative factor`);
   setText("metric-events", formatInteger(provisional.events));
-  setText("metric-days", `${state.dashboard.dry_run.provisional_days}/${state.dashboard.dry_run.planned_days} common days`);
+  setText("metric-days", `${state.dashboard.dry_run.successful_scored_days} successful · ${state.dashboard.dry_run.calendar_days_elapsed}/${state.dashboard.dry_run.planned_days} calendar`);
   renderSummary("provisional", aggregate(selectedScores("provisional")));
   renderSummary("final", aggregate(selectedScores("final")));
   setText("incident-count", formatInteger(state.dashboard.open_incidents));

@@ -24,31 +24,85 @@ def _score_summary(rows: list[dict], revision: str) -> dict:
     }
 
 
-def _dry_run_progress(rows: list[dict], region_ids: list[str], planned_days: int) -> dict:
+def _dry_run_progress(
+    rows: list[dict],
+    region_ids: list[str],
+    planned_days: int,
+    *,
+    schedule_start=None,
+    generated_date=None,
+    missed_target_dates=None,
+) -> dict:
     expected = set(region_ids)
 
     def complete_days(revision: str) -> int:
         coverage = {}
         for row in rows:
             if row["revision"] == revision:
-                coverage.setdefault(row["target_date"], set()).add(row["region_id"])
+                target_date = row["target_date"]
+                if isinstance(target_date, str):
+                    target_date = datetime.fromisoformat(target_date).date()
+                if schedule_start is not None and not (
+                    schedule_start
+                    <= target_date
+                    < schedule_start + timedelta(days=planned_days)
+                ):
+                    continue
+                coverage.setdefault(target_date, set()).add(row["region_id"])
         return sum(regions >= expected for regions in coverage.values()) if expected else 0
 
     provisional_days = complete_days("provisional")
     final_days = complete_days("final")
-    if final_days >= planned_days:
-        phase = "complete"
-    elif provisional_days >= planned_days:
-        phase = "settling"
-    elif provisional_days:
-        phase = "running"
+    if schedule_start is not None and generated_date is not None:
+        elapsed_days = min(
+            planned_days, max(0, (generated_date - schedule_start).days)
+        )
+        calendar_end_exclusive = schedule_start + timedelta(days=planned_days)
+        missed_days = len({
+            value for value in (missed_target_dates or [])
+            if schedule_start <= value < calendar_end_exclusive
+            and value < generated_date
+        })
+        unscored_completed_days = max(0, elapsed_days - provisional_days)
+        if elapsed_days >= planned_days:
+            phase = (
+                "complete"
+                if final_days >= provisional_days
+                and unscored_completed_days <= missed_days
+                else "settling"
+            )
+        elif elapsed_days:
+            phase = "running"
+        else:
+            phase = "awaiting_scores"
+        calendar_start = schedule_start.isoformat()
+        calendar_end = calendar_end_exclusive.isoformat()
     else:
-        phase = "awaiting_scores"
+        elapsed_days = min(provisional_days, planned_days)
+        missed_days = 0
+        unscored_completed_days = max(0, elapsed_days - provisional_days)
+        if final_days >= planned_days:
+            phase = "complete"
+        elif provisional_days >= planned_days:
+            phase = "settling"
+        elif provisional_days:
+            phase = "running"
+        else:
+            phase = "awaiting_scores"
+        calendar_start = None
+        calendar_end = None
     return {
         "phase": phase,
         "planned_days": planned_days,
-        "provisional_days": min(provisional_days, planned_days),
-        "final_days": min(final_days, planned_days),
+        "calendar_start": calendar_start,
+        "calendar_end_exclusive": calendar_end,
+        "calendar_days_elapsed": elapsed_days,
+        "calendar_days_remaining": max(0, planned_days - elapsed_days),
+        "successful_scored_days": provisional_days,
+        "missed_calendar_days": missed_days,
+        "unscored_completed_days": unscored_completed_days,
+        "provisional_days": provisional_days,
+        "final_days": final_days,
     }
 
 
@@ -142,10 +196,17 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
     ]
     incident_row = connection.execute(
         """
-        SELECT count(*), max(occurred_at)
+        SELECT count(*) FILTER (
+                   WHERE resolved_at IS NULL
+                     AND severity IN ('warning', 'critical')
+               ),
+               max(occurred_at),
+               max(occurred_at) FILTER (
+                   WHERE resolved_at IS NULL
+                     AND severity IN ('warning', 'critical')
+               )
         FROM prospective.incidents
-        WHERE protocol_id = %s AND resolved_at IS NULL
-          AND severity IN ('warning', 'critical')
+        WHERE protocol_id = %s
         """,
         (protocol_id,),
     ).fetchone()
@@ -158,11 +219,55 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         """,
         (protocol_id,),
     ).fetchall()
+    operation_rows = connection.execute(
+        """
+        SELECT region_id, issue_date, target_date, publication_status
+        FROM prospective.region_day_operations
+        WHERE protocol_id = %s
+        ORDER BY region_id, issue_date
+        """,
+        (protocol_id,),
+    ).fetchall()
+    operation_history = {}
+    for row in operation_rows:
+        operation_history.setdefault(row[0], []).append({
+            "issue_date": row[1],
+            "target_date": row[2],
+            "publication_status": row[3],
+        })
+    observed_target_dates = [
+        item["target_date"]
+        for records in operation_history.values()
+        for item in records
+    ] + [datetime.fromisoformat(item["target_date"]).date() for item in scores]
+    schedule_start = min(observed_target_dates, default=None)
+    schedule_end = (
+        None if schedule_start is None
+        else schedule_start + timedelta(days=int(protocol_row[2]))
+    )
+    scoped_scores = scores
+    if config["mode"] == "dry_run" and schedule_end is not None:
+        scoped_scores = [
+            item for item in scores
+            if datetime.fromisoformat(item["target_date"]).date() < schedule_end
+        ]
+
+    def current_missed_streak(region_id):
+        streak = 0
+        for record in reversed(operation_history.get(region_id, [])):
+            if record["publication_status"] == "missed":
+                streak += 1
+            elif record["publication_status"] == "published":
+                break
+        return streak
+
     operational = {
         row[0]: {
             "primary_eligible": bool(row[1]),
             "missed_region_days": int(row[2]),
-            "consecutive_missed_days": int(row[3]),
+            "consecutive_missed_days": current_missed_streak(row[0]),
+            "current_consecutive_missed_days": current_missed_streak(row[0]),
+            "longest_consecutive_missed_days": int(row[3]),
             "invalidated_at": _iso(row[4]),
             "invalidation_reason": row[5],
         }
@@ -171,7 +276,9 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
     regions = []
     for row in region_rows:
         region_id = row[0]
-        region_scores = [score for score in scores if score["region_id"] == region_id]
+        region_scores = [
+            score for score in scoped_scores if score["region_id"] == region_id
+        ]
         regions.append({
             "region_id": region_id,
             "name": row[1],
@@ -187,6 +294,8 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
                 "primary_eligible": True,
                 "missed_region_days": 0,
                 "consecutive_missed_days": 0,
+                "current_consecutive_missed_days": 0,
+                "longest_consecutive_missed_days": 0,
                 "invalidated_at": None,
                 "invalidation_reason": None,
             }),
@@ -231,7 +340,7 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
     )
     planned_days = int(protocol_row[2])
     return {
-        "schema_version": 2,
+        "schema_version": 3,
         "generated_at": generated_at.isoformat(),
         "pipeline_status": pipeline_status,
         "protocol": {
@@ -249,16 +358,28 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         "published_regions": published_regions,
         "open_incidents": open_incidents,
         "last_incident_at": _iso(incident_row[1]),
+        "last_open_incident_at": _iso(incident_row[2]),
         "pooled_primary_claim_status": (
             "eligible" if pooled_primary_eligible else "inconclusive"
         ),
         "dry_run": _dry_run_progress(
-            scores, [row[0] for row in region_rows], planned_days
+            scoped_scores,
+            [row[0] for row in region_rows],
+            planned_days,
+            schedule_start=schedule_start,
+            generated_date=generated_at.astimezone(timezone.utc).date(),
+            missed_target_dates=[
+                item["target_date"]
+                for records in operation_history.values()
+                for item in records
+                if item["publication_status"] == "missed"
+            ],
         ),
-        "provisional": _score_summary(scores, "provisional"),
-        "final": _score_summary(scores, "final"),
+        "post_window_score_rows_excluded": len(scores) - len(scoped_scores),
+        "provisional": _score_summary(scoped_scores, "provisional"),
+        "final": _score_summary(scoped_scores, "final"),
         "regions": regions,
-        "daily_scores": scores,
+        "daily_scores": scoped_scores,
     }
 
 
