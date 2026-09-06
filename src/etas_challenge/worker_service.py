@@ -14,6 +14,9 @@ from etas_challenge.object_storage import ObjectStorageConfig
 from etas_challenge.object_storage import storage_health
 from etas_challenge.newsletter import NewsletterService
 from etas_challenge.prospective_dashboard import read_dashboard
+from etas_challenge.prospective_evaluation import build_evaluation
+from etas_challenge.prospective_evaluation import evaluation_markdown
+from etas_challenge.prospective_evaluation import llms_text
 from etas_challenge.prospective_map import ForecastMapReader
 
 
@@ -70,6 +73,22 @@ def handler_factory(
                 return
             if path == "/api/dashboard":
                 self._serve_dashboard()
+                return
+            if path == "/api/evaluation.json":
+                self._serve_evaluation_json()
+                return
+            if path == "/ai-evaluation":
+                self._serve_ai_evaluation()
+                return
+            if path == "/llms.txt":
+                self._text_response(
+                    HTTPStatus.OK, llms_text(self._public_base_url()), "text/plain"
+                )
+                return
+            if path == "/robots.txt":
+                self._text_response(
+                    HTTPStatus.OK, "User-agent: *\nAllow: /\n", "text/plain"
+                )
                 return
             if path == "/api/forecast-map":
                 self._serve_forecast_map()
@@ -160,6 +179,37 @@ def handler_factory(
                 self.wfile.write(encoded)
             except (BrokenPipeError, ConnectionResetError):
                 pass
+
+        def _public_base_url(self):
+            return os.environ.get(
+                "PUBLIC_BASE_URL",
+                os.environ.get("NEWSLETTER_PUBLIC_BASE_URL", "https://etas.bboga.com"),
+            ).rstrip("/")
+
+        def _evaluation(self):
+            if dashboard_reader is None:
+                raise RuntimeError("dashboard unavailable")
+            return build_evaluation(
+                dashboard_reader(),
+                root=Path.cwd(),
+                public_base_url=self._public_base_url(),
+            )
+
+        def _serve_evaluation_json(self):
+            try:
+                body = self._evaluation()
+            except Exception:
+                self._json_error(HTTPStatus.SERVICE_UNAVAILABLE, "evaluation_unavailable")
+                return
+            self._json_response(HTTPStatus.OK, body)
+
+        def _serve_ai_evaluation(self):
+            try:
+                body = evaluation_markdown(self._evaluation())
+            except Exception:
+                self._json_error(HTTPStatus.SERVICE_UNAVAILABLE, "evaluation_unavailable")
+                return
+            self._text_response(HTTPStatus.OK, body, "text/markdown")
 
         def _serve_forecast_map(self):
             if map_reader is None:
@@ -294,6 +344,18 @@ def handler_factory(
             encoded = json.dumps(body, separators=(",", ":")).encode("utf-8")
             self.send_response(status)
             self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(encoded)))
+            self.send_header("Cache-Control", "no-store")
+            self.end_headers()
+            try:
+                self.wfile.write(encoded)
+            except (BrokenPipeError, ConnectionResetError):
+                pass
+
+        def _text_response(self, status, body, content_type):
+            encoded = body.encode("utf-8")
+            self.send_response(status)
+            self.send_header("Content-Type", f"{content_type}; charset=utf-8")
             self.send_header("Content-Length", str(len(encoded)))
             self.send_header("Cache-Control", "no-store")
             self.end_headers()

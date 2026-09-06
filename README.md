@@ -27,6 +27,8 @@ The following stages are complete:
 - PostgreSQL/S3 daily collection, state, publication, and scoring pipeline;
 - bilingual live dashboard and complete Turkish/English method pages.
 - checksum-verified forecast maps and a double-opt-in daily status newsletter.
+- public AI-readable live evaluation through `/llms.txt`,
+  `/api/evaluation.json`, and `/ai-evaluation`.
 
 The three-region 14-day operational dry run is active. Its first issue was
 `2026-08-31T00:05:18Z` for the target day beginning `2026-09-01T00:00:00Z`.

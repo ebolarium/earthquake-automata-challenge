@@ -59,7 +59,29 @@ class WorkerServiceTest(unittest.TestCase):
         self.assertEqual(raised.exception.code, HTTPStatus.SERVICE_UNAVAILABLE)
 
     def test_serves_dashboard_and_static_application(self):
-        dashboard = {"schema_version": 1, "pipeline_status": "ok", "regions": []}
+        dashboard = {
+            "schema_version": 2,
+            "generated_at": "2026-09-04T08:00:00+00:00",
+            "pipeline_status": "ok",
+            "protocol": {
+                "protocol_id": "ch008-three-region-dry-run-v1",
+                "mode": "dry_run",
+                "counts_toward_prospective_claim": False,
+                "minimum_events": 1,
+                "settled_score_delay_days": 7,
+            },
+            "dry_run": {"phase": "running", "planned_days": 14},
+            "provisional": {
+                "days": 1, "events": 1, "total_gain": 0.01,
+                "mean_igpe": 0.01, "relative_factor": 1.01005,
+            },
+            "final": {
+                "days": 0, "events": 0, "total_gain": 0.0,
+                "mean_igpe": None, "relative_factor": None,
+            },
+            "regions": [],
+            "daily_scores": [],
+        }
         base = self.start_server(
             (True, None), dashboard,
             lambda region: {"region_id": region, "layers": {}},
@@ -70,6 +92,19 @@ class WorkerServiceTest(unittest.TestCase):
         with urllib.request.urlopen(f"{base}/api/dashboard") as response:
             self.assertEqual(json.load(response), dashboard)
             self.assertEqual(response.headers["Cache-Control"], "no-store")
+        with urllib.request.urlopen(f"{base}/api/evaluation.json") as response:
+            evaluation = json.load(response)
+            self.assertEqual(evaluation["schema"], "ch008-ai-evaluation-v1")
+            self.assertFalse(
+                evaluation["evidence_status"]["counts_toward_prospective_claim"]
+            )
+        with urllib.request.urlopen(f"{base}/ai-evaluation") as response:
+            self.assertEqual(response.headers.get_content_type(), "text/markdown")
+            self.assertIn(b"no_prospective_claim_permitted", response.read())
+        with urllib.request.urlopen(f"{base}/llms.txt") as response:
+            self.assertIn(b"Evaluation JSON", response.read())
+        with urllib.request.urlopen(f"{base}/robots.txt") as response:
+            self.assertEqual(response.read(), b"User-agent: *\nAllow: /\n")
         with urllib.request.urlopen(f"{base}/api/forecast-map?region=california-relm") as response:
             self.assertEqual(response.status, HTTPStatus.OK)
         with urllib.request.urlopen(f"{base}/about.html") as response:
