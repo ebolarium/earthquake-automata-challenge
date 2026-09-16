@@ -2,17 +2,21 @@
 
 ## Current operational status
 
-The non-claim three-region dry run is active. Its first issue was
-`2026-08-31T00:05:18.514765Z`, targeting `2026-09-01T00:00:00Z` through
-`2026-09-02T00:00:00Z`. All three regions published six artifacts before the
-target window. The reconstructed repository record is
+The non-claim three-region dry run covered target days 1--14 September 2026 and
+is now in its seven-day catalog-settlement phase. Twelve calendar days were
+scored; 1 and 2 September remain marked as missed after the early
+`utc_timestamp` software failure. They were not backfilled and were not
+imputed as zero IGPE. The reconstructed repository record is
 `data/manifests/ch008-three-region-dry-run-activation-v1.json`; PostgreSQL
 `prospective.forecast_artifacts` and the corresponding S3 objects remain the
 authority for each artifact content hash.
 
-This dry run does not activate the 365-day scientific claim. That transition
-still requires `data/manifests/prospective-challenge-v1.json` before its first
-target window.
+This dry run does not activate the 365-day scientific claim. The formal
+protocol is frozen in
+`configs/prospective/ch008-three-region-prospective-v1.json` and is activated
+by the ordinary daily command at the 23 September 2026 UTC issue cycle. A
+database activation manifest is created only after all three first formal
+forecasts are safely persisted; it is not pre-created or backfilled.
 
 The production schedule runs at `00:05 UTC`:
 

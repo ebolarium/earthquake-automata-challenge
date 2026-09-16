@@ -3,11 +3,15 @@ message: "If you use this software or its evaluation protocol, please cite it us
 title: "Earthquake Automata Challenge: CH-008 Prospective ETAS Evaluation"
 type: software
 authors:
-  - family-names: "Ebolarium"
+  - family-names: "Boga"
+    given-names: "Saban Baris"
+    affiliation: "Independent Researcher"
+    orcid: "https://orcid.org/0009-0000-9076-946X"
+    email: "hello@bboga.com"
 repository-code: "https://github.com/ebolarium/earthquake-automata-challenge"
 url: "https://github.com/ebolarium/earthquake-automata-challenge"
 version: 0.1.0
-date-released: 2026-08-31
+date-released: 2026-09-16
 license: MIT
 keywords:
   - earthquake forecasting

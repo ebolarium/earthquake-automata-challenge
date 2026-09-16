@@ -30,17 +30,23 @@ The following stages are complete:
 - public AI-readable live evaluation through `/llms.txt`,
   `/api/evaluation.json`, and `/ai-evaluation`.
 
-The three-region 14-day operational dry run is active. Its first issue was
-`2026-08-31T00:05:18Z` for the target day beginning `2026-09-01T00:00:00Z`.
-California, New Zealand, and Chile each published six forecast artifacts before
-the target window. The committed operational record is
+The three-region 14-day operational dry run covered target days 1--14 September
+2026 and is now in its seven-day catalog-settlement phase. Twelve calendar days
+were scored and two early software-failure days remain transparently marked as
+missed; they were neither backfilled nor scored as zero. Dry-run scores are
+scientifically discarded. The committed activation record is
 `data/manifests/ch008-three-region-dry-run-activation-v1.json`.
 
-Dry-run scores are scientifically discarded. The separate 365-day, minimum
-500-event prospective claim has **not** started and still requires
-`data/manifests/prospective-challenge-v1.json` before its first target window.
-No forecast may be backfilled, and any model, feature, threshold, or geometry
-change requires a new protocol identity.
+The separate 365-day, minimum 500-event prospective protocol is frozen in
+`configs/prospective/ch008-three-region-prospective-v1.json`. The unchanged
+daily command will activate it automatically on the 23 September 2026 UTC issue
+cycle and publish the first formal target for 24 September. No forecast may be
+backfilled, and any model, feature, threshold, or geometry change requires a
+new protocol identity.
+
+The pre-prospective methods and evidence manuscript is available as
+[`paper/manuscript.md`](paper/manuscript.md), with the submission PDF at
+[`output/pdf/ch008-preprospective-manuscript-v0.1.pdf`](output/pdf/ch008-preprospective-manuscript-v0.1.pdf).
 
 CH-001 through CH-009, including negative results and stopped candidates, are
 preserved in [`wiki/05-experiments/INDEX.md`](wiki/05-experiments/INDEX.md).
@@ -126,12 +132,20 @@ data/            Locked small runtime inputs and committed manifests
 db/              Append-only PostgreSQL migrations
 docker/          Reference, web, and prospective production images
 prospective_web/ Bilingual live dashboard and scientific method pages
+paper/           EarthArXiv manuscript source, figures, and build script
 reference/       Reference-run instructions and temporary upstream checkout
 scripts/         Reproduction, fitting, evaluation, and operations commands
 src/             Native implementation
 tests/           Contract, formula, and alignment tests
 web/             Independent ETAS forecast server and static application
 wiki/            Literature, decisions, protocols, and experiment records
+```
+
+Build the single-file EarthArXiv manuscript PDF with:
+
+```bash
+python -m pip install ".[paper]"
+python paper/build_manuscript.py
 ```
 
 ## Commands

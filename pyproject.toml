@@ -41,6 +41,10 @@ prospective = [
   "boto3==1.43.83",
   "psycopg[binary]==3.3.4",
 ]
+paper = [
+  "matplotlib==3.10.8",
+  "reportlab==4.4.4",
+]
 
 [project.urls]
 Source = "https://github.com/ebolarium/earthquake-automata-challenge"
