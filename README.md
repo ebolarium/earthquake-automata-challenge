@@ -47,6 +47,11 @@ new protocol identity.
 The pre-prospective methods and evidence manuscript is available as
 [`paper/manuscript.md`](paper/manuscript.md), with the submission PDF at
 [`output/pdf/ch008-preprospective-manuscript-v0.1.pdf`](output/pdf/ch008-preprospective-manuscript-v0.1.pdf).
+The formal evaluation is publicly preregistered on
+[OSF](https://osf.io/u6yte/) under DOI
+[10.17605/OSF.IO/U6YTE](https://doi.org/10.17605/OSF.IO/U6YTE). Repository
+copies of the registration narrative and submitted form answers are preserved
+in [`registration/`](registration/).
 
 CH-001 through CH-009, including negative results and stopped candidates, are
 preserved in [`wiki/05-experiments/INDEX.md`](wiki/05-experiments/INDEX.md).
