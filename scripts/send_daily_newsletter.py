@@ -17,9 +17,9 @@ sys.path.insert(0, str(ROOT / "src"))
 from etas_challenge.newsletter import ResendClient, ResendError, public_base_url  # noqa: E402
 from etas_challenge.newsletter_report import render_daily_report  # noqa: E402
 from etas_challenge.prospective_dashboard import read_dashboard  # noqa: E402
+from etas_challenge.prospective_runtime import read_active_protocol_id  # noqa: E402
 
 
-PROTOCOL_ID = "ch008-three-region-dry-run-v1"
 TURKEY_TIME = timezone(timedelta(hours=3))
 
 
@@ -46,7 +46,7 @@ def main() -> int:
     import psycopg
 
     report_date = args.report_date or datetime.now(TURKEY_TIME).date()
-    dashboard = read_dashboard(database_url, PROTOCOL_ID)
+    dashboard = read_dashboard(database_url, read_active_protocol_id(database_url))
     client = None if args.dry_run else ResendClient(api_key)
     sent = 0
     failures = 0

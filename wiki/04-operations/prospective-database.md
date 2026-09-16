@@ -20,6 +20,20 @@ The production schedule runs at `00:05 UTC`:
 python scripts/run_prospective_daily.py
 ```
 
+No cron change is required for the formal launch. Before 23 September 2026 the
+command runs `ch008-three-region-dry-run-v1`. At the 23 September issue time it
+atomically activates `ch008-three-region-prospective-v1`, transfers the causal
+22 September state byte-for-byte without refitting, advances it through the
+ordinary daily path, and publishes the first formal forecast for 24 September
+UTC. PostgreSQL rows and S3 objects remain separated by protocol and artifact
+lane.
+
+Activation fails closed if it is attempted after `00:15 UTC`, if any source
+state is missing, or if the scheduled activation date was missed. It never
+creates a retrospective formal forecast. After the formal publication is safe,
+the same run collects the final dry-run settlement catalogs and completes any
+remaining dry-run scores.
+
 The prospective PostgreSQL database stores operational metadata and scores,
 not forecast grids. Large catalog snapshots, forecast grids, and manifests are
 stored as object artifacts; PostgreSQL records their keys and SHA-256 hashes.

@@ -28,13 +28,15 @@ from etas_challenge.object_storage import ObjectStorageConfig  # noqa: E402
 from etas_challenge.object_storage import object_key, put_verified_bytes  # noqa: E402
 from etas_challenge.prospective_bootstrap import utc_timestamp  # noqa: E402
 from etas_challenge.prospective_protocol import validate_protocol  # noqa: E402
+from etas_challenge.prospective_protocol import configured_protocol_path  # noqa: E402
+from etas_challenge.prospective_protocol import artifact_lane  # noqa: E402
 from etas_challenge.prospective_state import BootstrapCatalog  # noqa: E402
 from etas_challenge.prospective_state import catalog_history_sha256  # noqa: E402
 from etas_challenge.prospective_state import model_state_id  # noqa: E402
 from etas_challenge.training_matrix import sha256_file  # noqa: E402
 
 
-PROTOCOL_PATH = ROOT / "configs/prospective/three-region-dry-run-v1.json"
+PROTOCOL_PATH = configured_protocol_path(ROOT)
 RUNTIME_PATH = ROOT / "configs/prospective/daily-runtime-v1.json"
 PARENT_MODEL_PATH = ROOT / "models/ch004-marked-renewal-v1.json"
 CH008_MODEL_PATH = ROOT / "models/ch008-boundary-sensitivity-v1.json"
@@ -65,12 +67,14 @@ def load_parent(connection, client, storage, protocol_id: str, region_id: str, a
     return row[0], payload, list(row[4])
 
 
-def append_completed_day(connection, source, region_id: str, start, end, cutoff):
+def append_completed_day(
+    connection, source, protocol_id: str, region_id: str, start, end, cutoff
+):
     row = connection.execute(
         """
         SELECT snapshot_id
         FROM prospective.catalog_snapshots
-        WHERE region_id = %s
+        WHERE protocol_id = %s AND region_id = %s
           AND collection_kind = 'rolling'
           AND source_start_at <= %s
           AND source_cutoff_at >= %s
@@ -78,7 +82,7 @@ def append_completed_day(connection, source, region_id: str, start, end, cutoff)
         ORDER BY source_cutoff_at DESC, captured_at DESC, snapshot_id DESC
         LIMIT 1
         """,
-        (region_id, start, end, cutoff),
+        (protocol_id, region_id, start, end, cutoff),
     ).fetchone()
     if row is None:
         raise ValueError("no rolling snapshot covers the completed UTC day")
@@ -141,6 +145,7 @@ def main() -> int:
     to_as_of = cutoff.replace(hour=0, minute=0, second=0, microsecond=0)
     from_as_of = to_as_of - timedelta(days=1)
     protocol = validate_protocol(PROTOCOL_PATH, ROOT)
+    lane = artifact_lane(protocol)
     runtime = json.loads(RUNTIME_PATH.read_text(encoding="utf-8"))
     selected = set(args.regions or [region["region_id"] for region in protocol["regions"]])
     known = {region["region_id"] for region in protocol["regions"]}
@@ -176,7 +181,8 @@ def main() -> int:
             )
             with np.load(io.BytesIO(parent_payload), allow_pickle=False) as source:
                 catalog, rolling_snapshot_id = append_completed_day(
-                    connection, source, region_id, from_as_of, to_as_of, cutoff
+                    connection, source, protocol["protocol_id"], region_id,
+                    from_as_of, to_as_of, cutoff,
                 )
                 prefix_count = verify_source_prefix(source, catalog, from_as_of)
                 etas_path = ROOT / region["etas_model_path"]
@@ -210,7 +216,7 @@ def main() -> int:
             artifact_sha = hashlib.sha256(artifact).hexdigest()
             stem = to_as_of.strftime("%Y%m%dT%H%M%SZ")
             artifact_key = object_key(
-                storage, f"dry-run/states/{region_id}/{stem}-{artifact_sha}.npz"
+                storage, f"{lane}/states/{region_id}/{stem}-{artifact_sha}.npz"
             )
             put_verified_bytes(
                 storage, artifact_key, artifact, "application/octet-stream", client
@@ -250,7 +256,7 @@ def main() -> int:
             ).encode("utf-8")
             manifest_sha = hashlib.sha256(manifest_bytes).hexdigest()
             manifest_key = object_key(
-                storage, f"dry-run/states/{region_id}/{stem}-{state_id}.json"
+                storage, f"{lane}/states/{region_id}/{stem}-{state_id}.json"
             )
             put_verified_bytes(
                 storage, manifest_key, manifest_bytes, "application/json", client

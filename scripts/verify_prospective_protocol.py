@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the three-region dry-run protocol and all locked files."""
+"""Verify the dry-run and formal protocols and all locked files."""
 
 from __future__ import annotations
 
@@ -15,22 +15,33 @@ from etas_challenge.prospective_protocol import validate_protocol  # noqa: E402
 from etas_challenge.prospective_downtime import validate_downtime_policy  # noqa: E402
 
 
-PROTOCOL = ROOT / "configs/prospective/three-region-dry-run-v1.json"
+PROTOCOLS = (
+    ROOT / "configs/prospective/three-region-dry-run-v1.json",
+    ROOT / "configs/prospective/ch008-three-region-prospective-v1.json",
+)
 POLICY = ROOT / "configs/challenge/ch008-downtime-policy.json"
 
 
 def main() -> int:
-    protocol = validate_protocol(PROTOCOL, ROOT)
+    protocols = [validate_protocol(path, ROOT) for path in PROTOCOLS]
     policy = validate_downtime_policy(POLICY)
     print(
         json.dumps(
             {
                 "status": "ok",
-                "protocol_id": protocol["protocol_id"],
-                "protocol_sha256": sha256_file(PROTOCOL),
+                "protocols": [
+                    {
+                        "protocol_id": protocol["protocol_id"],
+                        "protocol_sha256": sha256_file(path),
+                        "mode": protocol["mode"],
+                    }
+                    for path, protocol in zip(PROTOCOLS, protocols)
+                ],
                 "downtime_policy_sha256": sha256_file(POLICY),
                 "downtime_policy_status": policy["status"],
-                "regions": [region["region_id"] for region in protocol["regions"]],
+                "regions": [
+                    region["region_id"] for region in protocols[0]["regions"]
+                ],
             },
             sort_keys=True,
         )

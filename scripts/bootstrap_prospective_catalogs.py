@@ -41,19 +41,26 @@ def parse_args():
     return parser.parse_args()
 
 
-def stored_window(database_url: str, region_id: str, start: datetime, cutoff: datetime):
+def stored_window(
+    database_url: str, protocol_id: str, region_id: str, start: datetime, cutoff: datetime
+):
     import psycopg
 
     with psycopg.connect(database_url) as connection:
-        return existing_window(connection, region_id, start, cutoff, "bootstrap")
+        return existing_window(
+            connection, protocol_id, region_id, start, cutoff, "bootstrap"
+        )
 
 
-def store_snapshot(database_url: str, snapshot, artifact_key: str) -> int:
+def store_snapshot(
+    database_url: str, protocol_id: str, snapshot, artifact_key: str
+) -> int:
     import psycopg
 
     with psycopg.connect(database_url) as connection:
         return persist_snapshot(
             connection,
+            protocol_id,
             snapshot,
             artifact_key,
             datetime.now(timezone.utc),
@@ -94,13 +101,16 @@ def collect_window(
     database_url: str,
     storage: ObjectStorageConfig,
     client,
+    protocol_id: str,
     region: dict,
     start: datetime,
     cutoff: datetime,
     refresh: bool,
     delay_seconds: float,
 ) -> dict[str, int]:
-    existing = None if refresh else stored_window(database_url, region["region_id"], start, cutoff)
+    existing = None if refresh else stored_window(
+        database_url, protocol_id, region["region_id"], start, cutoff
+    )
     if existing is not None:
         snapshot_id, event_count = existing
         print(
@@ -125,15 +135,17 @@ def collect_window(
             raise RuntimeError("FDSN result limit exceeded inside the minimum one-hour window")
         midpoint = start + (cutoff - start) / 2
         left = collect_window(
-            database_url, storage, client, region, start, midpoint, refresh, delay_seconds
+            database_url, storage, client, protocol_id, region, start, midpoint,
+            refresh, delay_seconds,
         )
         right = collect_window(
-            database_url, storage, client, region, midpoint, cutoff, refresh, delay_seconds
+            database_url, storage, client, protocol_id, region, midpoint, cutoff,
+            refresh, delay_seconds,
         )
         return {key: left[key] + right[key] for key in left}
     key = object_key(storage, artifact_suffix(snapshot))
     put_verified_bytes(storage, key, snapshot.raw_payload, "text/plain; charset=utf-8", client)
-    snapshot_id = store_snapshot(database_url, snapshot, key)
+    snapshot_id = store_snapshot(database_url, protocol_id, snapshot, key)
     print(
         json.dumps(
             {
@@ -183,6 +195,7 @@ def main() -> int:
                     database_url,
                     storage,
                     client,
+                    protocol["protocol_id"],
                     region,
                     window_start,
                     window_end,

@@ -30,11 +30,13 @@ from etas_challenge.prospective_forecast import deterministic_npz_bytes  # noqa:
 from etas_challenge.prospective_forecast import enforce_publication_deadline  # noqa: E402
 from etas_challenge.prospective_forecast import forecast_run_id  # noqa: E402
 from etas_challenge.prospective_forecast import payload_identity  # noqa: E402
+from etas_challenge.prospective_protocol import artifact_lane  # noqa: E402
+from etas_challenge.prospective_protocol import configured_protocol_path  # noqa: E402
 from etas_challenge.prospective_protocol import validate_protocol  # noqa: E402
 from etas_challenge.training_matrix import sha256_file  # noqa: E402
 
 
-PROTOCOL_PATH = ROOT / "configs/prospective/three-region-dry-run-v1.json"
+PROTOCOL_PATH = configured_protocol_path(ROOT)
 RUNTIME_PATH = ROOT / "configs/prospective/daily-runtime-v1.json"
 PARENT_MODEL_PATH = ROOT / "models/ch004-marked-renewal-v1.json"
 CH008_MODEL_PATH = ROOT / "models/ch008-boundary-sensitivity-v1.json"
@@ -94,12 +96,14 @@ def load_state(connection, client, storage, protocol_id: str, region_id: str, as
     }
 
 
-def latest_input_snapshot(connection, region_id: str, state_as_of, issue_time) -> int:
+def latest_input_snapshot(
+    connection, protocol_id: str, region_id: str, state_as_of, issue_time
+) -> int:
     row = connection.execute(
         """
         SELECT snapshot_id
         FROM prospective.catalog_snapshots
-        WHERE region_id = %s
+        WHERE protocol_id = %s AND region_id = %s
           AND collection_kind = 'rolling'
           AND source_cutoff_at >= %s
           AND source_cutoff_at <= %s
@@ -107,7 +111,7 @@ def latest_input_snapshot(connection, region_id: str, state_as_of, issue_time) -
         ORDER BY source_cutoff_at DESC, captured_at DESC, snapshot_id DESC
         LIMIT 1
         """,
-        (region_id, state_as_of, issue_time, issue_time),
+        (protocol_id, region_id, state_as_of, issue_time, issue_time),
     ).fetchone()
     if row is None:
         raise ValueError("no catalog snapshot was captured before issue time")
@@ -245,6 +249,7 @@ def main() -> int:
         hour=0, minute=0, second=0, microsecond=0
     )
     protocol = validate_protocol(PROTOCOL_PATH, ROOT)
+    lane = artifact_lane(protocol)
     runtime = json.loads(RUNTIME_PATH.read_text(encoding="utf-8"))
     deadline = schedule_minutes(runtime["issue_schedule"]["forecast_deadline_utc"])
     target_start, target_end = enforce_publication_deadline(
@@ -292,7 +297,9 @@ def main() -> int:
                 results.append(result)
                 print(json.dumps({"status": "already_published", **result}, sort_keys=True), flush=True)
                 continue
-            snapshot_id = latest_input_snapshot(connection, region_id, state_as_of, issue_time)
+            snapshot_id = latest_input_snapshot(
+                connection, protocol["protocol_id"], region_id, state_as_of, issue_time
+            )
             etas_model = json.loads((ROOT / region["etas_model_path"]).read_text(encoding="utf-8"))
             with np.load(io.BytesIO(state["payload"]), allow_pickle=False) as source:
                 expected_etas_sha = sha256_file(ROOT / region["etas_model_path"])
@@ -323,7 +330,7 @@ def main() -> int:
                         ch008_model=ch008,
                     )
             run_id = forecast_run_id(protocol["protocol_id"], region_id, target_start)
-            stem = f"dry-run/forecasts/{target_start.date()}/{region_id}/{run_id}"
+            stem = f"{lane}/forecasts/{target_start.date()}/{region_id}/{run_id}"
             model_payloads = {
                 state["baseline_model_id"]: deterministic_npz_bytes(pair.baseline_arrays),
                 state["challenger_model_id"]: deterministic_npz_bytes(pair.challenger_arrays),

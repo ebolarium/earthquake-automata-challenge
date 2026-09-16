@@ -9,7 +9,6 @@ from pathlib import Path
 
 
 DEFAULT_PUBLIC_BASE_URL = "https://etas.bboga.com"
-PROTOCOL_PATH = Path("configs/prospective/three-region-dry-run-v1.json")
 POLICY_PATH = Path("configs/challenge/ch008-downtime-policy.json")
 
 
@@ -58,9 +57,12 @@ def _region_projection(region: dict) -> dict:
     }
 
 
-def _load_protocol(root: Path) -> tuple[dict, Path]:
-    path = root / PROTOCOL_PATH
-    return json.loads(path.read_text(encoding="utf-8")), path
+def _load_protocol(root: Path, protocol_id: str) -> tuple[dict, Path, Path]:
+    from etas_challenge.prospective_runtime import protocol_path
+
+    relative = protocol_path(protocol_id)
+    path = root / relative
+    return json.loads(path.read_text(encoding="utf-8")), path, relative
 
 
 def build_evaluation(
@@ -71,7 +73,9 @@ def build_evaluation(
 ) -> dict:
     root = Path.cwd() if root is None else Path(root)
     base_url = (public_base_url or DEFAULT_PUBLIC_BASE_URL).rstrip("/")
-    protocol, protocol_path = _load_protocol(root)
+    protocol, protocol_file, protocol_relative = _load_protocol(
+        root, dashboard["protocol"]["protocol_id"]
+    )
     provisional = _score_projection(dashboard.get("provisional") or {})
     final = _score_projection(dashboard.get("final") or {})
     preferred_revision = "final" if final["scored_events"] else "provisional"
@@ -88,8 +92,8 @@ def build_evaluation(
 
     locked_files = {
         "protocol": {
-            "path": str(PROTOCOL_PATH),
-            "sha256": _sha256(protocol_path),
+            "path": str(protocol_relative),
+            "sha256": _sha256(protocol_file),
         },
         "downtime_policy": {
             "path": str(POLICY_PATH),
@@ -125,10 +129,10 @@ def build_evaluation(
             "protocol_mode": dashboard["protocol"]["mode"],
             "counts_toward_prospective_claim": permits_claim,
             "claim_assessment": claim_assessment,
-            "dry_run": dashboard.get("dry_run"),
+            "test_progress": dashboard.get("test_progress") or dashboard.get("dry_run"),
             "preferred_score_revision_for_description": preferred_revision,
             "uncertainty_status": "not_available_in_live_dashboard",
-            "warning": "A positive live IGPE is descriptive only. It is not proof that CH-008 beats ETAS, especially during the operational dry run or with few events.",
+            "warning": "A positive live IGPE is descriptive until the frozen event gate and uncertainty criteria are met; few events are not proof that CH-008 beats ETAS.",
         },
         "primary_metric": {
             "name": "paired information gain per earthquake (IGPE)",

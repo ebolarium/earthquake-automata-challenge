@@ -22,12 +22,14 @@ from etas_challenge.prospective_downtime import evaluate_invalidation  # noqa: E
 from etas_challenge.prospective_downtime import publication_deadline  # noqa: E402
 from etas_challenge.prospective_downtime import run_with_retries  # noqa: E402
 from etas_challenge.prospective_downtime import validate_downtime_policy  # noqa: E402
+from etas_challenge.prospective_protocol import artifact_lane  # noqa: E402
 from etas_challenge.prospective_protocol import validate_protocol  # noqa: E402
+from etas_challenge.prospective_runtime import DRY_RUN_PROTOCOL_PATH  # noqa: E402
+from etas_challenge.prospective_runtime import PROSPECTIVE_PROTOCOL_PATH  # noqa: E402
 from etas_challenge.object_storage import ObjectStorageConfig  # noqa: E402
 from etas_challenge.object_storage import object_key, put_verified_bytes  # noqa: E402
 
 
-PROTOCOL_PATH = ROOT / "configs/prospective/three-region-dry-run-v1.json"
 POLICY_PATH = ROOT / "configs/challenge/ch008-downtime-policy.json"
 
 
@@ -39,8 +41,12 @@ def parse_args():
     return parser.parse_args()
 
 
-def run_command(arguments: list[str]) -> None:
-    completed = subprocess.run(arguments, cwd=ROOT, text=True, capture_output=True)
+def run_command(arguments: list[str], protocol_path: Path) -> None:
+    environment = os.environ.copy()
+    environment["PROSPECTIVE_PROTOCOL_PATH"] = str(protocol_path)
+    completed = subprocess.run(
+        arguments, cwd=ROOT, env=environment, text=True, capture_output=True
+    )
     if completed.stdout:
         print(completed.stdout, end="", flush=True)
     if completed.returncode:
@@ -275,11 +281,12 @@ def reconcile_missed_event_counts(database_url: str, protocol_id: str) -> int:
             snapshot = connection.execute(
                 """
                 SELECT snapshot_id FROM prospective.catalog_snapshots
-                WHERE region_id = %s AND collection_kind = 'rolling'
+                WHERE protocol_id = %s AND region_id = %s
+                  AND collection_kind = 'rolling'
                   AND source_start_at <= %s AND source_cutoff_at >= %s
                 ORDER BY source_cutoff_at, captured_at, snapshot_id LIMIT 1
                 """,
-                (region_id, target_start, target_end),
+                (protocol_id, region_id, target_start, target_end),
             ).fetchone()
             if snapshot is None:
                 continue
@@ -314,7 +321,9 @@ def reconcile_missed_event_counts(database_url: str, protocol_id: str) -> int:
     return reconciled
 
 
-def export_incident_log(database_url: str, protocol_id: str, issue_time: datetime) -> dict:
+def export_incident_log(
+    database_url: str, protocol_id: str, issue_time: datetime, lane: str
+) -> dict:
     import psycopg
 
     with psycopg.connect(database_url) as connection:
@@ -353,13 +362,13 @@ def export_incident_log(database_url: str, protocol_id: str, issue_time: datetim
     storage = ObjectStorageConfig.from_environment()
     key = object_key(
         storage,
-        f"dry-run/incidents/{issue_time.strftime('%Y/%m/%d')}/{checksum}.json",
+        f"{lane}/incidents/{issue_time.strftime('%Y/%m/%d')}/{checksum}.json",
     )
     put_verified_bytes(storage, key, encoded, "application/json", storage.client())
     return {"object_key": key, "sha256": checksum, "incidents": len(rows)}
 
 
-def run_scoring_cycle(region_id: str, retry: dict):
+def run_scoring_cycle(region_id: str, retry: dict, protocol_path: Path):
     command = [
         sys.executable, "scripts/score_prospective_forecasts.py", "--region", region_id,
     ]
@@ -368,7 +377,7 @@ def run_scoring_cycle(region_id: str, retry: dict):
         seconds=sum(int(value) for value in retry["backoff_seconds"]) + 60
     )
     return run_with_retries(
-        lambda: run_command(command),
+        lambda: run_command(command, protocol_path),
         max_attempts=int(retry["max_attempts"]),
         backoff_seconds=retry["backoff_seconds"],
         deadline=deadline,
@@ -385,6 +394,7 @@ def execute_region(
     database_url: str,
     protocol_id: str,
     lookback_days: int,
+    protocol_path: Path,
 ) -> dict:
     python = sys.executable
     target_date = (issue_time.date() + timedelta(days=1))
@@ -426,7 +436,7 @@ def execute_region(
     if not already_published:
         for stage, command in prepublication:
             result = run_with_retries(
-                lambda command=command: run_command(command),
+                lambda command=command: run_command(command, protocol_path),
                 max_attempts=int(retry["max_attempts"]),
                 backoff_seconds=retry["backoff_seconds"],
                 deadline=deadline,
@@ -446,7 +456,7 @@ def execute_region(
                 invalidation = refresh_invalidation(
                     database_url, protocol_id, region_id, policy
                 )
-                score = run_scoring_cycle(region_id, retry)
+                score = run_scoring_cycle(region_id, retry, protocol_path)
                 attempts["scoring"] = score.attempts
                 return {
                     "region_id": region_id,
@@ -464,7 +474,7 @@ def execute_region(
             publication_issue_time.isoformat(), "--region", region_id,
         ]
         publication = run_with_retries(
-            lambda: run_command(publication_command),
+            lambda: run_command(publication_command, protocol_path),
             max_attempts=int(retry["max_attempts"]),
             backoff_seconds=retry["backoff_seconds"],
             deadline=deadline,
@@ -484,7 +494,7 @@ def execute_region(
             invalidation = refresh_invalidation(
                 database_url, protocol_id, region_id, policy
             )
-            score = run_scoring_cycle(region_id, retry)
+            score = run_scoring_cycle(region_id, retry, protocol_path)
             attempts["scoring"] = score.attempts
             return {
                 "region_id": region_id,
@@ -494,7 +504,7 @@ def execute_region(
                 "primary_eligible": not invalidation.invalid,
             }
 
-    score = run_scoring_cycle(region_id, retry)
+    score = run_scoring_cycle(region_id, retry, protocol_path)
     attempts["scoring"] = score.attempts
     record_terminal_state(
         database_url, protocol_id, region_id, issue_time, target_date,
@@ -512,15 +522,11 @@ def execute_region(
     }
 
 
-def main() -> int:
-    args = parse_args()
-    database_url = os.environ.get("DATABASE_URL")
-    if not database_url:
-        raise SystemExit("DATABASE_URL is required")
-    wall_clock = datetime.now(timezone.utc)
-    issue_time = args.issue_time or wall_clock
-    issue_time = issue_time.astimezone(timezone.utc)
-    protocol = validate_protocol(PROTOCOL_PATH, ROOT)
+def run_protocol(
+    args, database_url: str, issue_time: datetime, relative_protocol_path: Path
+) -> int:
+    protocol_path = ROOT / relative_protocol_path
+    protocol = validate_protocol(protocol_path, ROOT)
     policy = validate_downtime_policy(POLICY_PATH)
     known = [region["region_id"] for region in protocol["regions"]]
     selected = args.regions or known
@@ -533,6 +539,7 @@ def main() -> int:
             executor.submit(
                 execute_region, region_id, issue_time, deadline, policy,
                 database_url, protocol["protocol_id"], args.lookback_days,
+                relative_protocol_path,
             ): region_id
             for region_id in selected
         }
@@ -550,7 +557,7 @@ def main() -> int:
         database_url, protocol["protocol_id"]
     )
     incident_export = export_incident_log(
-        database_url, protocol["protocol_id"], issue_time
+        database_url, protocol["protocol_id"], issue_time, artifact_lane(protocol)
     )
     results.sort(key=lambda item: item["region_id"])
     failed = any(
@@ -559,6 +566,7 @@ def main() -> int:
     )
     print(json.dumps({
         "status": "failed" if failed else "ok",
+        "protocol_id": protocol["protocol_id"],
         "logical_issue_time": issue_time.isoformat(),
         "deadline": deadline.isoformat(),
         "missed_event_counts_reconciled": reconciled,
@@ -566,6 +574,65 @@ def main() -> int:
         "regions": results,
     }, sort_keys=True))
     return 1 if failed else 0
+
+
+def main() -> int:
+    args = parse_args()
+    database_url = os.environ.get("DATABASE_URL")
+    if not database_url:
+        raise SystemExit("DATABASE_URL is required")
+    issue_time = (args.issue_time or datetime.now(timezone.utc)).astimezone(timezone.utc)
+    formal = validate_protocol(ROOT / PROSPECTIVE_PROTOCOL_PATH, ROOT)
+    activation_date = datetime.fromisoformat(
+        formal["automatic_activation"]["activation_issue_date_utc"]
+    ).date()
+
+    if issue_time.date() < activation_date:
+        return run_protocol(args, database_url, issue_time, DRY_RUN_PROTOCOL_PATH)
+
+    import psycopg
+
+    with psycopg.connect(database_url) as connection:
+        formal_status = connection.execute(
+            "SELECT status FROM prospective.protocols WHERE protocol_id = %s",
+            (formal["protocol_id"],),
+        ).fetchone()
+    if formal_status is None:
+        raise SystemExit("formal prospective protocol is not seeded")
+
+    if formal_status[0] != "active":
+        if issue_time.date() != activation_date:
+            raise SystemExit(
+                "formal activation date was missed; retrospective activation is prohibited"
+            )
+        run_command(
+            [
+                sys.executable, "scripts/activate_prospective_protocol.py",
+                "--issue-time", issue_time.isoformat(),
+            ],
+            PROSPECTIVE_PROTOCOL_PATH,
+        )
+
+    result = run_protocol(
+        args, database_url, issue_time, PROSPECTIVE_PROTOCOL_PATH
+    )
+    if issue_time.date() == activation_date:
+        run_command(
+            [
+                sys.executable, "scripts/collect_prospective_catalogs.py",
+                "--lookback-days", str(args.lookback_days),
+                "--cutoff", issue_time.isoformat(),
+            ],
+            DRY_RUN_PROTOCOL_PATH,
+        )
+        run_command(
+            [
+                sys.executable, "scripts/score_prospective_forecasts.py",
+                "--as-of", issue_time.isoformat(),
+            ],
+            DRY_RUN_PROTOCOL_PATH,
+        )
+    return result
 
 
 if __name__ == "__main__":

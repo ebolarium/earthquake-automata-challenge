@@ -159,10 +159,11 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         SELECT DISTINCT ON (region_id)
                region_id, source_cutoff_at, event_count, content_sha256
         FROM prospective.catalog_snapshots
-        WHERE region_id = ANY(%s) AND collection_kind = 'rolling'
+        WHERE protocol_id = %s AND region_id = ANY(%s)
+          AND collection_kind = 'rolling'
         ORDER BY region_id, source_cutoff_at DESC, captured_at DESC
         """,
-        ([row[0] for row in region_rows],),
+        (protocol_id, [row[0] for row in region_rows]),
     ).fetchall()
     latest_catalogs = {
         row[0]: {
@@ -339,6 +340,19 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         else "attention"
     )
     planned_days = int(protocol_row[2])
+    progress = _dry_run_progress(
+        scoped_scores,
+        [row[0] for row in region_rows],
+        planned_days,
+        schedule_start=schedule_start,
+        generated_date=generated_at.astimezone(timezone.utc).date(),
+        missed_target_dates=[
+            item["target_date"]
+            for records in operation_history.values()
+            for item in records
+            if item["publication_status"] == "missed"
+        ],
+    )
     return {
         "schema_version": 3,
         "generated_at": generated_at.isoformat(),
@@ -362,19 +376,8 @@ def build_dashboard(connection, protocol_id: str, now=None) -> dict:
         "pooled_primary_claim_status": (
             "eligible" if pooled_primary_eligible else "inconclusive"
         ),
-        "dry_run": _dry_run_progress(
-            scoped_scores,
-            [row[0] for row in region_rows],
-            planned_days,
-            schedule_start=schedule_start,
-            generated_date=generated_at.astimezone(timezone.utc).date(),
-            missed_target_dates=[
-                item["target_date"]
-                for records in operation_history.values()
-                for item in records
-                if item["publication_status"] == "missed"
-            ],
-        ),
+        "test_progress": progress,
+        "dry_run": progress if config["mode"] == "dry_run" else None,
         "post_window_score_rows_excluded": len(scores) - len(scoped_scores),
         "provisional": _score_summary(scoped_scores, "provisional"),
         "final": _score_summary(scoped_scores, "final"),

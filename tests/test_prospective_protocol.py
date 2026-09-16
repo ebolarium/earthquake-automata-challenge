@@ -31,6 +31,21 @@ class ProspectiveProtocolTest(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "exactly the three admitted regions"):
             validate_protocol(temporary, self.root)
 
+    def test_formal_protocol_is_frozen_for_365_days(self):
+        path = (
+            self.root
+            / "configs/prospective/ch008-three-region-prospective-v1.json"
+        )
+        protocol = validate_protocol(path, self.root)
+        self.assertEqual(protocol["mode"], "prospective")
+        self.assertEqual(protocol["duration_days"], 365)
+        self.assertEqual(protocol["minimum_events"], 500)
+        self.assertTrue(protocol["counts_toward_prospective_claim"])
+        self.assertEqual(
+            protocol["automatic_activation"]["activation_issue_date_utc"],
+            "2026-09-23",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

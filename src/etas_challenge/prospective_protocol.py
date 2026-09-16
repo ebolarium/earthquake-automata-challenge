@@ -4,10 +4,29 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 from pathlib import Path
 
 
 EXPECTED_REGIONS = {"california-relm", "new-zealand-csep", "chile-subduction"}
+DEFAULT_PROTOCOL_PATH = "configs/prospective/three-region-dry-run-v1.json"
+
+
+def configured_protocol_path(root: Path) -> Path:
+    relative = os.environ.get("PROSPECTIVE_PROTOCOL_PATH", DEFAULT_PROTOCOL_PATH)
+    path = (root / relative).resolve()
+    if root.resolve() not in path.parents:
+        raise ValueError("prospective protocol path is outside project root")
+    return path
+
+
+def artifact_lane(protocol: dict) -> str:
+    lane = protocol["artifact_contract"].get(
+        "lane", "dry-run" if protocol.get("mode") == "dry_run" else None
+    )
+    if lane not in {"dry-run", "prospective"}:
+        raise ValueError("invalid prospective artifact lane")
+    return lane
 
 
 def sha256_file(path: Path) -> str:
@@ -16,10 +35,29 @@ def sha256_file(path: Path) -> str:
 
 def validate_protocol(path: Path, root: Path) -> dict:
     protocol = json.loads(path.read_text(encoding="utf-8"))
-    if protocol.get("mode") != "dry_run" or protocol.get("duration_days") != 14:
-        raise ValueError("expected a 14-day dry-run protocol")
-    if protocol.get("counts_toward_prospective_claim") is not False:
-        raise ValueError("dry-run must not count toward the prospective claim")
+    mode = protocol.get("mode")
+    duration = protocol.get("duration_days")
+    counts = protocol.get("counts_toward_prospective_claim")
+    if mode == "dry_run":
+        if duration != 14 or counts is not False:
+            raise ValueError("expected a non-claim 14-day dry-run protocol")
+    elif mode == "prospective":
+        if duration != 365 or counts is not True:
+            raise ValueError("expected a claim-bearing 365-day prospective protocol")
+        primary = protocol.get("primary_claim", {})
+        if (
+            primary.get("minimum_pooled_events") != 500
+            or primary.get("score_revision") != "final"
+            or primary.get("mean_igpe_must_exceed") != 0.0
+            or primary.get("bootstrap_30_day_lower_must_exceed") != 0.0
+            or primary.get("bootstrap_90_day_lower_must_exceed") != 0.0
+        ):
+            raise ValueError("prospective primary claim is not fully frozen")
+    else:
+        raise ValueError("unknown prospective protocol mode")
+    expected_lane = "dry-run" if mode == "dry_run" else "prospective"
+    if artifact_lane(protocol) != expected_lane:
+        raise ValueError("artifact lane disagrees with protocol mode")
     if protocol["issue_contract"].get("backfill_permitted") is not False:
         raise ValueError("forecast backfill must be prohibited")
 

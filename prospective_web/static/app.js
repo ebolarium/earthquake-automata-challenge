@@ -222,17 +222,23 @@ function differenceColor(value) { return value < 0 ? mixColor([244, 246, 245], [
 function formatMapTotal(value) { return Number(value).toLocaleString("tr-TR", { maximumSignificantDigits: 5 }); }
 
 function renderDryRun() {
-  const progress = state.dashboard.dry_run;
+  const progress = state.dashboard.test_progress || state.dashboard.dry_run;
+  const formal = state.dashboard.protocol.mode === "prospective";
   const notice = document.getElementById("run-notice");
-  const copy = {
+  const copy = (formal ? {
+    awaiting_scores: ["Prospektif test başladı", "İlk tamamlanmış hedef gününün skoru bekleniyor."],
+    running: ["Prospektif test sürüyor", `Takvim ${progress.calendar_days_elapsed}/${progress.planned_days} · ${progress.successful_scored_days} başarılı skor günü.`],
+    settling: ["365 günlük sabit pencere tamamlandı", `Başarılı ${progress.successful_scored_days} günün final skorları bekleniyor: ${progress.final_days}/${progress.successful_scored_days}.`],
+    complete: ["Prospektif test tamamlandı", `${progress.final_days} başarılı gün kesinleşti · ${progress.missed_calendar_days} gün kaçırıldı.`],
+  } : {
     awaiting_scores: ["Dry run başladı", "İlk tamamlanmış hedef gününün skoru bekleniyor."],
     running: ["Dry run sürüyor", `Takvim ${progress.calendar_days_elapsed}/${progress.planned_days} · ${progress.successful_scored_days} başarılı skor günü.`],
     settling: ["14 günlük sabit pencere tamamlandı", `Başarılı ${progress.successful_scored_days} günün final skorları bekleniyor: ${progress.final_days}/${progress.successful_scored_days}.`],
     complete: ["Dry run tamamlandı", `${progress.final_days} başarılı gün kesinleşti · ${progress.missed_calendar_days} gün kaçırıldı.`],
-  }[progress.phase];
+  })[progress.phase];
   const shownDays = progress.calendar_days_elapsed;
   notice.className = `run-notice ${progress.phase.replace("_", "-")}`;
-  setText("run-eyebrow", progress.phase === "complete" ? "TAMAMLANDI" : progress.phase === "settling" ? "KESİNLEŞME" : "DRY RUN");
+  setText("run-eyebrow", progress.phase === "complete" ? "TAMAMLANDI" : progress.phase === "settling" ? "KESİNLEŞME" : formal ? "PROSPEKTİF TEST" : "DRY RUN");
   setText("run-title", copy[0]);
   setText("run-detail", copy[1]);
   setText("run-progress-label", `${shownDays}/${progress.planned_days} gün`);
@@ -281,7 +287,8 @@ function renderMetrics() {
   setText("metric-igpe", formatGain(provisional.mean));
   setText("metric-factor", provisional.mean === null ? "ETAS'a göre" : `${formatFactor(Math.exp(provisional.mean))} göreli oran`);
   setText("metric-events", formatInteger(provisional.events));
-  setText("metric-days", `${state.dashboard.dry_run.successful_scored_days} başarılı · ${state.dashboard.dry_run.calendar_days_elapsed}/${state.dashboard.dry_run.planned_days} takvim`);
+  const progress = state.dashboard.test_progress || state.dashboard.dry_run;
+  setText("metric-days", `${progress.successful_scored_days} başarılı · ${progress.calendar_days_elapsed}/${progress.planned_days} takvim`);
   renderSummary("provisional", aggregate(selectedScores("provisional")));
   renderSummary("final", aggregate(selectedScores("final")));
   setText("incident-count", formatInteger(state.dashboard.open_incidents));
@@ -386,7 +393,8 @@ function renderProtocol() {
   const protocol = state.dashboard.protocol;
   const facts = document.getElementById("protocol-facts");
   facts.replaceChildren();
-  [["Kimlik", protocol.protocol_id], ["Mod", "14 günlük dry run"], ["Prospektif iddia", protocol.counts_toward_prospective_claim ? "Dahil" : "Dahil değil"], ["Bölge", "3"], ["Final gecikmesi", `${protocol.settled_score_delay_days} gün`]].forEach(([label, value]) => {
+  const mode = protocol.mode === "prospective" ? "365 günlük prospektif test" : "14 günlük dry run";
+  [["Kimlik", protocol.protocol_id], ["Mod", mode], ["Prospektif iddia", protocol.counts_toward_prospective_claim ? "Dahil" : "Dahil değil"], ["Bölge", "3"], ["Final gecikmesi", `${protocol.settled_score_delay_days} gün`]].forEach(([label, value]) => {
     const div = document.createElement("div"); const dt = document.createElement("dt"); const dd = document.createElement("dd"); dt.textContent = label; dd.textContent = value; div.append(dt, dd); facts.appendChild(div);
   });
   const regions = document.getElementById("protocol-regions");

@@ -21,6 +21,7 @@ from etas_challenge.fern_ch008 import regional_grid  # noqa: E402
 from etas_challenge.masked_grid import masked_grid  # noqa: E402
 from etas_challenge.object_storage import ObjectStorageConfig  # noqa: E402
 from etas_challenge.prospective_bootstrap import utc_timestamp  # noqa: E402
+from etas_challenge.prospective_protocol import configured_protocol_path  # noqa: E402
 from etas_challenge.prospective_protocol import validate_protocol  # noqa: E402
 from etas_challenge.prospective_scoring import score_california_grid  # noqa: E402
 from etas_challenge.prospective_scoring import score_regional_events  # noqa: E402
@@ -28,7 +29,7 @@ from etas_challenge.training_matrix import GridDefinition  # noqa: E402
 from etas_challenge.training_matrix import sha256_file  # noqa: E402
 
 
-PROTOCOL_PATH = ROOT / "configs/prospective/three-region-dry-run-v1.json"
+PROTOCOL_PATH = configured_protocol_path(ROOT)
 SCORING_MODULE_PATH = ROOT / "src/etas_challenge/prospective_scoring.py"
 
 
@@ -98,7 +99,9 @@ def score_exists(connection, protocol_id: str, region: dict, run: dict, revision
     return row is not None
 
 
-def scoring_snapshot(connection, run: dict, revision: str, as_of, delay_days: int):
+def scoring_snapshot(
+    connection, protocol_id: str, run: dict, revision: str, as_of, delay_days: int
+):
     threshold = run["target_end"] + (
         timedelta(days=delay_days) if revision == "final" else timedelta(0)
     )
@@ -108,7 +111,7 @@ def scoring_snapshot(connection, run: dict, revision: str, as_of, delay_days: in
         """
         SELECT snapshot_id, content_sha256, source_cutoff_at
         FROM prospective.catalog_snapshots
-        WHERE region_id = %s
+        WHERE protocol_id = %s AND region_id = %s
           AND collection_kind = 'rolling'
           AND source_start_at <= %s
           AND source_cutoff_at >= %s
@@ -118,7 +121,7 @@ def scoring_snapshot(connection, run: dict, revision: str, as_of, delay_days: in
         LIMIT 1
         """,
         (
-            run["region_id"], run["target_start"], threshold, as_of, as_of,
+            protocol_id, run["region_id"], run["target_start"], threshold, as_of, as_of,
         ),
     ).fetchone()
     if row is None:
@@ -474,7 +477,8 @@ def main() -> int:
                     continue
                 try:
                     snapshot = scoring_snapshot(
-                        connection, run, revision, as_of, delay_days
+                        connection, protocol["protocol_id"], run, revision,
+                        as_of, delay_days,
                     )
                     if snapshot is None:
                         continue

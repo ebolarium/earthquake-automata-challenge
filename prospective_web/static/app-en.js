@@ -222,17 +222,23 @@ function differenceColor(value) { return value < 0 ? mixColor([244, 246, 245], [
 function formatMapTotal(value) { return Number(value).toLocaleString("en-GB", { maximumSignificantDigits: 5 }); }
 
 function renderDryRun() {
-  const progress = state.dashboard.dry_run;
+  const progress = state.dashboard.test_progress || state.dashboard.dry_run;
+  const formal = state.dashboard.protocol.mode === "prospective";
   const notice = document.getElementById("run-notice");
-  const copy = {
+  const copy = (formal ? {
+    awaiting_scores: ["Prospective test started", "Waiting for the first completed target-day score."],
+    running: ["Prospective test in progress", `Calendar ${progress.calendar_days_elapsed}/${progress.planned_days} · ${progress.successful_scored_days} successfully scored days.`],
+    settling: ["Fixed 365-day window complete", `Waiting for final settlement of ${progress.successful_scored_days} successful days: ${progress.final_days}/${progress.successful_scored_days}.`],
+    complete: ["Prospective test complete", `${progress.final_days} successful days settled · ${progress.missed_calendar_days} days missed.`],
+  } : {
     awaiting_scores: ["Dry run started", "Waiting for the first completed target-day score."],
     running: ["Dry run in progress", `Calendar ${progress.calendar_days_elapsed}/${progress.planned_days} · ${progress.successful_scored_days} successfully scored days.`],
     settling: ["Fixed 14-day window complete", `Waiting for final settlement of ${progress.successful_scored_days} successful days: ${progress.final_days}/${progress.successful_scored_days}.`],
     complete: ["Dry run complete", `${progress.final_days} successful days settled · ${progress.missed_calendar_days} days missed.`],
-  }[progress.phase];
+  })[progress.phase];
   const shownDays = progress.calendar_days_elapsed;
   notice.className = `run-notice ${progress.phase.replace("_", "-")}`;
-  setText("run-eyebrow", progress.phase === "complete" ? "COMPLETE" : progress.phase === "settling" ? "SETTLEMENT" : "DRY RUN");
+  setText("run-eyebrow", progress.phase === "complete" ? "COMPLETE" : progress.phase === "settling" ? "SETTLEMENT" : formal ? "PROSPECTIVE TEST" : "DRY RUN");
   setText("run-title", copy[0]);
   setText("run-detail", copy[1]);
   setText("run-progress-label", `${shownDays}/${progress.planned_days} days`);
@@ -281,7 +287,8 @@ function renderMetrics() {
   setText("metric-igpe", formatGain(provisional.mean));
   setText("metric-factor", provisional.mean === null ? "relative to ETAS" : `${formatFactor(Math.exp(provisional.mean))} relative factor`);
   setText("metric-events", formatInteger(provisional.events));
-  setText("metric-days", `${state.dashboard.dry_run.successful_scored_days} successful · ${state.dashboard.dry_run.calendar_days_elapsed}/${state.dashboard.dry_run.planned_days} calendar`);
+  const progress = state.dashboard.test_progress || state.dashboard.dry_run;
+  setText("metric-days", `${progress.successful_scored_days} successful · ${progress.calendar_days_elapsed}/${progress.planned_days} calendar`);
   renderSummary("provisional", aggregate(selectedScores("provisional")));
   renderSummary("final", aggregate(selectedScores("final")));
   setText("incident-count", formatInteger(state.dashboard.open_incidents));
@@ -386,7 +393,8 @@ function renderProtocol() {
   const protocol = state.dashboard.protocol;
   const facts = document.getElementById("protocol-facts");
   facts.replaceChildren();
-  [["Identifier", protocol.protocol_id], ["Mode", "14-day dry run"], ["Prospective claim", protocol.counts_toward_prospective_claim ? "Included" : "Not included"], ["Regions", "3"], ["Final delay", `${protocol.settled_score_delay_days} days`]].forEach(([label, value]) => {
+  const mode = protocol.mode === "prospective" ? "365-day prospective test" : "14-day dry run";
+  [["Identifier", protocol.protocol_id], ["Mode", mode], ["Prospective claim", protocol.counts_toward_prospective_claim ? "Included" : "Not included"], ["Regions", "3"], ["Final delay", `${protocol.settled_score_delay_days} days`]].forEach(([label, value]) => {
     const div = document.createElement("div"); const dt = document.createElement("dt"); const dd = document.createElement("dd"); dt.textContent = label; dd.textContent = value; div.append(dt, dd); facts.appendChild(div);
   });
   const regions = document.getElementById("protocol-regions");

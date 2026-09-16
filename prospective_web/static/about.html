@@ -56,8 +56,8 @@
           <h1>CH-008 Yöntem ve Bilimsel Protokol</h1>
           <p class="lead">CH-008, güçlü bir uzay-zaman ETAS modelini değiştirmeden korur ve yalnızca doğrudan arka plan sismisite kütlesini, geçmişten nedensel olarak hesaplanan yenilenme ve yerel yatkınlık durumlarına göre yeniden dağıtır.</p>
           <div class="document-meta">
-            <span>Son güncelleme: 31 Ağustos 2026</span>
-            <span>Durum: 14 günlük operasyonel dry run</span>
+            <span>Son güncelleme: 16 Eylül 2026</span>
+            <span>Durum: dry run tamamlandı; prospektif başlangıç 24 Eylül 2026 UTC</span>
             <span>İletişim: hello@bboga.com</span>
           </div>
         </header>
@@ -73,7 +73,7 @@
           </div>
           <div class="claim-note">
             <strong>İddia sınırı</strong>
-            <p>Bu çalışma belirli bir depremin tam zamanını, yerini veya büyüklüğünü bildiğini; fiziksel gerilme ya da fay dayanımını doğrudan ölçtüğünü iddia etmez. Retrospektif üstünlük, prospektif ETAS üstünlüğü değildir. Canlı dry run bilimsel iddiaya dahil değildir.</p>
+            <p>Bu çalışma belirli bir depremin tam zamanını, yerini veya büyüklüğünü bildiğini; fiziksel gerilme ya da fay dayanımını doğrudan ölçtüğünü iddia etmez. Retrospektif üstünlük, prospektif ETAS üstünlüğü değildir. Tamamlanan dry run bilimsel iddiaya dahil değildir.</p>
           </div>
 
           <h3>Modelin gelişim mantığı</h3>
@@ -217,16 +217,16 @@ relative factor = exp(IGPE)</div>
 
         <section class="method-section" id="prospektif">
           <h2>Canlı prospektif protokol</h2>
-          <p>Mevcut çalışma <code>ch008-three-region-dry-run-v1</code> kimlikli 14 günlük operasyonel dry run’dır. Kaliforniya, Yeni Zelanda ve Şili için aynı günlük issue clock kullanılır. Tahmin, hedef gün başlamadan en az 1.425 dakika önce kalıcı olarak yayımlanır; her grid, state ve manifest SHA-256 ile kimliklendirilir.</p>
+          <p>14 günlük operasyonel dry run, <code>ch008-three-region-dry-run-v1</code> kimliğiyle tamamlandı. Ayrı ve dondurulmuş <code>ch008-three-region-prospective-v1</code> protokolü 23 Eylül 2026 issue zamanında otomatik aktive olur; ilk resmi hedef günü 24 Eylül 2026 UTC’dir. Kaliforniya, Yeni Zelanda ve Şili için aynı günlük issue clock kullanılır. Tahmin, hedef gün başlamadan önce kalıcı olarak yayımlanır; her grid, state ve manifest SHA-256 ile kimliklendirilir.</p>
           <ul>
             <li>Dry run skorları bilimsel prospektif üstünlük iddiasına dahil edilmez.</li>
-            <li>Dry run bitince model veya feature değişmeden ayrı bir aktivasyon manifesti gerekir.</li>
+            <li>Prospektif protokol, model veya feature değişmeden ayrı kimlik ve artifact alanıyla aktive edilir.</li>
             <li>Planlanan ana test 365 gün ve üç bölge birleşiminde en az 500 hedef olay kapısına sahiptir.</li>
             <li>Parametre, feature, katalog eşiği veya geometri değişikliği yeni model/protokol kimliği gerektirir.</li>
             <li>Tahmin backfill’i yasaktır; yalnızca hedef zamanından önce yayımlanmış artefaktlar sayılır.</li>
             <li>Bölge sonuçları ayrıca raporlanır; birincil karar önceden tanımlı birleşik paired IGPE üzerinden verilir.</li>
           </ul>
-          <p>Canlı dashboard pipeline sağlığını, yayımlanan bölgeleri, katalog cutoff’larını, provisional/final günlük skorları ve 14 günlük ilerlemeyi gösterir. Dry run’ın 14 ortak hedef günü tamamlandıktan sonra 7 günlük katalog kesinleşme penceresi ayrıca izlenir.</p>
+          <p>Canlı dashboard aktif protokolün pipeline sağlığını, yayımlanan bölgeleri, katalog cutoff’larını, provisional/final günlük skorlarını ve takvim ilerlemesini gösterir. Her hedef günü için 7 günlük katalog kesinleşme penceresi ayrıca izlenir.</p>
         </section>
 
         <section class="method-section" id="tekrar">
@@ -239,7 +239,7 @@ relative factor = exp(IGPE)</div>
         <section class="method-section" id="sinirlar">
           <h2>Sınırlılıklar ve etik kullanım</h2>
           <ol>
-            <li>Mevcut güçlü sonuçlar retrospektiftir; canlı dry run bilimsel üstünlük kanıtı değildir.</li>
+            <li>Dry run ve retrospektif sonuçlar bilimsel prospektif üstünlük kanıtı değildir; bu iddia yalnızca ayrı 365 günlük protokolle değerlendirilecektir.</li>
             <li>CH-008 şu anda esas olarak koşullu mekânsal arka plan dağılımını iyileştirir; büyüklük dağılımını veya toplam günlük oranı değiştirmez.</li>
             <li>Kaliforniya fay-ağı, Yeni Zelanda ve Şili hücre-komşuluk geometrisi kullanır. Bu adaptör farkı açıkça raporlanmalıdır.</li>
             <li>Kataloglar sonradan konum, büyüklük ve olay kimliği revizyonları alabilir. Bu nedenle provisional ve final skorlar ayrıdır.</li>
@@ -263,6 +263,7 @@ relative factor = exp(IGPE)</div>
             <li><a href="https://github.com/ss15859/EarthquakeNPP">EarthquakeNPP referans yazılımı</a> ve <a href="https://github.com/ss15859/etas">ETAS referans uygulaması</a></li>
             <li><a href="https://github.com/ebolarium/earthquake-automata-challenge/blob/main/wiki/07-scientific-review/CH008-scientific-dossier-tr.md">CH-008 bilimsel değerlendirme dosyası</a></li>
             <li><a href="https://github.com/ebolarium/earthquake-automata-challenge/blob/main/configs/prospective/three-region-dry-run-v1.json">Kilitli üç-bölgeli dry run protokolü</a></li>
+            <li><a href="https://github.com/ebolarium/earthquake-automata-challenge/blob/main/configs/prospective/ch008-three-region-prospective-v1.json">Kilitli 365 günlük prospektif protokol</a></li>
           </ol>
 
           <div class="contact-band">

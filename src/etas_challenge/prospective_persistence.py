@@ -24,6 +24,7 @@ def snapshot_identity(snapshot: CatalogSnapshot, collection_kind: str) -> str:
 
 def existing_window(
     connection,
+    protocol_id: str,
     region_id: str,
     start: datetime,
     cutoff: datetime,
@@ -35,20 +36,21 @@ def existing_window(
         """
         SELECT snapshot_id, event_count
         FROM prospective.catalog_snapshots
-        WHERE region_id = %s
+        WHERE protocol_id = %s AND region_id = %s
           AND source_start_at = %s
           AND source_cutoff_at = %s
           AND collection_kind = %s
         ORDER BY captured_at DESC
         LIMIT 1
         """,
-        (region_id, start, cutoff, collection_kind),
+        (protocol_id, region_id, start, cutoff, collection_kind),
     ).fetchone()
     return None if row is None else (row[0], row[1])
 
 
 def persist_snapshot(
     connection,
+    protocol_id: str,
     snapshot: CatalogSnapshot,
     artifact_key: str,
     captured_at: datetime,
@@ -65,14 +67,15 @@ def persist_snapshot(
         cursor.execute(
             """
             INSERT INTO prospective.catalog_snapshots
-                (region_id, captured_at, source_start_at, source_cutoff_at,
+                (protocol_id, region_id, captured_at, source_start_at, source_cutoff_at,
                  collection_kind, source_request, artifact_key, content_sha256,
                  event_count, snapshot_identity)
-            VALUES (%s, %s, %s, %s, %s, %s::jsonb, %s, %s, %s, %s)
+            VALUES (%s, %s, %s, %s, %s, %s, %s::jsonb, %s, %s, %s, %s)
             ON CONFLICT DO NOTHING
             RETURNING snapshot_id
             """,
             (
+                protocol_id,
                 snapshot.region_id,
                 captured_at,
                 snapshot.start,
@@ -92,11 +95,12 @@ def persist_snapshot(
                 SELECT snapshot_id, region_id, source_start_at, source_cutoff_at,
                        collection_kind, content_sha256
                 FROM prospective.catalog_snapshots
-                WHERE snapshot_identity = %s OR artifact_key = %s
+                WHERE protocol_id = %s
+                  AND (snapshot_identity = %s OR artifact_key = %s)
                 ORDER BY (snapshot_identity = %s) DESC
                 LIMIT 1
                 """,
-                (identity, artifact_key, identity),
+                (protocol_id, identity, artifact_key, identity),
             )
             existing = cursor.fetchone()
             expected = (

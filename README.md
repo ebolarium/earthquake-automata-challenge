@@ -81,6 +81,12 @@ The production command is:
 python scripts/run_prospective_daily.py
 ```
 
+The same command automatically activates the frozen 365-day protocol at the
+23 September 2026 UTC issue time and publishes its first formal target for
+24 September. The transition preserves the dry-run records, transfers the
+latest causal state without refitting, and writes formal artifacts to a
+separate S3 lane. A missed activation date is never backfilled.
+
 The independent morning newsletter command is:
 
 ```bash

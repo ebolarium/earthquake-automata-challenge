@@ -22,6 +22,7 @@ class DatabaseMigrationTest(unittest.TestCase):
                 "007_daily_score_run.sql",
                 "008_downtime_policy.sql",
                 "009_newsletter.sql",
+                "010_protocol_scoped_regions.sql",
             ],
         )
         self.assertEqual(len(migration_checksum(migrations[0])), 64)

@@ -56,8 +56,8 @@
           <h1>CH-008 Method and Scientific Protocol</h1>
           <p class="lead">CH-008 preserves a strong space-time ETAS model and redistributes only its direct background seismicity mass according to causal renewal and local-susceptibility states computed from past observations.</p>
           <div class="document-meta">
-            <span>Last updated: 31 August 2026</span>
-            <span>Status: 14-day operational dry run</span>
+            <span>Last updated: 16 September 2026</span>
+            <span>Status: dry run complete; prospective start 24 September 2026 UTC</span>
             <span>Contact: hello@bboga.com</span>
           </div>
         </header>
@@ -73,7 +73,7 @@
           </div>
           <div class="claim-note">
             <strong>Claim boundary</strong>
-            <p>This work does not claim to predict the exact time, location, or magnitude of an individual earthquake, nor to directly measure physical stress or fault strength. Retrospective superiority is not prospective superiority. The current dry run does not count toward a scientific claim.</p>
+            <p>This work does not claim to predict the exact time, location, or magnitude of an individual earthquake, nor to directly measure physical stress or fault strength. Retrospective superiority is not prospective superiority. The completed dry run does not count toward a scientific claim.</p>
           </div>
 
           <h3>Development logic</h3>
@@ -217,16 +217,16 @@ relative factor = exp(IGPE)</div>
 
         <section class="method-section" id="prospective">
           <h2>Live prospective protocol</h2>
-          <p>The current study is a 14-day operational dry run identified as <code>ch008-three-region-dry-run-v1</code>. California, New Zealand, and Chile share the same daily issue clock. Forecasts are permanently published at least 1,425 minutes before the target day begins; every grid, state, and manifest is identified by SHA-256.</p>
+          <p>The 14-day operational dry run was completed under <code>ch008-three-region-dry-run-v1</code>. The separate frozen <code>ch008-three-region-prospective-v1</code> protocol activates automatically at the 23 September 2026 issue time, with 24 September 2026 UTC as its first formal target day. California, New Zealand, and Chile share the same daily issue clock. Forecasts are permanently published before the target day begins; every grid, state, and manifest is identified by SHA-256.</p>
           <ul>
             <li>Dry-run scores do not count toward a scientific prospective-superiority claim.</li>
-            <li>After the dry run, a separate activation manifest is required without model or feature changes.</li>
+            <li>The prospective protocol is activated under a separate identity and artifact lane without model or feature changes.</li>
             <li>The planned primary test lasts 365 days and requires at least 500 combined target events across the three regions.</li>
             <li>Any change to parameters, features, catalog thresholds, or geometry requires a new model and protocol identity.</li>
             <li>Forecast backfill is prohibited; only artifacts published before their target window count.</li>
             <li>Regional results are reported separately, while the primary decision uses a predeclared combined paired IGPE.</li>
           </ul>
-          <p>The live dashboard reports pipeline health, region publication, catalog cutoffs, provisional and final daily scores, and 14-day progress. Once 14 common target days have been scored, the seven-day catalog-settlement period is tracked separately.</p>
+          <p>The live dashboard reports pipeline health, region publication, catalog cutoffs, provisional and final daily scores, and calendar progress for the active protocol. The seven-day catalog-settlement period is tracked separately for every target day.</p>
         </section>
 
         <section class="method-section" id="reproducibility">
@@ -239,7 +239,7 @@ relative factor = exp(IGPE)</div>
         <section class="method-section" id="limitations">
           <h2>Limitations and responsible use</h2>
           <ol>
-            <li>The strongest current results are retrospective; the live dry run is not scientific superiority evidence.</li>
+            <li>Dry-run and retrospective results are not scientific evidence of prospective superiority; that claim will be evaluated only under the separate 365-day protocol.</li>
             <li>CH-008 primarily improves conditional spatial background allocation. It does not change the magnitude distribution or total daily rate.</li>
             <li>California uses fault-network geometry, while New Zealand and Chile use cell-neighborhood geometry. This adapter difference must remain explicit.</li>
             <li>Catalog locations, magnitudes, and event identities can be revised. Provisional and final scores are therefore distinct.</li>
@@ -263,6 +263,7 @@ relative factor = exp(IGPE)</div>
             <li><a href="https://github.com/ss15859/EarthquakeNPP">EarthquakeNPP reference software</a> and the <a href="https://github.com/ss15859/etas">ETAS reference implementation</a></li>
             <li><a href="https://github.com/ebolarium/earthquake-automata-challenge/blob/main/wiki/07-scientific-review/CH008-scientific-dossier-tr.md">CH-008 scientific review dossier</a></li>
             <li><a href="https://github.com/ebolarium/earthquake-automata-challenge/blob/main/configs/prospective/three-region-dry-run-v1.json">Locked three-region dry-run protocol</a></li>
+            <li><a href="https://github.com/ebolarium/earthquake-automata-challenge/blob/main/configs/prospective/ch008-three-region-prospective-v1.json">Locked 365-day prospective protocol</a></li>
           </ol>
 
           <div class="contact-band">

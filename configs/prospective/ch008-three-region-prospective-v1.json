@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "protocol_id": "ch008-three-region-prospective-v1",
+  "status": "frozen_awaiting_activation",
+  "mode": "prospective",
+  "counts_toward_prospective_claim": true,
+  "duration_days": 365,
+  "minimum_events": 500,
+  "automatic_activation": {
+    "activation_issue_date_utc": "2026-09-23",
+    "first_target_start": "2026-09-24T00:00:00+00:00",
+    "source_protocol_id": "ch008-three-region-dry-run-v1",
+    "state_transfer": "latest causal source state before activation issue time, followed by ordinary daily advance",
+    "no_refit": true
+  },
+  "issue_contract": {
+    "frequency": "daily",
+    "target_window": "next_utc_day",
+    "history_boundary": "strictly_before_issue_time",
+    "persist_before_target_start": true,
+    "backfill_permitted": false,
+    "publication_deadline_utc": "00:15:00"
+  },
+  "catalog_revision_contract": {
+    "raw_response_preserved": true,
+    "first_observed_score": "provisional",
+    "settled_score_delay_days": 7,
+    "settled_score_label": "final"
+  },
+  "artifact_contract": {
+    "s3_prefix": "prospective/v1/prospective",
+    "lane": "prospective",
+    "forecast_format": "compressed_npz",
+    "manifest_format": "json",
+    "sha256_required": true
+  },
+  "primary_claim": {
+    "metric": "pooled paired information gain per earthquake against frozen ETAS",
+    "score_revision": "final",
+    "minimum_pooled_events": 500,
+    "mean_igpe_must_exceed": 0.0,
+    "bootstrap_method": "stationary daily block bootstrap",
+    "bootstrap_replicates": 10000,
+    "bootstrap_confidence_level": 0.95,
+    "bootstrap_30_day_lower_must_exceed": 0.0,
+    "bootstrap_90_day_lower_must_exceed": 0.0,
+    "regional_results": "secondary evidence reported without post-hoc exclusion",
+    "all_regions_must_remain_operationally_eligible": true,
+    "calendar_extension_allowed": false,
+    "if_event_gate_not_met": "inconclusive"
+  },
+  "challenger": {
+    "california_model_id": "ch008-california-v1",
+    "normalized_model_id": "ch008-normalized-v1",
+    "model_path": "models/ch008-boundary-sensitivity-v1.json",
+    "model_sha256": "72e030a4d61c512bb096c1469a409c1cf3d9206fc0d9580f2352e0d604e3fa27",
+    "california_runtime_path": "src/etas_challenge/frailty_renewal_fit.py",
+    "california_runtime_sha256": "004bb95b64789bd909e408e3d220bae4982284d85e6925202566e2776c4015cf",
+    "normalized_runtime_path": "src/etas_challenge/fern_ch008_normalized.py",
+    "normalized_runtime_sha256": "a85e8da1b501e5c43d3374714d9014683bb37b40c33bee179ae2dd7e2a7b7f16"
+  },
+  "baseline_runtime": {
+    "path": "src/etas_challenge/etas_native.py",
+    "sha256": "a833974874e05dcd4f24d914b405da37ee83f99e744cf5c503ec73d886812161"
+  },
+  "regions": [
+    {
+      "region_id": "california-relm",
+      "name": "California RELM",
+      "catalog_source": "USGS ANSS ComCat FDSN",
+      "catalog_endpoint": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+      "geometry": {
+        "type": "grid_mask",
+        "path": "data/grids/california-relm-v1.json",
+        "sha256": "91ddb0f09244c2173cd5fe9fab4405a6582175ee933ba271d63639c8872cdce9",
+        "cells": 7682,
+        "spacing_degrees": 0.1
+      },
+      "minimum_magnitude": 2.5,
+      "minimum_depth_km": null,
+      "maximum_depth_km_exclusive": null,
+      "baseline_model_id": "etas-california-comcat25-v1",
+      "challenger_model_id": "ch008-california-v1",
+      "etas_model_path": "models/etas/california-comcat25-v1.json",
+      "etas_model_sha256": "a87aa34b7b716f4c1b78ca62eef5c0add9a14e722a1081be899b63ef39d08b22",
+      "ch008_geometry": "ucerf3_fault_network",
+      "renewal_exposure_scale": 1.0
+    },
+    {
+      "region_id": "new-zealand-csep",
+      "name": "New Zealand CSEP",
+      "catalog_source": "GeoNet FDSN Event Web Service",
+      "catalog_endpoint": "https://service.geonet.org.nz/fdsnws/event/1/query",
+      "geometry": {
+        "type": "published_grid_mask",
+        "path": "data/regions/nz-csep-v1.npz",
+        "sha256": "e7b68401782f7f05a9c53ebe5d4eb4bbe1a127804480d5607f0bec3ffa27f0d0",
+        "cells": 6343,
+        "spacing_degrees": 0.1,
+        "latent_spacing_degrees": 0.5
+      },
+      "minimum_magnitude": 4.0,
+      "minimum_depth_km": 0.0,
+      "maximum_depth_km_exclusive": 40.0,
+      "baseline_model_id": "etas-new-zealand-csep-v1",
+      "challenger_model_id": "ch008-normalized-v1",
+      "etas_model_path": "models/etas/new-zealand-csep-v1.json",
+      "etas_model_sha256": "aab87d0645082ecab3d789db2bcb308c400578971dd5d33d55c57902d25ba3c1",
+      "ch008_geometry": "latent_cell_neighborhood",
+      "renewal_exposure_scale": 0.4772598372902653
+    },
+    {
+      "region_id": "chile-subduction",
+      "name": "Chile subduction corridor",
+      "catalog_source": "USGS ANSS ComCat FDSN",
+      "catalog_endpoint": "https://earthquake.usgs.gov/fdsnws/event/1/query",
+      "geometry": {
+        "type": "rectangle",
+        "longitude": [-76.0, -66.0],
+        "latitude": [-56.0, -17.0],
+        "cells": 1560,
+        "spacing_degrees": 0.5,
+        "protocol_path": "configs/regions/chile-subduction-v1.json",
+        "protocol_sha256": "7a1975c3967712ece537549bf0043328eb0f094b386efd091e6a5309afde8101"
+      },
+      "minimum_magnitude": 4.5,
+      "minimum_depth_km": 0.0,
+      "maximum_depth_km_exclusive": 100.0,
+      "baseline_model_id": "etas-chile-subduction-v1",
+      "challenger_model_id": "ch008-normalized-v1",
+      "etas_model_path": "models/etas/chile-subduction-v1.json",
+      "etas_model_sha256": "936cf0f2f6fc28723e3ca4a2b2c450ab784b782280f40960fd0228941f0e87cd",
+      "ch008_geometry": "latent_cell_neighborhood",
+      "renewal_exposure_scale": 4.261045999817415
+    }
+  ],
+  "freeze_contract": {
+    "dry_run_scores_not_used_to_refit_or_select_parameters": true,
+    "model_or_feature_change_requires_new_protocol": true,
+    "region_geometry_and_catalog_thresholds_frozen": true,
+    "downtime_policy_path": "configs/challenge/ch008-downtime-policy.json"
+  }
+}

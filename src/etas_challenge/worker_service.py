@@ -18,6 +18,7 @@ from etas_challenge.prospective_evaluation import build_evaluation
 from etas_challenge.prospective_evaluation import evaluation_markdown
 from etas_challenge.prospective_evaluation import llms_text
 from etas_challenge.prospective_map import ForecastMapReader
+from etas_challenge.prospective_runtime import read_active_protocol_id
 
 
 DEFAULT_STATIC = Path(
@@ -26,7 +27,20 @@ DEFAULT_STATIC = Path(
         Path.cwd() / "prospective_web" / "static",
     )
 )
-PROTOCOL_ID = "ch008-three-region-dry-run-v1"
+
+
+class ActiveForecastMapReader:
+    def __init__(self, database_url: str):
+        self.database_url = database_url
+        self.readers = {}
+
+    def __call__(self, region_id: str):
+        protocol_id = read_active_protocol_id(self.database_url)
+        reader = self.readers.get(protocol_id)
+        if reader is None:
+            reader = ForecastMapReader(self.database_url, protocol_id)
+            self.readers[protocol_id] = reader
+        return reader(region_id)
 
 
 def database_health(database_url: str | None) -> tuple[bool, str | None]:
@@ -393,7 +407,7 @@ def main() -> None:
     newsletter_service = NewsletterService(database_url) if database_url else None
     if database_url:
         try:
-            map_reader = ForecastMapReader(database_url, PROTOCOL_ID)
+            map_reader = ActiveForecastMapReader(database_url)
         except ValueError:
             pass
     server = create_server(
@@ -403,7 +417,9 @@ def main() -> None:
         (
             None
             if not database_url
-            else lambda: read_dashboard(database_url, PROTOCOL_ID)
+            else lambda: read_dashboard(
+                database_url, read_active_protocol_id(database_url)
+            )
         ),
         map_reader=map_reader,
         newsletter_service=newsletter_service,

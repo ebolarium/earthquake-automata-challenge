@@ -18,9 +18,11 @@ from etas_challenge.object_storage import object_key, put_verified_bytes  # noqa
 from etas_challenge.prospective_catalog import fetch_snapshot  # noqa: E402
 from etas_challenge.prospective_persistence import persist_snapshot  # noqa: E402
 from etas_challenge.prospective_protocol import validate_protocol  # noqa: E402
+from etas_challenge.prospective_protocol import configured_protocol_path  # noqa: E402
+from etas_challenge.prospective_protocol import artifact_lane  # noqa: E402
 
 
-PROTOCOL_PATH = ROOT / "configs/prospective/three-region-dry-run-v1.json"
+PROTOCOL_PATH = configured_protocol_path(ROOT)
 
 
 def parse_timestamp(value: str) -> datetime:
@@ -62,6 +64,7 @@ def main() -> int:
     import psycopg
 
     protocol = validate_protocol(PROTOCOL_PATH, ROOT)
+    lane = artifact_lane(protocol)
     selected = set(args.regions or [region["region_id"] for region in protocol["regions"]])
     known = {region["region_id"] for region in protocol["regions"]}
     if not selected <= known:
@@ -70,8 +73,8 @@ def main() -> int:
     start = cutoff - timedelta(days=args.lookback_days)
     storage = ObjectStorageConfig.from_environment()
     expected_prefix = protocol["artifact_contract"]["s3_prefix"]
-    if expected_prefix != f"{storage.prefix}/dry-run":
-        raise ValueError("configured S3 prefix disagrees with dry-run protocol")
+    if expected_prefix != f"{storage.prefix}/{lane}":
+        raise ValueError("configured S3 prefix disagrees with protocol lane")
     client = storage.client()
     results = []
     failures = []
@@ -81,13 +84,16 @@ def main() -> int:
         try:
             snapshot = fetch_snapshot(region, ROOT, start, cutoff)
             suffix = (
-                f"dry-run/catalogs/{snapshot.region_id}/"
+                f"{lane}/catalogs/{snapshot.region_id}/"
                 f"{cutoff.strftime('%Y/%m/%d/%H%M%S%f')}-{snapshot.content_sha256}.txt"
             )
             key = object_key(storage, suffix)
             put_verified_bytes(storage, key, snapshot.raw_payload, "text/plain; charset=utf-8", client)
             with psycopg.connect(database_url) as connection:
-                snapshot_id = persist_snapshot(connection, snapshot, key, datetime.now(timezone.utc))
+                snapshot_id = persist_snapshot(
+                    connection, protocol["protocol_id"], snapshot, key,
+                    datetime.now(timezone.utc)
+                )
             results.append({"region_id": snapshot.region_id, "snapshot_id": snapshot_id, "events": len(snapshot.events), "sha256": snapshot.content_sha256})
         except Exception as error:
             failures.append(

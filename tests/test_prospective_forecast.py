@@ -150,6 +150,7 @@ class ProspectiveForecastTest(unittest.TestCase):
         catalog, snapshot_id = append_completed_day(
             connection,
             source,
+            "protocol",
             "region",
             datetime(2026, 8, 30, tzinfo=timezone.utc),
             datetime(2026, 8, 31, tzinfo=timezone.utc),
