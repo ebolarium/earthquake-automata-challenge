@@ -9,7 +9,8 @@ authors:
     orcid: "https://orcid.org/0009-0000-9076-946X"
     email: "hello@bboga.com"
 repository-code: "https://github.com/ebolarium/earthquake-automata-challenge"
-url: "https://github.com/ebolarium/earthquake-automata-challenge"
+url: "https://doi.org/10.5281/zenodo.22800614"
+doi: "10.5281/zenodo.22800614"
 version: 0.1.0
 date-released: 2026-09-16
 license: MIT

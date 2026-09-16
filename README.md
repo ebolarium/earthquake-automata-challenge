@@ -1,6 +1,7 @@
 # Earthquake Automata Challenge
 
 [![Test](https://github.com/ebolarium/earthquake-automata-challenge/actions/workflows/test.yml/badge.svg)](https://github.com/ebolarium/earthquake-automata-challenge/actions/workflows/test.yml)
+[![DOI](https://zenodo.org/badge/1339609487.svg)](https://doi.org/10.5281/zenodo.22800613)
 
 An independent, reproducibility-first project for implementing and testing a
 published earthquake forecasting baseline before developing challengers.
@@ -52,6 +53,8 @@ The formal evaluation is publicly preregistered on
 [10.17605/OSF.IO/U6YTE](https://doi.org/10.17605/OSF.IO/U6YTE). Repository
 copies of the registration narrative and submitted form answers are preserved
 in [`registration/`](registration/).
+The frozen `v0.1.0` software release is archived on
+[Zenodo](https://doi.org/10.5281/zenodo.22800614).
 
 CH-001 through CH-009, including negative results and stopped candidates, are
 preserved in [`wiki/05-experiments/INDEX.md`](wiki/05-experiments/INDEX.md).
